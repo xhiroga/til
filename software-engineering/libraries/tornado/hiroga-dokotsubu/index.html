@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"> </head>
+
+<body>
+  <nav class="navbar navbar-expand-md bg-secondary navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">さわらのオススメ本紹介</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#">Contact me
+              <br> </a>
+          </li>
+        </ul>
+        <form class="form-inline m-0">
+          <input class="form-control mr-2" type="text" placeholder="Search">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div class="py-5 bg-light text-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form class="" method="post" action="/">
+            <div class="form-group"> <label>オススメ本投稿</label> <textarea type="email" name="tsubuyaki" class="form-control" placeholder="オススメの本をつぶやこう" row="8"> </textarea> </div>
+            <button type="submit" class="btn btn-primary">つぶやく</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 my-3">
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center">{{book.title}}</div>
+            <img class="img-fluid" src="https://pingendo.github.io/templates/sections/assets/features_mac.jpg" alt="Card image">
+            <div class="card-body">
+              <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+              <p class="card-text p-y-1">{{book.description}}</p>
+              <a href="#" class="card-link">link</a>
+              <a href="#" class="card-link">Second link</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 my-3">
+          <img class="img-fluid d-block mb-4" src="https://pingendo.github.io/templates/sections/assets/features_strawberry.jpg">
+          <h5><b>Features#2: strawberries</b></h5>
+          <p class="mt-1">Integrate it in your toolset. Use Pingendo alongside your favourite code editor, Git client, etc.</p>
+        </div>
+        <div class="col-md-4 my-3">
+          <img class="img-fluid d-block mb-4 img-thumbnail" src="https://pingendo.github.io/templates/sections/assets/features_bluetable.jpg">
+          <h5><b>Features#3: blue palette</b></h5>
+          <p class="mt-1">Just quality vanilla Bootstrap 4 code. No messy dependencies. For nerds peace of mind.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+
+</html>
