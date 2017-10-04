@@ -2,6 +2,9 @@ import tornado.ioloop
 import tornado.web
 from jinja2 import Environment, FileSystemLoader
 
+from tornado.options import define
+define("port", default=5000, help="run on the given port", type=int)
+
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -32,5 +35,5 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8888)
+    app.listen(tornado.options.options.port)
     tornado.ioloop.IOLoop.current().start()
