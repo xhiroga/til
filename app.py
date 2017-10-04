@@ -1,3 +1,4 @@
+import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 from jinja2 import Environment, FileSystemLoader
@@ -34,6 +35,7 @@ def make_app():
 
 
 if __name__ == "__main__":
-    app = make_app()
-    app.listen(tornado.options.options.port)
+    http_server = tornado.httpserver.HTTPServer(make_app())
+    http_server.listen(tornado.options.options.port)
+
     tornado.ioloop.IOLoop.current().start()
