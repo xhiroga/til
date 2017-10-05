@@ -27,11 +27,28 @@ class ThanksHandler(tornado.web.RequestHandler):
         self.write("Thanks!!! You are redirected!!")
 
 
+class AjaxHandler(tornado.web.RequestHandler):
+    # 参考
+    # https://www.ibm.com/developerworks/jp/web/library/wa-ajaxintro1.html
+    def get(self):
+        env = Environment(loader=FileSystemLoader('./', encoding='utf8'))
+        template = env.get_template('./ajax.html')
+        self.write(template.render())
+
+
+class MultipleHandler(tornado.web.RequestHandler):
+    def get(self):
+        print("/multiple ACCESS!!")
+        self.write("*5")
+
+
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
         (r"/register", RegisterHandler),
         (r"/thanks", ThanksHandler),
+        (r"/ajax", AjaxHandler),
+        (r"/multiple", MultipleHandler),
     ])
 
 
