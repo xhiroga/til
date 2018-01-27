@@ -10,7 +10,7 @@ Pythonはそうではない。明示しなければローカル日時。TimeZone
 from datetime import datetime as dt
 from datetime import timedelta
 from datetime import
-dt.today() # ローカルな現在日"時"
+dt.today() # ローカルな現在日時
 dt.now(timezone(timedelta(hours=9))) # ローカルな現在日時（タイムゾーンつき）
 # dt.now()に渡すのはtzinfoのサブクラスならなんでもいいので、サードパーティのpytzのオブジェクトでもOK
 dt.now(pytz.timezone('Asia/Tokyo'))
@@ -26,6 +26,14 @@ dt.now(pytz.utc) # グローバルな現在日時のツウなやり方(タイム
 2018-01-26 21:30:11.190465
 >>> print(dt.now(timezone(timedelta(hours=9))))
 2018-01-26 21:30:29.619718+09:00
+```
+
+
+## nativeからawareへの変更
+→ pytzがtimezone.localize()を用意してくれている。  
+```
+>>> pytz.utc.localize(dt.utcnow())
+datetime.datetime(2018, 1, 26, 23, 57, 18, 731087, tzinfo=<UTC>)
 ```
 
 
