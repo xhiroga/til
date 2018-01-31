@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>1行が2段組のテーブルを縞々に表示する</title>
+  <style type="text/css">
+    .table-striped-2span tbody tr:nth-of-type(4n+1),
+    .table-striped-2span tbody tr:nth-of-type(4n+2) {
+      background-color: #c0c0c0;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"> </head>
+
+<body>
+  <div class="container">
+    <table class="table table-striped-2span">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">アメリカ</td>
+          <td>ドナルド</td>
+          <td>トランプ</td>
+        </tr>
+        <tr>
+          <td>Donald</td>
+          <td>Trump</td>
+        </tr>
+        <tr>
+          <td rowspan="2">ドイツ</td>
+          <td>アンゲラ</td>
+          <td>メルケル</td>
+        </tr>
+        <tr>
+          <td>Angela</td>
+          <td>Merkel</td>
+        </tr>
+        <tr>
+          <td rowspan="2">日本</td>
+          <td>シンゾウ</td>
+          <td>アベ</td>
+        </tr>
+        <tr>
+          <td>晋三</td>
+          <td>安倍</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
