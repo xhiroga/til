@@ -12,6 +12,12 @@ https://jquery.com/download/#using-jquery-with-a-cdn
 https://developers.google.com/speed/libraries/#jquery
 
 
+# DOM操作
+apiドキュメントを開いてAttributesの項を参照しよう。  
+
+
+
 # 参考
 http://jquery.com/
 https://classroom.udacity.com/courses/ud245/
+http://api.jquery.com/
