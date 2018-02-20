@@ -13,22 +13,26 @@
       </div>
       <div class="card-body">
         <div style="float:right;">
-          <button class="btn btn-info">float:right;</button>
+          <button class="btn btn-info">float:right;を指定したボタン</button>
         </div>
         <div style="text-align:center;">
           <span>
-            この文が親ボックスの中央に配置されることはない。float:right;は、親ボックスの内側のコンテンツ表示領域を侵食するからである。
+            単純にtext-align:center;を指定しても、コンテンツが親ボックスの中央に配置されることはない。float:right;は、親ボックスの内側のコンテンツ表示領域を侵食するからである。
           </span>
         </div>
       </div>
-      <div class="card-footer">
-        <div style="text-align:center;">
-          代替案として挙げられるのは、<br>
-          * 左右に同じ幅のマージンを設定する<br>
-          * 親をposition:relative; 子をposition:absoluteにする<br>
-          などである。
+      <div class="card-body" style="position:relative;height:200px;">
+        <div style="float:right;">
+          <button class="btn btn-info">float:right;を指定したボタン</button>
+        </div>
+        <div style="position:absolute;text-align:center;width:100%;margin:0px -20px;">
+          中央に配置されるには、以下の3ステップを踏む必要がある。<br>
+          1. 親要素をposition:relative;に、子要素をposition:absolute;にする。<br>
+          2. 子要素にtext-align:center;とwidth:XX%を指定し、かつ親要素のマージンをマイナス方向のマージンで相殺する。<br>
+          3. 子要素の内側にテキストを配置する。
         </div>
       </div>
+      <div class="card-footer"></div>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
