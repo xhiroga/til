@@ -12,6 +12,16 @@ app.run(host='localhost', port=5000)
 $ export FLASK_APP=app.py
 $ flask run
 
+
+# 実践
+* 画像ファイル, JavaScriptファイルの取得  
+静的ファイルは全てapp.py と同じ階層のstaticフォルダに格納する。  
+
+* URLクエリパラメータの取得  
+ex) http://127.0.0.1:5000/?speed=60  
+request.args.get('speed') # 60  
+
+
 # その他
 debugフラグがオンだとホットスワップする(app.debug=True)  
 その用途ならrun()ではなくflaskCLIを使うべし。  
