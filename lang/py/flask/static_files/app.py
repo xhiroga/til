@@ -7,7 +7,7 @@ CORS(app)
 
 @app.route("/", methods=['GET'])
 def callback():
-    return render_template('index.html', speed=dic["speed"])
+    return render_template('index.html')
 
 
 if __name__ == "__main__":
