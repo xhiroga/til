@@ -10,6 +10,11 @@ RESTful API作成支援のツール群。
 現在はOpenAPI仕様。  
 https://swagger.io/specification/  
 
+大まかな構成は...  
+1. swagger(バージョン), info(APIの解説), paths(パス)の3つのプロパティが必須。  
+2. pathsの内側には操作対象(ex. pet)と操作(ex. get, post...)がある。  
+3. 操作の内側にparameterとresponseの定義がある。  
+
 
 # Swagger Codegen
 OpenAPI仕様を元に、選択した言語でサーバーのスタブとクライアントのSDKを作成する。  
