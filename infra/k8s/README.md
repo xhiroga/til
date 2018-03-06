@@ -1,9 +1,16 @@
-# k8s
+# Kubernetes(クーベネティス)
 
 ScalableなMicroservicesのためのインフラストラクチャー  
 アプリケーションをモジュールに分割し(portability)、デプロイを簡単にし(deployability)、一部分だけをスケールできるようにする(scalability)。  
 
-Kubernetesには12の原則がある。
+SaaSアプリケーション開発には12の原則からなる方法論がある。  
+https://12factor.net/ja/  
+
+JWT(ジョート)... JSON Web Tokens  
+2者間で安全に情報をやり取りするための規格。base64EncodeされたHeader+Payloadと、それらに秘密鍵を添付して作成したハッシュ(=サイン)からなる。  
+jwt.ioで簡単にEncode/Decode可能。  
+https://jwt.io/  
+
 
 
 ## GCP
