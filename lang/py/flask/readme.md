@@ -3,6 +3,7 @@
 2. appデコレータでURLごとに呼ばれるメソッドの定義
 3. run実行（必要に応じて）
 
+
 # 実行方法
 1. メソッド
 app.run(host='localhost', port=5000)
@@ -25,3 +26,8 @@ request.args.get('speed') # 60
 # その他
 debugフラグがオンだとホットスワップする(app.debug=True)  
 その用途ならrun()ではなくflaskCLIを使うべし。  
+
+
+# 参考
+http://flask.pocoo.org/  
+https://github.com/Microsoft/project-python-flask-webapp  
