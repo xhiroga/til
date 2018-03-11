@@ -4,7 +4,7 @@
 * 対話実行  
 $ ghci # インタプリタを起動, Ctrl+D で終了  
 * コンパイラの実行  
-$ ghc -o hello hello.hs  
+$ ghc -o hello hello.hs # 実行可能ファイルが生成される  
 
 ## 仕様
 (チュートリアルの観察メモ)  
