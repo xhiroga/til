@@ -6,10 +6,14 @@
 同じアプリケーションの複数バージョン, 複数インスタンスを同時に走らせられるため。  
 
 # 使い方
-$ sudo apt-get install docker.io # インストール
-$ sudo docker images # イメージの確認
-
-
+```Console:
+apt-get install docker.io # インストール
+docker images # イメージの確認
+docker pull nginx:1.10.0 # DockerHubからイメージをインストール
+docker run -d nginx:1.10.0 # -dはdetach(バックグラウンド起動)
+docker inspect ID # IDの頭文字とかでもOK
+docker stop
+```
 
 # 参考資料
 https://classroom.udacity.com/courses/ud615  

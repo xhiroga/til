@@ -11,21 +11,33 @@ JWT(ジョート)... JSON Web Tokens
 jwt.ioで簡単にEncode/Decode可能。  
 https://jwt.io/  
 
-
-
 ## GCP
 以下の二つを有効にする必要がある。  
 * Google Compute Engine API  
 * Google Kubernetes Engine API  
+かつ、クラスタを作成する必要あり。  
+```console:
+gcloud container clusters create k0 --zone “us-central1-a”  
+```
 
-
-
-
-
+# Pods
+1つ以上のコンテナとボリュームからなる、アプリケーションの単位。  
+ex) nginxコンテナとappコンテナ  
+```console:
+cat pods/monolith.yaml # yamlファイルで構成を管理  
+kubectl create -f pods/monolith.yaml # Podを作成(この時点で起動)
+kubectl get pods  
+kubectl port-forward monolith 10080:80  
+kubectl logs -f monolith # ログをウォッチ  
+kubectl exec monolith --stdin --tty -c monolith /bin/sh # シェルを実行  
+```
 
 # 参考資料
+* Udacityのコース  
 https://classroom.udacity.com/courses/ud615  
+
 * Udacityで紹介しているResource一覧
 https://classroom.udacity.com/courses/ud615/lessons/7826112332/concepts/80841806450923  
+
 * k8sのサンプル  
 https://github.com/udacity/ud615  
