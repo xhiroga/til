@@ -17,13 +17,18 @@ docker build -t image:tag . # カレントのDockerfileからイメージ作成,
 ## Dockerコンテナーの実行→削除
 ```Console:
 docker run -d nginx:1.10.0 # -dはdetach(バックグラウンド起動), コンテナ名だけを表示する
+docker run -p 55555:8080 nginx:1.10.0 # -pでポート転送。ホスト:コンテナ
 docker ps # 起動中のコンテナの確認
-docker exec -it cc21766ebf79 bash # 起動中のコンテナの中に入る
+docker exec -it cc21766ebf79 sh # 起動中のコンテナの中に入る
 docker inspect ID # IDの頭文字とかでもOK
 docker stop
 ```
 
 # 参考資料
-https://classroom.udacity.com/courses/ud615  
-https://www.itworld.com/article/2698646/virtualization/containers-bring-a-skinny-new-world-of-virtualization-to-linux.html  
-https://www.cio.com/article/2924995/software/what-are-containers-and-why-do-you-need-them.html  
+[Dockerコマンド](http://docs.docker.jp/engine/reference/commandline)
+
+[Scalable Microservices with Kubernetes | Udacity](https://classroom.udacity.com/courses/ud615)
+
+[Containers bring a skinny new world of virtualization to Linux](https://www.itworld.com/article/2698646/virtualization/containers-bring-a-skinny-new-world-of-virtualization-to-linux.html)
+
+[What are containers and why do you need them?](https://www.cio.com/article/2924995/software/what-are-containers-and-why-do-you-need-them.html)
