@@ -24,12 +24,12 @@ gcloud container clusters create k0 --zone “us-central1-a”
 1つ以上のコンテナとボリュームからなる、アプリケーションの単位。  
 ex) nginxコンテナとappコンテナ  
 ```console:
-cat pods/monolith.yaml # yamlファイルで構成を管理  
-kubectl create -f pods/monolith.yaml # Podを作成(この時点で起動)
+cat ngingx-pod.yaml # yamlファイルで構成を管理  
+kubectl create -f pods/nginx-pod.yaml # Podを作成(この時点で起動)
 kubectl get pods  
-kubectl port-forward monolith 10080:80  
-kubectl logs -f monolith # ログをウォッチ  
-kubectl exec monolith --stdin --tty -c monolith /bin/sh # シェルを実行  
+kubectl port-forward nginx-pod 10080:80  
+kubectl logs -f nginx-pod # ログをウォッチ  
+kubectl exec nginx-pod --stdin --tty -c nginx-pod /bin/sh # シェルを実行  
 ```
 
 # 参考資料
