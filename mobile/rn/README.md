@@ -7,6 +7,10 @@ Reactの文法でネイティブアプリを作ることができるFacebook製�
 react-native init todolist # アプリの雛形を作成
 react-native run-ios
 ```
+
+# セットアップ
+npmよりyarnの方が事故りづらい
+
 # デバッグ
 * Ctrl+DでDevelopmentメニューを起動→ ブラウザからRemode Debugが可能。  
 
