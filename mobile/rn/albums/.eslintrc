@@ -1,0 +1,5 @@
+# .eslintrcファイルはeslintを使う上で必須。
+# 以下の内容でセットアップするなら、npm install -save-dev eslint-config-rallycoding も必須。
+{
+  "extends": "rallycoding"
+}
