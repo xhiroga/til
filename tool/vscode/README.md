@@ -1,8 +1,11 @@
 ＃ VSCode
 
 # よく使うショートカット
-* Ctrl + Shift + @  
-ターミナルを開く  
-
 * Command + Shift + p
 コマンド入力を呼び出す  
+
+* Alt + D
+PlantUMLのレビューを開く  
+
+* Ctrl + Shift + @  
+ターミナルを開く  
