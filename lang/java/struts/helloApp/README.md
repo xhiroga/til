@@ -3,14 +3,14 @@
 Struts1.xのアプリケーションをGradleでビルドしてDocker+Tomcatで動かすサンプル。  
 
 ```Console
-gragradle build -p hello
-# 本当は gradle warを試したかったが、プロジェクト構成とwarプラグインの設定が必要になる  
+gradle build -p hello
 docker build -t struts-hello .
 docker run -ip 18080:8080 struts-hello
 curl http://localhost:18080/hello/pages/Who.jsp
 ```
 
 # 課題
+* 本当は gradle warを試したかったが、プロジェクト構成とwarプラグインの設定が必要になる
 * Strutsのページ構成が正しいか不明。pagesに置いたjspファイルにアクセスさせており、内部でforwardをさせていない。
 * Tomcatへのインストール時にwarファイル化せずdocBaseにそのまま置いている。
 
