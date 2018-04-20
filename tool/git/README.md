@@ -9,4 +9,4 @@ git pull origin master
 ```
 
 # 参考
-[わかばちゃんと学ぶ uGit使い方入門](https://www.amazon.co.jp/dp/B071D4D6XX)
+[わかばちゃんと学ぶ Git使い方入門](https://www.amazon.co.jp/dp/B071D4D6XX)
