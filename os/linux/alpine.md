@@ -1,10 +1,9 @@
 # Alpine
 軽量なLinuxデイストリビューション。  
 
-# 使い方
-## 基本
+# 実行方法
 ```Console
-docker run -i alpine /bin/ash # デフォルトでbashがない
+docker run -i alpine
 ```
 
 # 参考
