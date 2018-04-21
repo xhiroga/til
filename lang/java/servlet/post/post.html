@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta http-equiv ="Content-Type"content ="text/ html; charset = Shift_ JIS">
+        <title>テスト フォーム</title>
+    </head>
+    <body>
+        <form action ="http://localhost:8001/posttest/PostTest"method="post">
+            <input type="text" name="text_name"/><br/>
+            <input type="password" name="password_name"/><br/>
+            <textarea name="textarea_name" rows ="4" cols="40"></textarea>
+            <table border ="1">
+                <tr>
+                    <td>
+                        <input type ="radio" name ="radio_name" value ="radio 1">
+                        <input type ="radio" name ="radio_name" value ="radio 2">
+                        <input type ="radio" name ="radio_name" value ="radio 3">
+                        <input type ="radio" name ="radio_name" value ="radio 4">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name ="check_name" value="check 1">
+                        <input type="checkbox" name ="check_name" value="check 2">
+                        <input type="checkbox" name ="check_name" value="check 3">
+                        <input type="checkbox" name ="check_name" value="check 4">
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="hidden_name" value="hidden_value 日本語"/>
+            <input type="file" name="file_ name"/>
+            <input type="submit" name ="submit_name" value="送るよ!"/>
+        </form>
+    </body>
+</html>
