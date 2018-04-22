@@ -18,6 +18,7 @@ docker build -t image:tag . # カレントのDockerfileからイメージ作成,
 ```Console:
 docker run -d nginx:1.10.0 # -dはdetach(バックグラウンド起動), コンテナ名だけを表示する
 docker run -p 55555:8080 nginx:1.10.0 # -pでポート転送。ホスト:コンテナ
+docker run -it ubuntu_test # -iでインタラクティブ -tで擬似端末の割り当て（矢印とか使えるようになる）
 docker ps # 起動中のコンテナの確認
 docker exec -it cc21766ebf79 sh # 起動中のコンテナの中に入る
 docker inspect ID # IDの頭文字とかでもOK
