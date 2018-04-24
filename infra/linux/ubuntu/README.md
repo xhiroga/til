@@ -4,8 +4,8 @@
 デスクトップ環境が充実している。  
 
 # 実行方法
-```Console
-docker run -i ubuntu
+```Console:
+docker run -it ubuntu
 ```
 
 # ツール

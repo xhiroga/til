@@ -2,7 +2,7 @@
 Linuxの仕組み
 
 # セットアップ
-```Console
+```Console:
 docker run -it ubuntu_test
 ```
 
