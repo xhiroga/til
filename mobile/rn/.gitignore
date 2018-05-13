@@ -69,3 +69,6 @@ package-lock.json
 
 # FROM
 # https://github.com/facebook/react-native/blob/master/.gitignore
+
+# GitHub Projects
+/pj
