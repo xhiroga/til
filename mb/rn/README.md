@@ -2,6 +2,7 @@
 
 Reactの文法でネイティブアプリを作ることができるFacebook製のOSS。  
 
+
 # Usage
 ## react-native initの場合
 ```console:
@@ -44,22 +45,14 @@ Reactが仮想DOMを使って物理DOMを生成しているように、ネイテ
     - npm run ejectが.gitignoreに対応していない
 [Difference between react-native-init and create-react-native-app](https://github.com/react-community/create-react-native-app/issues/516)
 
-* まとめてExportするとき、index.jsでexport from *とするためにはすでに名前が決まっているexportをしている必要あり
-よってdefault exportはダメ、ただしexportできるのは宣言かstatementだけなので、{}記法でclassを含む宣言？としてexporつる
-default exportされたモジュールをindex.jsなどで直接exportする場合、export対象を指定するために名前'default'を指定してnamed import構文で指定する
-
-* npm vs yarn 
-npmよりyarnの方が事故りづらい
-* EXPOでローカルサーバーのアプリをロードするとだいたい反映までに30秒程度かかる
+## Other Tips
+* `console.log()`などでターミナルにObjectを渡すとアプリがフリーズすることがある(Chrome Debuggerなら大丈夫)  
+* Viewのサイズは内側のcomponentsのサイズに依存するため、何もないViewだとonPressする場所さえも発生しない  
 
 
 # TroubleShooting🐯
 ## React-Native Version Mismatch
 JavaScript Version(?)とNative version(package.jsonのバージョン)が異なり、アプリ上のJavaScriptランタイムがReact Nativeを起動できないことがある。使っているターミナルを閉じると治ることがある。
-
-
-# デバッグ
-* Ctrl+DでDevelopmentメニューを起動→ ブラウザからRemode Debugが可能。  
 
 
 # 参考
