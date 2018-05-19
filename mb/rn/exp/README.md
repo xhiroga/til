@@ -7,7 +7,9 @@ Expo XDEとExpo CLIがある。
 ```
 exp init
 exp start # QRコード経由でスマホのExpoを起動する。
+exp publish # アプリの公開
 ```
+
 
 
 # TIPS

@@ -13,5 +13,12 @@ Routerコンポーネント...複数のSceneコンポーネントを内包する
 Sceneコンポーネント...key: componentの組み合わせでそれぞれの画面を持つ。  
 Action API...Sceneで定義したkeyを指定componentへ移動する関数として持つAPI。onPressなどに組み込んで使用する。  
 
+# Usage
+
+
+※ ModalとTabsを併用すると、Tabs自身もnavbarを表示するためnavbarが2段階になってしまう。  
+TabsにhideNavBar属性を明記することで防ぐことが可能。  
+
+
 # Reference
 https://github.com/aksonov/react-native-router-flux
