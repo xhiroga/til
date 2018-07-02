@@ -8,4 +8,7 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
+# git cloneなどの格納ディレクトリ
+tmp
+
 # https://github.com/github/gitignore/tree/master/Global
