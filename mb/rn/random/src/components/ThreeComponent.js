@@ -57,8 +57,7 @@ export default class ThreeComponent extends Component {
 
     // Expo.GLViewをターゲットとしてThree.jsのレンダリングをするためにExpoTHREEが必要
     _onGLContextCreate = async gl => {
-        console.log("this is gl object");
-        console.log(gl); // WebGL2RenderingContextオブジェクトが返却される。
+        // console.log(gl); // WebGL2RenderingContextオブジェクトが返却される。
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(
             75, gl.drawingBufferWidth / gl.drawingBufferHeight, 0.1, 1000
