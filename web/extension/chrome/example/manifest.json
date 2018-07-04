@@ -3,6 +3,7 @@
     "version": "1.0",
     "description": "Build an Extension!",
     "permissions": [
+        "activeTab",
         "declarativeContent",
         "storage"
     ],
@@ -12,6 +13,7 @@
         ],
         "persistent": false
     },
+    "options_page": "options.html",
     "page_action": {
         "default_popup": "popup.html",
         "default_icon": {

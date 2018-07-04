@@ -9,8 +9,9 @@ chromeクラスから各種APIが使用可能(import不要)
 chrome://extensions/ で Developper modeをオンにし、LOAD UNPACKEDから選択する。  
 
 # TIPS
-chormeのAPIがundefinedになっている場合、manifestでpermissionを設定していないかもしれない。  
-
+* chormeのAPIがundefinedになっている場合、manifestでpermissionを設定していないかもしれない。  
+* ドキュメントにはアイコンにJPEGが使えるとあるが、実際は使えない（試した限り）
 
 # Reference
 https://developer.chrome.com/extensions/getstarted
+[Sample Extensions](https://developer.chrome.com/extensions/samples)
