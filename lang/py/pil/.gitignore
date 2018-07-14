@@ -1,0 +1,7 @@
+!lena.png
+
+# image
+*.png
+
+#font
+*.ttf
