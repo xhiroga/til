@@ -8,6 +8,12 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
+# Archive
+*.zip
+
+# Language, Framework, etc
+.vagrant/
+
 # git cloneなどの格納ディレクトリ
 tmp
 
