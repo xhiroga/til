@@ -25,6 +25,13 @@ cd til # サブモジュールはリンクではないため、ディレクト�
 git pull origin master
 ```
 
+## ログイン情報の省略
+`git config credential.helper` とすることで、gitcredentialsによってusernameとpasswordを提供させられる。  
+```
+git config credential.helper store # store >> ~/.git-credentialsに保存する。
+git config credential.helper osxkeychain # macOSの場合はKeyChainを参照することが可能。
+```
+
 # 参考
 [わかばちゃんと学ぶ Git使い方入門](https://www.amazon.co.jp/dp/B071D4D6XX)
 [Learn Git Branching](https://learngitbranching.js.org/)
