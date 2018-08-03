@@ -1,0 +1,16 @@
+{
+  "name": "ffmpeg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.15",
+    "bluebird": "^3.5.1",
+    "fluent-ffmpeg": "^2.1.2"
+  }
+}
