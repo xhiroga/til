@@ -17,6 +17,10 @@ rebaseとインタラクティブrebaseを混同しがち。
 
 ポイント: resetはローカルコミットに限ること。  
 
+## 移動
+`git branch -f master hash`
+
+
 ## submodule
 他のリポジトリの特定のコミットを、自分のリポジトリのサブディレクトリとして登録・参照する。  
 ```Console
