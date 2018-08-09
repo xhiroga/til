@@ -23,4 +23,4 @@
   docker push TARGET_IMAGE[:TAG]
 
 # 参考
-[AWS ECR](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/docker-basics.html#use-ecr)
+[AWS ECS](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/docker-basics.html#use-ecr)
