@@ -6,8 +6,8 @@ Parameters:
     Type: String
 
 Resources:
-  til:
-    Type: AWS::ECR::Repository
-    Properties:
-      RepositoryName: !Sub ${ENV}til-worker
-      # ECRのリポジトリ名に大文字を使うことはできないので注意
+    til:
+      Type: AWS::ECR::Repository
+      Properties:
+        RepositoryName: !Sub ${ENV}til-worker
+        # ECRのリポジトリ名に大文字を使うことはできないので注意
