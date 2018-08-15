@@ -1,5 +1,5 @@
 # AWS ECS
-  Docker push/pullでイメージを管理し、JSONで作成したタスクを使ってコンテナーを起動する。  
+Docker push/pullでイメージを管理し、JSONで作成したタスクを使ってコンテナーを起動する。  
 
 * AWS ECRはDockerのレジストリサービス(AWS版のDockerHub)
 * FargateはAWSの提供するサーバレスコンテナ実行環境
@@ -21,6 +21,12 @@
 * ターゲットのリポジトリ/イメージをタグ付けし、プッシュ
   docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
   docker push TARGET_IMAGE[:TAG]
+
+# Memo
+タスク定義:
+* 環境の定義とコンテナの登録の2部からなる
+* networkModeがbridgeでないと、特定条件では失敗する
+* コンテナ登録時にコマンドおよび環境変数を設定できる。  
 
 # 参考
 [AWS ECS](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/docker-basics.html#use-ecr)

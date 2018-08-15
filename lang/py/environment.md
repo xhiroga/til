@@ -7,6 +7,7 @@
 pyenv versions
 pyenv install -l # インストールできる環境の確認
 pyenv install 3.7.0
+pyenv virtualenv 3.7.0 til
 ```
 
 ## viertualenv
