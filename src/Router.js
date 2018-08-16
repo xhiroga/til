@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Drawer, Scene, Router } from 'react-native-router-flux';
+import DrawerComponent from './components/drawer/DrawerComponent';
 import ThreeComponent from './components/ThreeComponent';
 import Camera from './components/Camera';
-import Firebase from './components/Firebase/Firebase';
-import DrawerComponent from './components/drawer/DrawerComponent';
+import PhotoSwiper from './components/PhotoSwiper';
 
 class RouterComponent extends Component {
 
@@ -14,10 +14,9 @@ class RouterComponent extends Component {
         return (
             <Router>
                 <Drawer key="root" contentComponent={DrawerComponent}>
-
-                    <Scene key="firebase" component={Firebase} init={true} />
                     <Scene key="threeComponent" component={ThreeComponent} />
                     <Scene key="camera" component={Camera} />
+                    <Scene key="swiper" component={PhotoSwiper} />
                 </Drawer>
             </Router>
         );

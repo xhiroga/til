@@ -1,0 +1,45 @@
+// あとで治す
+// 可変フォンとかつstylesをsheetにする実装  
+
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
+class YTitle extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        titleStyle = [styles.titleText]
+        if (this.props.fontLoaded) titleStyle.push(styles.titleFontFamily)
+
+        return (
+            <View style={styles.container}>
+                <Text style={titleStyle}>
+                    {this.props.text}
+                </Text>
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 15,
+    },
+    text: {
+        letterSpacing: 1,
+        fontSize: 24,
+    },
+    fontFamily: {
+        fontFamily: 'Cardo-Regular',
+    }
+})
+
+const mapStateToProps = state => {
+    const { regions, lang, fontLoaded } = state.Init
+    return { regions, lang, fontLoaded };
+};
+
+export default connect(mapStateToProps, {})(YTitle);

@@ -28,6 +28,7 @@
     "react-native": "~0.55.2",
     "react-native-dotenv": "^0.1.1",
     "react-native-router-flux": "^4.0.0-beta.31",
+    "react-native-swiper": "^1.5.13",
     "three": "^0.92.0"
   }
 }
