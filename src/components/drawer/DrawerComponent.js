@@ -24,6 +24,7 @@ class DrawerContent extends React.Component {
                 <Button onPress={Actions.threeComponent} title="Three.js"></Button>
                 <Button onPress={Actions.camera} title="Camera"></Button>
                 <Button onPress={Actions.formik} title="formik"></Button>
+                <Button onPress={Actions.modalDateTimePicker} title="react-native-modal-datetime-picker"></Button>
                 <Button onPress={Actions.swiper} title="react-native-swiper"></Button>
             </View >
         );
