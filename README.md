@@ -1,4 +1,6 @@
-# プロジェクト
+# RANDOM
+Hiroaki Ogasawara's feature testing app.  
+Use this application for developing practice.
 
 # ディレクトリ構成
 ```
@@ -17,6 +19,3 @@ myApp
 +--package.json
 +--yarn.lock
 ```
-
-# state管理
-
