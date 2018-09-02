@@ -18,6 +18,7 @@ contract ZombieFactory {
 
     Zombie[] public zombies;
 
+    // mappingは要するに連想配列
     mapping (uint => address) public zombieToOwner;
     mapping (address => uint) ownerZombieCount;
 
