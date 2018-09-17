@@ -13,11 +13,13 @@ ehthumbs_vista.db
 
 # Language, Framework, etc
 .vagrant/
+.mypy_cache
 
 # git cloneなどの格納ディレクトリ
 tmp
 
 # Secret
 .env
+.vscode
 
 # https://github.com/github/gitignore/tree/master/Global
