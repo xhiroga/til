@@ -24,6 +24,6 @@ console.log('🏋️‍♀️ size', imList.size)
 //////////
 
 console.log('おまけ')
-array.size = 10000
-console.log('arrayのsizeを上書きできる? ', array.size)
-console.log('その時lengthは? ', array.length)
+array.length = 10000
+console.log('lengthを上書きしたら? ', array) // [ 1, 2, 3, <9997 empty items>, size: 10000 ]
+console.log('lengthの値は? ', array.length) // 10000
