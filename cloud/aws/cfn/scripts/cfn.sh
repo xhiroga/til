@@ -1,7 +1,10 @@
 cmd=$1
 stack_name=$2
 
-if [ $cmd = "create" ]; then
+if [ -z $cmd ]; then
+    echo "Error: Command is required"
+    exit -1
+elif [ $cmd = "create" ]; then
     case $3 in
         "") echo "Error: Please give a template file path!"; exit 0;;
         /*) absolute=$3 ;;
