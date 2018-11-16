@@ -1,14 +1,14 @@
 require('./common')
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-const userPoolFactory = require('./myUserPool');
+const userPoolFactory = require('./userPoolFactory');
 const userPool = userPoolFactory()
 
 var authenticationData = {
-    Username : 'hiroaki',
+    Username : process.env.USER,
     Password : process.env.PASSWORD,
 };
 const userData = {
-    Username : 'hiroaki',
+    Username : process.env.USER,
     Pool : userPool
 };
 

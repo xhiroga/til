@@ -1,6 +1,6 @@
 require('./common')
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-const userPoolFactory = require('./myUserPool');
+const userPoolFactory = require('./userPoolFactory');
 const userPool = userPoolFactory()
 
 var attributeList = [];
@@ -20,7 +20,7 @@ attributeList.push(attributeEmail);
 attributeList.push(attributePhoneNumber);
 
 // コンソールに反映されるまで15秒くらいかかる
-userPool.signUp('hiroaki', process.env.PASSWORD, attributeList, null, function(err, result){
+userPool.signUp(process.env.USER, process.env.PASSWORD, attributeList, null, function(err, result){
     if (err) {
         alert(err);
         return;

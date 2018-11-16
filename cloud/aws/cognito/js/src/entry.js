@@ -1,5 +1,6 @@
-global.alert = console.log;
-global.fetch = require('node-fetch');
-const userPool = require('./myUserPool');
+require('./common')
 
-require('./signin');
+const getIdToken = require('./getIdToken');
+const getCognitoIdentityCredentials = require('./getCognitoIdentityCredentials')
+
+getIdToken(idToken => getCognitoIdentityCredentials(idToken, console.log))

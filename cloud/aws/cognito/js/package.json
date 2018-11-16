@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "rify": "browserify -t localenvify src/entry.js -o dist/entry.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,7 +17,9 @@
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^3.0.3",
+    "aws-sdk": "^2.357.0",
     "dotenv": "^6.1.0",
+    "localenvify": "^1.0.1",
     "node-fetch": "^2.3.0"
   }
 }

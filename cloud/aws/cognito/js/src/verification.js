@@ -1,15 +1,15 @@
 require('./common')
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-const userPoolFactory = require('./myUserPool');
+const userPoolFactory = require('./userPoolFactory');
 const userPool = userPoolFactory()
 
 const userData = {
-    Username : 'hiroaki',
+    Username : process.env.USER,
     Pool : userPool
 };
 
 var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-cognitoUser.confirmRegistration('026795', true, function(err, result) {
+cognitoUser.confirmRegistration(process.env.VERIFICATION_CODE, true, function(err, result) {
     if (err) {
         alert(err);
         return;
