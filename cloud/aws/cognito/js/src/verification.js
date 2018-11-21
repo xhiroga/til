@@ -4,7 +4,7 @@ const userPoolFactory = require('./userPoolFactory');
 const userPool = userPoolFactory()
 
 const userData = {
-    Username : process.env.USER,
+    Username : process.env.USERNAME,
     Pool : userPool
 };
 

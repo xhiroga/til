@@ -4,11 +4,11 @@ const userPoolFactory = require('./userPoolFactory');
 const userPool = userPoolFactory()
 
 var authenticationData = {
-    Username : process.env.USER,
+    Username : process.env.USERNAME,
     Password : process.env.PASSWORD,
 };
 const userData = {
-    Username : process.env.USER,
+    Username : process.env.USERNAME,
     Pool : userPool
 };
 

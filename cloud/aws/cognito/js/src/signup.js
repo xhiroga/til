@@ -20,7 +20,7 @@ attributeList.push(attributeEmail);
 attributeList.push(attributePhoneNumber);
 
 // コンソールに反映されるまで15秒くらいかかる
-userPool.signUp(process.env.USER, process.env.PASSWORD, attributeList, null, function(err, result){
+userPool.signUp(process.env.USERNAME, process.env.PASSWORD, attributeList, null, function(err, result){
     if (err) {
         alert(err);
         return;
