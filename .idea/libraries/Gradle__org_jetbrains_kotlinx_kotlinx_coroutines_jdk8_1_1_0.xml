@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-jdk8/1.1.0/c4985f08c92832fd4e8b975395e4431a258f0174/kotlinx-coroutines-jdk8-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-jdk8/1.1.0/89dff879c462c404208377a7b49e93583308d62f/kotlinx-coroutines-jdk8-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
