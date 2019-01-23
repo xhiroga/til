@@ -1,4 +1,4 @@
-package jp.hkento
+package cc.hiroga
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.application.Application
@@ -13,6 +13,7 @@ import io.ktor.jackson.jackson
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.get
+import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.server.engine.commandLineEnvironment
 import io.ktor.server.engine.embeddedServer
@@ -65,13 +66,18 @@ fun Application.module(testing: Boolean = false) {
             call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
         }
 
-        get("/item") {
-            call.respond(Item(3, "hoge"))
+        post("/chomado") {
+            val TEST_CHOMADO_PIC = "https://pbs.twimg.com/profile_images/1086536800791740417/uvkmvoBk_400x400.jpg"
+            val attachment = SlackResponseAttachement(TEST_CHOMADO_PIC)
+            val response = SlackResponse(
+                "in_channel",
+                "(*ﾟ▽ﾟ* っ)З. (*ﾟ▽ﾟ* っ)З ‬",
+                arrayOf(attachment)
+            )
+
+            call.respond(response )
         }
 
-        get("/random") {
-            call.respond(Item(random.nextInt(), "random"))
-        }
     }
 }
 

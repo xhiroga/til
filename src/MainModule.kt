@@ -1,4 +1,4 @@
-package jp.hkento
+package cc.hiroga
 
 import org.koin.dsl.module.module
 import java.security.SecureRandom

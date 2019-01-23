@@ -1,4 +1,4 @@
-package jp.hkento
+package cc.hiroga
 
 import io.ktor.http.*
 import io.ktor.client.*
