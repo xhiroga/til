@@ -57,3 +57,7 @@ shadowJar {
     //    classifier = null
     //    version = null
 }
+
+task stage {
+    dependsOn installDist
+}
