@@ -1,0 +1,1 @@
+web: ./gradlew build && java -server -jar ./build/libs/app-0.0.1-all.jar
