@@ -5,6 +5,7 @@ plugins {
 
 group 'cc.hiroga'
 version '1.0-SNAPSHOT'
+mainClassName "todolist.MainKt"
 
 sourceCompatibility = 1.8
 

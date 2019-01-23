@@ -13,6 +13,7 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.lang.Exception
 
 fun main(args: Array<String>) {
+    val taskRepository = TaskRepository()
     embeddedServer(Netty, 8080) {
         routing {
             get("/") {
@@ -22,13 +23,15 @@ fun main(args: Array<String>) {
                 try {
                     println(call.request)
 
-                    // TODO: なぜかObjectMapper()のインスタンスを作るとレスポンスが返らなくなる。
+                    // TODO: なぜかObjectMapper().registerKotlinModule() のインスタンスを作るとレスポンスが返らなくなる。
                     val objectMapper = ObjectMapper()
 
-                    val tasks = listOf(
-                        Task(1, "みかん販売の看板を作成する", false),
-                        Task(2, "トイレットペーパーを購入する", true)
-                    )
+//                    val tasks = listOf(
+//                        Task(1, "みかん販売の看板を作成する", false),
+//                        Task(2, "トイレットペーパーを購入する", true)
+//                    )
+                    val tasks = taskRepository.findAll()
+
                     // call.respondがtransformしてくれるのはdata class単体に限るらしい？
                     call.respondText(
                         objectMapper.writeValueAsString(tasks)
