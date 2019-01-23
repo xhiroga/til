@@ -22,8 +22,8 @@ fun main(args: Array<String>) {
                 try {
                     println(call.request)
 
-//               TODO: なぜかObjectMapper()のインスタンスを作るとレスポンスが返らなくなる。
-//               val objectMapper = ObjectMapper().registerKotlinModule()
+                    // TODO: なぜかObjectMapper()のインスタンスを作るとレスポンスが返らなくなる。
+                    val objectMapper = ObjectMapper()
 
                     val tasks = listOf(
                         Task(1, "みかん販売の看板を作成する", false),
@@ -31,7 +31,7 @@ fun main(args: Array<String>) {
                     )
                     // call.respondがtransformしてくれるのはdata class単体に限るらしい？
                     call.respondText(
-                        tasks.toString()
+                        objectMapper.writeValueAsString(tasks)
                     )
                 } catch (error: Exception) {
                     println(error)
