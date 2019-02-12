@@ -1,5 +1,5 @@
 package cc.hiroga
 
 data class SlackResponseAttachement(
-    val text: String
+    val image_url: String
 )
