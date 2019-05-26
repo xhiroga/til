@@ -33,9 +33,10 @@ const wordToLinear = (word) => {
 
 const paint = () => {
     let word = $("#yourWordInput").val()
-    if (word.length === 0) {
+    if (!word || word.length === 0) {
         word = "無事故でチャリ通"
     }
+    console.log(word)
 
     const linearGradients = `${wordToLinear(word + salt1)},${wordToLinear(word + salt2)},${wordToLinear(word + salt3)}`
     $("#yourwordInupted").text(word)
