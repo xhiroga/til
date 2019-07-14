@@ -22,4 +22,7 @@ tmp
 .env
 .vscode
 
+# local file(s)
+.local
+
 # https://github.com/github/gitignore/tree/master/Global
