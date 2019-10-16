@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: API Gateway
+
+Parameters:
+  S3BucketCfn:
+    Type: String
+
+Resources:
+  ApiGatewayVtlChecker:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: ApiGatewayVtlChecker
+      StageName: s1
+      DefinitionBody:
+        Fn::Transform:
+          Name: 'AWS::Include'
+          Parameters:
+            Location: !Sub 's3://${S3BucketCfn}/assortment/swagger.yml'
+      MethodSettings:
+        - DataTraceEnabled: true
+          LoggingLevel: 'INFO'
+          HttpMethod: '*'
+          ResourcePath: '/*'

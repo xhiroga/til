@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  app:
+    image: hiroga/flask-repeat-after-me
+    depends_on:
+      - localstack
+      - cfn
+    entrypoint: /bin/ash
+    ports:
+      - 5000:5000
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=cloudformation,apigateway
+      - DEBUG=${DEBUG- }
+      - DATA_DIR=./localstack
+      - PORT_WEB_UI=${PORT_WEB_UI-9800}
+    ports:
+      - 4581:4581
+      - 4567:4567
+      - ${PORT_WEB_UI-9800}:${PORT_WEB_UI-9800}
+    healthcheck:
+      test: ["CMD", "curl", "-X", "OPTIONS", "localhost:4581"]
+      interval: 1s
+      timeout: 1s
+      retries: 3
+      start_period: 5s
+  cfn:
+    image: justincasetech/aws-cli:1.16.186-jq1.6-git
+    depends_on:
+      - localstack
+    entrypoint: /bin/ash
+    environment:
+      - AWS_ACCESS_KEY_ID=localstack
+      - AWS_SECRET_ACCESS_KEY=localstack
+      - AWS_DEFAULT_REGION=ap-northeast-1
+    command: ["/cfn/init.sh"]
+    volumes:
+      - ./cfn:/cfn/
