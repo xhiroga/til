@@ -12,6 +12,12 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>learning iBeacon by hiroga</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>learning iBeacon by hiroga</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>my first BLE app</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
