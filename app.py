@@ -1,5 +1,6 @@
 # orignal: https://github.com/line/line-bot-sdk-python
 import logging
+import json
 import os
 
 from flask import Flask, request, abort
@@ -21,6 +22,7 @@ app.logger.setLevel(logging.DEBUG)
 
 YOUR_CHANNEL_ACCESS_TOKEN=os.environ.get('YOUR_CHANNEL_ACCESS_TOKEN')
 YOUR_CHANNEL_SECRET=os.environ.get('YOUR_CHANNEL_SECRET')
+REPLY_TOKEN_BY_HEALTH_CHECK = "00000000000000000000000000000000"
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
@@ -37,6 +39,9 @@ def callback():
     app.logger.info("Request body: " + body)
 
     # handle webhook body
+    if json.loads(body)["events"][0]["replyToken"] == REPLY_TOKEN_BY_HEALTH_CHECK:
+        return 'OK'
+
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
