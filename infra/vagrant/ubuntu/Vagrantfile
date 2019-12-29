@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-18.04"
+  config.vm.provider :virtualbox do |vb|
+    vb.gui = true  # デスクトップ環境を使うので、GUIを有効にする
+    vb.customize [
+      "modifyvm", :id,
+      "--vram", "256",
+      "--clipboard", "bidirectional",
+      "--accelerate3d", "on",
+      "--hwvirtex", "on",
+      "--nestedpaging", "on",
+      "--largepages", "on",
+      "--ioapic", "on",
+      "--pae", "on",
+      "--paravirtprovider", "kvm",
+    ]
+  end
+
+  # 初期構築スクリプト
+  config.vm.provision :shell, :inline => <<-EOS
+    # 日本語化 https://www.ubuntulinux.jp/japanese のための準備
+    wget -q https://www.ubuntulinux.jp/ubuntu-ja-archive-keyring.gpg -O- | sudo apt-key add -
+    wget -q https://www.ubuntulinux.jp/ubuntu-jp-ppa-keyring.gpg -O- | sudo apt-key add -
+    sudo wget https://www.ubuntulinux.jp/sources.list.d/bionic.list -O /etc/apt/sources.list.d/ubuntu-ja.list
+    sudo apt update -y
+    sudo apt-get upgrade -y
+    sudo apt-get install ubuntu-desktop -y
+    sudo apt-get install ubuntu-defaults-ja -y
+
+    # タイムゾーンを日本時間に変更
+    sudo timedatectl set-timezone Asia/Tokyo
+    # デフォルトのエディタを nano から vim に変更
+    sudo update-alternatives --set editor $(update-alternatives --list editor | grep 'vim.basic')
+
+EOS
+end
