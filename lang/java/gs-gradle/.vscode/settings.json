@@ -1,3 +1,5 @@
 {
+    "java.home": "$HOME/.sdkman/candidates/java/8.0.222.j9-adpt",
+    "java.import.gradle.enabled": true,
     "java.configuration.updateBuildConfiguration": "interactive"
 }
