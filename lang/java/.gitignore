@@ -1,4 +1,7 @@
-# ****** Java ******
+build
+
+### https://raw.github.com/github/gitignore/086eacaaa2b9fde537315141e154631b945e1369/Java.gitignore
+
 # Compiled class file
 *.class
 
@@ -14,6 +17,7 @@
 # Package Files #
 *.jar
 *.war
+*.nar
 *.ear
 *.zip
 *.tar.gz
@@ -22,19 +26,38 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# ****** Maven ******
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
+### https://raw.github.com/github/gitignore/086eacaaa2b9fde537315141e154631b945e1369/Gradle.gitignore
 
-# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
-!/.mvn/wrapper/maven-wrapper.jar
+.gradle
+/build/
 
-# 参考
-# https://github.com/github/gitignore
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
+
+### https://raw.github.com/github/gitignore/086eacaaa2b9fde537315141e154631b945e1369/Gradle.gitignore
+
+.gradle
+/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
+
+

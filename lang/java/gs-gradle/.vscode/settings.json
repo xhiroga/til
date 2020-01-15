@@ -1,0 +1,4 @@
+{
+    "java.import.gradle.enabled": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = 's3.S3'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    baseName = 'awssdk'
+    version =  '0.1.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation platform('software.amazon.awssdk:bom:2.5.29')
+    implementation 'software.amazon.awssdk:s3'
+    testCompile "junit:junit:4.12"
+}
