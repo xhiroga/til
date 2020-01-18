@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+set -euxo pipefail
+
+DOMAIN=${1}
+openssl s_client -showcerts -connect ${DOMAIN}:443
