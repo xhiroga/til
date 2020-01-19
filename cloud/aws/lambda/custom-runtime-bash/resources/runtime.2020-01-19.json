@@ -1,0 +1,12 @@
+{
+    "Content": {
+        "Location": "https://awslambda-ap-ne-1-layers.s3.ap-northeast-1.amazonaws.com/snapshots/************/bash-runtime-............",
+        "CodeSha256": "n59lsHPETaXKxe+2+c0a7lP9lvBxb+ybTutC0Jd4SDw=",
+        "CodeSize": 583
+    },
+    "LayerArn": "arn:aws:lambda:ap-northeast-1:************:layer:bash-runtime",
+    "LayerVersionArn": "arn:aws:lambda:ap-northeast-1:************:layer:bash-runtime:1",
+    "Description": "",
+    "CreatedDate": "2020-01-19T03:29:23.157+0000",
+    "Version": 1
+}
