@@ -5,4 +5,5 @@
 ```shell script
 pipenv sync
 cdk synth
+cdk deploy
 ```
