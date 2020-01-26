@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -euxo pipefail
+
+echo "Show current process."
+ps -fe | grep $$
+
+echo "Show current process tree from root"
+pstree -p $$ 1

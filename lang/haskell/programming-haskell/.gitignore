@@ -1,0 +1,6 @@
+.stack-work/
+out
+programming-haskell.cabal
+*~
+
+.idea
