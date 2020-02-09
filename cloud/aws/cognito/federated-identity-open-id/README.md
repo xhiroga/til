@@ -33,4 +33,9 @@ aws cognito-identity get-id \
 # {
 #     "IdentityId": "ap-northeast-1:960db267-2e5e-4135-83b1-d01a7a0bc9c2"
 # }
+
+IdentityId=${IdentityId}
+aws cognito-identity describe-identity \
+    --identity-id ${IdentityId} \
+    --region ap-northeast-1
 ```
