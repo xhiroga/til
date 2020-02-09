@@ -21,3 +21,16 @@ facebook-cli config --appid=${FacebookAppId} --appsecret=${FacebookSecret}
 facebook-cli login
 open ~/.facebook-clirc
 ```
+
+```sh
+AccessToken=${AccessToken}
+FederatedIdentityId=${FederatedIdentityId}
+aws cognito-identity get-id \
+    --identity-pool-id ${FederatedIdentityId} \
+    --logins "{\"graph.facebook.com\":\"${AccessToken}\"}" \
+    --region ap-northeast-1
+
+# {
+#     "IdentityId": "ap-northeast-1:960db267-2e5e-4135-83b1-d01a7a0bc9c2"
+# }
+```
