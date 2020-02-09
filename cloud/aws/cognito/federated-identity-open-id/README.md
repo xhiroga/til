@@ -38,4 +38,13 @@ IdentityId=${IdentityId}
 aws cognito-identity describe-identity \
     --identity-id ${IdentityId} \
     --region ap-northeast-1
+
+# {
+#     "IdentityId": "ap-northeast-1:960db267-2e5e-4135-83b1-d01a7a0bc9c2",
+#     "Logins": [
+#         "graph.facebook.com"
+#     ],
+#     "CreationDate": 1581242169.197,
+#     "LastModifiedDate": 1581242169.217
+# }
 ```
