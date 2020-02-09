@@ -1,0 +1,130 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: federated-identity-open-id
+
+Parameters:
+  FacebookAppId:
+    Type: String
+
+Resources:
+  SNSRole:
+    # DeletionPolicy: Retain
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal: 
+              Service: 
+                - "cognito-idp.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: "CognitoSNSPolicy"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            Statement: 
+              - Effect: "Allow"
+                Action: "sns:publish"
+                Resource: "*"
+
+  RoleForEndUser:
+    # DeletionPolicy: Retain
+    Type: AWS::IAM::Role
+    Properties: 
+      Path: "/"
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Federated:
+                - "cognito-identity.amazonaws.com"
+            Action: 
+              - "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals:
+                cognito-identity.amazonaws.com:aud: !Ref TilIdentityPool
+              ForAnyValue:StringLike:
+                cognito-identity.amazonaws.com:amr: "authenticated"
+      Policies: 
+        - PolicyName: "AuthRoleAttachSnsEndpoint"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            Statement: 
+              - Effect: "Allow"
+                Action: 
+                  - "s3:ListBucket"
+                Resource: '*'
+
+  TilUserPool:
+    # DeletionPolicy: Retain
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: TilUserPool
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+          TemporaryPasswordValidityDays: 7
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+        - Name: phone_number
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+        - Name: preferred_username
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+      AutoVerifiedAttributes:
+        - email
+        - phone_number
+      AliasAttributes:
+        - email
+        - phone_number
+        - preferred_username
+      SmsConfiguration:
+        ExternalId:
+          Fn::Sub: TilUserPool-external
+        SnsCallerArn:
+          Fn::GetAtt: SNSRole.Arn
+
+  TilUserPoolClient:
+    # DeletionPolicy: Retain
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Sub TilUserPoolClient
+      ExplicitAuthFlows:
+        - USER_PASSWORD_AUTH
+      GenerateSecret: true
+      UserPoolId:
+        Ref: TilUserPool
+
+  TilIdentityPool:
+    # DeletionPolicy: Retain
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      IdentityPoolName: TilAppIdentityPool
+      AllowUnauthenticatedIdentities: true
+      CognitoIdentityProviders: 
+        - ClientId: !Ref TilUserPoolClient
+          ProviderName: !Sub cognito-idp.${AWS::Region}.amazonaws.com/${TilUserPool}
+      SupportedLoginProviders:
+        graph.facebook.com: !Ref FacebookAppId
+
+  TilIdentityPoolRolesAttachment:
+    # DeletionPolicy: Retain
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref TilIdentityPool
+      Roles: 
+        authenticated: !GetAtt RoleForEndUser.Arn
+        unauthenticated: !GetAtt RoleForEndUser.Arn
