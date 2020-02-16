@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+set -euxo pipefail
+
+ssh-keygen -t rsa -f ${FILE}
+ssh-keygen -t ed25519 -f ${FILE}
+
+ssh -T git@github.com
