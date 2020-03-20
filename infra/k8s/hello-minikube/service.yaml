@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2020-03-20T05:54:03Z"
+  labels:
+    app: hello-node
+  name: hello-node
+  namespace: default
+  resourceVersion: "12691"
+  selfLink: /api/v1/namespaces/default/services/hello-node
+  uid: 649cb7c2-e8ec-4c6a-aa55-3900bd2280cf
+spec:
+  clusterIP: 10.103.159.12
+  externalTrafficPolicy: Cluster
+  ports:
+    - nodePort: 31630
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: hello-node
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
