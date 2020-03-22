@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+# PodをReplicaSetで管理する場合、一般的にPodの定義もReplicaSetと同じYAMLファイルで記述してしまう。
+metadata:
+  name: simple-echo
+spec:
+  containers:
+    - name: nginx
+      image: gihyodocker/nginx-proxy:latest
+      env:
+        - name: BACKEND_HOST
+          value: "8080"
+      ports:
+        - containerPort: 80
+      resources:
+        limits:
+          memory: "10Mi"
+          cpu: "50m"
+    - name: echo
+      image: gihyodocker/echo:latest
+      ports:
+        - containerPort: 8080
+      resources:
+        limits:
+          memory: "10Mi"
+          cpu: "50m"
