@@ -18,8 +18,18 @@ echo $?
 # コロンなしの変数展開で判別できる
 test "${UNDEFINED+foo}"
 
+# awk
+# DSL used to data extraction and reporting.
+echo "I have an apple" | awk '{ print $4 }'
+
+# sed
+# Stream EDitor, parse and transform text.
+# grep(Global Regular Expression Print)の開発後にEditを目的として開発された。
+:
+
+
+
 # Reference
 # [入門UNIXプログラミングシェル](https://amzn.to/33yIXvz)
 # [WIKIBOOKS - Bourne Shell Scripting](https://en.wikibooks.org/wiki/Bourne_Shell_Scripting)
 # [BASH man page](http://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html)
-
