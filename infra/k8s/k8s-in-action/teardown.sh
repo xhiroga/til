@@ -1,3 +1,7 @@
 #!/bin/sh
 
-kubectl delete -f simple-replicaset.yaml
+set -eux
+
+NAMESPACE="k8s-in-action"
+
+kubectl delete namespaces "$NAMESPACE"

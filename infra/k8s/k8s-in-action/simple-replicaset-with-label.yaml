@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: echo
+  name: echo-spring
   labels:
     app: echo
     release: spring
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: echo
@@ -37,6 +37,7 @@ spec:
             limits:
               memory: "10Mi"
               cpu: "25m"
+      restartPolicy: Always # If container continues crash, Pod status will be CrashLoopBackOff.
 ---
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -46,7 +47,7 @@ metadata:
     app: echo
     release: summer
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: echo
