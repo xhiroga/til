@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+set -eu
+
+NAME="justincase.jp"
+TYPE="A"
+
+# echo "this is usually default server of dig to query. if macOS, this is not true."
+# cat /etc/resolv.conf
+
+echo "dig"
+dig "$NAME" "$TYPE"
+
+# +trace option does not work as expected on macOS.
+
+echo "nslookup"
+nslookup -type="$TYPE" "$NAME"
