@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction to WebRTC</title>
+  </head>
+  <body>
+    <video autoplay></video>
+    <script>
+      const constrains = { audio: true, video: true };
+      const videoArea = document.querySelector("video");
+      const onSuccess = (stream) => {
+        console.log("Success! We have a stream!");
+
+        // createObjectURL is deprecated.
+        // https://stackoverflow.com/questions/27120757/failed-to-execute-createobjecturl-on-url
+        // videoArea.src = window.URL.createObjectURL(stream);
+
+        videoArea.srcObject = stream;
+        videoArea.play();
+      };
+      const onError = (error) => {
+        console.log("Error with getUserMedia: ", error);
+      };
+      navigator.getUserMedia(constrains, onSuccess, onError);
+    </script>
+  </body>
+</html>
