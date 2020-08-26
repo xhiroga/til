@@ -2,26 +2,75 @@
 <html>
   <head>
     <title>Introduction to WebRTC</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
   <body>
+    <div>
+      Video:
+      <select id="camera"></select>
+    </div>
     <video autoplay></video>
     <script>
-      const constrains = { audio: true, video: true };
       const videoArea = document.querySelector("video");
+      const videoSelect = document.querySelector("#camera");
       const onSuccess = (stream) => {
         console.log("Success! We have a stream!");
+        videoArea.srcObject = stream;
+        videoArea.className = "grayscale_filter";
+        videoArea.play();
 
         // createObjectURL is deprecated.
         // https://stackoverflow.com/questions/27120757/failed-to-execute-createobjecturl-on-url
         // videoArea.src = window.URL.createObjectURL(stream);
+      };
+      const startStream = () => {
+        const videoSource = videoSelect.value;
+        const constraints = {
+          audio: true,
+          video: {
+            mandatory: {
+              minWidth: 640,
+              maxWidth: 640,
+              minHeight: 360,
+              maxHeight: 480,
+            },
+            optional: [
+              {
+                sourceId: videoSource,
+              },
+            ],
+          },
+        };
+        navigator.mediaDevices
+          .getUserMedia(constraints)
+          .then(onSuccess)
+          .catch((error) => {
+            console.error(error);
+          });
+        // navigator.getUserMedia() is deprecated because there are already newer promise version.
+      };
+      const getCameras = (sourceInfos) => {
+        console.log(sourceInfos);
+        sourceInfos.forEach((info) => {
+          const option = document.createElement("option");
+          option.value = info.id;
+          if (info.kind == "videoinput") {
+            option.text =
+              info.kind + ": " + info.label + " id = " + info.deviceId;
+            videoSelect.appendChild(option);
+          }
+        });
+      };
 
-        videoArea.srcObject = stream;
-        videoArea.play();
-      };
-      const onError = (error) => {
-        console.log("Error with getUserMedia: ", error);
-      };
-      navigator.getUserMedia(constrains, onSuccess, onError);
+      navigator.mediaDevices
+        .enumerateDevices()
+        .then(getCameras)
+        .catch((error) => {
+          console.error(error);
+        });
+      // MediaStreamTrack.getSources(getCameras); is deprecated
+      videoSelect.onchange = startStream;
+      startStream();
     </script>
   </body>
 </html>
