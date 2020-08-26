@@ -2,16 +2,17 @@
 
 set -eu
 
-NAME="justincase.jp"
+NAME="www.2020games.metro.tokyo.lg.jp"
 TYPE="A"
 
 # echo "this is usually default server of dig to query. if macOS, this is not true."
 # cat /etc/resolv.conf
 
 echo "dig"
-dig "$NAME" "$TYPE"
+dig @8.8.8.8 +trace "$NAME" "$TYPE"
 
-# +trace option does not work as expected on macOS.
+# if no server specified +trace option does not work as expected on my local environment.
+# https://stackoverflow.com/questions/53688690/dig-trace-does-not-do-a-trace
 
 echo "nslookup"
 nslookup -type="$TYPE" "$NAME"
