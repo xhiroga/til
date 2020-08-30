@@ -3,16 +3,28 @@
   <head>
     <title>Introduction to WebRTC</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <div>
       Video:
       <select id="camera"></select>
     </div>
-    <video autoplay></video>
+    <video id="videoTag" autoplay></video>
+    <div>
+      <label>Your Name</label><input id="myName" type="text" />
+      <label>Message</label><input id="myMessage" type="text" />
+      <input id="sendMessage" type="submit" />
+      <div id="chatArea">Message Output:<br /></div>
+    </div>
     <script>
       const videoArea = document.querySelector("video");
       const videoSelect = document.querySelector("#camera");
+      const myName = document.querySelector("#myName");
+      const myMessage = document.querySelector("#myMessage");
+      const sendMessage = document.querySelector("#sendMessage");
+      const chatArea = document.querySelector("#chatArea");
+      const ROOM = "chat";
       const onSuccess = (stream) => {
         console.log("Success! We have a stream!");
         videoArea.srcObject = stream;
@@ -70,7 +82,30 @@
         });
       // MediaStreamTrack.getSources(getCameras); is deprecated
       videoSelect.onchange = startStream;
-      startStream();
+      // startStream();
+
+      const socket = io.connect();
+      socket.emit("ready", ROOM);
+
+      const displayMessage = (message) => {
+        chatArea.innerHTML = chatArea.innerHTML + "<br />" + message;
+      };
+      socket.on("announce", (data) => {
+        displayMessage(data.message);
+      });
+
+      socket.on("message", (data) => {
+        displayMessage(data.author + ": " + data.message);
+      });
+
+      sendMessage.addEventListener("click", (event) => {
+        console.log("sendMessage start");
+        socket.emit("send", {
+          author: myName.value,
+          message: myMessage.value,
+          room: ROOM,
+        });
+      });
     </script>
   </body>
 </html>
