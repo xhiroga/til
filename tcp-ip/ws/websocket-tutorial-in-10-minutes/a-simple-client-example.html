@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Example</title>
+  </head>
+  <body>
+    <script>
+      // https://www.tutorialdocs.com/article/websocket-tutorial-in-10-minutes.html
+
+      const ws = new WebSocket("wss://echo.websocket.org");
+      const logReadyState = () =>
+        console.log("WebSocket.readyState: " + ws.readyState);
+
+      // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState
+      logReadyState(); // 0 CONNECTING
+
+      ws.onopen = (evt) => {
+        logReadyState(); // 1 OPEN
+        console.log("Connection open ...");
+        ws.send("Hello WebSockets!");
+      };
+
+      ws.onmessage = (evt) => {
+        logReadyState(); // 1 OPEN
+        console.log("Received Message: " + evt.data); // data are sometime text and sometime binary.
+        ws.close();
+      };
+
+      ws.onclose = (evt) => {
+        logReadyState(); // 3 CLOSED
+        console.log("Connection closed.");
+      };
+    </script>
+  </body>
+</html>
