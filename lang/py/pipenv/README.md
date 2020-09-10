@@ -6,7 +6,7 @@
 brew install pipenv
 
 # create .venv in project root, alternative to $HOME/.local/share/virtualenvs/
-export PIPENV_VENV_IN_PROJECT=true
+export PIPENV_VENV_IN_PROJECT=1
 
 pipenv --python 3.8.1
 
@@ -22,7 +22,6 @@ pipenv install --dev isort
 ```shell script
 pipenv run isort -rc -vb .    # all files under current
 ```
-
 
 ## References
 
