@@ -1,16 +1,21 @@
 # Tools
+
 ネットワーク系の調査で使用するツール群。
 
 ## ping
-特定のサーバーがresponseするのではなく、OSが直接responseする。  
+
+特定のサーバーが response するのではなく、OS が直接 response する。
 
 ## ip
+
 ネットワークインターフェースに割り当てられているアドレスを表示する。  
-ネットワークインターフェースの起動・停止もできる。設定変更後の再起動の代わりに落とし上げるなど。  
+ネットワークインターフェースの起動・停止もできる。設定変更後の再起動の代わりに落とし上げるなど。
 
 ## netcat-openbsd
-TCP/UDPの読み書きのための万能ツール。  
-```
+
+TCP/UDP の読み書きのための万能ツール。
+
+```sh
 # TCPクライアント
 nc localhost 3456
 
@@ -28,7 +33,9 @@ nc -vz localhost 1-65535 2>&1 | grep succeeded
 ```
 
 ## tcpdump
+
 基本的には対象のホストやポート/プロトコルを絞り込んでキャプチャする。
+
 ```bash
 tcpdump host google.com
 tcpdump tcp # httpのようにアプリケーションレイヤーのプロトコルは指定できないようだ。
@@ -37,13 +44,14 @@ tcpdump host yaoo.co.jp and port 80
 ```
 
 ## traceroute
-目的のhostにパケットを送るまでに通ったrouteをprintする。  
+
+目的の host にパケットを送るまでに通った route を print する。  
 対象のホストまでのどこで通信障害が起きているのかを知ることができる。  
 `traceroute google.com`
 
 ## mtr
-My tracerouteの略のよう。ping + tracerouteのようなアプリケーション。  
+
+My traceroute の略のよう。ping + traceroute のようなアプリケーション。  
 `mtr google.com`
 
-
-[原因調査用Linuxコマンド - 外道父の道](http://blog.father.gedow.net/2012/10/23/linux-command-for-trouble/)
+[原因調査用 Linux コマンド - 外道父の道](http://blog.father.gedow.net/2012/10/23/linux-command-for-trouble/)
