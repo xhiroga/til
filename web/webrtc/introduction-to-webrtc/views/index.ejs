@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction to WebRTC</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <video id="myVideoTag" autoplay></video>
+    <video id="theirVideoTag" autoplay></video>
+    <div>
+      <label>Your Name</label><input id="myName" type="text" />
+      <label>Message</label><input id="myMessage" type="text" />
+      <input id="sendMessage" type="submit" />
+      <div id="chatArea">Message Output:<br /></div>
+      <div id="signalingArea">signaling Messages:<br /></div>
+    </div>
+    <script>
+      const myVideoArea = document.querySelector("#myVideoTag");
+      const theirVideoArea = document.querySelector("#theirVideoTag");
+      const myName = document.querySelector("#myName");
+      const myMessage = document.querySelector("#myMessage");
+      const sendMessage = document.querySelector("#sendMessage");
+      const chatArea = document.querySelector("#chatArea");
+      const signalingArea = document.querySelector("#signalingArea");
+      const ROOM = "chat";
+      const SIGNAL_ROOM = "signal_room";
+      const configuration = {
+        iceServers: [
+          {
+            url: "stun://l.google.com:19302", // STUN server
+          },
+        ],
+      };
+      var rtcPeerConn;
+
+      const socket = io.connect();
+      socket.emit("ready", { chat_room: ROOM, signal_room: SIGNAL_ROOM });
+
+      const displayMessage = (message) => {
+        chatArea.innerHTML = chatArea.innerHTML + "<br />" + message;
+      };
+      const displaySignalMessage = (message) => {
+        signalingArea.innerHTML = signalingArea.innerHTML + "<br/>" + message;
+      };
+      const logError = (error) => {
+        displaySignalMessage(error.name + ": " + error.message);
+      };
+      const sendLocalDesc = (desc) => {
+        rtcPeerConn.setLocalDescription(
+          desc,
+          () => {
+            displaySignalMessage("sending local description");
+            socket.emit("signal", {
+              type: "SDP",
+              message: JSON.stringify({ sdp: rtcPeerConn.localDescription }),
+              room: SIGNAL_ROOM,
+            });
+          },
+          logError
+        );
+      };
+      const startSignaling = () => {
+        displaySignalMessage("starting signaling...");
+        rtcPeerConn = new RTCPeerConnection(configuration);
+
+        rtcPeerConn.onnegotiationneeded = () => {
+          displaySignalMessage("on negotiation called");
+          rtcPeerConn.createOffer(sendLocalDesc, logError);
+        };
+
+        // 7. Alice creates ICE(Internet Connectivity Establishment) Candidate and signals it forto Bob.
+        // 9. Bob creates ICE Candidate and signals it for Alice.
+        rtcPeerConn.onicecandidate = (event) => {
+          console.log(`onicecandidate payloads: ${event.candidate}`);
+          if (event.candidate) {
+            socket.emit("signal", {
+              type: "ice candidate",
+              message: JSON.stringify({ candidate: event.candidate }),
+              room: SIGNAL_ROOM,
+            });
+          }
+          displayMessage("completed that ice candidate...");
+        };
+
+        rtcPeerConn.onaddstream = (event) => {
+          displayMessage("going to add their stream...");
+          theirVideoArea.srcObject = event.stream;
+        };
+
+        navigator.getUserMedia(
+          { audio: true, video: true },
+          (stream) => {
+            displayMessage("going to display my stream...");
+            myVideoArea.srcObject = stream;
+            rtcPeerConn.addStream(stream);
+          },
+          logError
+        );
+      };
+
+      // 1. Alice says that user_here, but no one hear it.
+      // 2. Bob says user_here.
+      socket.emit("signal", {
+        type: "user_here",
+        message: "Are you ready for a call?",
+        room: SIGNAL_ROOM,
+      });
+
+      // 3. Alice hears bobs signal.
+      socket.on("signaling_message", (data) => {
+        displayMessage("Signal received:" + data.type);
+
+        // 4. Alice creates RTCPeerConnection.
+        // She also put local description and create offer, in other words, SDP(Session Description Protocol) message which describe anything about multimedia session.
+        if (!rtcPeerConn) startSignaling();
+
+        if (data.type != "user_here") {
+          const message = JSON.parse(data.message);
+          // 5. Bob receives offer SDP message from Alice. He gets her local description.
+          // He also puts his local description and sends answer.
+
+          // 6. Alice receives answer SDP message from Bob. She puts his local description.
+          // It invokes onicecantidate().
+          if (message.sdp) {
+            rtcPeerConn.setRemoteDescription(
+              new RTCSessionDescription(message.sdp),
+              () => {
+                // if we received an offer, we need to answer
+                if (rtcPeerConn.remoteDescription.type == "offer") {
+                  rtcPeerConn.createAnswer(sendLocalDesc, logError);
+                }
+              },
+              logError
+            );
+          } else {
+            // 8. Bob creates ICE Candidate which contains ICE Candidate of Alice.
+            // It invokes onicecandidate().
+            rtcPeerConn.addIceCandidate(new RTCIceCandidate(message.candidate));
+          }
+        }
+      });
+
+      socket.on("announce", (data) => {
+        displayMessage(data.message);
+      });
+
+      socket.on("message", (data) => {
+        displayMessage(data.author + ": " + data.message);
+      });
+
+      sendMessage.addEventListener("click", (event) => {
+        console.log("sendMessage start");
+        const author = myName.value;
+        const message = myMessage.value;
+        socket.emit("send", {
+          author: author,
+          message: message,
+          room: ROOM,
+        });
+        displayMessage(author + ": " + message);
+      });
+    </script>
+  </body>
+</html>
