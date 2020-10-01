@@ -3,5 +3,5 @@
 https://www.udemy.com/course/taming-big-data-with-apache-spark-hands-on
 
 ```sh
-spark-submit ./SparkCourse/ratings-counter.py
+spark-submit ./notebook/ratings-counter.py
 ```
