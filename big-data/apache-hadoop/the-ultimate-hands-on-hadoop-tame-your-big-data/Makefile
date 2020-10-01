@@ -1,0 +1,27 @@
+MATERIALS = HadoopSlides
+NOTEBOOK = notebook
+DATA = ml-100k
+PLATFORM = HDP_2.6.5_deploy-scripts_180624d542a25
+
+$(DATA): $(MATERIALS) $(NOTEBOOK)
+	wget http://files.grouplens.org/datasets/movielens/ml-100k.zip -O $(DATA).zip
+	unzip $(DATA).zip -d $(MATERIALS)
+	unzip $(DATA).zip -d $(NOTEBOOK)
+	# rm $(DATA).zip
+
+$(MATERIALS):
+	wget http://media.sundog-soft.com/hadoop/HadoopSlides.zip -O $(MATERIALS).zip
+	unzip $(MATERIALS).zip
+	# rm $(MATERIALS).zip
+
+$(NOTEBOOK):
+	mkdir -p $(NOTEBOOK)
+
+$(PLATFORM):
+	# before wget, you should agree to policy. https://www.cloudera.com/downloads/hortonworks-sandbox/hdp.html
+	wget https://archive.cloudera.com/hwx-sandbox/hdp/hdp-2.6.5/$(PLATFORM).zip -O $(PLATFORM).zip
+	unzip $(PLATFORM).zip
+	# rm $(PLATFORM).zip
+
+docker-deploy:
+	sh docker-deploy-hdp265.sh
