@@ -11,7 +11,8 @@ $(DATA): $(MATERIALS) $(NOTEBOOK)
 
 $(MATERIALS):
 	wget http://media.sundog-soft.com/hadoop/HadoopSlides.zip -O $(MATERIALS).zip
-	unzip $(MATERIALS).zip
+	mkdir -p $(MATERIALS)
+	unzip $(MATERIALS).zip -d $(MATERIALS)
 	# rm $(MATERIALS).zip
 
 $(NOTEBOOK):
