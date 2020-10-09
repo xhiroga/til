@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:cdk-python-dotvscode.helloWorld"
+    "onCommand:cdk-python-dotvscode.dotvscode-dir-and-setting-json"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "cdk-python-dotvscode.helloWorld",
-        "title": "Hello World"
+        "command": "cdk-python-dotvscode.dotvscode-dir-and-setting-json",
+        "title": "Generate .vscode directory and setting.json"
       }
     ]
   },
