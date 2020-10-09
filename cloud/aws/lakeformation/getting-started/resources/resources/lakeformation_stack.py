@@ -7,7 +7,7 @@ class LakeFormationStack(core.Stack):
 
         # Create an IAM Role for Workflows
         lakeformation_workflow_role_id = "LakeFormationWorkflowRole"
-        access = iam.PolicyDocument(
+        lakeFormationWorkflow = iam.PolicyDocument(
             statements=[
                 iam.PolicyStatement(
                     actions=[
@@ -30,11 +30,53 @@ class LakeFormationStack(core.Stack):
             self,
             id=lakeformation_workflow_role_id,
             assumed_by=iam.ServicePrincipal("glue.amazonaws.com"),
-            inline_policies={"Access": access},
             managed_policies=[
                 iam.ManagedPolicy.from_aws_managed_policy_name(
                     "service-role/AWSGlueServiceRole"
                 )
             ],
+            inline_policies={"LakeFormationWorkflow": lakeFormationWorkflow},
         )
 
+        # Create a Data Lake Administrator
+        iam.User(
+            self,
+            id="DataLakeAdministrator",
+            managed_policies=[
+                iam.ManagedPolicy.from_aws_managed_policy_name(
+                    "AWSLakeFormationDataAdmin"
+                ),
+                iam.ManagedPolicy.from_aws_managed_policy_name(
+                    "AWSGlueConsoleFullAccess"
+                ),
+                iam.ManagedPolicy.from_aws_managed_policy_name(
+                    "CloudWatchLogsReadOnlyAccess"
+                ),
+            ],
+        ).attach_inline_policy(
+            iam.Policy(
+                self,
+                id="LakeFormationSLR",
+                statements=[
+                    iam.PolicyStatement(
+                        actions=[
+                            "iam:CreateServiceLinkedRole",
+                        ],
+                        effect=iam.Effect.ALLOW,
+                        resources=["*"],
+                        conditions={
+                            "StringEquals": {
+                                "iam:AWSServiceName": "lakeformation.amazonaws.com"
+                            }
+                        },
+                    ),
+                    iam.PolicyStatement(
+                        actions=["iam:PutRolePolicy"],
+                        effect=iam.Effect.ALLOW,
+                        resources=[
+                            f"arn:aws:iam::{self.account}:role/aws-service-role/lakeformation.amazonaws.com/AWSServiceRoleForLakeFormationDataAccess"
+                        ],
+                    ),
+                ],
+            )
+        )
