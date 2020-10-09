@@ -2,10 +2,11 @@
 
 from aws_cdk import core
 
-from resources.lakeformation_stack import LakeFormationStack
-
+from resources.setting_up_stack import SettingUpStack
+from resources.datalake_with_cloudtrail_stack import DatalakeWithCloudTrailStack
 
 app = core.App()
-LakeFormationStack(app, "lakeformation-getting-stated")
+SettingUpStack(app, "lakeformation-getting-stated")
+DatalakeWithCloudTrailStack(app, "cloudtrail-tutorial")
 
 app.synth()
