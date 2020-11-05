@@ -4,5 +4,7 @@
 export ZENDESK_EMAIL="$ZENDESK_EMAIL"
 export ZENDESK_TOKEN="$ZENDESK_TOKEN"
 export ORGANIZATION="$ORGANIZATION"
-node request.js
+tsc --build tsconfig.json
+node out/request.js
+node out/ticket-comments.js
 ```
