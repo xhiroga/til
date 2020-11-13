@@ -103,30 +103,13 @@ class Foo {
     common = '123'
 }
 
-class Bar {
-    bar = 123;
-    common = '123';
-}
+// (ストリング)リテラル型
+const A: 'a' = 'a'
+console.log(A)
 
-function doStuff(arg: Foo | Bar) {
-    if (arg instanceof Foo) {
-        console.log(arg.foo); // OK
-        console.log(arg.bar); // Error!
-    }
-    if (arg instanceof Bar) {
-        // console.log(arg.foo); // Error!
-        console.log(arg.bar); // OK
-    }
+let B: 'b'
+// console.log(b)   // このように代入前に使用できるように見えるが、コンパイルエラーになる。
 
-    console.log(arg.common); // OK
-    // console.log(arg.foo); // Error!
-    console.log(arg.bar); // Error!
-}
-
-doStuff(new Foo());
-doStuff(new Bar());
-
-// リテラル型 ... Enumじゃんこれ（違います）
 function toBeOrNotToBe(how: 'toBe' | 'notToBe') {
     console.log(how)
 }
@@ -137,3 +120,7 @@ toBeOrNotToBe(ibm.how as 'toBe') // OK. もちろん宣言時にinlineで型ア�
 
 // deep-dive には既存の文字列の配列から文字列リテラルの合成型を生成する方法が載っているが、複雑でよく分からない...
 
+// never型
+function neverEndingStory(): never {
+    throw Error("The story will be continue!")
+}
