@@ -25,7 +25,11 @@ scrapy parse --spider=countries -c parse_country --meta='{"country_name":"China"
 ## Splash
 
 ```terminal
+docker-compose up -d
+curl http://localhost:8050/info?wait=0.5&images=1&expand=1&timeout=90.0&url=http%3A%2F%2Fgoogle.com&lua_source=function+main%28splash%2C+args%29%0D%0A++assert%28splash%3Ago%28args.url%29%29%0D%0A++assert%28splash%3Await%280.5%29%29%0D%0A++return+%7B%0D%0A++++html+%3D+splash%3Ahtml%28%29%2C%0D%0A++++png+%3D+splash%3Apng%28%29%2C%0D%0A++++har+%3D+splash%3Ahar%28%29%2C%0D%0A++%7D%0D%0Aend
 
+# down
+docker-compose down
 ```
 
 ## Reference

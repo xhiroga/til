@@ -1,17 +1,18 @@
-LECTURE_11 = resources/css_html_file
+LECTURE_11 = css_html_file
 LECTURE_11_URL = https://www.dropbox.com/s/bqrcr7a7vln0qwq/css_html_file.zip?dl=0
-LECTURE_14 = resources/xpath_html_file
+LECTURE_14 = xpath_html_file
 LECTURE_14_URL = https://www.dropbox.com/s/zk2dbqr2b1talms/xpath_html_file.zip?dl=0
-WORLDOMETERS = resources/worldmeters
+WORLDOMETERS = worldometers
 WORLDOMETERS_URL = https://www.dropbox.com/sh/p54jjns5rrchp4x/AACuEfYg8agYXLWX8IuTTRpia?dl=0
-IMDB = resources/imdb
+IMDB = imdb
 IMDB_URL = https://www.dropbox.com/sh/a4q7z0sxsrnmjtb/AAAGsi17Enb2LXzWbjWdZL2Pa?dl=0
-BOOKSTOSCRAPE = resources/bookstoscrape
+BOOKSTOSCRAPE = bookstoscrape
 BOOKSTOSCRAPE_URL = https://www.dropbox.com/sh/a8anjg5z1oinxhv/AABWn-1nH-gJ7FMc6aoTrLy0a?dl=0
+LIVECOIN = livecoin
+LIVECOIN_URL = https://www.dropbox.com/sh/ge4wjx9jbuzc7fo/AACeX57YEwGJhK8zRVTIBYAWa?dl=0
 
-
-.PHONY: all $(LECTURE_11) $(LECTURE_14) $(WORLDOMETERS)
-all: $(LECTURE_11) $(LECTURE_14) $(WORLDOMETERS)
+.PHONY: all;
+all: $(LECTURE_11) $(LECTURE_14) $(WORLDOMETERS) $(BOOKSTOSCRAPE) $(LIVECOIN);
 
 $(LECTURE_11): $(LECTURE_11).zip
 	unzip $(LECTURE_11).zip -d $(LECTURE_11)
@@ -26,11 +27,19 @@ $(WORLDOMETERS).zip:
 	wget $(WORLDOMETERS_URL) -O $(WORLDOMETERS).zip
 
 $(WORLDOMETERS): $(WORLDOMETERS).zip
-	unzip $(WORLDOMETERS).zip -d $(WORLDOMETERS)
+	unzip $(WORLDOMETERS).zip -x / -d $(WORLDOMETERS)
+	unzip $(WORLDOMETERS)/$(WORLDOMETERS).zip -x / -d $(WORLDOMETERS)
 
 $(BOOKSTOSCRAPE).zip:
 	wget $(BOOKSTOSCRAPE_URL) -O $(BOOKSTOSCRAPE).zip
 
 $(BOOKSTOSCRAPE): $(BOOKSTOSCRAPE).zip
-	unzip $(BOOKSTOSCRAPE).zip -d $(BOOKSTOSCRAPE)
+	unzip $(BOOKSTOSCRAPE).zip -x / -d $(BOOKSTOSCRAPE)
+	unzip $(BOOKSTOSCRAPE)/$(BOOKSTOSCRAPE).zip -x / -d $(BOOKSTOSCRAPE)
 
+$(LIVECOIN).zip:
+	wget $(LIVECOIN_URL) -O $(LIVECOIN).zip
+
+$(LIVECOIN): $(LIVECOIN).zip
+	unzip $(LIVECOIN).zip -x / -d $(LIVECOIN)
+	unzip $(LIVECOIN)/$(LIVECOIN).zip -x / -d $(LIVECOIN)
