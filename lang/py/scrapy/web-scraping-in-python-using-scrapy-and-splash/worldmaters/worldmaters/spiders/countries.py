@@ -7,10 +7,11 @@ class CountriesSpider(scrapy.Spider):
     start_urls = ['https://www.worldometers.info/world-population/population-by-country/']  # fix to https
 
     def parse(self, response):
-        title = response.xpath("//h1/text()").get()
-        countries = response.xpath("//td/a/text()").getall()
+        countries = response.xpath("//td/a")
+        for country in countries:
+            name = country.xpath(".//text()").get()     # Selecter オブジェクトに対して実行する場合は .// から始める。
+            link = country.xpath(".//@href").get()
 
-        yield{
-            'title': title,
-            'countries': countries
-        }
+            absolute_url = f"https://worldmeters.info{link}"
+            yield scrapy.Request(absolute_url)
+            # yield scrapy.Request(link) raise ValueError(f'Missing scheme in request url: {self._url}')
