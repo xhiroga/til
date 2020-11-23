@@ -22,6 +22,12 @@ scrapy crawl countries -o population_datasete.json
 scrapy parse --spider=countries -c parse_country --meta='{"country_name":"China"}' https://www.worldometers.info/world-population/china-population/
 ```
 
+## Splash
+
+```terminal
+
+```
+
 ## Reference
 
 - https://try.jsoup.org/
