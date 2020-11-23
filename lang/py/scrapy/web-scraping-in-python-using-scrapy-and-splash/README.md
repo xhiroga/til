@@ -12,6 +12,16 @@ scrapy shell
 >>> view(response)
 ```
 
+## Run
+
+```terminal
+scrapy crawl countries -o population_datasete.json
+# ('json', 'jsonlines', 'jl', 'csv', 'xml', 'marshal', 'pickle') is available
+
+# debug
+scrapy parse --spider=countries -c parse_country --meta='{"country_name":"China"}' https://www.worldometers.info/world-population/china-population/
+```
+
 ## Reference
 
 - https://try.jsoup.org/
