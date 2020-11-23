@@ -11,3 +11,8 @@ scrapy shell
 >>> response.body   # fetch()のMutableなオブジェクト
 >>> view(response)
 ```
+
+## Reference
+
+- https://try.jsoup.org/
+- https://scrapinghub.github.io/xpath-playground/
