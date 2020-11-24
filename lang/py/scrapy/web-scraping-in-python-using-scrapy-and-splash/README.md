@@ -32,6 +32,12 @@ curl http://localhost:8050/info?wait=0.5&images=1&expand=1&timeout=90.0&url=http
 docker-compose down
 ```
 
+## Selenium
+
+```terminal
+brew install chromedriver
+```
+
 ## Reference
 
 - https://try.jsoup.org/

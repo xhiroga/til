@@ -7,6 +7,9 @@ name = "pypi"
 scrapy = "*"
 scrapy-splash = "*"
 selenium = "*"
+scrapy-selenium = "*"
+pymongo = "*"
+dnspython = "*"
 
 [dev-packages]
 pylint = "*"
