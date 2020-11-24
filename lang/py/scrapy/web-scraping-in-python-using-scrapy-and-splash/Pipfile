@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 scrapy = "*"
 scrapy-splash = "*"
+selenium = "*"
 
 [dev-packages]
 pylint = "*"
