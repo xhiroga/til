@@ -1,10 +1,14 @@
 from typing import Optional
 
 import scrapy
+from scrapy.crawler import CrawlerProcess
+from scrapy.http import HtmlResponse
+from scrapy.utils.project import get_project_settings
+from scrapy.utils.response import open_in_browser
 from scrapy_selenium import SeleniumRequest
 
 
-def remove_characters(value: Optional[str, None]):
+def remove_characters(value: Optional[str]):
     if value:
         return value.strip('\xa0')
     else:
@@ -21,7 +25,8 @@ class ComputerDealsSpider(scrapy.Spider):
             callback=self.parse
         )
 
-    def parse(self, response):
+    def parse(self, response: HtmlResponse):
+        # open_in_browser(response)
         products = response.xpath("//li[@class='fpGridBox grid altDeal hasPrice']")
         for product in products:
             yield {
@@ -39,3 +44,13 @@ class ComputerDealsSpider(scrapy.Spider):
                 wait_time=3,
                 callback=self.parse
             )
+
+
+def main():
+    process = CrawlerProcess(settings=get_project_settings())
+    process.crawl(ComputerDealsSpider)
+    process.start()
+
+
+if __name__ == "__main__":
+    main()

@@ -2,6 +2,7 @@ from shutil import which
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
+from scrapy.http import HtmlResponse
 from scrapy.selector import Selector
 from scrapy.utils.project import get_project_settings
 from selenium import webdriver
@@ -33,7 +34,7 @@ class CoinSeleniumSpider(scrapy.Spider):
         self.html = driver.page_source
         driver.close()
 
-    def parse(self, response):
+    def parse(self, response: HtmlResponse):
         resp = Selector(text=self.html)
         for currency in resp.xpath("//div[contains(@class, 'ReactVirtualized__Table__row tableRow___3EtiS ')]"):
             yield {
