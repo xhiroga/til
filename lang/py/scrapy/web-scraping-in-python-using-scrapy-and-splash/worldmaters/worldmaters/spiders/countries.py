@@ -1,4 +1,5 @@
 import scrapy
+from scrapy.http import HtmlResponse
 
 
 class CountriesSpider(scrapy.Spider):
@@ -21,7 +22,7 @@ class CountriesSpider(scrapy.Spider):
 
             # yield scrapy.Request(link) raise ValueError(f'Missing scheme in request url: {self._url}')
 
-    def parse_country(self, response):
+    def parse_country(self, response: HtmlResponse):
         # inspect_response(self, response)  # REPLでレスポンスオブジェクトを参照
         # open_in_browser(response)         # レスポンスをローカルに保存して表示
         name = response.request.meta['country_name']

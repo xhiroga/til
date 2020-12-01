@@ -1,4 +1,6 @@
 import scrapy
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
 from scrapy_splash import SplashRequest
 
 
@@ -32,3 +34,13 @@ class CoinSpider(scrapy.Spider):
                 'currency pair': currency.xpath(".//div[1]/div/text()").get(),
                 'volume(24h)': currency.xpath(".//div[2]/span/text()").get()
             }
+
+
+def main():
+    process = CrawlerProcess(settings=get_project_settings())
+    process.crawl(CoinSpider)
+    process.start()
+
+
+if __name__ == "__main__":
+    main()
