@@ -1,0 +1,126 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Configure AWS Config
+
+Parameters:
+  ManagedResourcePrefix:
+    Type: "String"
+    Description: "Prefix for the managed resources"
+
+  AllSupported:
+    Type: String
+    Default: "true"
+    Description: Indicates whether to record all supported resource types.
+    AllowedValues:
+      - "true"
+      - "false"
+
+  IncludeGlobalResourceTypes:
+    Type: String
+    Default: "true"
+    Description: Indicates whether AWS Config records all supported global resource types.
+    AllowedValues:
+      - "true"
+      - "false"
+
+  ResourceTypes:
+    Type: CommaDelimitedList
+    Description: A list of valid AWS resource types to include in this recording group. Eg. AWS::CloudTrail::Trail
+
+  Frequency:
+    Type: String
+    Default: 1hour
+    Description: The frequency with which AWS Config delivers configuration snapshots.
+    AllowedValues:
+      - 1hour
+      - 3hours
+      - 6hours
+      - 12hours
+      - 24hours
+
+  AllConfigTopicName:
+    Type: String
+    Default: ""
+    Description: All Configuration Notification SNS Topic in Security Account that AWS Config delivers notifications to.
+
+  SecurityAccountId:
+    Type: "String"
+    Description: AWS Account Id of the Security account.
+
+  AuditBucketName:
+    Type: String
+    Default: ""
+    Description: Audit Bucket name from the Log Archive Account
+
+  AWSLogsS3KeyPrefix:
+    Type: "String"
+    Description: "Organization ID to use as the S3 Key prefix for storing the audit logs"
+
+Conditions:
+  IsAllSupported: !Equals
+    - !Ref AllSupported
+    - "true"
+
+Mappings:
+  Settings:
+    FrequencyMap:
+      1hour: One_Hour
+      3hours: Three_Hours
+      6hours: Six_Hours
+      12hours: Twelve_Hours
+      24hours: TwentyFour_Hours
+
+Resources:
+  ConfigRecorder:
+    Type: AWS::Config::ConfigurationRecorder
+    Properties:
+      Name: !Sub ${ManagedResourcePrefix}-BaselineConfigRecorder
+      RoleARN: !Sub arn:aws:iam::${AWS::AccountId}:role/${ManagedResourcePrefix}-ConfigRecorderRole
+      RecordingGroup:
+        AllSupported: !Ref AllSupported
+        IncludeGlobalResourceTypes: !Ref IncludeGlobalResourceTypes
+        ResourceTypes: !If
+          - IsAllSupported
+          - !Ref AWS::NoValue
+          - !Ref ResourceTypes
+
+  ConfigDeliveryChannel:
+    Type: AWS::Config::DeliveryChannel
+    Properties:
+      Name: !Sub ${ManagedResourcePrefix}-BaselineConfigDeliveryChannel
+      ConfigSnapshotDeliveryProperties:
+        DeliveryFrequency: !FindInMap
+          - Settings
+          - FrequencyMap
+          - !Ref Frequency
+      S3BucketName: !Ref AuditBucketName
+      S3KeyPrefix: !Ref AWSLogsS3KeyPrefix
+      SnsTopicARN: !Sub arn:aws:sns:${AWS::Region}:${SecurityAccountId}:${AllConfigTopicName}
+
+  AuthorizerPdx:
+    Type: "AWS::Config::AggregationAuthorization"
+    Properties:
+      AuthorizedAccountId: !Ref SecurityAccountId
+      AuthorizedAwsRegion: us-west-2
+  AuthorizerIad:
+    Type: "AWS::Config::AggregationAuthorization"
+    Properties:
+      AuthorizedAccountId: !Ref SecurityAccountId
+      AuthorizedAwsRegion: us-east-1
+  AuthorizerCmh:
+    Type: "AWS::Config::AggregationAuthorization"
+    Properties:
+      AuthorizedAccountId: !Ref SecurityAccountId
+      AuthorizedAwsRegion: us-east-2
+  AuthorizerDub:
+    Type: "AWS::Config::AggregationAuthorization"
+    Properties:
+      AuthorizedAccountId: !Ref SecurityAccountId
+      AuthorizedAwsRegion: eu-west-1
+
+Outputs:
+  BaselineConfigRecorder:
+    Description: Baseline Config Recorder
+    Value: !Ref ConfigRecorder
+  BaselineConfigDeliveryChannel:
+    Description: Baseline Config Delivery Channel
+    Value: !Ref ConfigDeliveryChannel

@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Configure the Cross-Account IAM Security Roles for the member accounts.
+
+Parameters:
+  ManagedResourcePrefix:
+    Type: "String"
+    Description: "Prefix for the managed resources"
+  SecurityAccountAdminRoleArn:
+    Type: String
+    Description: Admin role ARN from the security account.
+  SecurityAccountReadOnlyRoleArn:
+    Type: String
+    Description: Admin role ARN from the security account.
+  EnableAdminRole:
+    Type: String
+    Default: "true"
+    Description: Create an administrative cross-account role from Security Account to this account.
+    AllowedValues:
+      - "true"
+      - "false"
+  EnableReadOnlyRole:
+    Type: String
+    Default: "true"
+    Description: Create a read-only cross-account role from Security Account to this account.
+    AllowedValues:
+      - "true"
+      - "false"
+
+Conditions:
+  CreateAdminRole: !Equals
+    - !Ref EnableAdminRole
+    - "true"
+  CreateReadOnlyRole: !Equals
+    - !Ref EnableReadOnlyRole
+    - "true"
+
+Resources:
+  AdminExecutionRole:
+    Type: AWS::IAM::Role
+    Condition: CreateAdminRole
+    Properties:
+      RoleName: !Sub ${ManagedResourcePrefix}-AdministratorExecutionRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Ref SecurityAccountAdminRoleArn
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+
+  ReadOnlyExecutionRole:
+    Type: AWS::IAM::Role
+    Condition: CreateReadOnlyRole
+    Properties:
+      RoleName: !Sub ${ManagedResourcePrefix}-ReadOnlyExecutionRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Ref SecurityAccountReadOnlyRoleArn
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/ReadOnlyAccess
