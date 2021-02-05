@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# Getting started with React and Contentful
+
+[Getting started with React and Contentful
+](https://www.contentful.com/developers/docs/javascript/tutorials/getting-started-with-react-and-contentful/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
