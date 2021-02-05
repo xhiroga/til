@@ -1,0 +1,85 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Configure the Cross-Account IAM Audit Roles for Audit Account
+
+Parameters:
+  ManagedResourcePrefix:
+    Type: "String"
+    Description: "Prefix for the managed resources"
+  AuditAccountId:
+    Type: "String"
+    Description: "Audit account Id"
+  LoggingAccountId:
+    Type: "String"
+    Description: "Logging account Id"
+
+Resources:
+  AdministrationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${ManagedResourcePrefix}-AuditAdministratorRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
+      Policies:
+        - PolicyName: !Sub AssumeRole-${ManagedResourcePrefix}-AuditAdministratorRole
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sts:AssumeRole
+                Resource:
+                  - !Sub "arn:aws:iam::*:role/${ManagedResourcePrefix}-AdministratorExecutionRole"
+
+  ReadOnlyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${ManagedResourcePrefix}-AuditReadOnlyRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
+      Policies:
+        - PolicyName: !Sub AssumeRole-${ManagedResourcePrefix}-AuditReadOnlyRole
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sts:AssumeRole
+                Resource:
+                  - !Sub "arn:aws:iam::*:role/${ManagedResourcePrefix}-ReadOnlyExecutionRole"
+
+  # AWSConfig Aggregator for Guardrail compliance
+  GuardrailsComplianceAggregator:
+    Type: AWS::Config::ConfigurationAggregator
+    Properties:
+      AccountAggregationSources:
+        - AccountIds:
+            - !Ref AuditAccountId
+            - !Ref LoggingAccountId
+          AllAwsRegions: true
+      ConfigurationAggregatorName: !Sub ${ManagedResourcePrefix}-GuardrailsComplianceAggregator
+
+Outputs:
+  CrossAccountAdminRole:
+    Description: Audit Administrator Role
+    Value: !GetAtt "AdministrationRole.Arn"
+  CrossAccountReadOnlyRole:
+    Description: Audit ReadOnly Role
+    Value: !GetAtt "ReadOnlyRole.Arn"
