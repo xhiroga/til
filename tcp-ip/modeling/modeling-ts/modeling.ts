@@ -2,7 +2,6 @@
  * data in physical layer
  * @see https://en.wikipedia.org/wiki/Ethernet_frame
  */
-
 type EthernetPacket = {
   header: {
     preamble: ArrayBuffer;
@@ -101,7 +100,6 @@ class Hub {
 }
 
 /**
- * references
  * @see https://packet6.com/cam-table-fundamental-switch-operations/
  */
 type ContentAddressableMemoryTable = {
@@ -131,7 +129,9 @@ class Switch {
   };
 }
 
-type RoutingTable = {};
+type RoutingTable = {
+  // TODO
+};
 class Router {
   wanPort: Device;
   lanPorts: Device[];
