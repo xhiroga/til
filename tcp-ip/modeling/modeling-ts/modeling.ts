@@ -31,6 +31,7 @@ type IpAddress = ArrayBuffer;
 
 /**
  * data in network layer
+ * @see https://tools.ietf.org/html/rfc791
  * @see https://ja.wikipedia.org/wiki/IPv4
  */
 type IpV4Packet = {
@@ -54,6 +55,7 @@ type IpV4Packet = {
 
 /**
  * data in tcp
+ * @see https://tools.ietf.org/html/rfc793
  */
 type Segment = {};
 
@@ -129,15 +131,22 @@ class Switch {
   };
 }
 
-type RoutingTable = {
-  // TODO
+type RoutingTableEntry = {
+  subnet: ArrayBuffer;
+  nextHop: ArrayBuffer;
 };
+type RoutingTable = RoutingTableEntry[];
 class Router {
   wanPort: Device;
   lanPorts: Device[];
   routingTable: RoutingTable;
+  subnetMask: ArrayBuffer;
   constructor(wanPort: Device, lanPorts: Device[]) {}
-  receive = () => {
-    // TODO
+  receive = (packet: EthernetPacket) => {
+    const destinationAddress = packet.payload.payload.header.destinationAddress;
   };
 }
+const Layer3Switch = Router;
+
+class LoadBalancer {}
+const Layer4To7Switch = LoadBalancer;
