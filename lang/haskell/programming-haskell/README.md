@@ -9,6 +9,14 @@
 
 - JetBrains 公式を含め、他の Haskell Plugin がインストールされているとエラーが起きる。
 
+## test
+
+```
+# hspec-discover を利用し、テスト対象のファイルを自動で見つけている。 
+stack test
+```
+
+
 ## references
 
 - [プログラミング Haskell 第 2 版](https://amzn.to/36si782)
