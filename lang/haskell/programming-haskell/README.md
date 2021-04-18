@@ -2,7 +2,8 @@
 
 ## setup IntelliJ
 
-see [How do I set up IntelliJ to build Haskell projects with Stack?](https://stackoverflow.com/questions/37754956/how-do-i-set-up-intellij-to-build-haskell-projects-with-stack)
+- see [How do I set up IntelliJ to build Haskell projects with Stack?](https://stackoverflow.com/questions/37754956/how-do-i-set-up-intellij-to-build-haskell-projects-with-stack)
+- install `stack install hspec-discover`
 
 ### note
 
@@ -11,3 +12,4 @@ see [How do I set up IntelliJ to build Haskell projects with Stack?](https://sta
 ## references
 
 - [プログラミング Haskell 第 2 版](https://amzn.to/36si782)
+- [テストフレームワーク (hspec)](https://haskell.e-bigmoon.com/stack/test/hspec.html)
