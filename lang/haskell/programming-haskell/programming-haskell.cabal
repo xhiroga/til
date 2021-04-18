@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 6ab29818f66646dd15d42e6fb8784d53eff537f4f39fcec3d7d2c358367c0b30
+
+name:           programming-haskell
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/Github username here/programming-haskell#readme>
+homepage:       https://github.com/Github username here/programming-haskell#readme
+bug-reports:    https://github.com/Github username here/programming-haskell/issues
+author:         Author name here
+maintainer:     Author email here
+copyright:      2019 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/Github username here/programming-haskell
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_programming_haskell
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable programming-haskell-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_programming_haskell
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , programming-haskell
+  default-language: Haskell2010
+
+test-suite programming-haskell-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_programming_haskell
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , programming-haskell
+  default-language: Haskell2010
