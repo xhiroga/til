@@ -1,0 +1,942 @@
+{
+  "kind": "NodeList",
+  "apiVersion": "v1",
+  "metadata": {
+    "selfLink": "/api/v1/nodes",
+    "resourceVersion": "3563"
+  },
+  "items": [
+    {
+      "metadata": {
+        "name": "k3d-k3s-default-server-0",
+        "selfLink": "/api/v1/nodes/k3d-k3s-default-server-0",
+        "uid": "6a2f02a7-f9a1-4e92-8b5b-aaa4b990f2a9",
+        "resourceVersion": "2352",
+        "creationTimestamp": "2021-05-02T13:21:34Z",
+        "labels": {
+          "beta.kubernetes.io/arch": "amd64",
+          "beta.kubernetes.io/instance-type": "k3s",
+          "beta.kubernetes.io/os": "linux",
+          "k3s.io/hostname": "k3d-k3s-default-server-0",
+          "k3s.io/internal-ip": "172.28.0.2",
+          "kubernetes.io/arch": "amd64",
+          "kubernetes.io/hostname": "k3d-k3s-default-server-0",
+          "kubernetes.io/os": "linux",
+          "node-role.kubernetes.io/etcd": "true",
+          "node-role.kubernetes.io/master": "true",
+          "node.kubernetes.io/instance-type": "k3s"
+        },
+        "annotations": {
+          "etcd.k3s.cattle.io/node-address": "172.28.0.2",
+          "etcd.k3s.cattle.io/node-name": "k3d-k3s-default-server-0-93af1f8d",
+          "flannel.alpha.coreos.com/backend-data": "{\"VtepMAC\":\"42:45:7c:85:e6:42\"}",
+          "flannel.alpha.coreos.com/backend-type": "vxlan",
+          "flannel.alpha.coreos.com/kube-subnet-manager": "true",
+          "flannel.alpha.coreos.com/public-ip": "172.28.0.2",
+          "k3s.io/node-args": "[\"server\",\"--cluster-init\",\"--tls-san\",\"0.0.0.0\"]",
+          "k3s.io/node-config-hash": "UVKPDETVD7RJPY3K4KTB5LKLOHR5OJUHVBYRT3JQ7QEKGNMW2IYA====",
+          "k3s.io/node-env": "{\"K3S_KUBECONFIG_OUTPUT\":\"/output/kubeconfig.yaml\",\"K3S_TOKEN\":\"********\"}",
+          "node.alpha.kubernetes.io/ttl": "0",
+          "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+        },
+        "finalizers": [
+          "wrangler.cattle.io/managed-etcd-controller",
+          "wrangler.cattle.io/node"
+        ],
+        "managedFields": [
+          {
+            "manager": "k3s",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2021-05-02T13:28:05Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:etcd.k3s.cattle.io/node-address": {},
+                  "f:etcd.k3s.cattle.io/node-name": {},
+                  "f:flannel.alpha.coreos.com/backend-data": {},
+                  "f:flannel.alpha.coreos.com/backend-type": {},
+                  "f:flannel.alpha.coreos.com/kube-subnet-manager": {},
+                  "f:flannel.alpha.coreos.com/public-ip": {},
+                  "f:k3s.io/node-args": {},
+                  "f:k3s.io/node-config-hash": {},
+                  "f:k3s.io/node-env": {},
+                  "f:node.alpha.kubernetes.io/ttl": {},
+                  "f:volumes.kubernetes.io/controller-managed-attach-detach": {}
+                },
+                "f:finalizers": {
+                  ".": {},
+                  "v:\"wrangler.cattle.io/managed-etcd-controller\"": {},
+                  "v:\"wrangler.cattle.io/node\"": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:beta.kubernetes.io/arch": {},
+                  "f:beta.kubernetes.io/instance-type": {},
+                  "f:beta.kubernetes.io/os": {},
+                  "f:k3s.io/hostname": {},
+                  "f:k3s.io/internal-ip": {},
+                  "f:kubernetes.io/arch": {},
+                  "f:kubernetes.io/hostname": {},
+                  "f:kubernetes.io/os": {},
+                  "f:node-role.kubernetes.io/etcd": {},
+                  "f:node-role.kubernetes.io/master": {},
+                  "f:node.kubernetes.io/instance-type": {}
+                }
+              },
+              "f:spec": {
+                "f:podCIDR": {},
+                "f:podCIDRs": {
+                  ".": {},
+                  "v:\"10.42.0.0/24\"": {}
+                },
+                "f:providerID": {}
+              },
+              "f:status": {
+                "f:addresses": {
+                  ".": {},
+                  "k:{\"type\":\"Hostname\"}": {
+                    ".": {},
+                    "f:address": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"InternalIP\"}": {
+                    ".": {},
+                    "f:address": {},
+                    "f:type": {}
+                  }
+                },
+                "f:allocatable": {
+                  ".": {},
+                  "f:cpu": {},
+                  "f:ephemeral-storage": {},
+                  "f:hugepages-1Gi": {},
+                  "f:hugepages-2Mi": {},
+                  "f:memory": {},
+                  "f:pods": {}
+                },
+                "f:capacity": {
+                  ".": {},
+                  "f:cpu": {},
+                  "f:ephemeral-storage": {},
+                  "f:hugepages-1Gi": {},
+                  "f:hugepages-2Mi": {},
+                  "f:memory": {},
+                  "f:pods": {}
+                },
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"DiskPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"MemoryPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"NetworkUnavailable\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"PIDPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:daemonEndpoints": {
+                  "f:kubeletEndpoint": {
+                    "f:Port": {}
+                  }
+                },
+                "f:images": {},
+                "f:nodeInfo": {
+                  "f:architecture": {},
+                  "f:bootID": {},
+                  "f:containerRuntimeVersion": {},
+                  "f:kernelVersion": {},
+                  "f:kubeProxyVersion": {},
+                  "f:kubeletVersion": {},
+                  "f:operatingSystem": {},
+                  "f:osImage": {},
+                  "f:systemUUID": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "podCIDR": "10.42.0.0/24",
+        "podCIDRs": ["10.42.0.0/24"],
+        "providerID": "k3s://k3d-k3s-default-server-0"
+      },
+      "status": {
+        "capacity": {
+          "cpu": "6",
+          "ephemeral-storage": "61255492Ki",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "2035820Ki",
+          "pods": "110"
+        },
+        "allocatable": {
+          "cpu": "6",
+          "ephemeral-storage": "59589342571",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "2035820Ki",
+          "pods": "110"
+        },
+        "conditions": [
+          {
+            "type": "NetworkUnavailable",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:21:46Z",
+            "lastTransitionTime": "2021-05-02T13:21:46Z",
+            "reason": "FlannelIsUp",
+            "message": "Flannel is running on this node"
+          },
+          {
+            "type": "MemoryPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:05Z",
+            "lastTransitionTime": "2021-05-02T13:21:34Z",
+            "reason": "KubeletHasSufficientMemory",
+            "message": "kubelet has sufficient memory available"
+          },
+          {
+            "type": "DiskPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:05Z",
+            "lastTransitionTime": "2021-05-02T13:21:34Z",
+            "reason": "KubeletHasNoDiskPressure",
+            "message": "kubelet has no disk pressure"
+          },
+          {
+            "type": "PIDPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:05Z",
+            "lastTransitionTime": "2021-05-02T13:21:34Z",
+            "reason": "KubeletHasSufficientPID",
+            "message": "kubelet has sufficient PID available"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastHeartbeatTime": "2021-05-02T13:28:05Z",
+            "lastTransitionTime": "2021-05-02T13:21:44Z",
+            "reason": "KubeletReady",
+            "message": "kubelet is posting ready status"
+          }
+        ],
+        "addresses": [
+          {
+            "type": "InternalIP",
+            "address": "172.28.0.2"
+          },
+          {
+            "type": "Hostname",
+            "address": "k3d-k3s-default-server-0"
+          }
+        ],
+        "daemonEndpoints": {
+          "kubeletEndpoint": {
+            "Port": 10250
+          }
+        },
+        "nodeInfo": {
+          "machineID": "",
+          "systemUUID": "e8394434-0000-0000-938c-15c93e25f514",
+          "bootID": "f3fffb34-bffb-4fe7-8399-a7822d921d3f",
+          "kernelVersion": "4.19.121-linuxkit",
+          "osImage": "Unknown",
+          "containerRuntimeVersion": "containerd://1.4.0-k3s1",
+          "kubeletVersion": "v1.19.3+k3s2",
+          "kubeProxyVersion": "v1.19.3+k3s2",
+          "operatingSystem": "linux",
+          "architecture": "amd64"
+        },
+        "images": [
+          {
+            "names": [
+              "docker.io/rancher/klipper-helm@sha256:9cab2b9230d0454933de576b4e768cda8e0f1395cd5aca86ab649fc1d3be47bc",
+              "docker.io/rancher/klipper-helm:v0.3.0"
+            ],
+            "sizeBytes": 49992985
+          },
+          {
+            "names": [
+              "docker.io/rancher/coredns-coredns@sha256:e70c936deab8efed89db66f04847fec137dbb81d5b456e8068b6e71cb770f6c0",
+              "docker.io/rancher/coredns-coredns:1.6.9"
+            ],
+            "sizeBytes": 13403638
+          },
+          {
+            "names": [
+              "docker.io/rancher/local-path-provisioner@sha256:40cb8c984c1759f1860eee088035040f47051c959a6d07cdb126e132c6f43b45",
+              "docker.io/rancher/local-path-provisioner:v0.0.14"
+            ],
+            "sizeBytes": 13367922
+          },
+          {
+            "names": [
+              "docker.io/rancher/metrics-server@sha256:b85628b103169d7db52a32a48b46d8942accb7bde3709c0a4888a23d035f9f1e",
+              "docker.io/rancher/metrics-server:v0.3.6"
+            ],
+            "sizeBytes": 10543877
+          },
+          {
+            "names": [
+              "docker.io/rancher/klipper-lb@sha256:2fb97818f5d64096d635bc72501a6cb2c8b88d5d16bc031cf71b5b6460925e4a",
+              "docker.io/rancher/klipper-lb:v0.1.2"
+            ],
+            "sizeBytes": 2708293
+          },
+          {
+            "names": [
+              "docker.io/rancher/pause@sha256:d22591b61e9c2b52aecbf07106d5db313c4f178e404d660b32517b18fcbf0144",
+              "docker.io/rancher/pause:3.1"
+            ],
+            "sizeBytes": 326597
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "k3d-k3s-default-server-1",
+        "selfLink": "/api/v1/nodes/k3d-k3s-default-server-1",
+        "uid": "9a36d9d6-6059-417c-8b8a-f9bf70ff0e6f",
+        "resourceVersion": "2455",
+        "creationTimestamp": "2021-05-02T13:21:49Z",
+        "labels": {
+          "beta.kubernetes.io/arch": "amd64",
+          "beta.kubernetes.io/instance-type": "k3s",
+          "beta.kubernetes.io/os": "linux",
+          "k3s.io/hostname": "k3d-k3s-default-server-1",
+          "k3s.io/internal-ip": "172.28.0.3",
+          "kubernetes.io/arch": "amd64",
+          "kubernetes.io/hostname": "k3d-k3s-default-server-1",
+          "kubernetes.io/os": "linux",
+          "node-role.kubernetes.io/etcd": "true",
+          "node-role.kubernetes.io/master": "true",
+          "node.kubernetes.io/instance-type": "k3s"
+        },
+        "annotations": {
+          "etcd.k3s.cattle.io/node-address": "172.28.0.3",
+          "etcd.k3s.cattle.io/node-name": "k3d-k3s-default-server-1-86d0e262",
+          "flannel.alpha.coreos.com/backend-data": "{\"VtepMAC\":\"c6:1e:ba:22:ff:28\"}",
+          "flannel.alpha.coreos.com/backend-type": "vxlan",
+          "flannel.alpha.coreos.com/kube-subnet-manager": "true",
+          "flannel.alpha.coreos.com/public-ip": "172.28.0.3",
+          "k3s.io/node-args": "[\"server\",\"--tls-san\",\"0.0.0.0\"]",
+          "k3s.io/node-config-hash": "G5SCQ4ZXIZKDT47UIKM4ZO4U4WAYZBT5E4UP3IVAI6TNJFW7EW2Q====",
+          "k3s.io/node-env": "{\"K3S_KUBECONFIG_OUTPUT\":\"/output/kubeconfig.yaml\",\"K3S_TOKEN\":\"********\",\"K3S_URL\":\"https://k3d-k3s-default-server-0:6443\"}",
+          "node.alpha.kubernetes.io/ttl": "0",
+          "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+        },
+        "finalizers": [
+          "wrangler.cattle.io/managed-etcd-controller",
+          "wrangler.cattle.io/node"
+        ],
+        "managedFields": [
+          {
+            "manager": "k3s",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2021-05-02T13:28:27Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:etcd.k3s.cattle.io/node-address": {},
+                  "f:etcd.k3s.cattle.io/node-name": {},
+                  "f:flannel.alpha.coreos.com/backend-data": {},
+                  "f:flannel.alpha.coreos.com/backend-type": {},
+                  "f:flannel.alpha.coreos.com/kube-subnet-manager": {},
+                  "f:flannel.alpha.coreos.com/public-ip": {},
+                  "f:k3s.io/node-args": {},
+                  "f:k3s.io/node-config-hash": {},
+                  "f:k3s.io/node-env": {},
+                  "f:node.alpha.kubernetes.io/ttl": {},
+                  "f:volumes.kubernetes.io/controller-managed-attach-detach": {}
+                },
+                "f:finalizers": {
+                  ".": {},
+                  "v:\"wrangler.cattle.io/managed-etcd-controller\"": {},
+                  "v:\"wrangler.cattle.io/node\"": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:beta.kubernetes.io/arch": {},
+                  "f:beta.kubernetes.io/instance-type": {},
+                  "f:beta.kubernetes.io/os": {},
+                  "f:k3s.io/hostname": {},
+                  "f:k3s.io/internal-ip": {},
+                  "f:kubernetes.io/arch": {},
+                  "f:kubernetes.io/hostname": {},
+                  "f:kubernetes.io/os": {},
+                  "f:node-role.kubernetes.io/etcd": {},
+                  "f:node-role.kubernetes.io/master": {},
+                  "f:node.kubernetes.io/instance-type": {}
+                }
+              },
+              "f:spec": {
+                "f:podCIDR": {},
+                "f:podCIDRs": {
+                  ".": {},
+                  "v:\"10.42.1.0/24\"": {}
+                },
+                "f:providerID": {}
+              },
+              "f:status": {
+                "f:addresses": {
+                  ".": {},
+                  "k:{\"type\":\"Hostname\"}": {
+                    ".": {},
+                    "f:address": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"InternalIP\"}": {
+                    ".": {},
+                    "f:address": {},
+                    "f:type": {}
+                  }
+                },
+                "f:allocatable": {
+                  ".": {},
+                  "f:cpu": {},
+                  "f:ephemeral-storage": {},
+                  "f:hugepages-1Gi": {},
+                  "f:hugepages-2Mi": {},
+                  "f:memory": {},
+                  "f:pods": {}
+                },
+                "f:capacity": {
+                  ".": {},
+                  "f:cpu": {},
+                  "f:ephemeral-storage": {},
+                  "f:hugepages-1Gi": {},
+                  "f:hugepages-2Mi": {},
+                  "f:memory": {},
+                  "f:pods": {}
+                },
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"DiskPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"MemoryPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"NetworkUnavailable\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"PIDPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:daemonEndpoints": {
+                  "f:kubeletEndpoint": {
+                    "f:Port": {}
+                  }
+                },
+                "f:images": {},
+                "f:nodeInfo": {
+                  "f:architecture": {},
+                  "f:bootID": {},
+                  "f:containerRuntimeVersion": {},
+                  "f:kernelVersion": {},
+                  "f:kubeProxyVersion": {},
+                  "f:kubeletVersion": {},
+                  "f:operatingSystem": {},
+                  "f:osImage": {},
+                  "f:systemUUID": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "podCIDR": "10.42.1.0/24",
+        "podCIDRs": ["10.42.1.0/24"],
+        "providerID": "k3s://k3d-k3s-default-server-1"
+      },
+      "status": {
+        "capacity": {
+          "cpu": "6",
+          "ephemeral-storage": "61255492Ki",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "2035820Ki",
+          "pods": "110"
+        },
+        "allocatable": {
+          "cpu": "6",
+          "ephemeral-storage": "59589342571",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "2035820Ki",
+          "pods": "110"
+        },
+        "conditions": [
+          {
+            "type": "NetworkUnavailable",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:21:50Z",
+            "lastTransitionTime": "2021-05-02T13:21:50Z",
+            "reason": "FlannelIsUp",
+            "message": "Flannel is running on this node"
+          },
+          {
+            "type": "MemoryPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:27Z",
+            "lastTransitionTime": "2021-05-02T13:21:49Z",
+            "reason": "KubeletHasSufficientMemory",
+            "message": "kubelet has sufficient memory available"
+          },
+          {
+            "type": "DiskPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:27Z",
+            "lastTransitionTime": "2021-05-02T13:21:49Z",
+            "reason": "KubeletHasNoDiskPressure",
+            "message": "kubelet has no disk pressure"
+          },
+          {
+            "type": "PIDPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:27Z",
+            "lastTransitionTime": "2021-05-02T13:21:49Z",
+            "reason": "KubeletHasSufficientPID",
+            "message": "kubelet has sufficient PID available"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastHeartbeatTime": "2021-05-02T13:28:27Z",
+            "lastTransitionTime": "2021-05-02T13:21:59Z",
+            "reason": "KubeletReady",
+            "message": "kubelet is posting ready status"
+          }
+        ],
+        "addresses": [
+          {
+            "type": "InternalIP",
+            "address": "172.28.0.3"
+          },
+          {
+            "type": "Hostname",
+            "address": "k3d-k3s-default-server-1"
+          }
+        ],
+        "daemonEndpoints": {
+          "kubeletEndpoint": {
+            "Port": 10250
+          }
+        },
+        "nodeInfo": {
+          "machineID": "",
+          "systemUUID": "e8394434-0000-0000-938c-15c93e25f514",
+          "bootID": "f3fffb34-bffb-4fe7-8399-a7822d921d3f",
+          "kernelVersion": "4.19.121-linuxkit",
+          "osImage": "Unknown",
+          "containerRuntimeVersion": "containerd://1.4.0-k3s1",
+          "kubeletVersion": "v1.19.3+k3s2",
+          "kubeProxyVersion": "v1.19.3+k3s2",
+          "operatingSystem": "linux",
+          "architecture": "amd64"
+        },
+        "images": [
+          {
+            "names": [
+              "docker.io/rancher/library-traefik@sha256:3ba3ed48c4632f2b02671923950b30b5b7f1b556e559ce15446d1f5d648a037d",
+              "docker.io/rancher/library-traefik:1.7.19"
+            ],
+            "sizeBytes": 24011762
+          },
+          {
+            "names": [
+              "docker.io/rancher/klipper-lb@sha256:2fb97818f5d64096d635bc72501a6cb2c8b88d5d16bc031cf71b5b6460925e4a",
+              "docker.io/rancher/klipper-lb:v0.1.2"
+            ],
+            "sizeBytes": 2708293
+          },
+          {
+            "names": [
+              "docker.io/rancher/pause@sha256:d22591b61e9c2b52aecbf07106d5db313c4f178e404d660b32517b18fcbf0144",
+              "docker.io/rancher/pause:3.1"
+            ],
+            "sizeBytes": 326597
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "k3d-k3s-default-server-2",
+        "selfLink": "/api/v1/nodes/k3d-k3s-default-server-2",
+        "uid": "105e8c22-772a-4907-a1af-dab06e8cebc7",
+        "resourceVersion": "2389",
+        "creationTimestamp": "2021-05-02T13:22:13Z",
+        "labels": {
+          "beta.kubernetes.io/arch": "amd64",
+          "beta.kubernetes.io/instance-type": "k3s",
+          "beta.kubernetes.io/os": "linux",
+          "k3s.io/hostname": "k3d-k3s-default-server-2",
+          "k3s.io/internal-ip": "172.28.0.4",
+          "kubernetes.io/arch": "amd64",
+          "kubernetes.io/hostname": "k3d-k3s-default-server-2",
+          "kubernetes.io/os": "linux",
+          "node-role.kubernetes.io/etcd": "true",
+          "node-role.kubernetes.io/master": "true",
+          "node.kubernetes.io/instance-type": "k3s"
+        },
+        "annotations": {
+          "etcd.k3s.cattle.io/node-address": "172.28.0.4",
+          "etcd.k3s.cattle.io/node-name": "k3d-k3s-default-server-2-40e78ef8",
+          "flannel.alpha.coreos.com/backend-data": "{\"VtepMAC\":\"de:d4:06:b1:94:16\"}",
+          "flannel.alpha.coreos.com/backend-type": "vxlan",
+          "flannel.alpha.coreos.com/kube-subnet-manager": "true",
+          "flannel.alpha.coreos.com/public-ip": "172.28.0.4",
+          "k3s.io/node-args": "[\"server\",\"--tls-san\",\"0.0.0.0\"]",
+          "k3s.io/node-config-hash": "G5SCQ4ZXIZKDT47UIKM4ZO4U4WAYZBT5E4UP3IVAI6TNJFW7EW2Q====",
+          "k3s.io/node-env": "{\"K3S_KUBECONFIG_OUTPUT\":\"/output/kubeconfig.yaml\",\"K3S_TOKEN\":\"********\",\"K3S_URL\":\"https://k3d-k3s-default-server-0:6443\"}",
+          "node.alpha.kubernetes.io/ttl": "0",
+          "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+        },
+        "finalizers": [
+          "wrangler.cattle.io/managed-etcd-controller",
+          "wrangler.cattle.io/node"
+        ],
+        "managedFields": [
+          {
+            "manager": "k3s",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2021-05-02T13:28:13Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:etcd.k3s.cattle.io/node-address": {},
+                  "f:etcd.k3s.cattle.io/node-name": {},
+                  "f:flannel.alpha.coreos.com/backend-data": {},
+                  "f:flannel.alpha.coreos.com/backend-type": {},
+                  "f:flannel.alpha.coreos.com/kube-subnet-manager": {},
+                  "f:flannel.alpha.coreos.com/public-ip": {},
+                  "f:k3s.io/node-args": {},
+                  "f:k3s.io/node-config-hash": {},
+                  "f:k3s.io/node-env": {},
+                  "f:node.alpha.kubernetes.io/ttl": {},
+                  "f:volumes.kubernetes.io/controller-managed-attach-detach": {}
+                },
+                "f:finalizers": {
+                  ".": {},
+                  "v:\"wrangler.cattle.io/managed-etcd-controller\"": {},
+                  "v:\"wrangler.cattle.io/node\"": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:beta.kubernetes.io/arch": {},
+                  "f:beta.kubernetes.io/instance-type": {},
+                  "f:beta.kubernetes.io/os": {},
+                  "f:k3s.io/hostname": {},
+                  "f:k3s.io/internal-ip": {},
+                  "f:kubernetes.io/arch": {},
+                  "f:kubernetes.io/hostname": {},
+                  "f:kubernetes.io/os": {},
+                  "f:node-role.kubernetes.io/etcd": {},
+                  "f:node-role.kubernetes.io/master": {},
+                  "f:node.kubernetes.io/instance-type": {}
+                }
+              },
+              "f:spec": {
+                "f:podCIDR": {},
+                "f:podCIDRs": {
+                  ".": {},
+                  "v:\"10.42.2.0/24\"": {}
+                },
+                "f:providerID": {}
+              },
+              "f:status": {
+                "f:addresses": {
+                  ".": {},
+                  "k:{\"type\":\"Hostname\"}": {
+                    ".": {},
+                    "f:address": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"InternalIP\"}": {
+                    ".": {},
+                    "f:address": {},
+                    "f:type": {}
+                  }
+                },
+                "f:allocatable": {
+                  ".": {},
+                  "f:cpu": {},
+                  "f:ephemeral-storage": {},
+                  "f:hugepages-1Gi": {},
+                  "f:hugepages-2Mi": {},
+                  "f:memory": {},
+                  "f:pods": {}
+                },
+                "f:capacity": {
+                  ".": {},
+                  "f:cpu": {},
+                  "f:ephemeral-storage": {},
+                  "f:hugepages-1Gi": {},
+                  "f:hugepages-2Mi": {},
+                  "f:memory": {},
+                  "f:pods": {}
+                },
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"DiskPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"MemoryPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"NetworkUnavailable\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"PIDPressure\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:daemonEndpoints": {
+                  "f:kubeletEndpoint": {
+                    "f:Port": {}
+                  }
+                },
+                "f:images": {},
+                "f:nodeInfo": {
+                  "f:architecture": {},
+                  "f:bootID": {},
+                  "f:containerRuntimeVersion": {},
+                  "f:kernelVersion": {},
+                  "f:kubeProxyVersion": {},
+                  "f:kubeletVersion": {},
+                  "f:operatingSystem": {},
+                  "f:osImage": {},
+                  "f:systemUUID": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "podCIDR": "10.42.2.0/24",
+        "podCIDRs": ["10.42.2.0/24"],
+        "providerID": "k3s://k3d-k3s-default-server-2"
+      },
+      "status": {
+        "capacity": {
+          "cpu": "6",
+          "ephemeral-storage": "61255492Ki",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "2035820Ki",
+          "pods": "110"
+        },
+        "allocatable": {
+          "cpu": "6",
+          "ephemeral-storage": "59589342571",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "2035820Ki",
+          "pods": "110"
+        },
+        "conditions": [
+          {
+            "type": "NetworkUnavailable",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:22:17Z",
+            "lastTransitionTime": "2021-05-02T13:22:17Z",
+            "reason": "FlannelIsUp",
+            "message": "Flannel is running on this node"
+          },
+          {
+            "type": "MemoryPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:13Z",
+            "lastTransitionTime": "2021-05-02T13:22:12Z",
+            "reason": "KubeletHasSufficientMemory",
+            "message": "kubelet has sufficient memory available"
+          },
+          {
+            "type": "DiskPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:13Z",
+            "lastTransitionTime": "2021-05-02T13:22:12Z",
+            "reason": "KubeletHasNoDiskPressure",
+            "message": "kubelet has no disk pressure"
+          },
+          {
+            "type": "PIDPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2021-05-02T13:28:13Z",
+            "lastTransitionTime": "2021-05-02T13:22:12Z",
+            "reason": "KubeletHasSufficientPID",
+            "message": "kubelet has sufficient PID available"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastHeartbeatTime": "2021-05-02T13:28:13Z",
+            "lastTransitionTime": "2021-05-02T13:22:14Z",
+            "reason": "KubeletReady",
+            "message": "kubelet is posting ready status"
+          }
+        ],
+        "addresses": [
+          {
+            "type": "InternalIP",
+            "address": "172.28.0.4"
+          },
+          {
+            "type": "Hostname",
+            "address": "k3d-k3s-default-server-2"
+          }
+        ],
+        "daemonEndpoints": {
+          "kubeletEndpoint": {
+            "Port": 10250
+          }
+        },
+        "nodeInfo": {
+          "machineID": "",
+          "systemUUID": "e8394434-0000-0000-938c-15c93e25f514",
+          "bootID": "f3fffb34-bffb-4fe7-8399-a7822d921d3f",
+          "kernelVersion": "4.19.121-linuxkit",
+          "osImage": "Unknown",
+          "containerRuntimeVersion": "containerd://1.4.0-k3s1",
+          "kubeletVersion": "v1.19.3+k3s2",
+          "kubeProxyVersion": "v1.19.3+k3s2",
+          "operatingSystem": "linux",
+          "architecture": "amd64"
+        },
+        "images": [
+          {
+            "names": [
+              "docker.io/rancher/klipper-lb@sha256:2fb97818f5d64096d635bc72501a6cb2c8b88d5d16bc031cf71b5b6460925e4a",
+              "docker.io/rancher/klipper-lb:v0.1.2"
+            ],
+            "sizeBytes": 2708293
+          },
+          {
+            "names": [
+              "docker.io/rancher/pause@sha256:d22591b61e9c2b52aecbf07106d5db313c4f178e404d660b32517b18fcbf0144",
+              "docker.io/rancher/pause:3.1"
+            ],
+            "sizeBytes": 326597
+          }
+        ]
+      }
+    }
+  ]
+}
