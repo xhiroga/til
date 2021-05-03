@@ -56,7 +56,8 @@ kubectl delete -f replica-set/kuard-rs.yaml -v=8
 ## 12. Deployment
 
 ```shell
-kubectl apply -f deployment/nginx-deployment.yaml -v=8
+kubectl apply -f deployment/nginx-deployment.yaml -v=9
+kubectl delete -f deployment/nginx-deployment.yaml -v=8
 ```
 
 ## references
