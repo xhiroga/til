@@ -31,7 +31,7 @@ kubectl delete -f kuard-pod-health.yaml
 
 ```shell
 kubectl apply -f kuard-pod-vol.yaml -v=8
-
+kubectl delete -f kuard-pod-vol.yaml
 ```
 
 ## references
