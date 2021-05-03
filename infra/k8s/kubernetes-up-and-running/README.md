@@ -53,6 +53,12 @@ kubectl scale replicasets kuard --replicas=4 -v=8
 kubectl delete -f replica-set/kuard-rs.yaml -v=8
 ```
 
+## 12. Deployment
+
+```shell
+kubectl apply -f deployment/nginx-deployment.yaml -v=8
+```
+
 ## references
 
 - [入門 Kubernetes](https://amzn.to/3aTfAZp)

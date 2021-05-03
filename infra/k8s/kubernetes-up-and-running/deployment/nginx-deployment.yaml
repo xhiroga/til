@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    run: nginx
+    name: nginx
+    namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+        - image: nginx:1.7.12
+          name: nginx
+          imagePullPolicy: Always
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
