@@ -10,11 +10,14 @@ import { openApiV2 } from "./db/openapi-v2.ts";
 import { paths } from "./db/paths.ts";
 import { createPod, getPods } from "./services/pod-service.ts";
 import {
+  getResourceFromRequest,
   getApiGroupResponse,
   getApiGroupListResponse,
   getApiResourceListResponse,
+  getItemResponse,
   getListResponse,
 } from "./web/api-helper.ts";
+import { Pod } from "./definitions/resources.ts";
 
 const podsRouter = new Router()
   .get("/", (ctx) => {
@@ -24,9 +27,12 @@ const podsRouter = new Router()
       getPods(ctx.params.namespace)
     );
   })
-  .post("/", (ctx) => {
-    console.log(ctx.request.body());
-    createPod(ctx.request.body());
+  .post("/", async (ctx) => {
+    const pod = createPod(
+      ctx.params.namespace!,
+      getResourceFromRequest(await ctx.request.body().value) as Pod
+    );
+    ctx.response.body = getItemResponse("Pod", ctx.params.appsVersion!, pod);
   });
 const serviceAccountsRouter = new Router();
 const servicesRouter = new Router();
