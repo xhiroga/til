@@ -1,4 +1,6 @@
-const apiGroupList = [
+import { ApiGroup } from "../definitions/resources.ts";
+
+const apiGroupList: ApiGroup[] = [
   {
     name: "apps",
     versions: [

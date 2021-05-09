@@ -1,5 +1,4 @@
 const apiVersions = {
-  kind: "APIVersions",
   versions: ["v1"],
   serverAddressByClientCIDRs: [
     {
