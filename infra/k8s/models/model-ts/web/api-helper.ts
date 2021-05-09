@@ -10,15 +10,20 @@ type ListKind =
   | "ReplicaSetList"
   | "DeploymentList";
 
-export type ApiResponse = {
+export type ApiEnvelop = {
   kind: Kind;
   apiVersion: string;
 };
-export type ApiListResponse = ApiResponse & {
+export type ApiListEnvelop = ApiEnvelop & {
   metadata: {
     resourceVersion: string;
   };
   items: [];
+};
+
+const getResourceFromRequest = (request: ApiEnvelop & Resource) => {
+  const { kind, apiVersion, ...payload } = request;
+  return payload;
 };
 
 const getApiGroupResponse = () => {
@@ -48,6 +53,18 @@ const getApiResourceListResponse = (
   };
 };
 
+const getItemResponse = (
+  kind: ItemKind,
+  apiVersion: string,
+  resource: Resource
+) => {
+  return {
+    kind: kind,
+    apiVersion: apiVersion,
+    ...resource,
+  };
+};
+
 const getListResponse = (
   kind: ListKind,
   apiVersion: string,
@@ -61,8 +78,10 @@ const getListResponse = (
 };
 
 export {
+  getResourceFromRequest,
   getApiGroupResponse,
   getApiGroupListResponse,
   getApiResourceListResponse,
+  getItemResponse,
   getListResponse,
 };
