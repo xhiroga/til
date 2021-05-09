@@ -4,18 +4,26 @@ import {
   appsV1ApiResourceList,
 } from "./db/api-resource-list.ts";
 
+import { getNameSpaces } from "./services/namespace-service.ts";
 import { apiVersions } from "./db/api-versions.ts";
 import { openApiV2 } from "./db/openapi-v2.ts";
 import { paths } from "./db/paths.ts";
-import { createPod } from "./services/pod-service.ts";
+import { createPod, getPods } from "./services/pod-service.ts";
 import {
   getApiGroupResponse,
   getApiGroupListResponse,
   getApiResourceListResponse,
+  getListResponse,
 } from "./web/api-helper.ts";
 
 const podsRouter = new Router()
-  .get("/", (ctx) => {})
+  .get("/", (ctx) => {
+    ctx.response.body = getListResponse(
+      "PodList",
+      ctx.params.appsVersion!,
+      getPods(ctx.params.namespace)
+    );
+  })
   .post("/", (ctx) => {
     console.log(ctx.request.body());
     createPod(ctx.request.body());
@@ -34,9 +42,15 @@ const withAppsV1ResourcesRouter = (router: Router) => {
 
 const getNamespaceRouter = (withChildren: (router: Router) => Router) => {
   return new Router()
-    .get("/", (ctx) => {})
+    .get("/", (ctx) => {
+      ctx.response.body = getListResponse(
+        "NamespaceList",
+        ctx.params.version!, // 例えば /api/v1 と /apis/apps/v2 が共存した場合、どちらを使うのだろうか。
+        getNameSpaces()
+      );
+    })
     .use(
-      "/:namespaceId",
+      "/:namespace",
       withChildren(
         new Router()
           .get("/", (ctx) => {})
@@ -52,8 +66,9 @@ const apiRouter = new Router()
     ctx.response.body = { kind: "APIVersions", ...apiVersions };
   })
   .use(
+    "/:version",
     new Router()
-      .get("/:version", (ctx) => {
+      .get("/", (ctx) => {
         const version = ctx.params.version!;
         ctx.response.body = getApiResourceListResponse(
           version,
@@ -63,17 +78,18 @@ const apiRouter = new Router()
       .use("/namespaces", getNamespaceRouter(withV1ResourcesRouter).routes())
       .routes()
   );
+
 const appsApiRouter = new Router()
   .get("/", (ctx) => {
     ctx.response.body = getApiGroupResponse();
   })
   .use(
-    "/v1",
+    "/:appsVersion",
     new Router()
       .get("/", (ctx) => {
         ctx.response.body = getApiResourceListResponse(
-          "apps/v1",
-          appsV1ApiResourceList
+          `apps/${ctx.params.appsVersion}`,
+          appsV1ApiResourceList // インチキ
         );
       })
       .use(

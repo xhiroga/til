@@ -1,4 +1,4 @@
-export type Resource = APIResource | Pod | ReplicaSet | Deployment;
+export type Resource = APIResource | Naemspace | Pod | ReplicaSet | Deployment;
 export type Kind =
   // v1
   | "Pod"
@@ -65,6 +65,22 @@ export type APIResource = {
   shortNames?: string[];
   categories?: string[];
   storageVersionHash?: string;
+};
+
+export type Naemspace = {
+  metadata: {
+    name: string;
+    uid: string;
+    resourceVersion: string;
+    creationTimestamp: string;
+    managedFields: any[];
+  };
+  spec: {
+    finalizers: string[];
+  };
+  status: {
+    phase: string;
+  };
 };
 
 export type Container = {

@@ -5,6 +5,7 @@ type ItemKind = "APIVersions" | "APIGroup" | "APIResource" | Kind;
 type ListKind =
   | "APIGroupList"
   | "APIResourceList"
+  | "NamespaceList"
   | "PodList"
   | "ReplicaSetList"
   | "DeploymentList";
