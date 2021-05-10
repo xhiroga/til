@@ -22,4 +22,4 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 
 ### 学問の分類から調べる
 
-- [CIP](https://nces.ed.gov/ipeds/cipcode/browse.aspx?y=55) -- アメリカ教育統計センターによる、教育プログラム分類体系
+- [CIP](https://nces.ed.gov/ipeds/cipcode/browse.aspx?y=55) - アメリカ教育統計センターによる、教育プログラム分類体系
