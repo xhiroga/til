@@ -11,7 +11,7 @@ Function Componentを用いる。[^functional-components]
 #### Arrow Function vs Function
 
 アプリケーションの中で統一する。    
-個人的には引数と返り値の型定義を `React.VFC` で行えるアロー関数が好み。  
+個人的には引数と返り値の型定義をまとめて `React.VFC` で行えるアロー関数が好み。  
 function宣言には、同時に default exportできるメリットがある。
 
 ### Named Export vs Default Export
