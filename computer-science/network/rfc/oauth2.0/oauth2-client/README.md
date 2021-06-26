@@ -22,3 +22,6 @@ A.
 
 - [公開資料 \| OpenID ファウンデーション・ジャパン](https://www.openid.or.jp/document/)
     - RFCの日本語訳もこちらで公開されている。
+- [OAuth 2\.0 Authorization Framework](https://auth0.com/docs/protocols/protocol-oauth2)
+
+
