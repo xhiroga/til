@@ -23,13 +23,6 @@ const tokenEndpointPathName = getEnv('REACT_APP_TOKEN_ENDPOINT_PATH_NAME');
 
 const scope = getEnv('REACT_APP_ACCESS_TOKEN_SCOPE');
 
-type AuthorizationGrantType =
-  | 'authorization_code'
-  | 'implicit'
-  | 'resource_owner_password_credential'
-  | 'client_credential';
-const authorizationGrantType: AuthorizationGrantType = 'authorization_code';
-
 type AuthorizationResponseType = 'code' | 'token';
 const authorizationResponseType: AuthorizationResponseType = 'code';
 
@@ -44,13 +37,27 @@ type AuthorizationRequest = {
   state?: string;
 };
 
-type AuthorizationResponse = {
+type AuthorizationSuccessResponse = {
   code: string;
   state?: string;
 };
 
+type AuthorizationErrorResponse = {
+  error: any;
+  error_description?: string;
+  error_uri?: string;
+  state?: string;
+};
+
+type AuthorizationGrantType =
+  | 'authorization_code'
+  | 'implicit'
+  | 'resource_owner_password_credential'
+  | 'client_credential';
+const authorizationGrantType: AuthorizationGrantType = 'authorization_code';
+
 type AccessTokenRequest = {
-  grant_type: 'authorization_code';
+  grant_type: AuthorizationGrantType;
   code: string;
   redirect_uri?: string; // 認可リクエスト時と同じ値でなければならない(codeの横取りを防ぐための仕様だと思われる)
   client_id?: string;
@@ -71,12 +78,8 @@ type AccessTokenErrorResponse = {
   error_uri?: string;
 };
 
-type AccessTokenResponse =
-  | AccessTokenSuccessResponse
-  | AccessTokenErrorResponse;
-
 const Home: React.FunctionComponent = () => {
-  const authorizationRequest = {
+  const authorizationRequest: AuthorizationRequest = {
     response_type: authorizationResponseType,
     client_id: oauthClientId,
     redirect_uri: redirectEndpoint,
@@ -108,36 +111,41 @@ const EndpointContent: React.FunctionComponent = () => {
 
   useEffect(() => {
     const queries = querystring.parse(search.replace(`?`, ``));
-    if (queries.code !== undefined) {
-      setAuthorizationCode(queries.code as string);
+    if (queries.error !== undefined) {
+      setErrorMessage(JSON.stringify(queries as AuthorizationErrorResponse));
     }
+    setAuthorizationCode((queries as AuthorizationSuccessResponse).code);
+    setErrorMessage(null);
+
     return () => {
       setAuthorizationCode(null);
+      setErrorMessage(null);
     };
-  }, [search, setAuthorizationCode]);
+  }, [search, setAuthorizationCode, setErrorMessage]);
 
   const onClick = useCallback(() => {
     if (authorizationCode === null) {
       return;
     }
     const accessTokenRequest: AccessTokenRequest = {
-      grant_type: 'authorization_code',
+      grant_type: authorizationGrantType,
       code: authorizationCode,
       redirect_uri: redirectEndpoint,
       client_id: oauthClientId,
     };
     const params = querystring.stringify(accessTokenRequest);
+    const headers = {
+      'Content-Type': `application/x-www-form-urlencoded`,
+      Authorization: `Basic ${base64Encode(
+        `${oauthClientId}:${oauthClientPassword}`
+      )}`,
+    };
     void fetch(
       // https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/token-endpoint.html
       `${authorizationServerUrlOrigin}${tokenEndpointPathName}?${params}`,
       {
         method: `POST`,
-        headers: {
-          'Content-Type': `application/x-www-form-urlencoded`,
-          Authorization: `Basic ${base64Encode(
-            `${oauthClientId}:${oauthClientPassword}`
-          )}`,
-        },
+        headers: headers,
       }
     )
       .then((response) => response.json())
