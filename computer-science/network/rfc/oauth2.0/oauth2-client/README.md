@@ -22,6 +22,7 @@ A.
 
 - [公開資料 \| OpenID ファウンデーション・ジャパン](https://www.openid.or.jp/document/)
     - RFCの日本語訳もこちらで公開されている。
-- [OAuth 2\.0 Authorization Framework](https://auth0.com/docs/protocols/protocol-oauth2)
+- [Configuring a User Pool App Client \- Amazon Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-userpools-server-contract-reference.html)
+- [OAuth 2\.0 Authorization Framework \- Auth0](https://docs.aws.amazon.com/cognito/latest/developerguide/authorization-endpoint.html)
 
 

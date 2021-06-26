@@ -56,11 +56,17 @@ type AuthorizationGrantType =
   | 'client_credential';
 const authorizationGrantType: AuthorizationGrantType = 'authorization_code';
 
+type AccessTokenHeaders = {
+  'Content-Type': string;
+  Authorization?: string;
+};
+
 type AccessTokenRequest = {
   grant_type: AuthorizationGrantType;
   code: string;
   redirect_uri?: string; // 認可リクエスト時と同じ値でなければならない(codeの横取りを防ぐための仕様だと思われる)
   client_id?: string;
+  client_secret?: string;
 };
 
 type AccessTokenSuccessResponse = {
@@ -84,20 +90,52 @@ const Home: React.FunctionComponent = () => {
     client_id: oauthClientId,
     redirect_uri: redirectEndpoint,
   };
-  var parameter = querystring.stringify(authorizationRequest);
+  var query = querystring.stringify(authorizationRequest);
   if (authorizationServerUrlOrigin.includes('cognito')) {
-    parameter = parameter + `&scope=${scope}`; // + を URLエンコードしてはいけない
+    query = query + `&scope=${scope}`; // + を URLエンコードしてはいけない
+  } else {
+    query = query + `&${querystring.stringify({ scope: scope })}`;
   }
 
   return (
     <Center>
       <a
-        href={`${authorizationServerUrlOrigin}${authorizationEndpointPathName}?${parameter}`}
+        href={`${authorizationServerUrlOrigin}${authorizationEndpointPathName}?${query}`}
       >
         <button>Get OAuth Authorization Code</button>
       </a>
     </Center>
   );
+};
+
+// cognito -- https://docs.aws.amazon.com/cognito/latest/developerguide/token-endpoint.html
+// auth0 -- https://auth0.com/docs/api/authentication#get-token
+const getAccessTokenProps = (
+  authorizationCode: string
+): { query: string; headers: any } => {
+  var accessTokenRequest: AccessTokenRequest = {
+    grant_type: authorizationGrantType,
+    code: authorizationCode,
+    redirect_uri: redirectEndpoint,
+    client_id: oauthClientId,
+  };
+
+  var headers: AccessTokenHeaders = {
+    'Content-Type': `application/x-www-form-urlencoded`,
+    Authorization: `Basic ${base64Encode(
+      `${oauthClientId}:${oauthClientPassword}`
+    )}`,
+  };
+  if (authorizationServerUrlOrigin.includes('auth0')) {
+    accessTokenRequest = {
+      ...accessTokenRequest,
+      client_secret: oauthClientPassword,
+    };
+  }
+  return {
+    query: querystring.stringify(accessTokenRequest),
+    headers,
+  };
 };
 
 const EndpointContent: React.FunctionComponent = () => {
@@ -127,22 +165,9 @@ const EndpointContent: React.FunctionComponent = () => {
     if (authorizationCode === null) {
       return;
     }
-    const accessTokenRequest: AccessTokenRequest = {
-      grant_type: authorizationGrantType,
-      code: authorizationCode,
-      redirect_uri: redirectEndpoint,
-      client_id: oauthClientId,
-    };
-    const params = querystring.stringify(accessTokenRequest);
-    const headers = {
-      'Content-Type': `application/x-www-form-urlencoded`,
-      Authorization: `Basic ${base64Encode(
-        `${oauthClientId}:${oauthClientPassword}`
-      )}`,
-    };
+    const { query, headers } = getAccessTokenProps(authorizationCode);
     void fetch(
-      // https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/token-endpoint.html
-      `${authorizationServerUrlOrigin}${tokenEndpointPathName}?${params}`,
+      `${authorizationServerUrlOrigin}${tokenEndpointPathName}?${query}`,
       {
         method: `POST`,
         headers: headers,
