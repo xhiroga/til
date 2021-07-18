@@ -8,7 +8,7 @@
 
 # You need to edit these values.
 
-DICT_NAME		=	"IT用語辞典"
+DICT_NAME		=	"新明解IT辞典"
 DICT_SRC_PATH		=	MyDictionary.xml
 CSS_PATH		=	MyDictionary.css
 PLIST_PATH		=	MyInfo.plist
