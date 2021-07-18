@@ -35,6 +35,11 @@ RM			=	/bin/rm
 
 ###########################
 
+JING_URL	=	https://repo1.maven.org/maven2/com/thaiopensource/jing/20091111/jing-20091111.jar
+JING_JAR	=	jing-20091111.jar
+
+###########################
+
 all:
 	"$(DICT_BUILD_TOOL_BIN)/build_dict.sh" $(DICT_BUILD_OPTS) $(DICT_NAME) $(DICT_SRC_PATH) $(CSS_PATH) $(PLIST_PATH)
 	echo "Done."
@@ -47,6 +52,12 @@ install:
 	touch $(DESTINATION_FOLDER)
 	echo "Done."
 	echo "To test the new dictionary, try Dictionary.app."
+
+$(JING_JAR):
+	wget $(JING_URL) -O $(JING_JAR)
+
+validate: $(JING_JAR);
+	java -jar $(JING_JAR) documents/DictionarySchema/AppleDictionarySchema.rng $(DICT_SRC_PATH)
 
 clean:
 	$(RM) -rf $(DICT_DEV_KIT_OBJ_DIR)
