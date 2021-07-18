@@ -44,7 +44,6 @@ all:
 	"$(DICT_BUILD_TOOL_BIN)/build_dict.sh" $(DICT_BUILD_OPTS) $(DICT_NAME) $(DICT_SRC_PATH) $(CSS_PATH) $(PLIST_PATH)
 	echo "Done."
 
-
 install:
 	echo "Installing into $(DESTINATION_FOLDER)".
 	mkdir -p $(DESTINATION_FOLDER)
@@ -56,8 +55,15 @@ install:
 $(JING_JAR):
 	wget $(JING_URL) -O $(JING_JAR)
 
+compile:
+	DICT_SRC_PATH=$(DICT_SRC_PATH) deno run --allow-env --allow-write main.ts
+	echo "Compile Done."
+
 validate: $(JING_JAR);
 	java -jar $(JING_JAR) documents/DictionarySchema/AppleDictionarySchema.rng $(DICT_SRC_PATH)
+	echo "Validate Done."
+
+deploy: compile validate all install;
 
 clean:
 	$(RM) -rf $(DICT_DEV_KIT_OBJ_DIR)

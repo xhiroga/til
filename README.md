@@ -10,6 +10,5 @@ Additional Tools` をインストール
 ## Build & Install
 
 ```shell
-make validate
-make & make install
+make deploy
 ```
