@@ -8,6 +8,5 @@
 docker-compose build --build-arg
 docker-compose up -d
 ssh root@localhost -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 -i .ssh/id_ed25519
-export ANSIBLE_HOST_KEY_CHECKING=False
 ansible testserver -i hosts.yml -m ping
 ```

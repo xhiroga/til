@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - PASSWD=${PASSWD}
     volumes:
       - .ssh:/root/.ssh
     ports:
