@@ -13,7 +13,7 @@ A self curated list of awesome macOS provisioning scripts.
 
 - [minamarkham/formation: 💻 macOS setup script for front\-end development](https://github.com/minamarkham/formation) - Web開発のためのSetUpスクリプト。ZshでなくBashだったり、Dockerの代わりにVagrantだったり、Gulp使ってたり多少古い感じもするが、知らなかったツールがたくさんある。最終更新は2019年。Mathiasのdotfilesと上述のlaptopを参考にしている。
 
-- [geerlingguy/mac\-dev\-playbook: Mac setup and configuration via Ansible\.](https://github.com/geerlingguy/mac-dev-playbook) - 
+- [geerlingguy/mac\-dev\-playbook: Mac setup and configuration via Ansible\.](https://github.com/geerlingguy/mac-dev-playbook) - macOSセットアップでよくある操作（Dockからアプリを除外とか）をAnsibleのRoleにまとめているっぽい？Ansible読めないとありがたみがわからないが複数OSを設定するなら個人的にはこの方向性だと思う。
 
 - [MikeMcQuaid/strap: 👢 Bootstrap your macOS development system\.](https://github.com/MikeMcQuaid/strap) - Featureを列挙してくれているのが親切。ユーザーごとのdotfiles, Brewfileを勝手に設定してくれる発想が面白い。構成が個人ごとに異なりがちなdotfilesだが、このようなSetUpスクリプトに呼ばれることを前提として標準化されていくのではないか。
 
