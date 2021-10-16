@@ -4,7 +4,9 @@
 
 - フォーマットにPrettierを、LintにESLintを用いる。
   - List時にPrettierのルールで上書きするように。
+- VSCodeのExtensionでもPrettierとESLintを導入する。
 
+- No `main` in package.json
 
 ## References
 
