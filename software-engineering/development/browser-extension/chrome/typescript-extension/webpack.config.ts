@@ -1,8 +1,9 @@
-const path = require('path')
-const CopyPlugin = require('copy-webpack-plugin')
+import { Configuration } from 'webpack'
+import * as path from 'path'
+import CopyPlugin from 'copy-webpack-plugin'
 const srcDir = path.join(__dirname, 'src')
 
-module.exports = {
+const config: Configuration = {
   entry: {
     options: path.join(srcDir, 'options.ts'),
     content: path.join(srcDir, 'content.ts'),
@@ -30,3 +31,5 @@ module.exports = {
     }),
   ],
 }
+
+export default config
