@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Chrome extension by typescript, use yarn instead of npm",
   "scripts": {
-    "watch": "webpack --dev-tool inline-source-map --mode development",
+    "watch": "webpack --devtool inline-source-map --mode development --watch",
     "build": "webpack --mode production",
     "clean": "node -e 'fs.rmSync(`dist`, {recursive:true, force:true})'"
   },
