@@ -13,6 +13,10 @@
 - No use rimraf
 - Simpler webpack config
 
+## Note
+
+- `ts-node` がないと、`webpack.config.ts` を読み込めない
+
 ## References
 
 - [TypeScriptのプロジェクトにESLintとPrettierを導入する方法（\+VSCodeでの設定） \- Qiita](https://qiita.com/yuma-ito-bd/items/cca7490fd7e300bbf169)
