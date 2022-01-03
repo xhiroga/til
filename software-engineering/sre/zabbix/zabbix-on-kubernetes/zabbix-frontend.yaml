@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: monitoring
+  labels:
+    zabbix-app: zabbix-server
+  name: zabbix-web-nginx-mysql
+spec:
+  selector:
+    matchLabels:
+      zabbix-app: zabbix-server
+  serviceName: "zabbix-web-nginx-mysql"
+  replicas: 1
+  #strategy:
+  #  type: Recreate
+  template:
+    metadata:
+      labels:
+        zabbix-app: zabbix-server
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_DATABASE
+                  name: zabbix-app
+
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: zabbix-app
+
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: zabbix-app
+
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: zabbix-app
+            - name: ZBX_SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: ZBX_SERVER_HOST
+                  name: zabbix-app
+            - name: ZBX_SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: ZBX_SERVER_PORT
+                  name: zabbix-app
+            - name: ZBX_SERVER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: ZBX_SERVER_NAME
+                  name: zabbix-app
+          image: zabbix/zabbix-web-nginx-mysql:ubuntu-4.4-latest
+          livenessProbe:
+            exec:
+              command:
+                - curl
+                - -f
+                - http://localhost
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: zabbix-web-nginx-mysql
+          ports:
+            - containerPort: 80
+          resources: {}
+### Service
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: monitoring
+  labels:
+    zabbix-app: zabbix-server
+  name: zabbix-web-nginx-mysql
+spec:
+  ports:
+    - name: "8081"
+      port: 8081
+      targetPort: 80
+    - name: "8443"
+      port: 8443
+      targetPort: 443
+  selector:
+    zabbix-app: zabbix-server
+status:
+  loadBalancer: {}
