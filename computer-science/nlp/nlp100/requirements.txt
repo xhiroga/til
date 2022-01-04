@@ -1,1 +1,2 @@
 jupyter
+mecab-python3

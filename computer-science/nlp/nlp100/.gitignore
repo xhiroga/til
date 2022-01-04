@@ -154,4 +154,5 @@ cython_debug/
 #.idea/
 
 ## Project
+bin/*
 files/*
