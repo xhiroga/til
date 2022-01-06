@@ -1,8 +1,9 @@
 MECAB_IPADIC_REPO := git@github.com:neologd/mecab-ipadic-neologd.git
 NEKO_TXT_URL := https://nlp100.github.io/data/neko.txt
+AI_JA_ZIP_URL := https://nlp100.github.io/data/ai.ja.zip
 
 .PHONY: all
-all: bin bin/mecab-ipadic-neologd bin/mecab-ipadic-neologd/build files files/neko.txt files/neko.txt.mecab
+all: bin bin/mecab-ipadic-neologd bin/mecab-ipadic-neologd/build data data/neko.txt data/neko.txt.mecab
 
 bin:
 	mkdir -p bin
@@ -13,11 +14,11 @@ bin/mecab-ipadic-neologd: bin;
 # bin/mecab-ipadic-neologd/build: bin/mecab-ipadic-neologd;
 # 	cd bin/mecab-ipadic-neologd; ./bin/install-mecab-ipadic-neologd -n
 
-files:
-	mkdir -p files
+data:
+	mkdir -p data
 
-files/neko.txt: files;
+data/neko.txt: data;
 	wget $(NEKO_TXT_URL) -O $@
 
-files/neko.txt.mecab: files/neko.txt bin/mecab-ipadic-neologd;
-	cat files/neko.txt | mecab > $@
+data/neko.txt.mecab: data/neko.txt bin/mecab-ipadic-neologd;
+	mecab data/neko.txt -o $@
