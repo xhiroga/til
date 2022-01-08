@@ -1,5 +1,8 @@
 # 初めての拡張機能
 
+```shell
+open firefox://about:debugging
+```
 
 ## References and Inspirations
 
