@@ -3,16 +3,7 @@ NEKO_TXT_URL := https://nlp100.github.io/data/neko.txt
 AI_JA_ZIP_URL := https://nlp100.github.io/data/ai.ja.zip
 
 .PHONY: all
-all: bin bin/mecab-ipadic-neologd bin/mecab-ipadic-neologd/build data data/neko.txt data/neko.txt.mecab
-
-bin:
-	mkdir -p bin
-
-bin/mecab-ipadic-neologd: bin;
-	git clone --depth 1 $(MECAB_IPADIC_REPO) $@
-
-# bin/mecab-ipadic-neologd/build: bin/mecab-ipadic-neologd;
-# 	cd bin/mecab-ipadic-neologd; ./bin/install-mecab-ipadic-neologd -n
+all: data data/neko.txt data/neko.txt.mecab data/ai.ja.zip data/ai.ja
 
 data:
 	mkdir -p data
@@ -20,5 +11,23 @@ data:
 data/neko.txt: data;
 	wget $(NEKO_TXT_URL) -O $@
 
-data/neko.txt.mecab: data/neko.txt bin/mecab-ipadic-neologd;
+data/neko.txt.mecab: data/neko.txt;
 	mecab data/neko.txt -o $@
+
+data/ai.ja.zip: data;
+	wget $(AI_JA_ZIP_URL) -O $@
+
+data/ai.ja: data/ai.ja.zip;
+	unzip data/ai.ja.zip -d $@
+
+data/ai.ja.txt.parsed: data/ai.ja;
+	cabocha -f1 data/ai.ja/ai.ja.txt > data/ai.ja.txt.parsed
+
+# bin:
+# 	mkdir -p bin
+
+# bin/mecab-ipadic-neologd: bin;
+# 	git clone --depth 1 $(MECAB_IPADIC_REPO) $@
+
+# bin/mecab-ipadic-neologd/build: bin/mecab-ipadic-neologd;
+# 	cd bin/mecab-ipadic-neologd; ./bin/install-mecab-ipadic-neologd -n
