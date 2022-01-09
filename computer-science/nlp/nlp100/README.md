@@ -13,6 +13,10 @@ brew install xz
 make
 ```
 
+## Note
+
+第5章を`cabocha-python`で実装しようと試みたが（[ch05.ipynb](./ch05.ipynb)）、SwingObjectの扱いに不慣れなせいか上手く行かなかった。
+
 ## References and Inspirations
 
 - [言語処理100本ノック 2020 \(Rev 2\) \- NLP100 2020](https://nlp100.github.io/ja/)
