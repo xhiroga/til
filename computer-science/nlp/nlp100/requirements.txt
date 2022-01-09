@@ -4,3 +4,4 @@ numpy
 pandas
 autopep8
 matplotlib
+cabocha-python
