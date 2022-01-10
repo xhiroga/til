@@ -1,0 +1,4 @@
+ipykernel
+sklearn
+scipy
+pandas
