@@ -23,6 +23,7 @@ make
 - [VS CodeでJupyterしてみよう：Visual Studio Codeで快適Pythonライフ（1/2 ページ） \- ＠IT](https://atmarkit.itmedia.co.jp/ait/articles/2108/06/news030.html)
 - [MeCab: Yet Another Part\-of\-Speech and Morphological Analyzer](https://taku910.github.io/mecab/)
 - [MacにMeCabを利用できる環境を整える \- Qiita](https://qiita.com/paulxll/items/72a2bea9b1d1486ca751)
+- [Python\-機械学習\-自然言語処理\-言語処理100本ノック 2020 カテゴリーの記事一覧 \- ギークなエンジニアを目指す男](https://www.takapy.work/archive/category/Python-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-%E8%87%AA%E7%84%B6%E8%A8%80%E8%AA%9E%E5%87%A6%E7%90%86-%E8%A8%80%E8%AA%9E%E5%87%A6%E7%90%86100%E6%9C%AC%E3%83%8E%E3%83%83%E3%82%AF%202020)
 
 ### [ch05.ipynb](./ch05.ipynb)
 
