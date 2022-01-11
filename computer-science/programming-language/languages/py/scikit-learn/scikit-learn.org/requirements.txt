@@ -2,3 +2,7 @@ ipykernel
 sklearn
 scipy
 pandas
+requests
+lxml
+numpy
+autopep8
