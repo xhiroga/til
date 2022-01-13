@@ -4,10 +4,17 @@
 npm install && npm start
 ```
 
+## Q&A
+
+- ユーザーが複数のOrganizationに所属するとき、OrganizationごとにRoleを設定できる？
+- Organizationのメタデータで、サービスの有効化・無効化を管理できる？（RoleのPermissionをOrganizationのメタデータでFilterできる？）
+- ユーザーがOrganizationの入力を省略するためのURLを生成できる？
+
 ## References ans Inspirations
 
 - [Auth0 Organizationsという素晴らしい機能を今更ながら紹介する](https://zenn.dev/urmot/articles/8c18d8b49d822c#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB)
 - [Auth0 React SDK Quickstarts: Login](https://auth0.com/docs/quickstart/spa/react/01-login?download=true)
+- [Auth0 Organizations](https://auth0.com/docs/manage-users/organizations)
 
 ## Original Author
 
