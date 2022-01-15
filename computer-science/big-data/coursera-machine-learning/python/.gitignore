@@ -1,0 +1,4 @@
+*.swp
+*.ipynb
+.ipynb*
+__pycache__
