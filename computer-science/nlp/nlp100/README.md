@@ -3,8 +3,7 @@
 ## Development
 
 ```shell
-source .venv/bin.activate
-pip install -r requirements.txt
+poetry install
 
 brew install mecab
 brew install mecab-ipadic

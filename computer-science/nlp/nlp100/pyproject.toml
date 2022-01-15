@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "nlp100"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <13391129+xhiroga@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+mecab-python3 = "^1.0.4"
+numpy = "^1.22.1"
+pandas = "^1.3.5"
+matplotlib = "^3.5.1"
+cabocha-python = "^0.69.1"
+graphviz = "^0.19.1"
+sklearn = "^0.0"
+seaborn = "^0.11.2"
+gensim = "^4.1.2"
+
+[tool.poetry.dev-dependencies]
+ipykernel = "^6.7.0"
+autopep8 = "^1.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
