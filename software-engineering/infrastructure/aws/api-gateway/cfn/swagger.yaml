@@ -1,0 +1,95 @@
+anchors:
+  - methodProperties: &methodProperties
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: "proxy"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          headers:
+            Last-Modified:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+        "400":
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+        - sigv4: []
+  - integrationProperties: &integrationProperties
+      # The reference about x-amazon-apigateway-integration.
+      # https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-swagger-extensions-integration.html
+      type: "HTTP"
+      httpMethod: "ANY"
+      connectionType: VPC_LINK
+      requestParameters:
+        integration.request.path.proxy: "method.request.path.proxy"
+      requestTemplates:
+        application/json: "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n
+        ##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n
+        $input.json('$')"
+      passthroughBehavior: "when_no_templates"
+      contentHandling: "CONVERT_TO_TEXT"
+      responses:
+        '200':
+          statusCode: '200'
+          responseParameters:
+            method.response.header.Last-Modified: integration.response.header.Last-Modified
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        '400':
+          statusCode: '400'
+          responseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        '500':
+          statusCode: '500'
+          responseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+  - optionsProperties: &optionsProperties
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      responses:
+        '200':
+          headers:
+            Access-Control-Allow-Origin:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Headers:
+              type: 'string'
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,PATCH,PUT,POST,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Authorization,Content-Type,Origin,X-Amz-Date,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        passthroughBehavior: 'when_no_match'
+        type: 'mock'
+
+swagger: 2.0
+info:
+  title: api-gateway-vtl-checker
+paths:
+  /{proxy+}:
+    x-amazon-apigateway-any-method:
+      <<: *methodProperties
+      x-amazon-apigateway-integration:
+        <<: *integrationProperties
+        uri: http://app:5000/{proxy}
+    options:
+      <<: *optionsProperties
