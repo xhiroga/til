@@ -1,4 +1,4 @@
-# Try to Federated Identity Open ID federation
+# Open ID federation in Federated Identities
 
 To understand Federated Identity - Facebook connection.
 
