@@ -30,6 +30,9 @@ data/NewsAggregatorDataset.zip:
 data/NewsAggregatorDataset: data/NewsAggregatorDataset.zip;
 	unzip data/NewsAggregatorDataset.zip -d $@
 
+data/GoogleNews-vectors-negative300.bin.gz:
+	open https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing
+
 # bin:
 # 	mkdir -p bin
 
