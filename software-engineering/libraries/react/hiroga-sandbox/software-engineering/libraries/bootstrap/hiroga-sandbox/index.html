@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>書籍検索</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+  </head>
+
+  <body>
+  <div class="container">
+
+  <!-- 共通ヘッダー -->
+  <div class="row">
+    <header>
+      <h1>蔵書検索</h1>
+    </header>
+  </div>
+
+
+  <!-- 結果に対する動作 -->
+
+  <!-- 情報・警告など -->
+
+  <div class="row">
+    <form action="" method="post">
+
+    <!-- 検索条件 -->
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label class="col-form-label">書名</label>
+        <input class="form-control" type="text" name="bookName">
+      </div>
+      <div class="form-group col-md-6">
+        <label class="col-form-label">著者名</label>
+        <input class="form-control" type="text" name="authorName">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-form-label">出版社</label>
+      <select class="form-control" name="company">
+        <option>竹書房</option>
+        <option>角川書店</option>
+        <option>蔦屋書店</option>
+      </select>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> 県立
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> 神戸市
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled> 大学等
+      </label>
+    </div>
+
+    <!-- 検索ボタン -->
+      <p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </p>
+    </form>
+  </div>
+
+  <!-- 検索結果 -->
+  <div class="row">
+    <table></table>
+  </div>
+
+  <div class="row">
+    <footer>
+
+    </footer>
+  </div>
+
+  </div>
+  </body>
+
+</html>

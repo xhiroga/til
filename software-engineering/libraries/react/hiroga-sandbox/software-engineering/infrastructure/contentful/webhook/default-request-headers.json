@@ -1,0 +1,5 @@
+{
+  "X-Contentful-Topic": "ContentManagement.Entry.publish",
+  "X-Contentful-Webhook-Name": "Tweet",
+  "Content-Type": "application/vnd.contentful.management.v1+json"
+}

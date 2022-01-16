@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ECR TEST
+
+Parameters:
+  ENV:
+    Type: String
+
+Resources:
+  tilTaskDef:
+    Type: "AWS::ECS::TaskDefinition"
+    Properties: 
+      Volumes:
+        - Volume Definition
+      Cpu: String
+      ExecutionRoleArn: String
+      Family: String
+      Memory: String
+      NetworkMode: String
+      PlacementConstraints:
+        - TaskDefinitionPlacementConstraint
+      RequiresCompatibilities:
+        - String
+      TaskRoleArn: String
+      ContainerDefinitions:
+        - Container Definition

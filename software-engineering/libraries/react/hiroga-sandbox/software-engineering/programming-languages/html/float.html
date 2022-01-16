@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Locationについて</title>
+  <style type="text/css">
+    div {
+      width: 100px;
+      height: 100px;
+      border: 3px solid #ccc;
+    }
+    div.block {display: block;}
+    div.inline {display: inline;}
+    div.left {float: left;}
+    div.right {float: right;}
+    .clear {clear: both;}
+  </style>
+</head>
+
+<body>
+  <p>
+    ボックスレイアウトは横書き文章の要領のレイアウト。肝は3つ。<br/> 1. 新しい行から始めるか<br/> 2. 挿絵(浮動要素)にするかどうか<br/> 3. 挿絵に隣接させたいかどうか
+  </p>
+  <p>
+    HTMLの全ての要素は、前後に新しい行を伴う"ブロックレベル要素"と同じ行の中で始まる"インライン要素"に分けられる。<br/>
+    <a href="https://developer.mozilla.org/ja/docs/Web/HTML/Block-level_elements#Block-level_Example">MDN - ブロックレベル要素</a>
+  </p>
+  <div class="block">ブロック要素</div>
+  <div class="inline">インライン要素</div>
+  <div class="inline">インライン要素</div>
+
+  <p>
+    floatプロパティの値を指定すると、要素は包含ブロックの左右どちらかの端に設定され、テキストはその周りを回り込む。<br/>
+    <a href="https://developer.mozilla.org/ja/docs/Web/CSS/float">MDN - float</a>
+  </p>
+  <div class="left">1</div>
+  <div class="left">2</div>
+  <div class="right">3</div>
+
+  <p>このパラグラフ(インライン要素)の範囲は、1,2,3の裏側にも及ぶ。この文章が隠れていないのは、テキストなどの要素はfloatを避けるように決められているからである。</p>
+  <p　class="clear">例えば見出しの行など、浮動要素の下から始めたいときはclearを使う。なぜかうまくいかないけど...</p>
+</body>

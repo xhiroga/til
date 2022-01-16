@@ -1,0 +1,37 @@
+{
+    "Configuration": {
+        "FunctionName": "myBashFunction1",
+        "FunctionArn": "arn:aws:lambda:ap-northeast-1:************:function:myBashFunction1",
+        "Runtime": "provided",
+        "Role": "arn:aws:iam::************:role/service-role/myBashFunction1",
+        "Handler": "function.handler",
+        "CodeSize": 269,
+        "Description": "",
+        "Timeout": 3,
+        "MemorySize": 128,
+        "LastModified": "2020-01-19T03:35:38.865+0000",
+        "CodeSha256": "QaH0CZY3BG7Ak/J/0PTtocHeTbvyI/c2fxXApXOlBcM=",
+        "Version": "$LATEST",
+        "VpcConfig": {
+            "SubnetIds": [],
+            "SecurityGroupIds": [],
+            "VpcId": ""
+        },
+        "TracingConfig": {
+            "Mode": "PassThrough"
+        },
+        "RevisionId": "1fc2bd1e-c10a-4b0c-a83d-bed27f592ef1",
+        "Layers": [
+            {
+                "Arn": "arn:aws:lambda:ap-northeast-1:************:layer:bash-runtime:1",
+                "CodeSize": 583
+            }
+        ],
+        "State": "Active",
+        "LastUpdateStatus": "Successful"
+    },
+    "Code": {
+        "RepositoryType": "S3",
+        "Location": "https://awslambda-ap-ne-1-tasks.s3.ap-northeast-1.amazonaws.com/snapshots/************/myBashFunction1-............"
+    }
+}

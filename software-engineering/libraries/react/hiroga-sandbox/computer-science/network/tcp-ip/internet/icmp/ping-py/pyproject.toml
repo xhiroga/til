@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "ping-py"
+version = "0.1.0"
+description = ""
+authors = ["Hiroaki Ogasawara <13391129+xhiroga@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scapy = "^2.4.4"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

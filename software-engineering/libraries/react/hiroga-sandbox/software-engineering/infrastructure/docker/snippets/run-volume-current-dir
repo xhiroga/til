@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+set -euxo pipefail
+
+IMAGE=${1-python}
+DESTINATION="/host"
+docker run --rm -it -v "$(pwd):${DESTINATION}" "${IMAGE}" /bin/sh

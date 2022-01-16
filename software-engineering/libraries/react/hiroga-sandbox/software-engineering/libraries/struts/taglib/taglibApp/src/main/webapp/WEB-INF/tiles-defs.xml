@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="baseLayout" path="/layout/baseLayout.jsp">
+        <put name="title"  value="Tiles Example" />
+        <put name="header" value="/components/header.jsp" />
+        <put name="body"   value="/components/body.jsp" />
+    </definition>
+</tiles-definitions>

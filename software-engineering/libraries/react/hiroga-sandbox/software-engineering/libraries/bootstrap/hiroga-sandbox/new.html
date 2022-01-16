@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>おすすめ本</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+</head>
+
+<body>
+<nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <!-- コンテナをナビゲーションの内側にしないと、ナビゲーションがはみ出ない -->
+    <!-- ここが盲点→containerをbody直下ではなく、ナビゲータとメインコンテンツで分けて切る -->
+    <div class="navbar-header">
+      <!-- 知らなかった→スマホ表示の時に右端に寄せてくれる -->
+      <a class="navbar-brand" href="#">おすすめ本紹介</a>
+        <!-- ここが盲点→ナビゲーションバーのタイトル用のクラスがある。また、hrefでアンカー名を指定しないとトップに戻る -->
+    </div>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="nav navbar-nav">
+          <li class="active"><a href="https://www.tutorialrepublic.com" target="_blank">Home</a></li>
+          <li><a href="https://www.tutorialrepublic.com/about-us.php" target="_blank">About</a></li>
+          <li><a href="https://www.tutorialrepublic.com/contact-us.php" target="_blank">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="jumbotron">
+    <!-- これも知らなかった。WEBサイトの主要コンテンツを紹介するためのタグ -->
+    <h1>さわらのおすすめ本紹介</h1>
+    <p>さわらが読んでて面白かった本を紹介するためのサイトです。</p>
+  </div>
+  <!-- 最重要：rowの中のコンテンツを箱として捉える。1行づつ捉えない。 -->
+  <!-- rowの中の要素まで行として扱ってしまうと、マージンがかさんで横が揃わない。 -->
+  <div class="row">
+    <div class="col-sm-6 col-md-4 col-lg-2">
+        <h2>虐殺器官</h2>
+        <p>伊藤計劃のSF作品。背景となる近未来の世界の考察がしっかりしている。この世界観がもう読めないのはつらいなあ。</p>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-2">
+        <h2>Gene Mapper</h2>
+        <p>藤井太洋のSF作品。主人公はバイオ系のエンジニア。ITエンジニアなら「わかるわかる」と思いながら読めること請け合い。</p>
+    </div>
+    <div class="clearfix visible-sm-block"></div>
+    <div class="col-sm-6 col-md-4 col-lg-2">
+        <h2>超高速！参勤交代</h2>
+        <p>恋にバトルにコメディになんでもありの時代劇。土橋章宏さんの作品。全然固くない、スイスイ読めた。</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

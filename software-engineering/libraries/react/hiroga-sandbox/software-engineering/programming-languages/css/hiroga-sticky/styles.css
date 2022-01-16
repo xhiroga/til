@@ -1,0 +1,8 @@
+div.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  background-color: gray;
+  bottom: 0;
+  color: white;
+  z-index: 1;
+}

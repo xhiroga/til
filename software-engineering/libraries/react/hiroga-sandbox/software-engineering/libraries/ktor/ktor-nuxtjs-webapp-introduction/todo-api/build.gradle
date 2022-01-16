@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+group 'com.example.todo'
+version '0.0.1'
+mainClassName = "io.ktor.server.tomcat.EngineMain"
+
+sourceSets {
+    main.kotlin.srcDirs = main.java.srcDirs = ['src']
+    test.kotlin.srcDirs = test.java.srcDirs = ['test']
+    main.resources.srcDirs = ['resources']
+    test.resources.srcDirs = ['testresources']
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "io.ktor:ktor-server-tomcat:$ktor_version"
+    implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation "io.ktor:ktor-jackson:$ktor_version"
+
+    implementation "org.jetbrains.exposed:exposed:0.17.7"
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+    implementation "org.postgresql:postgresql:42.2.14"
+
+    implementation 'org.flywaydb:flyway-core:6.5.3'
+
+    testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+}

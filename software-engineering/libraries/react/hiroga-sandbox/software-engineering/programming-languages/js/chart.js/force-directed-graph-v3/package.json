@@ -1,0 +1,22 @@
+{
+  "name": "force-directed-graph-v3",
+  "version": "1.0.0",
+  "description": "Because of CodePen not works, I copy scripts here.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chart.js": "^3.0.1",
+    "chartjs-chart-graph": "^3.0.0-rc.3",
+    "d3-force": "^2.1.1",
+    "d3-hierarchy": "^2.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0"
+  }
+}

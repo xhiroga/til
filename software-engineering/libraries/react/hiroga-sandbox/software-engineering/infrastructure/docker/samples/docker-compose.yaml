@@ -1,0 +1,5 @@
+version: "3"
+services:
+  amazon-ecs-sample:
+    imange: amazon/amazon-ecs-sample
+    # https://docs.aws.amazon.com/cdk/latest/guide/ecs_example.html

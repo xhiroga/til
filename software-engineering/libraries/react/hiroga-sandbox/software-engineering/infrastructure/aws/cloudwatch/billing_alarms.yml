@@ -1,0 +1,174 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  Billing Alerts for AWS Account
+  Original: https://github.com/tarasowski/aws-billing-alarm-cloudformation-template/blob/master/template.yaml
+  Commands:
+    - aws cloudformation validate-template --template-body file://billing_alarms.yml
+    - aws cloudformation deploy --template-file ./billing_alarms.yml --stack-name BillingAlarms \
+        --capabilities CAPABILITY_IAM \
+        --parameter-overrides Email=${Email} \
+        --region ${REGION} --profile ${PROFILE}
+
+Parameters:
+  Email:
+    Type: String
+    Default: example@example.com
+
+Mappings:
+  EstimatedCharges:
+    AlarmRange:
+      "One" : 10
+      "Two" : 20
+      "Three" : 40
+      "Four" : 60
+      "Five" : 80
+      "Six" : 100
+      "Seven" : 200
+      "Eight" : 400
+
+Resources:
+  BillingAlertOne:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, One]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, One]
+
+  BillingAlertTwo:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, Two]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, Two]
+
+  BillingAlertThree:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, Three]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, Three]
+
+  BillingAlertFour:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, Four]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, Four]
+
+  BillingAlertFive:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, Five]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, Five]
+
+  BillingAlertSix:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, Six]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, Six]
+
+  BillingAlertSeven:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, Seven]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, Seven]
+
+  BillingAlertEight:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmActions:
+        - !Ref BillingAlertTopic
+      AlarmDescription: !Join ["", [Billing Alert for $, !FindInMap [EstimatedCharges, AlarmRange, Eight]]]
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      EvaluationPeriods: 1
+      MetricName: EstimatedCharges
+      Namespace: AWS/Billing
+      Period: 21600
+      Statistic: Maximum
+      Threshold: !FindInMap [EstimatedCharges, AlarmRange, Eight]
+
+  BillingAlertTopic:
+    Type: AWS::SNS::Topic
+
+  AlarmSubscriberEmail:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Endpoint: !Ref Email
+      Protocol: email
+      TopicArn: !Ref BillingAlertTopic

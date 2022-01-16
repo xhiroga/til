@@ -1,0 +1,14 @@
+{
+  "name": "array",
+  "version": "1.0.0",
+  "description": "",
+  "main": "length_size.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "immutable": "^3.8.2"
+  }
+}

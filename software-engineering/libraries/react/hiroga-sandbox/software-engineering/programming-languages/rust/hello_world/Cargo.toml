@@ -1,0 +1,5 @@
+[package]
+
+name = "hello_world"
+version = "0.0.1"
+authors = [ "あなたの名前<you@example.com>"]

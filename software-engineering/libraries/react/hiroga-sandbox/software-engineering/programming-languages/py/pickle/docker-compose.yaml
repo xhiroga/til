@@ -1,0 +1,9 @@
+version: '3'
+services:
+  pickle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash
+    volumes:
+      - ./src:/src

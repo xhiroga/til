@@ -1,0 +1,41 @@
+{
+  "sys": {
+    "type": "Entry",
+    "id": "****",
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "****"
+      }
+    },
+    "environment": {
+      "sys": {
+        "id": "master",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "news"
+      }
+    },
+    "revision": 1,
+    "createdAt": "2021-02-07T08:03:47.443Z",
+    "updatedAt": "2021-02-07T08:03:47.443Z"
+  },
+  "fields": {
+    "title": {
+      "en-US": "テストのお知らせです。"
+    },
+    "datetime": {
+      "en-US": "2021-02-07T00:00+09:00"
+    },
+    "content": {
+      "en-US": "このお知らせはテストです。"
+    }
+  }
+}

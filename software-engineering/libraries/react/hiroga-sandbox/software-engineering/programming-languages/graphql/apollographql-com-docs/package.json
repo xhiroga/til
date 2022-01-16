@@ -1,0 +1,13 @@
+{
+  "name": "apollographql-com-docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^3.6.1",
+    "graphql": "^16.2.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

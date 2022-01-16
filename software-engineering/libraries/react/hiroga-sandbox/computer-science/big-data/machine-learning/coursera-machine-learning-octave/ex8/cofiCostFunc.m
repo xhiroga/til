@@ -1,0 +1,91 @@
+function [J, grad] = cofiCostFunc(params, Y, R, num_users, num_movies, ...
+                                  num_features, lambda)
+%COFICOSTFUNC Collaborative filtering cost function
+%   [J, grad] = COFICOSTFUNC(params, Y, R, num_users, num_movies, ...
+%   num_features, lambda) returns the cost and gradient for the
+%   collaborative filtering problem.
+%
+
+% Unfold the U and W matrices from params
+X = reshape(params(1:num_movies*num_features), num_movies, num_features);
+Theta = reshape(params(num_movies*num_features+1:end), ...
+                num_users, num_features);
+
+            
+% You need to return the following values correctly
+J = 0;
+X_grad = zeros(size(X));
+Theta_grad = zeros(size(Theta));
+
+% ====================== YOUR CODE HERE ======================
+% Instructions: Compute the cost function and gradient for collaborative
+%               filtering. Concretely, you should first implement the cost
+%               function (without regularization) and make sure it is
+%               matches our costs. After that, you should implement the 
+%               gradient and use the checkCostFunction routine to check
+%               that the gradient is correct. Finally, you should implement
+%               regularization.
+%
+% Notes: X - num_movies  x num_features matrix of movie features
+%        Theta - num_users  x num_features matrix of user features
+%        Y - num_movies x num_users matrix of user ratings of movies
+%        R - num_movies x num_users matrix, where R(i, j) = 1 if the 
+%            i-th movie was rated by the j-th user
+%
+% You should set the following variables correctly:
+%
+%        X_grad - num_movies x num_features matrix, containing the 
+%                 partial derivatives w.r.t. to each element of X
+%        Theta_grad - num_users x num_features matrix, containing the 
+%                     partial derivatives w.r.t. to each element of Theta
+%
+
+J = (1/2)* sum((((X*Theta').- Y).^2)(R==1) );
+J = (1/2)* sum((((X*Theta').- Y).^2)(R==1) ) + (lambda/2)*sum(sum(Theta.^2,1),2)+ (lambda/2)*sum(sum(X.^2,1),2);
+
+
+%calculate X grad 
+for i = 1:num_movies
+
+  % from R, produce vector 1*user_count about watch or not
+  index  = find (R(i,:) == 1);
+  
+  %about the movie of this iteration, feature of user who watch the movie
+  Theta_temp = Theta(index, :);
+  
+  % actual rate of the movie
+  Y_temp = Y (i, index);
+
+  %calculate the movie rate precision, and calculate difference, multiple user featture who watch the moviee
+  %ある映画において、その映画の持つフィーちゃーに対するgradを、見たユーザだけの映画に対するレーティングの誤差に、見たユーザのフィt−ちゃをかけることで作る
+ X_grad(i,:) = (X(i,:)*Theta_temp' - Y_temp)*Theta_temp;
+ X_grad(i,:) = (X(i,:)*Theta_temp' - Y_temp)*Theta_temp .+ lambda*X(i,:);
+ 
+end
+
+
+%calculate theta grad 
+for j=1:num_users
+  index = find(R(:,j) == 1)';
+  
+  %あるユーザにおいて、見られた映画のフィーちゃーだけを取り出したXを作る
+  X_temp = X(index, :);
+
+  Y_temp = Y(index, j);
+
+  %あるユーザにおいて、そのユーザのフィ＾ちゃのgradを、そのユーザが見た映画のフィーちゃをかけることで作る
+  Theta_grad(j,:) = (X_temp*Theta(j,:)' - Y_temp)'*X_temp;
+  Theta_grad(j,:) = (X_temp*Theta(j,:)' - Y_temp)'*X_temp .+ lambda*Theta(j,:);  
+  
+end
+
+
+
+
+
+
+% =============================================================
+
+grad = [X_grad(:); Theta_grad(:)];
+
+end

@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgresql:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ktoruser
+      POSTGRES_PASSWORD: ktorpass
+      POSTGRES_DB: todo
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+      TZ: "Asia/Tokyo"

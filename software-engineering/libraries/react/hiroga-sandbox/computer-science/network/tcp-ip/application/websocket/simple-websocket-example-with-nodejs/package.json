@@ -1,0 +1,9 @@
+{
+  "name": "simple-websocket-example-with-nodejs",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.4.6"
+  }
+}

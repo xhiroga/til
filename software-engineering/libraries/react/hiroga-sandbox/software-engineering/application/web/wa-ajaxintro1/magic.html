@@ -1,0 +1,44 @@
+<html>
+ <head>
+  <title>Magic Hat</title>
+  <script type="text/javascript">
+    function showRabbit(){
+      var hatImage = document.getElementById("topHat");
+      var newImage = document.createElement("img");
+      newImage.setAttribute("src", "static/images/rabbit-hat.gif");
+      newImage.setAttribute("id", "topHat");
+
+      var imageParent = hatImage.parentNode;
+      imageParent.replaceChild(newImage, hatImage);
+
+      var button = document.getElementById("hocusPocus");
+      button.setAttribute("value", "Get back the hat!!");
+      button.onclick = hideRabbit;
+    }
+    function hideRabbit(){
+
+      var topHat = document.getElementById("topHat");
+      topHat.setAttribute("src", "static/images/topHat.gif")
+
+      var button = document.getElementById("hocusPocus");
+      button.setAttribute("value", "hocusPocus");
+      button.onclick = showRabbit;
+
+      // 属性として指定する時はonClickでも大目に見てくれるんだが、butttonの要素として指定するならonclick小文字じゃないとだめ
+    }
+  </script>
+ </head>
+
+ <body>
+  <h1 align="center">Welcome to the DOM Magic Shop!</h1>
+  <form name="magic-hat">
+   <p align="center">
+    <img src="static/images/topHat.gif" id="topHat" />
+    <br /><br />
+    <input type="button" value="Hocus Pocus!" onClick="showRabbit()" id="hocusPocus"/>
+    <br /><br />
+    <a href="/ajax">Multiplication Example</a></a>
+   </p>
+  </form>
+ </body>
+</html>

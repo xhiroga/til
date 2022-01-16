@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>websocket-chat</title>
+  <link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>WebSocket-Chat</h1>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="msgForm">メッセージ：</label>
+          <input type="text" class="form-control" id="msgForm">
+        </div>
+          <button type="submit" class="btn btn-primary">送信</button>
+      </form>
+      <div id="chatLogs"></div>
+  </div>
+
+    <script type="text/javascript">
+        var socket = io.connect();
+
+        // ポイント: onで受信時に実行する関数を指定。emitで送信。
+        socket.on("server_to_client", function(data){appendMsg(data.value)});
+
+        function appendMsg(text) {
+            $("#chatLogs").append("<div>" + text + "</div>");
+        }
+
+        $("form").submit(function(e){
+            var message = $("#msgForm").val();
+            $("#msgForm").val('');
+            socket.emit("client_to_server", {value : message});
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

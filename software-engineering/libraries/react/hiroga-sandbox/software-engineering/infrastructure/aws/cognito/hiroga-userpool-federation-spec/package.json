@@ -1,0 +1,23 @@
+{
+  "name": "userpool-federation-spec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiroga-cc/userpool-federation-spec.git"
+  },
+  "author": "Hiroaki Ogasawara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiroga-cc/userpool-federation-spec/issues"
+  },
+  "homepage": "https://github.com/hiroga-cc/userpool-federation-spec#readme",
+  "dependencies": {
+    "aws-amplify": "^1.1.24",
+    "node-fetch": "^2.3.0"
+  }
+}

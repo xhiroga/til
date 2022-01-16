@@ -1,0 +1,2 @@
+def awesome():
+    print('awesome!!!')

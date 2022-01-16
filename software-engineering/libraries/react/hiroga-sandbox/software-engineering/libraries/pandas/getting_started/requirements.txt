@@ -1,0 +1,5 @@
+ipykernel
+pandas
+openpyxl
+matplotlib
+autopep8

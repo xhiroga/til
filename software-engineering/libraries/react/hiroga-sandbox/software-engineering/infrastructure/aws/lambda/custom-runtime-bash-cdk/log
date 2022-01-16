@@ -1,0 +1,10 @@
+cdk bootstrap
+cdk init app --language python
+pipenv --python 3.8.1
+pipenv install aws_cdk.core     # and more...
+vi Pipfile                      # to run cdk by pipenv
+vi cdk.json                     # to run cdk by pipenv
+# coding...
+chmod 755 ./src/function/function.sh ./src/layer/bootstrap
+cdk synth
+cdk deploy
