@@ -1,0 +1,13 @@
+{
+    "workbench.colorTheme": "Default Light+", // Easy to read ipython notebook
+    "files.exclude": {
+        "**/.venv/*": true
+    },
+    // "editor.formatOnSave": true, // Now not supported for ipynb. Vote [Format on save for a notebook · Issue \#120432 · microsoft/vscode](https: //github.com/microsoft/vscode/issues/120432)
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
+}
