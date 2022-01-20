@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "coursera-machine-learning-ipynb"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <13391129+xhiroga@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+ipykernel = "^6.7.0"
+black = "^21.12b0"
+isort = "^5.10.1"
+pylint = "^2.12.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
