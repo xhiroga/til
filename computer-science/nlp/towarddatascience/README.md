@@ -1,0 +1,1 @@
+[Multi\-label text classification using BERT and TensorFlow \| by Nicolo Cosimo Albanese \| Jan, 2022 \| Towards Data Science](https://towardsdatascience.com/multi-label-text-classification-using-bert-and-tensorflow-d2e88d8f488d)
