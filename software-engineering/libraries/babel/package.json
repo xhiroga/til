@@ -5,9 +5,9 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.5",
-    "@babel/preset-env": "^7.1.5"
+    "@babel/cli": "7.1.5",
+    "@babel/core": "7.1.5",
+    "@babel/preset-env": "7.1.5"
   },
   "scripts": {
     "build": "babel src -d lib",
