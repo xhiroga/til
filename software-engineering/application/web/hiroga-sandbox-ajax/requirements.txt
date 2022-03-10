@@ -1,2 +1,2 @@
-Tornado>=3
+Tornado==6.1
 jinja2
