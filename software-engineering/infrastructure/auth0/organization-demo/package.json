@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "1.8.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.17",
-    "@fortawesome/free-solid-svg-icons": "^5.8.1",
-    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@fortawesome/fontawesome-svg-core": "1.2.29",
+    "@fortawesome/free-solid-svg-icons": "5.13.1",
+    "@fortawesome/react-fontawesome": "0.1.11",
     "cors": "2.8.5",
     "express": "4.17.1",
     "express-jwt": "6.0.0",
