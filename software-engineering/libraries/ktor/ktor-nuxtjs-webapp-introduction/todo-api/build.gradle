@@ -33,11 +33,11 @@ dependencies {
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.ktor:ktor-jackson:$ktor_version"
 
-    implementation "org.jetbrains.exposed:exposed:0.17.7"
+    implementation "org.jetbrains.exposed:exposed:0.17.14"
     implementation 'com.zaxxer:HikariCP:3.4.5'
     implementation "org.postgresql:postgresql:42.2.14"
 
-    implementation 'org.flywaydb:flyway-core:6.5.3'
+    implementation 'org.flywaydb:flyway-core:6.5.7'
 
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
