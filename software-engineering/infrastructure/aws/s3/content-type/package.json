@@ -1,0 +1,25 @@
+{
+  "name": "content-type",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "presigner": "node -r @swc-node/register src/presigner.ts",
+    "presigned-post": "node -r @swc-node/register src/presigned-post.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.112.0",
+    "@aws-sdk/s3-presigned-post": "^3.112.0",
+    "@aws-sdk/s3-request-presigner": "^3.112.0",
+    "dotenv": "^16.0.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@swc-node/register": "^1.5.1",
+    "@types/node": "^18.0.0",
+    "typescript": "^4.7.3"
+  }
+}
