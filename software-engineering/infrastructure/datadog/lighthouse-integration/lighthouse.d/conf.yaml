@@ -1,0 +1,53 @@
+init_config:
+
+instances:
+  ## @param min_collection_interval - integer - required
+  ## The lighthouse check can be resource intensive
+  ## and can take ~10 seconds per instance, this has only been tested
+  ## with a min collection interval of 60 seconds for a few instances
+  #
+  - min_collection_interval: 60
+
+    ## @param url - string - optional
+    ## url of the website to get lighthouse metrics of. This option is deprecated.
+    ## ex: "https://www.datadoghq.com"
+    #
+    # url: <URL_PLACEHOLDER>
+
+    ## @param urls - list of strings - required
+    ## urls of the websites to get lighthouse metrics of
+    ## ex: "https://www.datadoghq.com"
+    #
+    urls:
+      - "https://www.datadoghq.com"
+
+    ## @param name - string - required
+    ## name of your website.
+    ## ex: "datadog_homepage"
+    #
+    name: "datadog_homepage"
+
+    ## @param form_factor - string - optional
+    ## passed to lighthouse as the form-factor param
+    ## options are "mobile" or "desktop"
+    #
+    # form_factor: <FORM_FACTOR_PLACEHOLDER>
+
+    ## @param extra_chrome_flags - list - optional
+    ## List of chrome-flags in addition to `--headless`
+    ##
+    ## Learn more about flags: https://www.chromium.org/developers/how-tos/run-chromium-with-flags
+    #
+    extra_chrome_flags:
+      - "--no-sandbox"
+      - "--disable-gpu"
+      - "--disable-dev-shm-usage"
+
+    ## @param tags - list of key:value elements - optional
+    ## List of tags to attach to every metric, event and service check emitted by this integration.
+    ##
+    ## Learn more about tagging: https://docs.datadoghq.com/tagging/
+    #
+    # tags:
+    #   - <KEY_1>:<VALUE_1>
+    #   - <KEY_2>:<VALUE_2>
