@@ -1,4 +1,4 @@
-## Datadog LightHouse Integration with Docker
+# Datadog LightHouse Integration with Docker
 
 **Work in progress.**
 
