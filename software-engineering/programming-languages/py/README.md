@@ -5,7 +5,7 @@
 Basic policy: each repository has each environment, created by Pipenv.
 
 ```
-pipenv install --dev autopep8 pylint flake8 mypy --python 3.7.5
+pipenv install --dev autopep8 pylint flake8 mypy --python 3.9
 ```
 
 
