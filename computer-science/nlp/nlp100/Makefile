@@ -2,6 +2,8 @@ MECAB_IPADIC_REPO := git@github.com:neologd/mecab-ipadic-neologd.git
 NEKO_TXT_URL := https://nlp100.github.io/data/neko.txt
 AI_JA_ZIP_URL := https://nlp100.github.io/data/ai.ja.zip
 NEWS_AGGREGATOR_DATA_SET := https://archive.ics.uci.edu/ml/machine-learning-databases/00359/NewsAggregatorDataset.zip
+QUESTIONS_WORDS_URL := http://download.tensorflow.org/data/questions-words.txt
+WORD_SIM_URL := https://gabrilovich.com/resources/data/wordsim353/wordsim353.zip
 
 .PHONY: all
 all: data data/neko.txt data/neko.txt.mecab data/ai.ja.zip data/ai.ja
@@ -32,6 +34,15 @@ data/NewsAggregatorDataset: data/NewsAggregatorDataset.zip;
 
 data/GoogleNews-vectors-negative300.bin.gz:
 	open https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing
+
+data/questions-words.txt:
+	wget $(QUESTIONS_WORDS_URL) -O $@
+
+data/wordsim353.zip:
+	wget $(WORD_SIM_URL) -O $@
+
+data/wordsim353: data/wordsim353.zip;
+	unzip data/wordsim353.zip -d $@
 
 # bin:
 # 	mkdir -p bin
