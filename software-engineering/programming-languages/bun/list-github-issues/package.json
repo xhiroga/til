@@ -1,0 +1,11 @@
+{
+  "name": "list-github-issues",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/core": "^4.0.4"
+  }
+}
