@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "csv": "bun index.ts > issues.csv",
     "test": "bun util.spec.ts"
   },
   "author": "",

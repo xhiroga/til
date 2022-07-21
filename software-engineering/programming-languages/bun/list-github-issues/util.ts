@@ -6,21 +6,26 @@ export const getTwitterId = (body: string) => {
 
 export const getSessionAbstract = (body: string) => {
     // カタカナもマッチしないようだ...
-    const res = body.match(/### .+\n\n(.*)\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*$/)
+    const res = body.match(/### Twitter ID .+\n\n\w{1,15}\n\n### .+\n\n.*\n\n### .+\n\n(.*)\n\n/)
     return res ? res[1] : null
 }
 
 export const getSessionHosoku = (body: string) => {
-    const res = body.match(/### .+\n\n(.*)\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*$/)
+    const res = body.match(/### .+\n\n(.*)\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*$/)
     return res ? res[1] : null
 }
 
 export const getToudanshaStartupPhase = (body: string) => {
-    const res = body.match(/### .+\n\n(.*)\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*$/)
+    const res = body.match(/### .+\n\n(.*)\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*$/)
     return res ? res[1] : null
 }
 
 export const getJukoushaStartupPhase = (body: string) => {
+    const res = body.match(/### .+\n\n(.*)\n\n### .+\n\n.*\n\n### .+\n\n.*\n\n### .+\n\n.*$/)
+    return res ? res[1] : null
+}
+
+export const getJukoushaRole = (body: string) => {
     const res = body.match(/### .+\n\n(.*)\n\n### .+\n\n.*\n\n### .+\n\n.*$/)
     return res ? res[1] : null
 }

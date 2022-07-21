@@ -19,7 +19,7 @@ const csv = response.data.map(({ title, body }) => {
     const jukoushaStartupPhase = getJukoushaStartupPhase(body)
     const sessionTopic = getSessionTopic(body)
     const sessionFormat = getSessionFormat(body)
-    return `${title},${twitterId},${sessionAbstract},${sessionHosoku},${toudanshaStartupPhase},${jukoushaStartupPhase},${sessionTopic},${sessionFormat}`
+    return `"${title}","${twitterId}","${sessionAbstract}","${sessionHosoku}","${toudanshaStartupPhase}","${jukoushaStartupPhase}","${sessionTopic}","${sessionFormat}"`
 }).join("\n")
 console.log("タイトル,Twitter ID,アブストラクト,補足,所属Startupフェーズ,受講者スタートアップフェーズ,トピック,フォーマット")
 console.log(csv)
