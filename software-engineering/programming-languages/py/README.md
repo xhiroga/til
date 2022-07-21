@@ -1,11 +1,15 @@
 # Python
 
+## Getting Started(2022)
 
-# Environment
-Basic policy: each repository has each environment, created by Pipenv.
-
-```
-pipenv install --dev autopep8 pylint flake8 mypy --python 3.9
+```shell
+mkdir $PROJECT_NAME
+cd $PROJECT_NAME
+poetry config virtualenvs.in-project true --local
+poetry init --python ">=3.9,<3.11"  # 詳しくないがScipyの制約
+poetry install
+code .
+# Select interpreter by `Cmd + Shift + P`
 ```
 
 
