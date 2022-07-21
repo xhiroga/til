@@ -11,6 +11,7 @@ const csv = response.data.map(({ title, body }) => {
     if (!body) {
         return
     }
+    body = body.replace(/\r\n/g, "\n")
     const twitterId = getTwitterId(body)
     const sessionAbstract = getSessionAbstract(body)
     const sessionHosoku = getSessionHosoku(body)
