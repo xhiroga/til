@@ -156,3 +156,4 @@ cython_debug/
 ## Project
 bin/*
 data/*
+*.sample.ipynb
