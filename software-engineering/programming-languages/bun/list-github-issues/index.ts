@@ -7,7 +7,7 @@ const octokit = new MyOctotKit()
 
 const response = await octokit.rest.issues.listForRepo({ owner: "aws-startup-community", repo: "aws-startup-community-conference-2022-cfp", state: "open" })
 
-const csv = response.data.map(({ title, body }) => {
+const csv = response.data.map(({ body, html_url, title }) => {
     if (!body) {
         return
     }
@@ -19,7 +19,7 @@ const csv = response.data.map(({ title, body }) => {
     const jukoushaStartupPhase = getJukoushaStartupPhase(body)
     const sessionTopic = getSessionTopic(body)
     const sessionFormat = getSessionFormat(body)
-    return `"${title}","${twitterId}","${sessionAbstract}","${sessionHosoku}","${toudanshaStartupPhase}","${jukoushaStartupPhase}","${sessionTopic}","${sessionFormat}"`
+    return `"${title}","${twitterId}","${sessionAbstract}","${sessionHosoku}","${toudanshaStartupPhase}","${jukoushaStartupPhase}","${sessionTopic}","${sessionFormat}","${html_url}"`
 }).join("\n")
-console.log("タイトル,Twitter ID,アブストラクト,補足,所属Startupフェーズ,受講者スタートアップフェーズ,トピック,フォーマット")
+console.log("タイトル,Twitter ID,アブストラクト,補足,所属Startupフェーズ,受講者スタートアップフェーズ,トピック,フォーマット,URL")
 console.log(csv)
