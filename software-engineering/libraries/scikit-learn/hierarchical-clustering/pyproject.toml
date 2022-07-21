@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "hierarchical-clustering"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <13391129+xhiroga@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+numpy = "^1.23.1"
+matplotlib = "^3.5.2"
+scipy = "^1.8.1"
+scikit-learn = "^1.1.1"
+
+[tool.poetry.dev-dependencies]
+ipykernel = "^6.15.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
