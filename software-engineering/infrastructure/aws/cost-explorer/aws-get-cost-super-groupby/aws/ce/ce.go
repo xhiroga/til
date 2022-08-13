@@ -4,11 +4,15 @@ import (
 	"github.com/aws/aws-sdk-go/service/costexplorer"
 )
 
-type RetinaCostExplorer struct {
-	*costexplorer.CostExplorer
+type CostExplorer interface {
+	GetCostAndUsage(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error)
 }
 
-func NewRetinaCostExplorer(ce *costexplorer.CostExplorer) *RetinaCostExplorer {
+type RetinaCostExplorer struct {
+	CostExplorer
+}
+
+func NewRetinaCostExplorer(ce CostExplorer) *RetinaCostExplorer {
 	return &RetinaCostExplorer{
 		CostExplorer: ce,
 	}
