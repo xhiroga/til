@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"xhiroga/ce/aws/ce"
+	"xhiroga/retinacostexplorer/pkg/retinacostexplorer"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -12,7 +12,7 @@ import (
 
 func main() {
 	sess := session.Must(session.NewSessionWithOptions(session.Options{}))
-	svc := ce.NewRetinaCostExplorer(
+	svc := retinacostexplorer.New(
 		costexplorer.New(
 			sess,
 		),

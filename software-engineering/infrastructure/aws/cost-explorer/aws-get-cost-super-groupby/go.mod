@@ -1,4 +1,4 @@
-module xhiroga/ce
+module xhiroga/retinacostexplorer
 
 go 1.19
 
