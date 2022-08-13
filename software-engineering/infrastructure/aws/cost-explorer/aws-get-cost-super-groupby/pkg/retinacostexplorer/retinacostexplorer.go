@@ -1,4 +1,4 @@
-package ce
+package retinacostexplorer
 
 import (
 	"github.com/aws/aws-sdk-go/service/costexplorer"
@@ -12,21 +12,13 @@ type RetinaCostExplorer struct {
 	CostExplorer
 }
 
-func NewRetinaCostExplorer(ce CostExplorer) *RetinaCostExplorer {
+func New(ce CostExplorer) *RetinaCostExplorer {
 	return &RetinaCostExplorer{
 		CostExplorer: ce,
 	}
 }
 
 func (svc *RetinaCostExplorer) GetRetinaCostAndUsage(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
+	// TODO
 	return svc.GetCostAndUsage(input)
 }
-
-// func TestGetRetinaCostAndUsage(t *testing.T) {
-// 	tests := []struct {
-// 		name    string
-// 		args    *costexplorer.GetCostAndUsageInput
-// 		want    *costexplorer.GetCostAndUsageOutput
-// 		wantErr bool
-// 	}{}
-// }
