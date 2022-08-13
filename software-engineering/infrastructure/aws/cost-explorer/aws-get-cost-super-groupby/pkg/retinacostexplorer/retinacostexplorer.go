@@ -19,6 +19,7 @@ func New(ce CostExplorer) *RetinaCostExplorer {
 }
 
 func (svc *RetinaCostExplorer) GetRetinaCostAndUsage(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
-	// TODO
+	// TODO: group byの先頭2つを取り出す
+
 	return svc.GetCostAndUsage(input)
 }
