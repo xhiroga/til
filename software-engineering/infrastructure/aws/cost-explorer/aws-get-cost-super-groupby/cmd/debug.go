@@ -20,10 +20,20 @@ func main() {
 	res, err := svc.GetRetinaCostAndUsage(
 		&costexplorer.GetCostAndUsageInput{
 			Granularity: aws.String("MONTHLY"),
-			GroupBy:     []*costexplorer.GroupDefinition{{Key: aws.String("SERVICE"), Type: aws.String("DIMENSION")}, {Key: aws.String("LINKED_ACCOUNT"), Type: aws.String("DIMENSION")}},
-			Metrics:     []*string{aws.String("BlendedCost")},
-			// NextPageToken: new(string),
-			TimePeriod: &costexplorer.DateInterval{Start: aws.String("2022-01-01"), End: aws.String("2022-08-31")},
+			GroupBy: []*costexplorer.GroupDefinition{
+				{
+					Type: aws.String("DIMENSION"),
+					Key:  aws.String("LINKED_ACCOUNT"),
+				}, {
+					Type: aws.String("DIMENSION"),
+					Key:  aws.String("SERVICE"),
+				},
+			},
+			Metrics: []*string{aws.String("BlendedCost")},
+			TimePeriod: &costexplorer.DateInterval{
+				Start: aws.String("2022-01-01"),
+				End:   aws.String("2022-01-31"),
+			},
 		},
 	)
 	fmt.Println(res)
