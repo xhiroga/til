@@ -1,11 +1,12 @@
 # AWS Get cost super group-by
 
+
+## Debug
+
 ```shell
 # Tutorial
 # Set AWS Credential in environment variables
-go run main.go
-
-
+go run cmd/debug.go
 ```
 
 
