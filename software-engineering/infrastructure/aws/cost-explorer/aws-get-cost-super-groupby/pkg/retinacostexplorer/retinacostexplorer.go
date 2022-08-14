@@ -1,6 +1,10 @@
 package retinacostexplorer
 
 import (
+	"strconv"
+	"strings"
+
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/costexplorer"
 )
 
@@ -34,10 +38,73 @@ func (svc *RetinaCostExplorer) GetRetinaCostAndUsage(input *costexplorer.GetCost
 	return svc.GetCostAndUsageRecursively(input)
 }
 
-// GetCostAndUsage but can take "WHOLE" as a granularity.
-// "WHOLE" is also a default value
 func (svc *RetinaCostExplorer) GetWholeCostAndUsage(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
-	return svc.GetCostAndUsageRecursively(input)
+	output, err := svc.GetCostAndUsageRecursively(input)
+	if err != nil {
+		return nil, err
+	}
+	groupsArray := [][]*costexplorer.Group{}
+	for _, resultsByTime := range output.ResultsByTime {
+		groupsArray = append(groupsArray, resultsByTime.Groups)
+	}
+	return &costexplorer.GetCostAndUsageOutput{
+		DimensionValueAttributes: output.DimensionValueAttributes,
+		GroupDefinitions:         output.GroupDefinitions,
+		NextPageToken:            output.NextPageToken,
+		ResultsByTime: []*costexplorer.ResultByTime{
+			{
+				Estimated: output.ResultsByTime[0].Estimated,
+				Groups:    totalMetricsByKey(groupsArray),
+				TimePeriod: &costexplorer.DateInterval{
+					End:   output.ResultsByTime[len(output.ResultsByTime)-1].TimePeriod.End,
+					Start: output.ResultsByTime[0].TimePeriod.Start,
+				},
+				Total: output.ResultsByTime[0].Total,
+			},
+		},
+	}, nil
+}
+
+type metrics map[string]*costexplorer.MetricValue
+type groupedByKeys map[string]metrics
+
+func totalMetricsByKey(groupsArray [][]*costexplorer.Group) []*costexplorer.Group {
+	groupedByKeys := groupedByKeys{}
+
+	for _, groups := range groupsArray {
+		for _, group := range groups {
+			key := strings.Join(StringsValues(group.Keys), ",")
+			if _, ok := groupedByKeys[key]; !ok {
+				groupedByKeys[key] = group.Metrics
+			} else {
+				for metricKey, metricValue := range group.Metrics {
+					set, _ := strconv.ParseFloat(*groupedByKeys[key][metricKey].Amount, 64)
+					new, _ := strconv.ParseFloat(*metricValue.Amount, 64)
+					updatedAmount := strconv.FormatFloat(set+new, 'f', -1, 64)
+					updatedMetricValue := &costexplorer.MetricValue{
+						Amount: aws.String(updatedAmount),
+						Unit:   groupedByKeys[key][metricKey].Unit,
+					}
+					groupedByKeys[key][metricKey] = updatedMetricValue
+				}
+			}
+		}
+	}
+	return convertMetricsMapToGroups(groupedByKeys)
+}
+
+func convertMetricsMapToGroups(groupedByKeys groupedByKeys) []*costexplorer.Group {
+	groups := []*costexplorer.Group{}
+	for key, metrics := range groupedByKeys {
+		keys := strings.Split(key, ",")
+
+		group := &costexplorer.Group{
+			Keys:    Strings(keys),
+			Metrics: metrics,
+		}
+		groups = append(groups, group)
+	}
+	return groups
 }
 
 // GetCostAndUsage but get all pages.
