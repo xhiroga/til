@@ -1,0 +1,8 @@
+#!/bin/sh
+# おそらくEC2サービスの使用状況のみで有効なので、EC2を使っていないならそこまで意味がなさそう
+aws ce get-cost-and-usage-with-resources \
+--filter '{"Dimensions": {"Key": "REGION", "Values": ["ap-northeast-1"], "MatchOptions": ["EQUALS"]}}' \
+--granularity MONTHLY \
+--group-by Type=DIMENSION,Key=RESOURCE_ID \
+--metrics "BlendedCost" "UnblendedCost" \
+--time-period Start=$(gdate '+%Y-%m')-01,End=$(gdate -d 'next month' '+%Y-%m')-01

@@ -1,6 +1,5 @@
 #!/bin/sh
 aws ce get-cost-and-usage \
---region us-east-1 \
 --time-period Start=$(gdate '+%Y-%m')-01,End=$(gdate -d 'next month' '+%Y-%m')-01 \
 --granularity MONTHLY \
 --metrics BlendedCost \
