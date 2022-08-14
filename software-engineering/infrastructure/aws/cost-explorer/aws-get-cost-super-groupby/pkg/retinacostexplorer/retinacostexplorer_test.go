@@ -358,6 +358,107 @@ func TestGetRetinaCostAndUsage(t *testing.T) {
 	}
 }
 
+func TestConvertGroupsToFilters(t *testing.T) {
+	type args struct {
+		groupDefs []*costexplorer.GroupDefinition
+		groups    []*costexplorer.Group
+	}
+	tests := []struct {
+		name string
+		args args
+		want []*costexplorer.Expression
+	}{
+		{
+			name: "empty",
+			args: args{
+				groupDefs: []*costexplorer.GroupDefinition{},
+				groups:    []*costexplorer.Group{},
+			},
+			want: []*costexplorer.Expression{},
+		}, {
+			name: "one group",
+			args: args{
+				groupDefs: []*costexplorer.GroupDefinition{{
+					Type: aws.String("DIMENSION"),
+					Key:  aws.String("LINKED_ACCOUNT"),
+				}, {
+					Type: aws.String("DIMENSION"),
+					Key:  aws.String("SERVICE"),
+				}},
+				groups: []*costexplorer.Group{
+					{
+						Keys: []*string{aws.String("123456789012"), aws.String("EC2 - Other")},
+						Metrics: map[string]*costexplorer.MetricValue{
+							"BlendedCost": {
+								Amount: aws.String("3.716129016"),
+								Unit:   aws.String("USD"),
+							},
+						},
+					},
+				},
+			},
+			want: []*costexplorer.Expression{
+				{
+					And: []*costexplorer.Expression{
+						{
+							Dimensions: &costexplorer.DimensionValues{
+								Key:          aws.String("LINKED_ACCOUNT"),
+								Values:       []*string{aws.String("123456789012")},
+								MatchOptions: []*string{aws.String("EQUALS")},
+							},
+						},
+						{
+							Dimensions: &costexplorer.DimensionValues{
+								Key:          aws.String("SERVICE"),
+								Values:       []*string{aws.String("EC2 - Other")},
+								MatchOptions: []*string{aws.String("EQUALS")},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := convertGroupsToFilters(tt.args.groupDefs, tt.args.groups); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ConvertGroupsToFilters() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestConvertGroupToFilter(t *testing.T) {
+	type args struct {
+		groupDefs []*costexplorer.GroupDefinition
+		group     *costexplorer.Group
+	}
+	tests := []struct {
+		name string
+		args args
+		want *costexplorer.Expression
+	}{
+		{
+			name: "empty",
+			args: args{
+				groupDefs: []*costexplorer.GroupDefinition{},
+				group:     &costexplorer.Group{},
+			},
+			want: &costexplorer.Expression{
+				And: []*costexplorer.Expression{},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := convertGroupToFilter(tt.args.groupDefs, tt.args.group); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ConvertGroupToFilter() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestGetWholeCostAndUsage(t *testing.T) {
 	tests := []struct {
 		name          string
