@@ -38,6 +38,35 @@ func (svc *RetinaCostExplorer) GetRetinaCostAndUsage(input *costexplorer.GetCost
 	return svc.GetCostAndUsageRecursively(input)
 }
 
+func convertGroupsToFilters(groupDefs []*costexplorer.GroupDefinition, groups []*costexplorer.Group) []*costexplorer.Expression {
+	filters := []*costexplorer.Expression{}
+	for _, group := range groups {
+		filters = append(filters, convertGroupToFilter(groupDefs, group))
+	}
+	return filters
+}
+
+func convertGroupToFilter(groupDefs []*costexplorer.GroupDefinition, group *costexplorer.Group) *costexplorer.Expression {
+	exps := []*costexplorer.Expression{}
+	for i, groupDef := range groupDefs {
+		exp := &costexplorer.Expression{
+			Dimensions: &costexplorer.DimensionValues{
+				Key: groupDef.Key,
+				Values: []*string{
+					group.Keys[i],
+				},
+				MatchOptions: []*string{
+					aws.String("EQUALS"),
+				},
+			},
+		}
+		exps = append(exps, exp)
+	}
+	return &costexplorer.Expression{
+		And: exps,
+	}
+}
+
 func (svc *RetinaCostExplorer) GetWholeCostAndUsage(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
 	output, err := svc.GetCostAndUsageRecursively(input)
 	if err != nil {
