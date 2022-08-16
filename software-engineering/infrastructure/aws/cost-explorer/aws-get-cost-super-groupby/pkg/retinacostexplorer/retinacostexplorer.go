@@ -1,7 +1,6 @@
 package retinacostexplorer
 
 import (
-	"strconv"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -23,7 +22,12 @@ func New(ce CostExplorer) *RetinaCostExplorer {
 }
 
 func (svc *RetinaCostExplorer) GetRetinaCostAndUsage(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
-	return nil, nil
+	base := &costexplorer.GetCostAndUsageInput{
+		Granularity: input.Granularity,
+		Metrics:     input.Metrics,
+		TimePeriod:  input.TimePeriod,
+	}
+	return svc.getCostAndUsageRecursively(base, input.GroupBy, nil)
 }
 
 func min(a, b int) int {
@@ -33,28 +37,7 @@ func min(a, b int) int {
 	return b
 }
 
-// ## 関数のIn, Process, Out
-// In:      通常のGetCostAndUsageInput
-// Process: GetCostAndUsageを1回実行し、次のGroupByがなければ擬似GroupByを追加してOutputを返すし、そうでなければGroupを抽出した後Filterに変換して実行、結果を時間でZipして返す
-// Out:     通常のGetCostAndUsageOutput
-// ## 再帰の流れ
-// GetCostAndUsageを実行
-// 次のGroupByが残っていれば、今回のGroupByをFilterに追加して再帰的に実行する
-// (1-1)
-// GetCostAndUsageをFilter付きで実行
-// 次のGroupByが残っていれば、今回のGroupByを時間方向でSumした後、Filterに追加して再帰的にGroup回数分実行する
-// (2-1)
-// GetCostAndUsageをFilter付きで実行
-// 次のGroupByが無ければ、FilterのValueを擬似GroupByとして追加してOutputを返す
-// (2-2)
-// GetCostAndUsageをFilter付きで実行
-// 次のGroupByが無ければ、FilterのValueを擬似GroupByとして追加してOutputを返す
-// ...
-// 擬似GroupByが追加されたそれぞれ異なるDimensionのOutputの配列が取得されるので、時間でZipして返却
-// (1-2)
-// 省略
-// 擬似GroupByが追加されたそれぞれ異なるDimensionのOutputの配列が取得されるので、時間でZipして返却
-func (svc *RetinaCostExplorer) getCostAndUsageWithPseudoFilters(base *costexplorer.GetCostAndUsageInput, groupBy []*costexplorer.GroupDefinition, pseudoGroupFilter *costexplorer.Expression) (*costexplorer.GetCostAndUsageOutput, error) {
+func (svc *RetinaCostExplorer) getCostAndUsageRecursively(base *costexplorer.GetCostAndUsageInput, groupBy []*costexplorer.GroupDefinition, pseudoGroupFilter *costexplorer.Expression) (*costexplorer.GetCostAndUsageOutput, error) {
 	current := groupBy[:min(2, len(groupBy))]
 	next := groupBy[min(2, len(groupBy)):]
 
@@ -65,7 +48,7 @@ func (svc *RetinaCostExplorer) getCostAndUsageWithPseudoFilters(base *costexplor
 		}
 	}
 
-	output, err := svc.GetCostAndUsageRecursively(&costexplorer.GetCostAndUsageInput{
+	output, err := svc.GetCostAndUsageAllPages(&costexplorer.GetCostAndUsageInput{
 		// TODO
 		Filter:  filter,
 		GroupBy: current,
@@ -76,10 +59,10 @@ func (svc *RetinaCostExplorer) getCostAndUsageWithPseudoFilters(base *costexplor
 
 	if len(next) > 0 {
 		recursed := [][]*costexplorer.ResultByTime{}
-		result := sumResultsThroughTime(output.ResultsByTime)
-		for _, group := range result.Groups {
+		groups := extractUniqueGroups(output.ResultsByTime)
+		for _, group := range groups {
 			nextFilter := extractFilterFromGroup(current, group)
-			output, err := svc.getCostAndUsageWithPseudoFilters(base, next, nextFilter)
+			output, err := svc.getCostAndUsageRecursively(base, next, nextFilter)
 			if err != nil {
 				return nil, err
 			}
@@ -103,68 +86,48 @@ func prependPseudoGroupsFromFilter(results []*costexplorer.ResultByTime, pseudoG
 }
 
 func zipResultsByTime(resultsArray [][]*costexplorer.ResultByTime) []*costexplorer.ResultByTime {
-	// TODO
-	return []*costexplorer.ResultByTime{}
+	timeToGroups := map[string][]*costexplorer.Group{}
+	for _, results := range resultsArray {
+		for _, result := range results {
+			key := *result.TimePeriod.Start + "/" + *result.TimePeriod.End
+			timeToGroups[key] = append(timeToGroups[key], result.Groups...)
+		}
+	}
+	results := []*costexplorer.ResultByTime{}
+	for key, groups := range timeToGroups {
+		time := strings.Split(key, "/")
+		results = append(results, &costexplorer.ResultByTime{
+			// TODO: EstimatedとTotalは考慮しない
+			Groups: groups,
+			TimePeriod: &costexplorer.DateInterval{
+				Start: aws.String(time[0]),
+				End:   aws.String(time[1]),
+			},
+		})
+	}
+	return results
 }
 
-// TODO: Groupの抽出、的な名前に変更したい
-func sumResultsThroughTime(results []*costexplorer.ResultByTime) *costexplorer.ResultByTime {
-	// TODO: resultsをまたいで同じ日時のGroupsが存在する場合、Uniqueチェックがないので多重計上になってしまう問題がある。
-	groupsArray := [][]*costexplorer.Group{}
+func extractUniqueGroups(results []*costexplorer.ResultByTime) []*costexplorer.Group {
+	groups := []*costexplorer.Group{}
 	for _, result := range results {
-		groupsArray = append(groupsArray, result.Groups)
-	}
-	return &costexplorer.ResultByTime{
-		Estimated: results[0].Estimated,
-		Groups:    totalMetricsByKey(groupsArray),
-		TimePeriod: &costexplorer.DateInterval{
-			End:   results[len(results)-1].TimePeriod.End,
-			Start: results[0].TimePeriod.Start,
-		},
-		Total: results[0].Total,
-	}
-}
-
-type metrics map[string]*costexplorer.MetricValue
-type groupedByKeys map[string]metrics
-
-func totalMetricsByKey(groupsArray [][]*costexplorer.Group) []*costexplorer.Group {
-	groupedByKeys := groupedByKeys{}
-
-	for _, groups := range groupsArray {
-		for _, group := range groups {
-			key := strings.Join(StringsValues(group.Keys), ",")
-			if _, ok := groupedByKeys[key]; !ok {
-				groupedByKeys[key] = group.Metrics
-			} else {
-				for metricKey, metricValue := range group.Metrics {
-					set, _ := strconv.ParseFloat(*groupedByKeys[key][metricKey].Amount, 64)
-					new, _ := strconv.ParseFloat(*metricValue.Amount, 64)
-					updatedAmount := strconv.FormatFloat(set+new, 'f', -1, 64)
-					updatedMetricValue := &costexplorer.MetricValue{
-						Amount: aws.String(updatedAmount),
-						Unit:   groupedByKeys[key][metricKey].Unit,
-					}
-					groupedByKeys[key][metricKey] = updatedMetricValue
-				}
+		for _, group := range result.Groups {
+			if !containsGroup(groups, group) {
+				groups = append(groups, group)
 			}
 		}
 	}
-	return convertMetricsMapToGroups(groupedByKeys)
+	return groups
 }
 
-func convertMetricsMapToGroups(groupedByKeys groupedByKeys) []*costexplorer.Group {
-	groups := []*costexplorer.Group{}
-	for key, metrics := range groupedByKeys {
-		keys := strings.Split(key, ",")
-
-		group := &costexplorer.Group{
-			Keys:    Strings(keys),
-			Metrics: metrics,
+// TODO: パフォーマンス改善の余地がありそう
+func containsGroup(groups []*costexplorer.Group, group *costexplorer.Group) bool {
+	for _, g := range groups {
+		if strings.Join(StringsValues(g.Keys), ",") == strings.Join(StringsValues(group.Keys), ",") {
+			return true
 		}
-		groups = append(groups, group)
 	}
-	return groups
+	return false
 }
 
 func extractFiltersFromGroups(groupDefs []*costexplorer.GroupDefinition, groups []*costexplorer.Group) []*costexplorer.Expression {
@@ -196,15 +159,14 @@ func extractFilterFromGroup(groupDefs []*costexplorer.GroupDefinition, group *co
 	}
 }
 
-// TODO: recursiveを他で使うので、 GetCostAndUsage but get all pages. っぽい名前に直す
-func (svc *RetinaCostExplorer) GetCostAndUsageRecursively(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
+func (svc *RetinaCostExplorer) GetCostAndUsageAllPages(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
 	output, err := svc.GetCostAndUsage(input)
 	if err != nil {
 		return nil, err
 	}
 	if output.NextPageToken != nil {
 		input.NextPageToken = output.NextPageToken
-		nextOutput, nextErr := svc.GetCostAndUsageRecursively(input)
+		nextOutput, nextErr := svc.GetCostAndUsageAllPages(input)
 		if nextErr != nil {
 			return nil, nextErr
 		}
