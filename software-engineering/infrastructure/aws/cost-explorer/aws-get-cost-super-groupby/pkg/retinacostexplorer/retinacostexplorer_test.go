@@ -561,7 +561,6 @@ func TestZipResultsByTime(t *testing.T) {
 			},
 			want: []*costexplorer.ResultByTime{
 				{
-					Estimated: aws.Bool(false),
 					Groups: []*costexplorer.Group{
 						{
 							Keys: []*string{aws.String("123456789012"), aws.String("EC2 - Other"), aws.String("APN1-EBS:VolumeUsage.gp2")},
@@ -598,51 +597,21 @@ func TestZipResultsByTime(t *testing.T) {
 	}
 }
 
-func TestConvertGroupToFilter(t *testing.T) {
-	type args struct {
-		groupDefs []*costexplorer.GroupDefinition
-		group     *costexplorer.Group
-	}
-	tests := []struct {
-		name string
-		args args
-		want *costexplorer.Expression
-	}{
-		{
-			name: "empty",
-			args: args{
-				groupDefs: []*costexplorer.GroupDefinition{},
-				group:     &costexplorer.Group{},
-			},
-			want: &costexplorer.Expression{
-				And: []*costexplorer.Expression{},
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := extractFilterFromGroup(tt.args.groupDefs, tt.args.group); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ConvertGroupToFilter() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestSumResultsThroughTime(t *testing.T) {
+func TestExtractUniqueGroups(t *testing.T) {
 	type args struct {
 		results []*costexplorer.ResultByTime
 	}
 	tests := []struct {
 		name string
 		args args
-		want *costexplorer.ResultByTime
+		want []*costexplorer.Group
 	}{
 		{
 			name: "empty",
 			args: args{
 				results: []*costexplorer.ResultByTime{},
 			},
-			want: &costexplorer.ResultByTime{},
+			want: []*costexplorer.Group{},
 		},
 		{
 			name: "2 month total",
@@ -717,129 +686,70 @@ func TestSumResultsThroughTime(t *testing.T) {
 					Total: map[string]*costexplorer.MetricValue{},
 				}},
 			},
-			want: &costexplorer.ResultByTime{
-				Estimated: aws.Bool(false),
-				Groups: []*costexplorer.Group{
-					{
-						Keys: []*string{aws.String("123456789012"), aws.String("EC2 - Other")},
-						Metrics: map[string]*costexplorer.MetricValue{
-							"BlendedCost": {
-								Amount: aws.String("7.4189861496"),
-								Unit:   aws.String("USD"),
-							},
+			want: []*costexplorer.Group{
+				{
+					Keys: []*string{aws.String("123456789012"), aws.String("EC2 - Other")},
+					Metrics: map[string]*costexplorer.MetricValue{
+						"BlendedCost": {
+							Amount: aws.String("3.716129016"),
+							Unit:   aws.String("USD"),
 						},
-					}, {
-						Keys: []*string{aws.String("123456789012"), aws.String("AWS CloudTrail")},
-						Metrics: map[string]*costexplorer.MetricValue{
-							"BlendedCost": {
-								Amount: aws.String("0"),
-								Unit:   aws.String("USD"),
-							},
+					},
+				}, {
+					Keys: []*string{aws.String("123456789012"), aws.String("AWS CloudTrail")},
+					Metrics: map[string]*costexplorer.MetricValue{
+						"BlendedCost": {
+							Amount: aws.String("0"),
+							Unit:   aws.String("USD"),
 						},
-					}, {
-						Keys: []*string{aws.String("987654321098"), aws.String("AWS CloudTrail")},
-						Metrics: map[string]*costexplorer.MetricValue{
-							"BlendedCost": {
-								Amount: aws.String("5.5121199999999995"),
-								Unit:   aws.String("USD"),
-							},
+					},
+				}, {
+					Keys: []*string{aws.String("987654321098"), aws.String("AWS CloudTrail")},
+					Metrics: map[string]*costexplorer.MetricValue{
+						"BlendedCost": {
+							Amount: aws.String("2.90684"),
+							Unit:   aws.String("USD"),
 						},
 					},
 				},
-				TimePeriod: &costexplorer.DateInterval{
-					End:   aws.String("2022-02-28"),
-					Start: aws.String("2022-01-01"),
-				},
-				Total: map[string]*costexplorer.MetricValue{},
 			},
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := sumResultsThroughTime(tt.args.results); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("sumResultsThroughTime() = %v, want %v", got, tt.want)
+			if got := extractUniqueGroups(tt.args.results); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("extractUniqueGroups() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestTotalMetricsByKey(t *testing.T) {
-	tests := []struct {
-		name string
-		args [][]*costexplorer.Group
-		want []*costexplorer.Group
-	}{{
-		name: "success",
-		args: [][]*costexplorer.Group{
-			{{
-				Keys: []*string{aws.String("key1"), aws.String("key2")},
-				Metrics: metrics{
-					"metric1": &costexplorer.MetricValue{
-						Amount: aws.String("1"),
-						Unit:   aws.String("unit1"),
-					},
-					"metric2": &costexplorer.MetricValue{
-						Amount: aws.String("2"),
-						Unit:   aws.String("unit2"),
-					},
-				},
-			}},
-			{{
-				Keys: []*string{aws.String("key1"), aws.String("key2")},
-				Metrics: metrics{
-					"metric1": &costexplorer.MetricValue{
-						Amount: aws.String("3"),
-						Unit:   aws.String("unit1"),
-					},
-					"metric2": &costexplorer.MetricValue{
-						Amount: aws.String("4"),
-						Unit:   aws.String("unit2"),
-					},
-				},
-			}},
-		},
-		want: []*costexplorer.Group{
-			{
-
-				Keys: []*string{aws.String("key1"), aws.String("key2")},
-				Metrics: metrics{
-					"metric1": &costexplorer.MetricValue{
-						Amount: aws.String("4"),
-						Unit:   aws.String("unit1"),
-					},
-					"metric2": &costexplorer.MetricValue{
-						Amount: aws.String("6"),
-						Unit:   aws.String("unit2"),
-					},
-				},
-			},
-		},
-	}}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := totalMetricsByKey(tt.args); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("totalMetricsByKey() = %v, want %v", got, tt.want)
-			}
-		})
+func TestExtractFilterFromGroup(t *testing.T) {
+	type args struct {
+		groupDefs []*costexplorer.GroupDefinition
+		group     *costexplorer.Group
 	}
-}
-
-func TestConvertMetricsMapToGroups(t *testing.T) {
 	tests := []struct {
 		name string
-		in   groupedByKeys
-		out  []*costexplorer.Group
+		args args
+		want *costexplorer.Expression
 	}{
 		{
 			name: "empty",
-			in:   groupedByKeys{},
-			out:  []*costexplorer.Group{},
+			args: args{
+				groupDefs: []*costexplorer.GroupDefinition{},
+				group:     &costexplorer.Group{},
+			},
+			want: &costexplorer.Expression{
+				And: []*costexplorer.Expression{},
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := convertMetricsMapToGroups(tt.in); !reflect.DeepEqual(got, tt.out) {
-				t.Errorf("convertMetricsMapToGroups() = %v, want %v", got, tt.out)
+			if got := extractFilterFromGroup(tt.args.groupDefs, tt.args.group); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ConvertGroupToFilter() = %v, want %v", got, tt.want)
 			}
 		})
 	}
