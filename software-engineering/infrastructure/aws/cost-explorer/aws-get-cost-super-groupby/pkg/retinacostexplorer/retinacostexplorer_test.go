@@ -465,10 +465,14 @@ func TestPrependPseudoGroupsFromFilter(t *testing.T) {
 					},
 				},
 				pseudoGroupFilter: &costexplorer.Expression{
-					Dimensions: &costexplorer.DimensionValues{
-						Key:          aws.String("LINKED_ACCOUNT"),
-						Values:       []*string{aws.String("123456789012")},
-						MatchOptions: []*string{aws.String("EQUALS")},
+					And: []*costexplorer.Expression{
+						{
+							Dimensions: &costexplorer.DimensionValues{
+								Key:          aws.String("LINKED_ACCOUNT"),
+								Values:       []*string{aws.String("123456789012")},
+								MatchOptions: []*string{aws.String("EQUALS")},
+							},
+						},
 					},
 				},
 			},
