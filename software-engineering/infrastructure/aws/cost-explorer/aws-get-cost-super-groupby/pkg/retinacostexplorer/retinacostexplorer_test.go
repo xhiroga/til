@@ -358,10 +358,10 @@ func TestGetRetinaCostAndUsage(t *testing.T) {
 	}
 }
 
-func TestConvertGroupsToFilters(t *testing.T) {
+func TestExtractFiltersFromGroup(t *testing.T) {
 	type args struct {
 		groupDefs []*costexplorer.GroupDefinition
-		groups    []*costexplorer.Group
+		group     *costexplorer.Group
 	}
 	tests := []struct {
 		name string
@@ -372,7 +372,7 @@ func TestConvertGroupsToFilters(t *testing.T) {
 			name: "empty",
 			args: args{
 				groupDefs: []*costexplorer.GroupDefinition{},
-				groups:    []*costexplorer.Group{},
+				group:     &costexplorer.Group{},
 			},
 			want: []*costexplorer.Expression{},
 		}, {
@@ -385,14 +385,12 @@ func TestConvertGroupsToFilters(t *testing.T) {
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("SERVICE"),
 				}},
-				groups: []*costexplorer.Group{
-					{
-						Keys: []*string{aws.String("123456789012"), aws.String("EC2 - Other")},
-						Metrics: map[string]*costexplorer.MetricValue{
-							"BlendedCost": {
-								Amount: aws.String("3.716129016"),
-								Unit:   aws.String("USD"),
-							},
+				group: &costexplorer.Group{
+					Keys: []*string{aws.String("123456789012"), aws.String("EC2 - Other")},
+					Metrics: map[string]*costexplorer.MetricValue{
+						"BlendedCost": {
+							Amount: aws.String("3.716129016"),
+							Unit:   aws.String("USD"),
 						},
 					},
 				},
@@ -422,7 +420,7 @@ func TestConvertGroupsToFilters(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := extractFiltersFromGroups(tt.args.groupDefs, tt.args.groups); !reflect.DeepEqual(got, tt.want) {
+			if got := extractFiltersFromGroup(tt.args.groupDefs, tt.args.group); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ConvertGroupsToFilters() = %v, want %v", got, tt.want)
 			}
 		})
@@ -431,8 +429,8 @@ func TestConvertGroupsToFilters(t *testing.T) {
 
 func TestPrependPseudoGroupsFromFilter(t *testing.T) {
 	type args struct {
-		results           []*costexplorer.ResultByTime
-		pseudoGroupFilter *costexplorer.Expression
+		results            []*costexplorer.ResultByTime
+		pseudoGroupFilters []*costexplorer.Expression
 	}
 	tests := []struct {
 		name string
@@ -442,8 +440,8 @@ func TestPrependPseudoGroupsFromFilter(t *testing.T) {
 		{
 			name: "empty",
 			args: args{
-				results:           []*costexplorer.ResultByTime{},
-				pseudoGroupFilter: &costexplorer.Expression{},
+				results:            []*costexplorer.ResultByTime{},
+				pseudoGroupFilters: []*costexplorer.Expression{},
 			},
 			want: []*costexplorer.ResultByTime{},
 		}, {
@@ -464,14 +462,12 @@ func TestPrependPseudoGroupsFromFilter(t *testing.T) {
 						},
 					},
 				},
-				pseudoGroupFilter: &costexplorer.Expression{
-					And: []*costexplorer.Expression{
-						{
-							Dimensions: &costexplorer.DimensionValues{
-								Key:          aws.String("LINKED_ACCOUNT"),
-								Values:       []*string{aws.String("123456789012")},
-								MatchOptions: []*string{aws.String("EQUALS")},
-							},
+				pseudoGroupFilters: []*costexplorer.Expression{
+					{
+						Dimensions: &costexplorer.DimensionValues{
+							Key:          aws.String("LINKED_ACCOUNT"),
+							Values:       []*string{aws.String("123456789012")},
+							MatchOptions: []*string{aws.String("EQUALS")},
 						},
 					},
 				},
@@ -495,7 +491,7 @@ func TestPrependPseudoGroupsFromFilter(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := prependPseudoGroupsFromFilter(tt.args.results, tt.args.pseudoGroupFilter); !reflect.DeepEqual(got, tt.want) {
+			if got := prependPseudoGroupsFromFilter(tt.args.results, tt.args.pseudoGroupFilters); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("PrependPseudoGroupsFromFilter() = %v, want %v", got, tt.want)
 			}
 		})
@@ -737,7 +733,7 @@ func TestExtractFilterFromGroup(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *costexplorer.Expression
+		want []*costexplorer.Expression
 	}{
 		{
 			name: "empty",
@@ -745,14 +741,12 @@ func TestExtractFilterFromGroup(t *testing.T) {
 				groupDefs: []*costexplorer.GroupDefinition{},
 				group:     &costexplorer.Group{},
 			},
-			want: &costexplorer.Expression{
-				And: []*costexplorer.Expression{},
-			},
+			want: []*costexplorer.Expression{},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := extractFilterFromGroup(tt.args.groupDefs, tt.args.group); !reflect.DeepEqual(got, tt.want) {
+			if got := extractFiltersFromGroup(tt.args.groupDefs, tt.args.group); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ConvertGroupToFilter() = %v, want %v", got, tt.want)
 			}
 		})
