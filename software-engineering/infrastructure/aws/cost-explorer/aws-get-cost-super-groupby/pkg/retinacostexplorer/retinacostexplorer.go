@@ -37,24 +37,31 @@ func min(a, b int) int {
 	return b
 }
 
-func (svc *RetinaCostExplorer) getCostAndUsageRecursively(base *costexplorer.GetCostAndUsageInput, groupBy []*costexplorer.GroupDefinition, pseudoGroupFilter *costexplorer.Expression) (*costexplorer.GetCostAndUsageOutput, error) {
+func (svc *RetinaCostExplorer) getCostAndUsageRecursively(base *costexplorer.GetCostAndUsageInput, groupBy []*costexplorer.GroupDefinition, pseudoGroupFilter []*costexplorer.Expression) (*costexplorer.GetCostAndUsageOutput, error) {
 	current := groupBy[:min(2, len(groupBy))]
 	next := groupBy[min(2, len(groupBy)):]
 
 	filter := base.Filter
 	if pseudoGroupFilter != nil {
-		filter = &costexplorer.Expression{
-			And: []*costexplorer.Expression{filter, base.Filter},
+		if filter == nil {
+			filter = &costexplorer.Expression{
+				And: pseudoGroupFilter,
+			}
+		} else {
+			filter = &costexplorer.Expression{
+				And: []*costexplorer.Expression{filter, base.Filter},
+			}
 		}
 	}
 
-	output, err := svc.GetCostAndUsageAllPages(&costexplorer.GetCostAndUsageInput{
+	input := &costexplorer.GetCostAndUsageInput{
 		Granularity: base.Granularity,
 		Metrics:     base.Metrics,
 		TimePeriod:  base.TimePeriod,
 		Filter:      filter,
 		GroupBy:     current,
-	})
+	}
+	output, err := svc.GetCostAndUsageAllPages(input)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +70,8 @@ func (svc *RetinaCostExplorer) getCostAndUsageRecursively(base *costexplorer.Get
 		recursed := [][]*costexplorer.ResultByTime{}
 		groups := extractUniqueGroups(output.ResultsByTime)
 		for _, group := range groups {
-			nextFilter := extractFilterFromGroup(current, group)
-			output, err := svc.getCostAndUsageRecursively(base, next, nextFilter)
+			nextFilter := extractFiltersFromGroup(current, group)
+			output, err := svc.getCostAndUsageRecursively(base, next, append(pseudoGroupFilter, nextFilter...))
 			if err != nil {
 				return nil, err
 			}
@@ -84,14 +91,14 @@ func (svc *RetinaCostExplorer) getCostAndUsageRecursively(base *costexplorer.Get
 	}
 }
 
-func prependPseudoGroupsFromFilter(results []*costexplorer.ResultByTime, pseudoGroupFilter *costexplorer.Expression) []*costexplorer.ResultByTime {
+func prependPseudoGroupsFromFilter(results []*costexplorer.ResultByTime, pseudoGroupFilters []*costexplorer.Expression) []*costexplorer.ResultByTime {
 	// TODO: 型では表現できていないが、呼び出し元が渡すExpressionは必ずAndと複数のEquals条件を持つ
 	prepends := []*costexplorer.ResultByTime{}
 	for _, result := range results {
 		groups := []*costexplorer.Group{}
 		for _, group := range result.Groups {
 			updated := &costexplorer.Group{
-				Keys:    append(filterToGroupKeys(pseudoGroupFilter), group.Keys...),
+				Keys:    append(filtersToGroupKeys(pseudoGroupFilters), group.Keys...),
 				Metrics: group.Metrics,
 			}
 			groups = append(groups, updated)
@@ -102,9 +109,9 @@ func prependPseudoGroupsFromFilter(results []*costexplorer.ResultByTime, pseudoG
 	return prepends
 }
 
-func filterToGroupKeys(filter *costexplorer.Expression) []*string {
+func filtersToGroupKeys(filters []*costexplorer.Expression) []*string {
 	keys := []*string{}
-	for _, exp := range filter.And {
+	for _, exp := range filters {
 		keys = append(keys, exp.Dimensions.Values[0])
 	}
 	return keys
@@ -155,16 +162,8 @@ func containsGroup(groups []*costexplorer.Group, group *costexplorer.Group) bool
 	return false
 }
 
-func extractFiltersFromGroups(groupDefs []*costexplorer.GroupDefinition, groups []*costexplorer.Group) []*costexplorer.Expression {
+func extractFiltersFromGroup(groupDefs []*costexplorer.GroupDefinition, group *costexplorer.Group) []*costexplorer.Expression {
 	// TODO: 型では表現できていないが、groupByの要素数は1か2であり、groupのkeyの数も一致するはずである
-	filters := []*costexplorer.Expression{}
-	for _, group := range groups {
-		filters = append(filters, extractFilterFromGroup(groupDefs, group))
-	}
-	return filters
-}
-
-func extractFilterFromGroup(groupDefs []*costexplorer.GroupDefinition, group *costexplorer.Group) *costexplorer.Expression {
 	exps := []*costexplorer.Expression{}
 	for i, groupDef := range groupDefs {
 		exp := &costexplorer.Expression{
@@ -180,9 +179,7 @@ func extractFilterFromGroup(groupDefs []*costexplorer.GroupDefinition, group *co
 		}
 		exps = append(exps, exp)
 	}
-	return &costexplorer.Expression{
-		And: exps,
-	}
+	return exps
 }
 
 func (svc *RetinaCostExplorer) GetCostAndUsageAllPages(input *costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error) {
