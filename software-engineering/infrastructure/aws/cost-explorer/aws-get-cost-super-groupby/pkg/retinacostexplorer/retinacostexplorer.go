@@ -49,9 +49,11 @@ func (svc *RetinaCostExplorer) getCostAndUsageRecursively(base *costexplorer.Get
 	}
 
 	output, err := svc.GetCostAndUsageAllPages(&costexplorer.GetCostAndUsageInput{
-		// TODO
-		Filter:  filter,
-		GroupBy: current,
+		Granularity: base.Granularity,
+		Metrics:     base.Metrics,
+		TimePeriod:  base.TimePeriod,
+		Filter:      filter,
+		GroupBy:     current,
 	})
 	if err != nil {
 		return nil, err
@@ -69,20 +71,43 @@ func (svc *RetinaCostExplorer) getCostAndUsageRecursively(base *costexplorer.Get
 			recursed = append(recursed, output.ResultsByTime)
 		}
 		return &costexplorer.GetCostAndUsageOutput{
-			// TODO
-			ResultsByTime: zipResultsByTime(recursed),
+			DimensionValueAttributes: output.DimensionValueAttributes,
+			GroupDefinitions:         groupBy,
+			ResultsByTime:            zipResultsByTime(recursed),
 		}, nil
 	} else {
 		return &costexplorer.GetCostAndUsageOutput{
-			// TODO
-			ResultsByTime: prependPseudoGroupsFromFilter(output.ResultsByTime, pseudoGroupFilter),
+			DimensionValueAttributes: output.DimensionValueAttributes,
+			GroupDefinitions:         groupBy,
+			ResultsByTime:            prependPseudoGroupsFromFilter(output.ResultsByTime, pseudoGroupFilter),
 		}, nil
 	}
 }
 
 func prependPseudoGroupsFromFilter(results []*costexplorer.ResultByTime, pseudoGroupFilter *costexplorer.Expression) []*costexplorer.ResultByTime {
-	// TODO
-	return []*costexplorer.ResultByTime{}
+	// TODO: 型では表現できていないが、呼び出し元が渡すExpressionは必ずAndと複数のEquals条件を持つ
+	prepends := []*costexplorer.ResultByTime{}
+	for _, result := range results {
+		groups := []*costexplorer.Group{}
+		for _, group := range result.Groups {
+			updated := &costexplorer.Group{
+				Keys:    append(filterToGroupKeys(pseudoGroupFilter), group.Keys...),
+				Metrics: group.Metrics,
+			}
+			groups = append(groups, updated)
+		}
+		result.Groups = groups
+		prepends = append(prepends, result)
+	}
+	return prepends
+}
+
+func filterToGroupKeys(filter *costexplorer.Expression) []*string {
+	keys := []*string{}
+	for _, exp := range filter.And {
+		keys = append(keys, exp.Dimensions.Values[0])
+	}
+	return keys
 }
 
 func zipResultsByTime(resultsArray [][]*costexplorer.ResultByTime) []*costexplorer.ResultByTime {
@@ -131,6 +156,7 @@ func containsGroup(groups []*costexplorer.Group, group *costexplorer.Group) bool
 }
 
 func extractFiltersFromGroups(groupDefs []*costexplorer.GroupDefinition, groups []*costexplorer.Group) []*costexplorer.Expression {
+	// TODO: 型では表現できていないが、groupByの要素数は1か2であり、groupのkeyの数も一致するはずである
 	filters := []*costexplorer.Expression{}
 	for _, group := range groups {
 		filters = append(filters, extractFilterFromGroup(groupDefs, group))
