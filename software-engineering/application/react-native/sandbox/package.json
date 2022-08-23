@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "6.3.1",
-    "expo": "27.1.0",
+    "expo": "27.1.1",
     "expo-three": "2.2.2-alpha.1",
     "firebase": "5.2.0",
     "formik": "1.0.3",
