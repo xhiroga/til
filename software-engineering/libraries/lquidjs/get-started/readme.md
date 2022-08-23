@@ -1,13 +1,8 @@
-## Getting Started
+# Liquid.js
 
-### Cloning the repo
+## Get Started
 
 ```sh
-bun create blank ./NAME_HERE
-```
-
-### Execute a file (eg. src/index.js)
-    
-```sh
-bun run ./src/index.js
+bun install
+bun ./src/index.ts
 ```
