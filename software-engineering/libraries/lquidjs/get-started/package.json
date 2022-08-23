@@ -1,0 +1,11 @@
+{
+  "name": "get-started",
+  "version": "0.0.3",
+  "module": "src/index.js",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "dependencies": {
+    "liquidjs": "^9.40.0"
+  }
+}
