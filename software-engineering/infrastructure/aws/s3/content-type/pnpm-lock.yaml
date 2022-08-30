@@ -4,10 +4,10 @@ specifiers:
   '@aws-sdk/client-s3': ^3.112.0
   '@aws-sdk/s3-presigned-post': ^3.112.0
   '@aws-sdk/s3-request-presigner': ^3.112.0
-  '@swc-node/register': ^1.5.1
-  '@types/node': ^18.0.0
+  '@swc-node/register': 1.5.1
+  '@types/node': 18.7.14
   dotenv: ^16.0.1
-  typescript: ^4.7.3
+  typescript: 4.8.2
   uuid: ^8.3.2
 
 dependencies:
@@ -18,9 +18,9 @@ dependencies:
   uuid: 8.3.2
 
 devDependencies:
-  '@swc-node/register': 1.5.1_typescript@4.7.3
-  '@types/node': 18.0.0
-  typescript: 4.7.3
+  '@swc-node/register': 1.5.1_typescript@4.8.2
+  '@types/node': 18.7.14
+  typescript: 4.8.2
 
 packages:
 
@@ -943,7 +943,7 @@ packages:
       '@swc/core': 1.2.203
     dev: true
 
-  /@swc-node/register/1.5.1_typescript@4.7.3:
+  /@swc-node/register/1.5.1_typescript@4.8.2:
     resolution: {integrity: sha512-6IL5s4QShKGs08qAeNou3rDA3gbp2WHk6fo0XnJXQn/aC9k6FnVBbj/thGOIEDtgNhC/DKpZT8tCY1LpQnOZFg==}
     peerDependencies:
       typescript: '>= 4.3'
@@ -954,7 +954,7 @@ packages:
       debug: 4.3.4
       pirates: 4.0.5
       tslib: 2.4.0
-      typescript: 4.7.3
+      typescript: 4.8.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1102,8 +1102,8 @@ packages:
       '@swc/core-win32-x64-msvc': 1.2.203
     dev: true
 
-  /@types/node/18.0.0:
-    resolution: {integrity: sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==}
+  /@types/node/18.7.14:
+    resolution: {integrity: sha512-6bbDaETVi8oyIARulOE9qF1/Qdi/23z6emrUh0fNJRUmjznqrixD4MpGDdgOFk5Xb0m2H6Xu42JGdvAxaJR/wA==}
     dev: true
 
   /bowser/2.11.0:
@@ -1172,8 +1172,8 @@ packages:
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
 
-  /typescript/4.7.3:
-    resolution: {integrity: sha512-WOkT3XYvrpXx4vMMqlD+8R8R37fZkjyLGlxavMc4iB8lrl8L0DeTcHbYgw/v0N/z9wAFsgBhcsF0ruoySS22mA==}
+  /typescript/4.8.2:
+    resolution: {integrity: sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
