@@ -6,6 +6,6 @@
     "bun-types": "latest"
   },
   "dependencies": {
-    "liquidjs": "^9.40.0"
+    "liquidjs": "9.42.0"
   }
 }
