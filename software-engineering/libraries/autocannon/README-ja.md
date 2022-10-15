@@ -9,5 +9,6 @@ autocannon -H "Authorization: Bearer $TOKEN" -H "content-type: application/json;
     -d 5 \  # OR -a 10000   # 秒数 OR リクエスト数を指定
     -p 1 \
     --renderStatusCodes \
-    -m POST -b '{}' 
+    -m POST -b '{}' \
+    http://localhost:8080/api/v1/xxx
 ```
