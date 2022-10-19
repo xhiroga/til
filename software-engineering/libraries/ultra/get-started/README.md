@@ -6,6 +6,12 @@ ultra init
 ultra install lodash
 ```
 
+## Run
+
+```shell
+ultra run dev
+```
+
 ## Reference
 
 - [Getting started](https://ultrapkg.dev/docs/get-started)
