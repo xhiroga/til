@@ -4,5 +4,223 @@
       "path": "/node_modules/lodash",
       "cache": "/lodash/4.17.21"
     }
+  },
+  "ts-node": {
+    "10.9.1": {
+      "path": "/node_modules/ts-node",
+      "cache": "/ts-node/10.9.1"
+    }
+  },
+  "typescript": {
+    "4.8.4": {
+      "path": "/node_modules/typescript",
+      "cache": "/typescript/4.8.4"
+    }
+  },
+  "@types/node": {
+    "18.11.2": {
+      "path": "/node_modules/@types/node",
+      "cache": "/@types/node/18.11.2"
+    }
+  },
+  "@cspotcode/source-map-support": {
+    "0.8.1": {
+      "path": "/node_modules/@cspotcode/source-map-support",
+      "cache": "/@cspotcode/source-map-support/0.8.1"
+    }
+  },
+  "@jridgewell/trace-mapping": {
+    "0.3.9": {
+      "path": "/node_modules/@jridgewell/trace-mapping",
+      "cache": "/@jridgewell/trace-mapping/0.3.9"
+    }
+  },
+  "@jridgewell/resolve-uri": {
+    "3.1.0": {
+      "path": "/node_modules/@jridgewell/resolve-uri",
+      "cache": "/@jridgewell/resolve-uri/3.1.0"
+    }
+  },
+  "@jridgewell/sourcemap-codec": {
+    "1.4.14": {
+      "path": "/node_modules/@jridgewell/sourcemap-codec",
+      "cache": "/@jridgewell/sourcemap-codec/1.4.14"
+    }
+  },
+  "@tsconfig/node10": {
+    "1.0.9": {
+      "path": "/node_modules/@tsconfig/node10",
+      "cache": "/@tsconfig/node10/1.0.9"
+    }
+  },
+  "@tsconfig/node12": {
+    "1.0.11": {
+      "path": "/node_modules/@tsconfig/node12",
+      "cache": "/@tsconfig/node12/1.0.11"
+    }
+  },
+  "@tsconfig/node14": {
+    "1.0.3": {
+      "path": "/node_modules/@tsconfig/node14",
+      "cache": "/@tsconfig/node14/1.0.3"
+    }
+  },
+  "@tsconfig/node16": {
+    "1.0.3": {
+      "path": "/node_modules/@tsconfig/node16",
+      "cache": "/@tsconfig/node16/1.0.3"
+    }
+  },
+  "acorn": {
+    "8.8.0": {
+      "path": "/node_modules/acorn",
+      "cache": "/acorn/8.8.0"
+    }
+  },
+  "acorn-walk": {
+    "8.2.0": {
+      "path": "/node_modules/acorn-walk",
+      "cache": "/acorn-walk/8.2.0"
+    }
+  },
+  "arg": {
+    "4.1.3": {
+      "path": "/node_modules/arg",
+      "cache": "/arg/4.1.3"
+    }
+  },
+  "create-require": {
+    "1.1.1": {
+      "path": "/node_modules/create-require",
+      "cache": "/create-require/1.1.1"
+    }
+  },
+  "diff": {
+    "4.0.2": {
+      "path": "/node_modules/diff",
+      "cache": "/diff/4.0.2"
+    }
+  },
+  "make-error": {
+    "1.3.6": {
+      "path": "/node_modules/make-error",
+      "cache": "/make-error/1.3.6"
+    }
+  },
+  "v8-compile-cache-lib": {
+    "3.0.1": {
+      "path": "/node_modules/v8-compile-cache-lib",
+      "cache": "/v8-compile-cache-lib/3.0.1"
+    }
+  },
+  "yn": {
+    "3.1.1": {
+      "path": "/node_modules/yn",
+      "cache": "/yn/3.1.1"
+    }
+  },
+  "@swc/core": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core",
+      "cache": "/@swc/core/1.3.9"
+    }
+  },
+  "@swc/core-win32-x64-msvc": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-win32-x64-msvc",
+      "cache": "/@swc/core-win32-x64-msvc/1.3.9"
+    }
+  },
+  "@swc/core-darwin-x64": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-darwin-x64",
+      "cache": "/@swc/core-darwin-x64/1.3.9"
+    }
+  },
+  "@swc/core-linux-x64-gnu": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-linux-x64-gnu",
+      "cache": "/@swc/core-linux-x64-gnu/1.3.9"
+    }
+  },
+  "@swc/core-linux-x64-musl": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-linux-x64-musl",
+      "cache": "/@swc/core-linux-x64-musl/1.3.9"
+    }
+  },
+  "@swc/core-freebsd-x64": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-freebsd-x64",
+      "cache": "/@swc/core-freebsd-x64/1.3.9"
+    }
+  },
+  "@swc/wasm": {
+    "1.2.130": {
+      "path": "/node_modules/@swc/wasm",
+      "cache": "/@swc/wasm/1.2.130"
+    },
+    "1.2.122": {
+      "path": "/node_modules/@swc/core-android-arm-eabi/node_modules/@swc/wasm",
+      "cache": "/@swc/wasm/1.2.122"
+    },
+    "1.3.9": {
+      "path": "/node_modules/ts-node/node_modules/@swc/wasm",
+      "cache": "/@swc/wasm/1.3.9"
+    }
+  },
+  "@swc/core-win32-ia32-msvc": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-win32-ia32-msvc",
+      "cache": "/@swc/core-win32-ia32-msvc/1.3.9"
+    }
+  },
+  "@swc/core-linux-arm64-gnu": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-linux-arm64-gnu",
+      "cache": "/@swc/core-linux-arm64-gnu/1.3.9"
+    }
+  },
+  "@swc/core-linux-arm-gnueabihf": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-linux-arm-gnueabihf",
+      "cache": "/@swc/core-linux-arm-gnueabihf/1.3.9"
+    }
+  },
+  "@swc/core-darwin-arm64": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-darwin-arm64",
+      "cache": "/@swc/core-darwin-arm64/1.3.9"
+    }
+  },
+  "@swc/core-android-arm64": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-android-arm64",
+      "cache": "/@swc/core-android-arm64/1.3.9"
+    }
+  },
+  "@swc/core-linux-arm64-musl": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-linux-arm64-musl",
+      "cache": "/@swc/core-linux-arm64-musl/1.3.9"
+    }
+  },
+  "@swc/core-win32-arm64-msvc": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-win32-arm64-msvc",
+      "cache": "/@swc/core-win32-arm64-msvc/1.3.9"
+    }
+  },
+  "@swc/core-android-arm-eabi": {
+    "1.3.9": {
+      "path": "/node_modules/@swc/core-android-arm-eabi",
+      "cache": "/@swc/core-android-arm-eabi/1.3.9"
+    }
+  },
+  "@types/lodash": {
+    "4.14.186": {
+      "path": "/node_modules/@types/lodash",
+      "cache": "/@types/lodash/4.14.186"
+    }
   }
 }
