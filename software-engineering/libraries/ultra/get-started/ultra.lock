@@ -23,6 +23,12 @@
       "cache": "/@types/node/18.11.2"
     }
   },
+  "@types/lodash": {
+    "4.14.186": {
+      "path": "/node_modules/@types/lodash",
+      "cache": "/@types/lodash/4.14.186"
+    }
+  },
   "@cspotcode/source-map-support": {
     "0.8.1": {
       "path": "/node_modules/@cspotcode/source-map-support",
@@ -215,12 +221,6 @@
     "1.3.9": {
       "path": "/node_modules/@swc/core-android-arm-eabi",
       "cache": "/@swc/core-android-arm-eabi/1.3.9"
-    }
-  },
-  "@types/lodash": {
-    "4.14.186": {
-      "path": "/node_modules/@types/lodash",
-      "cache": "/@types/lodash/4.14.186"
     }
   }
 }
