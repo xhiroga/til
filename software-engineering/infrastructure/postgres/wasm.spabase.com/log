@@ -1,0 +1,36 @@
+% psql postgres://postgres@proxy.wasm.supabase.com:${PORT}
+
+Password for user postgres: 
+psql (14.5 (Homebrew))
+Type "help" for help.
+
+postgres=# select * from pg_database;
+  oid  |  datname  | datdba | encoding | datcollate | datctype | datistemplate | datallowconn | datconnlimit | datlastsysoid | datfrozenxid | datminmxid | dattablespace |               datacl                
+-------+-----------+--------+----------+------------+----------+---------------+--------------+--------------+---------------+--------------+------------+---------------+-------------------------------------
+ 12971 | postgres  |     10 |        6 | C          | C.UTF-8  | f             | t            |           -1 |         12970 |          725 |          1 |          1663 | 
+     1 | template1 |     10 |        6 | C          | C.UTF-8  | t             | t            |           -1 |         12970 |          725 |          1 |          1663 | {=c/postgres,postgres=CTc/postgres}
+ 12970 | template0 |     10 |        6 | C          | C.UTF-8  | t             | f            |           -1 |         12970 |          725 |          1 |          1663 | {=c/postgres,postgres=CTc/postgres}
+(3 rows)
+
+postgres=# select * from pg_user;
+ usename  | usesysid | usecreatedb | usesuper | userepl | usebypassrls |  passwd  | valuntil | useconfig 
+----------+----------+-------------+----------+---------+--------------+----------+----------+-----------
+ postgres |       10 | t           | t        | t       | t            | ******** |          | 
+(1 row)
+
+postgres=# select * from pg_stat_activity;
+ datid | datname  | pid | leader_pid | usesysid | usename  | application_name | client_addr | client_hostname | client_port |        backend_start        |         xact_start          |         query_start     >
+-------+----------+-----+------------+----------+----------+------------------+-------------+-----------------+-------------+-----------------------------+-----------------------------+------------------------->
+       |          | 143 |            |          |          |                  |             |                 |             | 2022-09-27 12:18:18.7568+00 |                             |                         >
+       |          | 145 |            |       10 | postgres |                  |             |                 |             | 2022-09-27 12:18:18.7967+00 |                             |                         >
+ 12971 | postgres | 167 |            |       10 | postgres | psql             |             |                 |          -1 | 2022-09-27 12:18:21.7741+00 |                             | 2022-09-27 12:21:51.6734>
+ 12971 | postgres | 228 |            |          |          |                  |             |                 |             | 2022-09-27 12:19:20.454+00  |                             |                         >
+ 12971 | postgres | 348 |            |          |          |                  |             |                 |             | 2022-09-27 12:21:20.5754+00 |                             |                         >
+ 12971 | postgres | 528 |            |       10 | postgres | psql             | 10.5.0.1    |                 |       47560 | 2022-09-27 12:22:58.3614+00 | 2022-09-27 12:31:14.4436+00 | 2022-09-27 12:31:14.4436>
+ 12971 | postgres | 977 |            |          |          |                  |             |                 |             | 2022-09-27 12:30:21.0484+00 |                             |                         >
+       |          | 141 |            |          |          |                  |             |                 |             | 2022-09-27 12:18:18.7266+00 |                             |                         >
+       |          | 140 |            |          |          |                  |             |                 |             | 2022-09-27 12:18:18.7176+00 |                             |                         >
+       |          | 142 |            |          |          |                  |             |                 |             | 2022-09-27 12:18:18.7246+00 |                             |                         >
+(10 rows)
+
+postgres=# quit;
