@@ -5,7 +5,7 @@
   "devDependencies": {
     "jest-expo": "27.0.1",
     "react-native-scripts": "1.14.1",
-    "react-test-renderer": "16.3.1"
+    "react-test-renderer": "16.14.0"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -20,13 +20,13 @@
   },
   "dependencies": {
     "@expo/vector-icons": "6.3.1",
-    "expo": "27.1.0",
+    "expo": "27.1.1",
     "expo-three": "2.2.2-alpha.1",
     "firebase": "5.2.0",
     "formik": "1.0.3",
     "native-base": "2.7.2",
-    "react": "16.3.1",
-    "react-native": "0.55.4",
+    "react": "16.14.0",
+    "react-native": "0.70.4",
     "react-native-dotenv": "0.1.1",
     "react-native-modal-datetime-picker": "6.0.0",
     "react-native-router-flux": "4.0.0-beta.31",
