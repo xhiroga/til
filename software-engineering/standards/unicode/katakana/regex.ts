@@ -11,6 +11,7 @@ const test = (reg: string) => {
     const pattern = Pattern.new().template("reg").vars({ reg }).build();
     console.log(pattern.test('アイウエオ'));
     console.log(pattern.test('ガラス'));    // ガ ではなく、基底文字「カ」と結合文字「゙」の組み合わせ
+    console.log(pattern.test('ハ゜ン'));    // パ ではなく、「ハ」と結合文字ではない「゜」の組み合わせ
     console.log(pattern.test('イスヾ'));    // 踊り字
     console.log(pattern.test('キャサリン・ゼタ゠ジョーンズ')); // [ダブルハイフン - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%80%E3%83%96%E3%83%AB%E3%83%8F%E3%82%A4%E3%83%95%E3%83%B3)
     console.log(pattern.test('ボクハトテモキミニサイカイスルヿハデキヌトオモウ'));  // [ヿ - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%BF)
