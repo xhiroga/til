@@ -9,6 +9,6 @@
   "automerge": false,
   "packageRules": {
     "matchPaths": ["**/*"],
-    "matchUpdateTypes": ["major", "minor", "patch"],
+    "matchUpdateTypes": ["minor", "patch"],
   }
 }
