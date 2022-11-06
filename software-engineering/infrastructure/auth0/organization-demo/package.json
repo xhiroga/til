@@ -22,7 +22,7 @@
     "@fortawesome/react-fontawesome": "0.2.0",
     "cors": "2.8.5",
     "express": "4.17.1",
-    "express-jwt": "6.0.0",
+    "express-jwt": "6.1.2",
     "helmet": "3.23.3",
     "highlight.js": "10.0.3",
     "jwks-rsa": "1.8.1",
