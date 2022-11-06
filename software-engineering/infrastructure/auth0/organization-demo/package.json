@@ -32,7 +32,7 @@
     "react-dom": "16.14.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.4",
-    "reactstrap": "8.5.0"
+    "reactstrap": "8.10.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.10.1",
