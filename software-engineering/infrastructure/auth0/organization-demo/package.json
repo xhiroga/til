@@ -35,7 +35,7 @@
     "reactstrap": "8.5.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "5.10.1",
+    "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "10.3.0",
     "jest-environment-jsdom-sixteen": "1.0.3",
     "jest-fetch-mock": "3.0.3",
