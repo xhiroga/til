@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-mrjob = "==0.5.11"
+mrjob = "==0.7.4"
 
 [requires]
 python_version = "3.6"
