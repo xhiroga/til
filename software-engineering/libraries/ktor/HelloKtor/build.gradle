@@ -20,7 +20,7 @@ dependencies {
     compile "io.ktor:ktor-server-core:$ktor_version"
     compile "io.ktor:ktor-server-netty:$ktor_version"
     compile "com.fasterxml.jackson.core:jackson-databind:2.8.8.1"
-    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.14.0"
 }
 
 compileKotlin {
