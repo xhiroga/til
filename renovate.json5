@@ -8,7 +8,7 @@
   // However, I want to catch up the library updates.
   "automerge": false,
   "packageRules": {
-    "matchPaths": ["**/*"],
+    "matchPackagePatterns": ["*"],
     "matchUpdateTypes": ["minor", "patch"],
   }
 }
