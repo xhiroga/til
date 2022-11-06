@@ -24,4 +24,4 @@ node -r @swc-node/register main.ts > out.html
 
 - `ファイルのメニュー > その他 > ファイルのリンクをコピー` でリンクを取得
 - `.env` の `FILE_LINK` を設定
-- node -r @swc-node/register get-url-private-download.ts
+- `node -r @swc-node/register get-url-private-download.ts`
