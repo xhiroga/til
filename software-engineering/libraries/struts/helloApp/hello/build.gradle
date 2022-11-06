@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
   compile	'javax.servlet:servlet-api:2.5',
-  'antlr:antlr:2.7.7',
+  'antlr:antlr:20030911',
   'commons-beanutils:commons-beanutils:1.9.4',
   'commons-chain:commons-chain:1.2',
   'commons-digester:commons-digester:2.1',
