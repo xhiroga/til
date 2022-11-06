@@ -16,7 +16,7 @@
     "d3-hierarchy": "2.0.0"
   },
   "devDependencies": {
-    "webpack": "5.30.0",
+    "webpack": "5.74.0",
     "webpack-cli": "4.6.0"
   }
 }
