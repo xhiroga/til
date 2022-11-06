@@ -13,7 +13,7 @@
     "chart.js": "3.0.1",
     "chartjs-chart-graph": "3.0.0-rc.3",
     "d3-force": "2.1.1",
-    "d3-hierarchy": "2.0.0"
+    "d3-hierarchy": "3.1.2"
   },
   "devDependencies": {
     "webpack": "5.30.0",
