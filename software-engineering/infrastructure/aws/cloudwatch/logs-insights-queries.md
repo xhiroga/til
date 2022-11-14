@@ -10,3 +10,17 @@ fields detail.stoppingAt as `StoppingAt(UTC)`, detail.startedAt as `StartedAt(UT
 
 - `detail.stoppingAt` and  `detail.startedAt` are in UTC.
 - IPv4Addressは `detail.attachments` からも取得できるが、 `detail.attachments.1...` の場合と `detail.attachments.0...` の場合があって安定しない。
+
+## [Auth0] Remove database connection log
+
+```
+fields @timestamp, @message
+| filter detail.data.description = "Delete a connection"
+| sort @timestamp desc
+```
+
+```
+fields @timestamp, @message
+| filter detail.data.details.request.method = "delete" and detail.data.details.request.path like /\/api\/v2\/connections/
+| sort @timestamp desc
+```
