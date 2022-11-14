@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "access-cookie"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga"]
+readme = "README.md"
+packages = [{include = "access_cookie"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+tornado = "^6.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+flake8 = "^5.0.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
