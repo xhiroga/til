@@ -21,20 +21,25 @@ class MainHandler(BaseHandler):
 
 class LoginHandler(BaseHandler):
     def get(self):
-        self.write('<html><body><form action="/login" method="post">'
+        self.write(
+            '<html><body><form action="/login" method="post">'
             'Name: <input type="text" name="name">'
             '<input type="submit" value="Sign in">'
-            '</form></body></html>')
+            "</form></body></html>"
+        )
+
     def post(self):
         self.set_cookie("user", self.get_argument("name"))
         self.redirect("/")
 
 
 if __name__ == "__main__":
-    app = tornado.web.Application([
-        (r"/", MainHandler),
-        (r"/login", LoginHandler),
-    ])
+    app = tornado.web.Application(
+        [
+            (r"/", MainHandler),
+            (r"/login", LoginHandler),
+        ]
+    )
     app.listen(8888)
     print("Start listen...")
     tornado.ioloop.IOLoop.current().start()
