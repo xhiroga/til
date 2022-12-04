@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "quickstart"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <13391129+xhiroga@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pytesseract = "^0.3.10"
+pillow = "^9.3.0"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+black = "^22.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
