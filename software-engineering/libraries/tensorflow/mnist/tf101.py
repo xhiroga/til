@@ -1,75 +1,40 @@
 import tensorflow as tf
 
 
-mnist = tf.keras.datasets.mnist
-
-
 def main():
+    mnist = tf.keras.datasets.mnist
 
-    print(type(mnist))  # これ何型？
+    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    x_train, x_test = x_train / 255.0, x_test / 255.0
 
-    x = tf.placeholder(tf.float32, [None, 784])
-    # シェイプは配列で表す
-
-    W = tf.Variable(tf.zeros([784, 10]))
-    b = tf.Variable(tf.zeros([10]))
-
-    y = tf.nn.softmax(tf.matmul(x, W) + b)
-
-    # (コスト定義)交差エントロピーを定義する
-    y_ = tf.placeholder(tf.float32, [None, 10])
-    cross_entropy = tf.reduce_mean(
-        -tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1])
+    model = tf.keras.models.Sequential(
+        [
+            tf.keras.layers.Flatten(input_shape=(28, 28)),
+            tf.keras.layers.Dense(128, activation="relu"),
+            tf.keras.layers.Dropout(0.2),
+            tf.keras.layers.Dense(10),
+        ]
     )
-    # y_は0or1, つまり1のはずのものを0.3Xとかで予想すると、ログは-XXXXとか巨大になり、ダメージがでかいようだ。
-    # reduce_mean: 平均化によってランクをひとつ削減できるから？
 
-    # 最小化のための関数を作成
-    train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+    print("x_train[]", x_train)
 
-    # 複数回ランする準備
-    sess = tf.InteractiveSession()
-    tf.global_variables_initializer().run()
+    predictions = model(x_train[:1]).numpy()
+    print(predictions)
 
-    print("モデルによる予想 -> 誤差を重み付けに反映、を1000回繰り返す")
-    for i in range(1000):
-        batch_xs, batch_ys = mnist.train.next_batch(100)
-        sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+    tf.nn.softmax(predictions).numpy()
 
-        if i % 100 == 0:
-            print(str(i) + "周目の正答率...")
-            scoring(x, y, y_, sess)
+    loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
-    print("正誤判定 -> 平均正答率を算出")
-    scoring(x, y, y_, sess)
+    print(loss_fn(y_train[:1], predictions).numpy())  # 正解率(0.0 ~ 1.0) を -log(2) で表した値
 
+    model.compile(optimizer="adam", loss=loss_fn, metrics=["accuracy"])
 
-def scoring(x, y, y_, sess):
-    # 正誤判定
-    correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-    # このtf.argmaxが便利。[0.1,0.75,0.15]とかを"2"にしてくれる（一番数字の高いのを返す）
+    model.fit(x_train, y_train, epochs=5)
+    model.evaluate(x_test, y_test, verbose=2)
 
-    # 平均を計算
-    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-    print(sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
+    probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
+    probability_model(x_test[:5])
 
 
 if __name__ == "__main__":
     main()
-
-
-"""
-あとで質問すること:
-1.トレーニングした結果はどうやって保存するのか？
-（訓練済みデータでAPIを作りたい時など...jsonにしてファイルで保存する？）
-
-2.inputデータをローカルから読み出す箇所、コピペで実装してよくわからない型の変数に代入したけど、
-これは一体何型なの？
-
-3.ハッカソンに活かしたい、そのへんお話ししたいです
-
-参考URL
-http://qiita.com/KojiOhki/items/ff6ae04d6cf02f1b6edf
-
-"""
