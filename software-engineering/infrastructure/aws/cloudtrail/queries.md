@@ -1,5 +1,12 @@
 # Sample Queries
 
+## Syntax
+
+- **`.`演算子で子プロパティにアクセスできるのは、[型が定義されている`useridentity`のみ](https://docs.aws.amazon.com/ja_jp/awscloudtrail/latest/userguide/query-limitations.html#query-supported-event-schema)。それ以外のネストした項目では、`element_at`などを利用する。**
+- コメントアウト（`--`) は利用できない。 (ex. `Error at line: 1 char position: 82, Invalid query`)
+- limit句はorder by句よりも後に置く必要がある。
+
+
 ## Detect AWS SSO AdministratorAccess
 
 ```sql
