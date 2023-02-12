@@ -5,6 +5,48 @@ editor:
   render-on-save: true
 ---
 
+
+## Derivative
+
+微分係数または導関数のこと。たぶん日本人が「微分」と呼ぶのと同じ感覚でラフに使われる。正確には、微分係数は"Differential Cofficient"、導関数は"Derived Function"。
+
+微分係数は定数、導関数は関数と性質の異なるものだが、式で表すと絵面が同じなので混乱してしまう。
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+def function_x(x: int):
+    return x * x
+
+# y=f(x)の導関数、f`(x)
+def derived_function_of_function_x(a: int):
+    return a * 2
+
+# y=f(x)のx=1における微分係数、f`(1)の値を返す式
+def differential_cofficient_of_function_x_at_x_equal_1(horizontal: int):
+    return horizontal * derived_function_of_function_x(1)
+
+x = np.linspace(-4, 4, 100)
+f_x = function_x(x)
+f_dash_x_for_1 = differential_cofficient_of_function_x_at_x_equal_1(x) - 1
+
+fi, ax = plt.subplots(figsize = (5, 15.825))
+ax.set_xticks(np.arange(-4, 4+1, 1))
+ax.set_yticks(np.arange(-9, 16+1, 1))
+ax.grid()
+
+plt.plot(x, f_x, color='blue')
+plt.plot(x, f_dash_x_for_1, color='green')
+plt.show()
+```
+
+### References
+
+- [微分係数と導関数](https://rikeilabo.com/differential-coefficient)
+- [Matplotlib 軸周り完璧マスターガイド | 軸・軸目盛・目盛り線の設定](https://www.yutaka-note.com/entry/matplotlib_axis)
+
+
 ## Sigmoid function
 
 シグモイド関数。ギリシア文字Σの語末系ςに似ていることから、Sigma(シグマ)+-oid(~状のもの)でシグモイドと呼ぶ。
