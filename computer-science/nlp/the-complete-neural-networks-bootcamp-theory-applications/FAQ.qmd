@@ -23,10 +23,12 @@ def quadrafic_case(func_ax: plt.Axes, derived_ax: plt.Axes):
     func_ax.set_xticks(np.arange(-4, 4+1, 1))
     func_ax.set_yticks(np.arange(-20, 16+1, 1))
     func_ax.grid()
+    func_ax.autoscale(False)
 
     derived_ax.set_xticks(np.arange(-4, 4+1, 1))
     derived_ax.set_yticks(np.arange(-20, 16+1, 1))
     derived_ax.grid()
+    derived_ax.autoscale(False)
 
     x = np.linspace(-4, 4, 100)
 
@@ -42,13 +44,13 @@ def quadrafic_case(func_ax: plt.Axes, derived_ax: plt.Axes):
     derived_ax.plot(x, differential_cofficients, color='green')
 
     # 接線
-    tangent_at_x_equal_2 = x * derived_function_of_function_x(2) - 4
+    tangent_at_x_equal_2 = x * derived_function_of_function_x(1) - 1
     func_ax.plot(x, tangent_at_x_equal_2, color='red')
 
-    tangent_at_x_equal_3 = x * derived_function_of_function_x(3) - 9
+    tangent_at_x_equal_3 = x * derived_function_of_function_x(2) - 4
     func_ax.plot(x, tangent_at_x_equal_3, color='red')
 
-    tangent_at_x_equal_4 = x * derived_function_of_function_x(4) - 16
+    tangent_at_x_equal_4 = x * derived_function_of_function_x(3) - 9
     func_ax.plot(x, tangent_at_x_equal_4, color='red')
 
 
@@ -68,8 +70,9 @@ def cubic_case(ax: plt.Axes):
     ax.set_xticks(np.arange(-4, 4+1, 1))
     ax.set_yticks(np.arange(-64, 64+1, 1))
     ax.grid()
+    ax.autoscale(False)
     ax.plot(x, f_x, color='blue')
-    ax.plot(x, tangent_at_x_equal_2, color='green')
+    ax.plot(x, tangent_at_x_equal_2, color='red')
 
 fi, axes = plt.subplots(2, 2, figsize = (7, 14), tight_layout=True)
 quadrafic_case(axes[0][0], axes[0][1])
@@ -84,10 +87,9 @@ plt.show()
 - [微分係数と導関数](https://rikeilabo.com/differential-coefficient)
 - [Matplotlib 軸周り完璧マスターガイド | 軸・軸目盛・目盛り線の設定](https://www.yutaka-note.com/entry/matplotlib_axis)
 
-## d
+## dy/dx
 
-
-
+yをxで微分する、と読む。y=x^2のように変数がyとxだけなら「微分する」だけでも通じるが、y=ax^2+bx+cのような複数の変数がある場合は困ってしまう。そのための表し方。
 
 ## Sigmoid function
 
