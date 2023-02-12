@@ -1,0 +1,28 @@
+---
+title: FAQ
+lang: jp
+editor:
+  render-on-save: true
+---
+
+## Sigmoid function
+
+シグモイド関数。ギリシア文字Σの語末系ςに似ていることから、Sigma(シグマ)+-oid(~状のもの)でシグモイドと呼ぶ。
+
+### Starndard Sigmoid Function
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+def sigmoid(x: int):
+    return 1 / (1 + np.e ** -x)
+
+x = np.linspace(-10, 10, 100)
+y = sigmoid(x)
+ 
+fig = plt.figure(figsize = (10, 5))
+plt.plot(x, y)
+plt.show()
+```
+
