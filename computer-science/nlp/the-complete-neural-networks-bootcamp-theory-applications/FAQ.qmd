@@ -10,41 +10,70 @@ editor:
 
 微分係数または導関数のこと。たぶん日本人が「微分」と呼ぶのと同じ感覚でラフに使われる。正確には、微分係数は"Differential Cofficient"、導関数は"Derived Function"。
 
-微分係数は定数、導関数は関数と性質の異なるものだが、式で表すと絵面が同じなので混乱してしまう。
+微分係数は定数、導関数は関数と性質の異なるものだが、個人的に次の2つの理由から混同してしまう。
+- 式で表すと絵面が同じ
+- y = x ^ 2 で簡単のために x = 1 を例に用いると、導関数のグラフと接線のグラフの傾きが一致してしまう。
 
 ```{python}
 import matplotlib.pyplot as plt
 import numpy as np
 
-def function_x(x: int):
-    return x * x
+# 2次関数の場合
+def quadrafic_case(ax: plt.Axes):
+    function_x = lambda x: x * x
 
-# y=f(x)の導関数、f`(x)
-def derived_function_of_function_x(a: int):
-    return a * 2
+    # y=f(x)の導関数、f`(x)
+    derived_function_of_function_x = lambda a: a * 2
 
-# y=f(x)のx=1における微分係数、f`(1)の値を返す式
-def differential_cofficient_of_function_x_at_x_equal_1(horizontal: int):
-    return horizontal * derived_function_of_function_x(1)
+    # y=f(x)のx=2における微分係数、f`(1)の値を返す式
+    differential_cofficient_of_function_x_at_x_equal_2 = lambda horizontal: horizontal * derived_function_of_function_x(2)
 
-x = np.linspace(-4, 4, 100)
-f_x = function_x(x)
-f_dash_x_for_1 = differential_cofficient_of_function_x_at_x_equal_1(x) - 1
+    x = np.linspace(-4, 4, 100)
+    f_x = function_x(x)
+    tangent_at_x_equal_2 = differential_cofficient_of_function_x_at_x_equal_2(x) - 4
 
-fi, ax = plt.subplots(figsize = (5, 15.825))
-ax.set_xticks(np.arange(-4, 4+1, 1))
-ax.set_yticks(np.arange(-9, 16+1, 1))
-ax.grid()
+    ax.set_xticks(np.arange(-4, 4+1, 1))
+    ax.set_yticks(np.arange(-20, 16+1, 1))
+    ax.grid()
+    ax.plot(x, f_x, color='blue')
+    ax.plot(x, tangent_at_x_equal_2, color='green')
 
-plt.plot(x, f_x, color='blue')
-plt.plot(x, f_dash_x_for_1, color='green')
+# 3次関数の場合
+def cubic_case(ax: plt.Axes):
+    # 関数内で宣言した関数がローカルな関数にならないため、Lambda式で定義する。
+    function_x = lambda x: x * x * x
+    
+    derived_function_of_function_x = lambda a: 3 * a ** 2
+
+    differential_cofficient_of_function_x_at_x_equal_2 = lambda horizontal: horizontal * derived_function_of_function_x(2)
+
+    x = np.linspace(-4, 4, 100)
+    f_x = function_x(x)
+    tangent_at_x_equal_2 = differential_cofficient_of_function_x_at_x_equal_2(x) - 16
+
+    ax.set_xticks(np.arange(-4, 4+1, 1))
+    ax.set_yticks(np.arange(-64, 64+1, 1))
+    ax.grid()
+    ax.plot(x, f_x, color='blue')
+    ax.plot(x, tangent_at_x_equal_2, color='green')
+
+
+fi, axes = plt.subplots(1, 2, figsize = (6, 8), tight_layout=True)
+quadrafic_case(axes[0])
+cubic_case(axes[1])
+
 plt.show()
 ```
+
 
 ### References
 
 - [微分係数と導関数](https://rikeilabo.com/differential-coefficient)
 - [Matplotlib 軸周り完璧マスターガイド | 軸・軸目盛・目盛り線の設定](https://www.yutaka-note.com/entry/matplotlib_axis)
+
+## d
+
+
 
 
 ## Sigmoid function
