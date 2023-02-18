@@ -1,4 +1,4 @@
-#  PitchPerfect
+# iOS Application
 my reference application for iOS, provided by Udacity.
 
 # Tour of XCode
