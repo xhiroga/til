@@ -13,25 +13,28 @@
 
 ```tree
 ...
-├── computer-science        MainClass / 類目（1次区分）
-│   ├── big-data            Division / 綱目（2次区分）
-│   │   ├── apache-hadoop   Section / 要目（3次区分）
+├── computer-science        類目(MainClass) - 1次区分
+│   ├── big-data            綱目(Division) - 2次区分
+│   │   ├── _src
+│   │   │   ├── getting-started
+...
+│   │   ├── README.md
 ...
 ├── README.md
 ...
 ```
 
-The name of classification is from [NDC Vocabulary Definition](https://www.jla.or.jp/Portals/0/data/iinkai/bunrui/2_NDC%20Vocabulary.pdf).
+- 分類は [NDC Vocabulary Definition](https://www.jla.or.jp/Portals/0/data/iinkai/bunrui/2_NDC%20Vocabulary.pdf) を参考にしています。
+- ソースコードは `{綱目}/_src` 以下のディレクトリに配置します。Jekyllのビルド対象外にするためです。
 
 :::note info
 要目(Section)は、2023-02-18の更新で無くなりました。  
 GitHub Pagesでのホスティングのためにマークダウンファイル(`*.md`)とソースコード(`_src/**`)を分けた結果、ネストが深くなることを懸念したものです。
 :::
 
+#### 類目(MainClass)
 
-### MainClass
-
-Often set up with reference to library classification.
+図書館の分類法を参考にして下さい。
 
 - [国立国会図書館オンライン](https://ndlonline.ndl.go.jp/#!/)
 - [日本十進分類法](https://www.ndl.go.jp/jp/data/NDC10code202006.pdf)
@@ -41,19 +44,18 @@ Often set up with reference to library classification.
 - [アメリカ議会図書館分類表(英) - Wikipedia](https://en.wikipedia.org/wiki/Library_of_Congress_Classification)
 - [CIP](https://nces.ed.gov/ipeds/cipcode/browse.aspx?y=55) - アメリカ教育統計センターによる、教育プログラム分類体系
 
-### Division
+#### 綱目(Division)
 
-Reference to category of computer science.
+類目によって分類方法が異なります。
 
-- [Computer science \- Wikipedia](https://en.wikipedia.org/wiki/Computer_science)
+##### Computer science
 
-### Section
+- [Computer science - Wikipedia](https://en.wikipedia.org/wiki/Computer_science)
 
-Alphabetical order.
+##### Software Engineering
 
-
-
-
+- [Zenn - Topics](https://zenn.dev/topics)
+- [Qiita - Tags](https://qiita.com/tags)
 
 ## 開発
 
@@ -61,12 +63,6 @@ Alphabetical order.
 make
 open http://localhost:4000
 ```
-
-## 脆弱性対応
-
-
-
-
 
 ## 参考
 
