@@ -1,0 +1,1 @@
+exclude: [Dockerfile, Makefile, renovate.json5]
