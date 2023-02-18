@@ -37,3 +37,11 @@ Reference to category of computer science.
 
 Alphabetical order.
 
+
+## Debug
+
+```shell
+make
+open http://localhost:4000
+```
+
