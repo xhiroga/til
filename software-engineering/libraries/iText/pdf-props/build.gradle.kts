@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.itextpdf:itext7-core:7.2.3")
+    implementation("com.itextpdf:itext7-core:7.2.5")
     testImplementation(kotlin("test"))
 }
 
