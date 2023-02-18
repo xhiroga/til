@@ -20,7 +20,7 @@ setuptools.setup(
 
     install_requires=[
         "aws-cdk.core==1.67.0",
-        "aws-cdk.aws-iam==1.67.0",
+        "aws-cdk.aws-iam==1.193.0",
     ],
 
     python_requires=">=3.6",
