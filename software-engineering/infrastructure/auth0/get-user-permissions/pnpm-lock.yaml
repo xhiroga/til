@@ -1,19 +1,19 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@types/auth0': 2.35.3
+  '@types/auth0': 2.35.9
   '@types/node': 18.7.14
-  auth0: 2.42.0
+  auth0: 2.44.1
   dotenv: 16.0.1
   ts-node: 10.9.1
   typescript: 4.8.2
 
 dependencies:
-  auth0: 2.42.0
+  auth0: 2.44.1
   dotenv: 16.0.1
 
 devDependencies:
-  '@types/auth0': 2.35.3
+  '@types/auth0': 2.35.9
   '@types/node': 18.7.14
   ts-node: 10.9.1_tphhiizkxv2hzwkunblc3hbmra
   typescript: 4.8.2
@@ -64,8 +64,8 @@ packages:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
     dev: true
 
-  /@types/auth0/2.35.3:
-    resolution: {integrity: sha512-8LmBUPDIe0RKV7odNbFzVsP2m8LN/c9/5i3RmXxgsJAZyDh0ND73YnwtFmsSyliRI0Wn+4WZ5vaTV/jEfv9QGg==}
+  /@types/auth0/2.35.9:
+    resolution: {integrity: sha512-44j1NMmIFpULn4fNByaPobo0Bj5GPepm5/YsvXiMRrkpq1i9sXQsN8SxA4rqZAX5V34x8vlYDW0WhLrA7cJPaw==}
     dev: true
 
   /@types/body-parser/1.19.2:
@@ -161,11 +161,11 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
 
-  /auth0/2.42.0:
-    resolution: {integrity: sha512-IiA224CoqjPF9Pnx0R80wQZBGlXMia69s7lQHg328Oe2mngdp6Qi32DaIKkkVtJb8FuMleWMgI+zmbwW0znhYw==}
+  /auth0/2.44.1:
+    resolution: {integrity: sha512-+/lloZ2YGa8Epf2e1TRhyeXNEN1xHd4mw7arhYvD0ZY83ZOZxsHtaVyaOXuSL+rp0uqXHjyNjAbkGeyYxTUe7Q==}
     engines: {node: '>=8.3.0'}
     dependencies:
-      axios: 0.26.1
+      axios: 0.27.2
       form-data: 3.0.1
       jsonwebtoken: 8.5.1
       jwks-rsa: 1.12.3
@@ -186,10 +186,11 @@ packages:
       - debug
     dev: false
 
-  /axios/0.26.1:
-    resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
+  /axios/0.27.2:
+    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
     dependencies:
       follow-redirects: 1.15.1_debug@4.3.4
+      form-data: 4.0.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -321,6 +322,15 @@ packages:
 
   /form-data/3.0.1:
     resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+    dev: false
+
+  /form-data/4.0.0:
+    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
     dependencies:
       asynckit: 0.4.0
