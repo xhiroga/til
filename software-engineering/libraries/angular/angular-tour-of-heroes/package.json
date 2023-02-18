@@ -19,7 +19,7 @@
     "@angular/http": "6.0.9",
     "@angular/platform-browser": "6.0.9",
     "@angular/platform-browser-dynamic": "6.0.9",
-    "@angular/router": "6.0.9",
+    "@angular/router": "6.1.10",
     "core-js": "2.5.7",
     "rxjs": "6.2.2",
     "zone.js": "0.8.26"
