@@ -3,7 +3,7 @@
     "main": "ts-node main.ts"
   },
   "dependencies": {
-    "auth0": "2.42.0",
+    "auth0": "3.2.0",
     "dotenv": "16.0.1"
   },
   "devDependencies": {
