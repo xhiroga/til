@@ -12,7 +12,7 @@ tornado = "^6.2"
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^22.10.0"
+black = "^23.0.0"
 flake8 = "^5.0.4"
 
 [build-system]
