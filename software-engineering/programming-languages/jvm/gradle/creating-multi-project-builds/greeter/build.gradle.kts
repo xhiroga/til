@@ -10,7 +10,7 @@ application {
 
 dependencies {
     compile(project(":greeting-library"))
-    testCompile("org.spockframework:spock-core:1.0-groovy-2.4") {
+    testCompile("org.spockframework:spock-core:2.3-groovy-4.0") {
         exclude(module = "groovy-all")
     }
 }
