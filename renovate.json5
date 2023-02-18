@@ -1,14 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   // Reference: https://docs.renovatebot.com/configuration-options/
-  "extends": [
-    "config:base"
-  ],
-  // This repo is for learning. No matter if it stops.
-  // However, I want to catch up the library updates.
-  "automerge": false,
-  "packageRules": {
-    "matchPackagePatterns": ["*"],
-    "matchUpdateTypes": ["minor", "patch"],
-  }
+  vulnerabilityAlerts: {
+    enabled: true,
+    labels: ["security"],
+    automerge: true,
+    schedule: ["at any time"],
+  },
 }
