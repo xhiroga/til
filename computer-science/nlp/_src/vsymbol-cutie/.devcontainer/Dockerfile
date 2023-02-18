@@ -1,4 +1,4 @@
-FROM python:3.7.6
+FROM python:3.11.2
 # tensorflow==1.12.0 does not support python:3.7.
 # However, python3.6 container cannot find any tensorflow versions and python3.8 does not support tensorflow==1.x
 ENV LC_ALL=C.UTF-8
