@@ -8,7 +8,7 @@ authors = ["Hiroaki Ogasawara <13391129+xhiroga@users.noreply.github.com>"]
 python = "^3.9"
 networkx = "2.5"
 matplotlib = "^3.4.1"
-decorator = "4.3.0"
+decorator = "4.4.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
