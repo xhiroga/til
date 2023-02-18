@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "3.10.4"
 tensorflow-macos = "^2.10.0"
-tensorflow-metal = "^0.6.0"
+tensorflow-metal = "^0.7.0"
 
 [build-system]
 requires = ["poetry-core"]
