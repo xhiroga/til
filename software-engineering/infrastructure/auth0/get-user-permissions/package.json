@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "auth0": "2.42.0",
-    "dotenv": "16.0.1"
+    "dotenv": "16.0.3"
   },
   "devDependencies": {
     "@types/auth0": "2.35.3",
