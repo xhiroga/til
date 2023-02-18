@@ -18,6 +18,6 @@
   "homepage": "https://github.com/hiroga-cc/userpool-federation-spec#readme",
   "dependencies": {
     "aws-amplify": "^1.1.24",
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^3.0.0"
   }
 }
