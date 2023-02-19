@@ -1,13 +1,11 @@
 # api-gateway-vtl-server
-Check you VTL by real API Gateway (provided by localstack)
+Check your VTL syntax by real API Gateway (provided by localstack)
 
-# How to run
+## How to run
 ```
 # modify cfn/swagger.yml
 docker-compose up --build
 ```
 
-
-
-# Reference
+## Reference
 [localstack](https://github.com/localstack/localstack)
