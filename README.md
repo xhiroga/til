@@ -54,6 +54,8 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
     - [Flask](./software-engineering/python/flask/README.md)
     - [Jinja](./software-engineering/python/jinja/README.md)
     - [Matplotlib](./software-engineering/python/matplotlib/RAEDME.md)
+    - [OpenCV](./software-engineering/python/opencv/README.md)
+    - [Pillow](./software-engineering/python/pillow/README.md)
     - [Pipenv](./software-engineering/python/pipenv/README.md)
 - [Raspberry Pi](./software-engineering/raspberrypi/README.md)
 - [React Native](./software-engineering/react-native/README.md)
