@@ -85,7 +85,7 @@ plt.show()
 ### References
 
 - [微分係数と導関数](https://rikeilabo.com/differential-coefficient)
-- [Matplotlib 軸周り完璧マスターガイド | 軸・軸目盛・目盛り線の設定](https://www.yutaka-note.com/entry/matplotlib_axis)
+- [Matplotlib 軸周り完璧マスターガイド - 軸・軸目盛・目盛り線の設定](https://www.yutaka-note.com/entry/matplotlib_axis)
 
 ## dy/dx
 
@@ -93,7 +93,7 @@ yをxで微分する、と読む。y=x^2のように変数がyとxだけなら�
 
 ## Sigmoid function
 
-シグモイド関数。ギリシア文字Σの語末系ςに似ていることから、Sigma(シグマ)+-oid(~状のもの)でシグモイドと呼ぶ。
+シグモイド関数。ギリシア文字Σの語末系ςに似ていることから、*Sigma(シグマ)*+*-oid(~状のもの)*でシグモイドと呼ぶ。
 
 ### Starndard Sigmoid Function
 
