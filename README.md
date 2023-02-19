@@ -25,8 +25,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 <!-- - [Spark AR Studio](./software-engineering/spark-ar-studio/) -->
 - [Swagger](./software-engineering/swagger/README.md)
 <!-- - [VSCode Extension](./software-engineering/vscode-extension/) -->
-- [WebGL](./software-engineering/webgl/README.md)
-- [WebRTC](./software-engineering/webrtc/README.md)
+- [Web API](./software-engineering/web-api/README.md)
 
 ## Contributing
 
