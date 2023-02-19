@@ -1,1 +1,13 @@
-exclude: [Dockerfile, Makefile, renovate.json5]
+exclude:
+  - Dockerfile
+  - Makefile
+  - renovate.json5
+  # Default
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+markdown_ext: "markdown,mkdown,mkdn,mkd,md,qmd"
