@@ -35,6 +35,11 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 - [NoobChain](./software-engineering/noobchain/README.md)
 - [Postgres SQL](./software-engineering/postgres/README.md)
 - [Post/Redirect/Get](./software-engineering/post-redirect-get/README.md)
+- [Python](./software-engineering/python/README.md)
+    - [Flask](./software-engineering/python/flask/README.md)
+    - [Jinja](./software-engineering/python/jinja/README.md)
+    - [Matplotlib](./software-engineering/python/matplotlib/RAEDME.md)
+    - [Pipenv](./software-engineering/python/pipenv/README.md)
 - [Raspberry Pi](./software-engineering/raspberrypi/README.md)
 - [React Native](./software-engineering/react-native/README.md)
 <!-- - [Spark AR Studio](./software-engineering/spark-ar-studio/) -->
