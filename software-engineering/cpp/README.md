@@ -1,7 +1,4 @@
-# C++ For Programmers＠Udacity
-
-C++開発者: Dr. Stroustrup(ストロブストルップ)
-
+# C++
 
 ## 使い方
 g++でコンパイルし、実行可能ファイル(.out)を作成する。  
@@ -61,8 +58,3 @@ how do a task & what to do
 
 sstream のstringstreamを使えばStringがnumericになる
 getlineで文字列として受け取ったものは、stringstreamで数値にする。
-
-
-## References and Inspirations
-
-[C++ For Programmers - Udacity](https://classroom.udacity.com/courses/ud210)
