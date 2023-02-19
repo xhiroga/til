@@ -59,6 +59,10 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
     - [Pipenv](./software-engineering/python/pipenv/README.md)
 - [Raspberry Pi](./software-engineering/raspberrypi/README.md)
 - [React Native](./software-engineering/react-native/README.md)
+- RFC
+    - [RFC6265 HTTP Cookie](./software-engineering/rfc/rfc6265-http-cookie/README.md)
+    - [RFC6455 WebSocket](./software-engineering/rfc/rfc6455-websocket/README.md)
+    - [RFC6962 Certificate Transparency](./software-engineering/rfc/rfc6962-certificate-transparency/README.md)
 - [Rust](./software-engineering/rust/README.md)
 - [Shell Script](./software-engineering/shell/README.md)
 <!-- - [Spark AR Studio](./software-engineering/spark-ar-studio/) -->
