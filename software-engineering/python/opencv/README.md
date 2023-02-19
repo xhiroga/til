@@ -4,5 +4,5 @@
 * OpenCVでは画素の順番が(B,G,R)の順番で入っている
 * OpenCVではnumpyのarrayには、y,x,color
 
-# Reference
-[【Pythonで学ぶ】OpenCVでの画像処理入門](https://www.udemy.com/pythonopencv/learn/v4/content)
+# References
+- [【Pythonで学ぶ】OpenCVでの画像処理入門](https://www.udemy.com/pythonopencv/learn/v4/content)
