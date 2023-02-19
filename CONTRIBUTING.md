@@ -60,6 +60,7 @@ GitHub Pagesでのホスティングのためにマークダウンファイル(`
 
 - [Zenn - Topics](https://zenn.dev/topics)
 - [Qiita - Tags](https://qiita.com/tags)
+- [AWS CLI Command Reference](https://docs.aws.amazon.com/cli/latest/reference/) - AWSのセクションのフォルダ名に用いる。
 
 ## 開発
 
