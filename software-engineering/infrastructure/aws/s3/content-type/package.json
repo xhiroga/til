@@ -15,7 +15,7 @@
     "@aws-sdk/s3-presigned-post": "^3.112.0",
     "@aws-sdk/s3-request-presigner": "^3.112.0",
     "dotenv": "^16.0.1",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@swc-node/register": "1.5.4",
