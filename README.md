@@ -28,6 +28,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 - [Firefox Extension](./software-engineering/firefox-extension/README.md)
 - [Google Chrome Extension](./software-engineering/google-chrome-extension/README.md)
 - [Heroku](./software-engineering/heroku/README.md)
+- [Kubernetes](./software-engineering/k8s/README.md)
 - [iOS Application](./software-engineering/ios/README.md)
 <!-- - [LINE Bot](./software-engineering/line-bot/) -->
 <!-- - [macOS Application](./software-engineering/macos/) -->
