@@ -25,7 +25,7 @@
     "firebase": "5.2.0",
     "formik": "1.0.3",
     "native-base": "2.7.2",
-    "react": "16.14.0",
+    "react": "18.2.0",
     "react-native": "0.70.4",
     "react-native-dotenv": "0.1.1",
     "react-native-modal-datetime-picker": "6.0.0",
