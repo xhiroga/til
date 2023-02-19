@@ -47,6 +47,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 <!-- - [LINE Bot](./software-engineering/line-bot/) -->
 <!-- - [macOS Application](./software-engineering/macos/) -->
 - [NoobChain](./software-engineering/noobchain/README.md)
+- [PlantUML](./software-engineering/plantuml/README.md)
 - [Postgres SQL](./software-engineering/postgres/README.md)
 - [Post/Redirect/Get](./software-engineering/post-redirect-get/README.md)
 - [Python](./software-engineering/python/README.md)
@@ -56,6 +57,8 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
     - [Pipenv](./software-engineering/python/pipenv/README.md)
 - [Raspberry Pi](./software-engineering/raspberrypi/README.md)
 - [React Native](./software-engineering/react-native/README.md)
+- [Rust](./software-engineering/rust/README.md)
+- [Shell Script](./software-engineering/shell/README.md)
 <!-- - [Spark AR Studio](./software-engineering/spark-ar-studio/) -->
 - [Swagger](./software-engineering/swagger/README.md)
 <!-- - [VSCode Extension](./software-engineering/vscode-extension/) -->
