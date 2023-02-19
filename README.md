@@ -14,6 +14,14 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 - [Arduino](./software-engineering/arduino/README.md)
 - [asciinema](./software-engineering/asciinema/README.md)
 <!-- - [Auth0](./software-engineering/auth0/) -->
+- AWS
+    - [Batch](./software-engineering/aws/batch/README.md)
+    - [CLI](./software-engineering/aws/cli/README.md)
+    - [CloudTrail](./software-engineering/aws/cloudtrail/README.md)
+    - [CloudWatch](./software-engineering/aws/cloudwatch/README.md)
+    - [Config](./software-engineering/aws/config/README.md)
+    - [ECS](./software-engineering/aws/ecs/README.md)
+    - [SES](./software-engineering/aws/ses/README.md)
 - [Ethereum](./software-engineering/ethereum/README.md)
 - [Firefox Extension](./software-engineering/firefox-extension/README.md)
 - [Google Chrome Extension](./software-engineering/google-chrome-extension/README.md)
