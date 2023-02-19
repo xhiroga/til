@@ -30,6 +30,9 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 - [Heroku](./software-engineering/heroku/README.md)
 - [Kubernetes](./software-engineering/k8s/README.md)
 - [iOS Application](./software-engineering/ios/README.md)
+- JavaScript
+    - [ESLint](./software-engineering/javascript/eslint/README.md)
+    - [jQuery](./software-engineering/javascript/jQuery/README.md)
 <!-- - [LINE Bot](./software-engineering/line-bot/) -->
 <!-- - [macOS Application](./software-engineering/macos/) -->
 - [NoobChain](./software-engineering/noobchain/README.md)
