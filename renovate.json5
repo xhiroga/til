@@ -1,6 +1,11 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   // Reference: https://docs.renovatebot.com/configuration-options/
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  // Vulnerability alerts only.
+  "packageRules": [{
+    "matchPackageNames": ["*"],
+    "enabled": false
+  }],
   vulnerabilityAlerts: {
     enabled: true,
     labels: ["security"],
