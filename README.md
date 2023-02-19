@@ -29,6 +29,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 - [Elixir](./software-engineering/elixir/README.md)
 - [Ethereum](./software-engineering/ethereum/README.md)
 - [Firefox Extension](./software-engineering/firefox-extension/README.md)
+- [Go](./software-engineering/go/README.md)
 - [Google Chrome Extension](./software-engineering/google-chrome-extension/README.md)
 - [Heroku](./software-engineering/heroku/README.md)
 - [Kubernetes](./software-engineering/k8s/README.md)
