@@ -9,7 +9,7 @@
 
 ## フォーマット
 
-
+[Markdownのスタイルガイド](./styleguides/markdown.md)を参照してください。
 
 ## フォルダ構成
 
