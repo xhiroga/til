@@ -522,10 +522,10 @@ readable-stream@^2.0.0, readable-stream@^2.1.5, readable-stream@^2.2.2, readable
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-regl@1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/regl/-/regl-1.3.5.tgz#7a870f32716b66aeaf3031aeb40d0f795274d533"
-  integrity sha512-ppjYjbtFCEX5/b/PSHDx6/OK1NNT0hnJrZudiF7UjekGbSYqNre9JsE4GOmAZ9p/qhCBnY+AT9CwzgZgbisC7g==
+regl@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/regl/-/regl-2.1.0.tgz#7dae71e9ff20f29c4f42f510c70cd92ebb6b657c"
+  integrity sha512-oWUce/aVoEvW5l2V0LK7O5KJMzUSKeiOwFuJehzpSFd43dO5spP9r+sSUfhKtsky4u6MCqWJaRL+abzExynfTg==
 
 resl@1.0.3:
   version "1.0.3"
