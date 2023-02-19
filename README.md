@@ -12,6 +12,8 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 - [Android Application](./software-engineering/andorid/README.md)
 - [Ansible](./software-engineering/ansible/README.md)
 - [Arduino](./software-engineering/arduino/README.md)
+- [asciinema](./software-engineering/asciinema/README.md)
+<!-- - [Auth0](./software-engineering/auth0/) -->
 - [Ethereum](./software-engineering/ethereum/README.md)
 - [Firefox Extension](./software-engineering/firefox-extension/README.md)
 - [Google Chrome Extension](./software-engineering/google-chrome-extension/README.md)
