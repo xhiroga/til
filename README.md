@@ -31,6 +31,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 - [Kubernetes](./software-engineering/k8s/README.md)
 - [iOS Application](./software-engineering/ios/README.md)
 - JavaScript
+    - [bun](./software-engineering/javascript/bun/README.md)
     - [ESLint](./software-engineering/javascript/eslint/README.md)
     - [jQuery](./software-engineering/javascript/jQuery/README.md)
 - JVM
