@@ -6,6 +6,8 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 ### Computer Science
 
+- [Machine Learning](./computer-science/machine-learning/README.qmd)
+
 ### Software Engineering
 
 - [Ajax](./software-engineering/ajax/README.md)
