@@ -7,6 +7,10 @@
 - GitHub Pagesで公開するサイトは日本語読者（主に自分）向けとして、日本語で記載します。
 - ソースコードのコメントは、ニュアンスが直感的に伝えられない場合を除いて英語で記載します。
 
+## フォーマット
+
+[Markdownのスタイルガイド](./styleguides/markdown.md)を参照してください。
+
 ## フォルダ構成
 
 ### 分類
@@ -28,7 +32,7 @@
 - ソースコードは `{綱目}/_src` 以下のディレクトリに配置します。Jekyllのビルド対象外にするためです。
 
 :::note info
-要目(Section)は、2023-02-18の更新で無くなりました。  
+要目(Section)は、2023-02-19の更新で任意になりました。  
 GitHub Pagesでのホスティングのためにマークダウンファイル(`*.md`)とソースコード(`_src/**`)を分けた結果、ネストが深くなることを懸念したものです。
 :::
 
@@ -56,6 +60,7 @@ GitHub Pagesでのホスティングのためにマークダウンファイル(`
 
 - [Zenn - Topics](https://zenn.dev/topics)
 - [Qiita - Tags](https://qiita.com/tags)
+- [AWS CLI Command Reference](https://docs.aws.amazon.com/cli/latest/reference/) - AWSのセクションのフォルダ名に用いる。
 
 ## 開発
 
