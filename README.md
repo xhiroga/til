@@ -34,6 +34,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
     - [bun](./software-engineering/javascript/bun/README.md)
     - [ESLint](./software-engineering/javascript/eslint/README.md)
     - [jQuery](./software-engineering/javascript/jQuery/README.md)
+    - [nvm](./software-engineering/javascript/nvm/README.md)
 - JVM
     - [Struts](./software-engineering/jvm/struts/README.md)
 <!-- - [LINE Bot](./software-engineering/line-bot/) -->
