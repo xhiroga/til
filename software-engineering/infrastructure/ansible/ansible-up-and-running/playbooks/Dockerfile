@@ -1,4 +1,4 @@
-FROM public.ecr.aws/ubuntu/ubuntu:20.04
+FROM public.ecr.aws/ubuntu/ubuntu:23.04
 
 ARG PASSWD
 
