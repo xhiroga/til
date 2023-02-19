@@ -33,12 +33,14 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code.
 <!-- - [LINE Bot](./software-engineering/line-bot/) -->
 <!-- - [macOS Application](./software-engineering/macos/) -->
 - [NoobChain](./software-engineering/noobchain/README.md)
+- [Postgres SQL](./software-engineering/postgres/README.md)
 - [Post/Redirect/Get](./software-engineering/post-redirect-get/README.md)
 - [Raspberry Pi](./software-engineering/raspberrypi/README.md)
 - [React Native](./software-engineering/react-native/README.md)
 <!-- - [Spark AR Studio](./software-engineering/spark-ar-studio/) -->
 - [Swagger](./software-engineering/swagger/README.md)
 <!-- - [VSCode Extension](./software-engineering/vscode-extension/) -->
+- [VNC](./software-engineering/vnc/README.md)
 - [Web API](./software-engineering/web-api/README.md)
 
 ## Contributing
