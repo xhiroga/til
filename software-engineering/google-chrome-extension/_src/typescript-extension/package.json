@@ -12,7 +12,7 @@
     "@types/copy-webpack-plugin": "8.0.1",
     "@types/webpack": "5.28.0",
     "@typescript-eslint/eslint-plugin": "5.0.0",
-    "@typescript-eslint/parser": "5.0.0",
+    "@typescript-eslint/parser": "5.53.0",
     "copy-webpack-plugin": "9.0.1",
     "eslint": "8.0.1",
     "eslint-config-airbnb-typescript": "14.0.2",
