@@ -13,7 +13,7 @@ def generate(inputs, params, n_head, n_tokens_to_generate):
 
     return inputs[len(inputs) - n_tokens_to_generate :]
 
-def main(prompt: str, n_tokens_to_genarete: int = 40, model_size: str = "124M", models_dir: str = "models"):
+def main(prompt: str, n_tokens_to_generate: int = 40, model_size: str = "124M", models_dir: str = "models"):
     from utils import load_encoder_hparams_and_params
 
     # encoder: 高次元のデータを低次元のデータに処理する。テキストをベクトルにする。
@@ -25,4 +25,13 @@ def main(prompt: str, n_tokens_to_genarete: int = 40, model_size: str = "124M", 
 
     assert len(inputs_ids) + n_tokens_to_genarete < hparams["n_ctx"]
 
-    output_ids = generate(input_ids, params, )
+    output_ids = generate(input_ids, params, hparams["n_head"], n_tokens_to_generate)
+
+    output_text = encoder.decode(output_ids)
+
+    return output_text
+
+if __name__ == "__main__":
+    import fire
+
+    fire.Fire(main)
