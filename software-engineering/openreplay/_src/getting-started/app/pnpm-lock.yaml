@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@openreplay/tracker': ^4.1.5
+  '@openreplay/tracker': ^5.0.0
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -13,7 +13,7 @@ specifiers:
   typescript: 4.8.4
 
 dependencies:
-  '@openreplay/tracker': 4.1.5
+  '@openreplay/tracker': 5.0.0
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -226,8 +226,8 @@ packages:
       fastq: 1.13.0
     dev: false
 
-  /@openreplay/tracker/4.1.5:
-    resolution: {integrity: sha512-S8YqZ/45I62Ed8l5PPgbUrf6tacGs6xJn6pGwxhwFqQnBDESLdomaOypa5D/iThq0FO9avzTfkzE9kYLhlmbIA==}
+  /@openreplay/tracker/5.0.0:
+    resolution: {integrity: sha512-+byapGLnC+7wW5k8RuG/EqcTXrAGCk2Axi1D2BmnUe2u2Dd7eLeO7cJU+OjshnkH4SCOfCxPatAEhmjBAseBdA==}
     engines: {node: '>=14.0'}
     dependencies:
       error-stack-parser: 2.1.4
