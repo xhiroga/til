@@ -1,5 +1,4 @@
 exclude:
-  - .markdownlint.jsonc
   - Dockerfile
   - Makefile
   - renovate.json5
