@@ -6,7 +6,12 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 ### Computer Science
 
-- [Machine Learning](./computer-science/machine-learning/README.qmd)
+- [機械学習](./computer-science/machine-learning/README.qmd)
+- [自然言語処理](./computer-science/nlp/README.md)
+
+### Mathematics
+
+- [微分積分](./mathematics/calculus/README.qmd)
 
 ### Software Engineering
 
