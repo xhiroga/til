@@ -48,7 +48,9 @@ plt.show()
 ## Gradient Descent
 
 機械学習の訓練中に使用される最適化アルゴリズム[^optimizer]の一つ。
+
 [^optimizer]: [【最適化手法】SGD・Momentum・AdaGrad・RMSProp・Adamを図と数式で理解しよう。](https://kunassy.com/oprimizer/)を参照。
+
 訓練中の予測結果と実際の値の誤差を各パラメータに戻し、パラメータを更新することで、誤差が最小になるようにパラメータを更新していく。
 
 ## GPT
