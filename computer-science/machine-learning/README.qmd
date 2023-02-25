@@ -23,16 +23,20 @@ editor:
 [^rnn]: Recurrent neural network, 再帰型（回帰型）ニューラルネットワーク
 [^gan]: Generative Adversarial Network, 敵対的生成ネットワーク
 
-# Neural Network
+## Neural Network
 
 ![ニューラルネットワークの構造](https://miyabi-lab.space/assets/imgs/blog/upload/images/nn_fig17.001_ut1523588254.jpeg)
 > [初心者必読！MNIST実行環境の準備から手書き文字識別までを徹底解説！ - MIYABI Lab](https://miyabi-lab.space/blog/10)
 
-## Sigmoid function
+## Activation Function
+
+活性化関数。非線形性（non-linearity）の1つ。
+
+### Sigmoid function
 
 シグモイド関数。ギリシア文字Σの語末系ςに似ていることから、*Sigma(シグマ)*+*-oid(~状のもの)*でシグモイドと呼ぶ。
 
-### Starndard Sigmoid Function
+#### Starndard Sigmoid Function
 
 ```{python}
 import matplotlib.pyplot as plt
@@ -49,6 +53,29 @@ plt.plot(x, y)
 plt.show()
 ```
 
+## ReLU
+
+レルー（ランプ関数、正規化線形ユニット（Rectified Linear Unit））は、主にディープニューラルネットワークの中間層で用いられる活性化関数。
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+def relu(x: int) -> int:
+  return np.maximum(x, 0)
+
+x = np.linspace(-4, 4, 100)
+y = relu(x)
+fig = plt.figure(figsize = (10, 5))
+plt.plot(x, y)
+plt.show()
+```
+
+## GELU
+
+ガウス誤差線形ユニット（Gaussian Error Linear Unit）は、Transformer系のモデルでも採用される活性化関数。
+
+
 ## Gradient Descent
 
 機械学習の訓練中に使用される最適化アルゴリズム[^optimizer]の一つ。
@@ -56,9 +83,3 @@ plt.show()
 [^optimizer]: [【最適化手法】SGD・Momentum・AdaGrad・RMSProp・Adamを図と数式で理解しよう。](https://kunassy.com/oprimizer/)を参照。
 
 訓練中の予測結果と実際の値の誤差を各パラメータに戻し、パラメータを更新することで、誤差が最小になるようにパラメータを更新していく。
-
-## GPT
-
-あえて訳すと生成的な事前訓練を行ったトランスフォーマー、となる。
-
-生成的って何？と思ったが、文章の生成タスクのための、という意味合い。
