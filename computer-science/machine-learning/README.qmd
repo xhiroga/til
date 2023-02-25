@@ -25,7 +25,8 @@ editor:
 
 # Neural Network
 
-![ニューラルネットワークの構造](https://miyabi-lab.space/assets/imgs/blog/upload/images/nn_fig17.001_ut1523588254.jpeg "初心者必読！MNIST実行環境の準備から手書き文字識別までを徹底解説！ - MIYABI Lab")
+![ニューラルネットワークの構造](https://miyabi-lab.space/assets/imgs/blog/upload/images/nn_fig17.001_ut1523588254.jpeg)
+> [初心者必読！MNIST実行環境の準備から手書き文字識別までを徹底解説！ - MIYABI Lab](https://miyabi-lab.space/blog/10)
 
 ## Sigmoid function
 
