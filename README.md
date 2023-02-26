@@ -11,7 +11,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 ### Mathematics
 
-- [代数学](./mathematics/algebra/README.md)
+- [代数](./mathematics/algebra/README.md)
 - [微分積分](./mathematics/calculus/README.qmd)
 
 ### Software Engineering
