@@ -16,9 +16,9 @@
 
 物理学的には、力と移動距離から仕事量を求める際に用いる。
 
-![内積と仕事](https://physkorimath.xyz/wp-content/uploads/2020/03/div0sig.jpg)[^内積と仕事]
+![内積と仕事](https://physkorimath.xyz/wp-content/uploads/2020/03/div0sig.jpg)[^dot-products-and-work]
 
-[^内積と仕事]: [仕事と運動エネルギーとの関係 - 理数系学習サイト kori](https://physkorimath.xyz/w/)
+[^dot-products-and-work]: [仕事と運動エネルギーとの関係 - 理数系学習サイト kori](https://physkorimath.xyz/w/)
 
 個人的に間違えやすいのが、内積はベクトルAに対してベクトルBが作る影ではない。それは射影といい、関係するが別の概念である。
 
