@@ -12,7 +12,7 @@
 
 内積（Dot Product、Scalar Product、Inner Product）。
 
-物理学的には、
+物理学的には、力と移動距離から仕事量を求める際に用いる。
 
 ![内積と仕事](https://physkorimath.xyz/wp-content/uploads/2020/03/div0sig.jpg)
 > [仕事と運動エネルギーとの関係 - 理数系学習サイト kori](https://physkorimath.xyz/w/)
