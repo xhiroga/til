@@ -3,7 +3,7 @@
 ## Demo
 
 ```shell
-conda env create -f gpt-from-scratch.yml
+conda env create -f environment.yml
 conda activate gpt-from-scratch
 ````
 
@@ -36,4 +36,3 @@ encoder.encode("一日一善")
 hparams
 # {'n_vocab': 50257, 'n_ctx': 1024, 'n_embd': 768, 'n_head': 12, 'n_layer': 12}
 ```
-
