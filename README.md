@@ -55,6 +55,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 <!-- - [LINE Bot](./software-engineering/line-bot/) -->
 <!-- - [macOS Application](./software-engineering/macos/) -->
 - [NoobChain](./software-engineering/noobchain/README.md)
+- [OpenAI](./software-engineering/openai/README.md)
 - [PlantUML](./software-engineering/plantuml/README.md)
 - [Postgres SQL](./software-engineering/postgres/README.md)
 - [Post/Redirect/Get](./software-engineering/post-redirect-get/README.md)
