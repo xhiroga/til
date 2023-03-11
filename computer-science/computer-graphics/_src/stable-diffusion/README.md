@@ -1,0 +1,11 @@
+# Stable Diffusion (AUTOMATIC1111)
+
+```powershell
+git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui || (cd .\FlexGen && git pull)
+ln -f webui-user.bat .\stable-diffusion-webui\webui-user.bat
+
+conda create -n stable-diffusion-webui -f environment.yaml
+conda activate stable-diffusion-webui
+cd stable-diffusion-webui
+.\webui-user.bat
+```
