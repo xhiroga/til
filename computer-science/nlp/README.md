@@ -75,7 +75,7 @@ LLMにReasoningタスク[^reasoning]を依頼する際に、「途中式を書�
 
 - [\[2201.11903\] Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903)
 
-## Self-Consistency
+### Self-Consistency
 
 自己無矛盾性。簡単に言えば、AIに検算させることで回答の精度を上げるやり方。  
 
