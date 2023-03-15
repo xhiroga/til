@@ -12,9 +12,16 @@
 
 ### GPT-4
 
+### OPT
+
+Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカルでLLMを動かしたい場合に重宝することがありそうだ。
+
+- [\[2205.01068\] OPT: Open Pre-trained Transformer Language Models](https://arxiv.org/abs/2205.01068)
+- [metaseq/projects/OPT at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT)
+
 ### Facebook LLaMa
 
-2023年月にMeta AI Researchが発表したLLM。  
+2023年2月にMeta AI Researchが発表したLLM。  
 公開から１週間後に完全なデータが4chanに流出した。一方で、M1Macで動作する[llama.cpp](https://github.com/ggerganov/llama.cpp)が登場し、以後ラズパイでも動くなど消費者向けハードウェアで実行可能になっている。
 
 - [Introducing LLaMA: A foundational, 65\-billion\-parameter language model](https://ai.facebook.com/blog/large-language-model-llama-meta-ai/)
