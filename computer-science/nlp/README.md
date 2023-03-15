@@ -74,3 +74,9 @@ LLMにReasoningタスク[^reasoning]を依頼する際に、「途中式を書�
 [^reasoning]: 論理的思考力を測るタスク。ここでは、つるかめ算など。個人的には、ICUのリベラルアーツ適正考査のようなもの（[例題](https://icu.bucho.net/icu/pastexams/SAT80.pdf)）を想像した。
 
 - [\[2201.11903\] Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903)
+
+## Self-Consistency
+
+自己無矛盾性。簡単に言えば、AIに検算させることで回答の精度を上げるやり方。  
+
+- [\[2203.11171\] Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171)
