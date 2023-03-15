@@ -19,6 +19,13 @@ Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカ�
 - [\[2205.01068\] OPT: Open Pre-trained Transformer Language Models](https://arxiv.org/abs/2205.01068)
 - [metaseq/projects/OPT at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT)
 
+### ChatGPT
+
+OpenAIが公開した、GPT-3.5をベースにRLHFでFine Tuningした会話特化のLLM。  
+
+- [ChatGPT](https://chat.openai.com/chat)
+- [Introducing ChatGPT](https://openai.com/blog/chatgpt)
+
 ### Facebook LLaMa
 
 2023年2月にMeta AI Researchが発表したLLM。  
@@ -57,6 +64,7 @@ Reinforcement Learning from Human Feedback。Fine Tuningの手法の一つ。
 余談だが、論文中にはRLFHやReinforcement Learning from Human Feedbackといった表記は出てこない。
 
 - [\[1909.08593\] Fine-Tuning Language Models from Human Preferences](https://arxiv.org/abs/1909.08593)
+- [Illustrating Reinforcement Learning from Human Feedback (RLHF)](https://huggingface.co/blog/rlhf)
 
 ## Prompt Engineering
 
