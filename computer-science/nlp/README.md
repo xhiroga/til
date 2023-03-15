@@ -49,6 +49,15 @@ A: 1. Tokyo 2. Yokohama 3. Osaka
 - [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
 - [Alpaca demo](https://crfm.stanford.edu/alpaca/)
 
+## Training method
+
+### RLHF
+
+Reinforcement Learning from Human Feedback。Fine Tuningの手法の一つ。  
+余談だが、論文中にはRLFHやReinforcement Learning from Human Feedbackといった表記は出てこない。
+
+- [\[1909.08593\] Fine-Tuning Language Models from Human Preferences](https://arxiv.org/abs/1909.08593)
+
 ## Prompt Engineering
 
 ### Chain of Thought
