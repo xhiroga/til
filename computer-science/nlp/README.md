@@ -67,6 +67,13 @@ Reinforcement Learning from Human Feedback。Fine Tuningの手法の一つ。
 - [\[1909.08593\] Fine-Tuning Language Models from Human Preferences](https://arxiv.org/abs/1909.08593)
 - [Illustrating Reinforcement Learning from Human Feedback (RLHF)](https://huggingface.co/blog/rlhf)
 
+### LoRA
+
+Microsoftが2021年に発表した論文『[LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)』で提案された手法。  
+学習対象のパラメータ数を一部に限定することで、GPUメモリやストレージを削減しつつFine Tuning並の精度を達成している。
+
+- [【インターンレポート】6.7B日本語モデルに対するLoRAチューニング](https://engineering.linecorp.com/ja/blog/lora-tuning-for-japanese-model)
+
 ## Prompt Engineering
 
 ### Chain of Thought
