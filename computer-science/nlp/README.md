@@ -22,6 +22,7 @@ Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカ�
 ### ChatGPT
 
 OpenAIが公開した、GPT-3.5をベースにRLHFでFine Tuningした会話特化のLLM。  
+[API経由のデータはデフォルトでモデルの学習に利用されず、逆にChatGPT経由のデータはデフォルトでモデルの学習に利用される。](https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance)オプトアウトも可能。
 
 - [ChatGPT](https://chat.openai.com/chat)
 - [Introducing ChatGPT](https://openai.com/blog/chatgpt)
