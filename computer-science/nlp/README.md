@@ -57,6 +57,12 @@ A: 1. Tokyo 2. Yokohama 3. Osaka
 - [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
 - [Alpaca demo](https://crfm.stanford.edu/alpaca/)
 
+### Claude
+
+Anthoropic[^Anthoropic]が2023-03-14に発表したAIアシスタントサービス。APIでのアクセスが可能など、エンタープライズを意識していることが伺える。名前の元ネタはおそらく、[Claude Shannon (クロード・シャノン)](https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%89%E3%83%BB%E3%82%B7%E3%83%A3%E3%83%8E%E3%83%B3)。
+
+[^Anthoropic]: 元OpenAI社員が起業。"Anthorop-"は「人類」を表す接頭語。
+
 ## Training method
 
 ### RLHF
@@ -73,6 +79,10 @@ Microsoftが2021年に発表した論文『[LoRA: Low-Rank Adaptation of Large L
 学習対象のパラメータ数を一部に限定することで、GPUメモリやストレージを削減しつつFine Tuning並の精度を達成している。
 
 - [【インターンレポート】6.7B日本語モデルに対するLoRAチューニング](https://engineering.linecorp.com/ja/blog/lora-tuning-for-japanese-model)
+
+### RLAIF
+
+Reinforcement Learning for AI Fairness。Anthoropicが2022年に発表した論文『[Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073)』で提案された手法。有用なモデルから有害性を取り除く際に、人間の代わりに憲法によって判断するAI（CAI, Constitutional AI）を活用する。
 
 ## Prompt Engineering
 
