@@ -1,5 +1,5 @@
 # LangChain
 
 ```shell
-export $(cat .env)
+python main.py
 ```
