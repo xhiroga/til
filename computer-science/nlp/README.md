@@ -12,6 +12,8 @@
 
 ### GPT-4
 
+- [gpt\-4\.pdf](https://cdn.openai.com/papers/gpt-4.pdf)
+
 ### OPT
 
 Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカルでLLMを動かしたい場合に重宝することがありそうだ。
