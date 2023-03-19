@@ -86,6 +86,12 @@ Microsoftが2021年に発表した論文『[LoRA: Low-Rank Adaptation of Large L
 
 Reinforcement Learning for AI Fairness。Anthoropicが2022年に発表した論文『[Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073)』で提案された手法。有用なモデルから有害性を取り除く際に、人間の代わりに憲法によって判断するAI（CAI, Constitutional AI）を活用する。
 
+### PEFT
+
+Parameter-Efficient Fine-Tuning。HuggingFaceが公開している、効率的に訓練を行うためのライブラリ。
+
+- [huggingface/peft: 🤗 PEFT: State-of-the-art Parameter-Efficient Fine-Tuning.](https://github.com/huggingface/peft)
+
 ## Prompt Engineering
 
 ### Chain of Thought
