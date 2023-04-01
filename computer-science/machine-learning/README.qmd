@@ -16,7 +16,7 @@ editor:
 | 決定木 | 教師あり学習| インスタンスの属性値による条件分岐によって、目的変数を予測する | ランダムフォレスト | データの可視化、健康診断の結果からの疾患予測 |
 | k近傍法[^k-NN] | 教師あり学習 | もっとも近いk個のデータ点を参照して、入力データに最も近いカテゴリを予測する | k最近傍法 | 推薦システム |
 | サポートベクターマシン | 教師あり学習 | 分類と回帰に使用され、高次元空間での線形および非線形分類を行う | - | 手書き数字の認識、がんの検出 |
-| ニューラルネットワーク | 教師あり学習 | 生物の神経細胞を真似したモデル。多層のノードが、ニューロンのように信号を処理・伝達する。 | CNN[^cnn]、RNN[^rnn]、オートエンコーダ、Transformer、GAN[^gan]など | 画像認識、音声認識、自然言語処理、自動運転 |
+| ニューラルネットワーク | 教師あり・なし両方 | 生物の神経細胞を真似したモデル。多層のノードが、ニューロンのように信号を処理・伝達する。 | CNN[^cnn]、RNN[^rnn]、オートエンコーダ、Transformer、GAN[^gan]など | 画像認識、音声認識、自然言語処理、自動運転 |
 
 [^k-NN]: k-nearest neighbor algorithm, k-NN
 [^cnn]: Convolutional neural network, 畳み込みニューラルネットワーク
@@ -41,6 +41,13 @@ editor:
 : [Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1985). Learning internal representations by error propagation. California Univ San Diego La Jolla Inst for Cognitive Science.](https://cs.uwaterloo.ca/~y328yu/classics/bp.pdf)
 
 2000年代に研究が再燃し、画像のノイズ除去などに用いられるようになる。
+
+### Transformer
+
+#### Self-Attention
+
+#### Encoder/Decoder
+
 
 ## Activation Function
 
