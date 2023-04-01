@@ -2,12 +2,6 @@
 
 自然言語処理。モデルについては[機械学習](../machine-learning/README.qmd)もご覧ください。
 
-## Transformer
-
-### Self-Attention
-
-### Encoder/Decoder
-
 ## LLM
 
 ### GPT-4
@@ -59,6 +53,8 @@ A: 1. Tokyo 2. Yokohama 3. Osaka
 - [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
 - [Alpaca demo](https://crfm.stanford.edu/alpaca/)
 
+### Vicuna
+
 ### Claude
 
 Anthoropic[^Anthoropic]が2023-03-14に発表したAIアシスタントサービス。APIでのアクセスが可能など、エンタープライズを意識していることが伺える。名前の元ネタはおそらく、[Claude Shannon (クロード・シャノン)](https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%89%E3%83%BB%E3%82%B7%E3%83%A3%E3%83%8E%E3%83%B3)。
@@ -91,6 +87,30 @@ Reinforcement Learning for AI Fairness。Anthoropicが2022年に発表した論�
 Parameter-Efficient Fine-Tuning。HuggingFaceが公開している、効率的に訓練を行うためのライブラリ。
 
 - [huggingface/peft: 🤗 PEFT: State-of-the-art Parameter-Efficient Fine-Tuning.](https://github.com/huggingface/peft)
+
+## Benchmark
+
+OpenAIの公開ベンチマーク[Evals](https://github.com/openai/evals)が参考になる。
+
+このリポジトリでは、LLMと一般的な日本語ネイティブを比較したい。テスト用のタスクをもとに、次のような質問を定めた。
+
+```txt
+# 基本となる知識問題
+Q: What is the first Japanese prime minister?
+
+# 日本語による知識問題
+Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
+
+# 計算
+Q: What's 111*111?
+
+# ジョーク
+Q: ミカンを使ったダジャレを教えてください。
+
+
+# その他
+Q: What is your name?
+```
 
 ## Prompt Engineering
 
