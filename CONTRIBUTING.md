@@ -11,6 +11,10 @@
 
 [Markdownのスタイルガイド](./styleguides/markdown.md)を参照してください。
 
+### 引用文献フォーマット
+
+CSの分野の学会などでメジャーなAPA形式を採用します。[Google Scholar Button](https://chrome.google.com/webstore/detail/google-scholar-button/ldipcbpaocekfooobnbcddclnhejkcpn)を用います。
+
 ## フォルダ構成
 
 ### 分類
