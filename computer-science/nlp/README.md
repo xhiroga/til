@@ -10,7 +10,9 @@
 
 ### OPT
 
-Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカルでLLMを動かしたい場合に重宝することがありそうだ。
+Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカルでLLMを動かしたい場合に重宝することがある。[^fastchat_opt]
+
+[^fastchat_opt]: [GitHub - lm-sysFastChat: The release repo for "Vicuna: An Open Chatbot Impressing GPT-4"](https://github.com/lm-sys/FastChat#command-line-interface)
 
 - [\[2205.01068\] OPT: Open Pre-trained Transformer Language Models](https://arxiv.org/abs/2205.01068)
 - [metaseq/projects/OPT at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT)
@@ -90,13 +92,15 @@ Parameter-Efficient Fine-Tuning。HuggingFaceが公開している、効率的�
 
 - [huggingface/peft: 🤗 PEFT: State-of-the-art Parameter-Efficient Fine-Tuning.](https://github.com/huggingface/peft)
 
-## Benchmark
+## Benchmarks
 
 OpenAIの公開ベンチマーク[Evals](https://github.com/openai/evals)が参考になる。
 
 このリポジトリでは、LLMと一般的な日本語ネイティブを比較したい。テスト用のタスクをもとに、次のような質問を定めた。
 
 ```txt
+Q: What is your name?
+
 # 基本となる知識問題
 Q: What is the first Japanese prime minister?
 
@@ -108,10 +112,6 @@ Q: What's 111*111?
 
 # ジョーク
 Q: ミカンを使ったダジャレを教えてください。
-
-
-# その他
-Q: What is your name?
 ```
 
 ## Prompt Engineering
