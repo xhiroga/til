@@ -1,5 +1,6 @@
 exclude:
   - Dockerfile
+  - environment.yml
   - Makefile
   - renovate.json5
   # Default

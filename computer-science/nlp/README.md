@@ -55,6 +55,8 @@ A: 1. Tokyo 2. Yokohama 3. Osaka
 
 ### Vicuna
 
+ビクーニャ。名前の由来はアルパカやラマと同じ種類の動物。
+
 ### Claude
 
 Anthoropic[^Anthoropic]が2023-03-14に発表したAIアシスタントサービス。APIでのアクセスが可能など、エンタープライズを意識していることが伺える。名前の元ネタはおそらく、[Claude Shannon (クロード・シャノン)](https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%89%E3%83%BB%E3%82%B7%E3%83%A3%E3%83%8E%E3%83%B3)。
