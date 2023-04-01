@@ -1,0 +1,4 @@
+name: FastChat
+channels:
+  - defaults
+prefix: C:\Users\hiroga\anaconda3\envs\FastChat
