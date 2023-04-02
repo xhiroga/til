@@ -2,7 +2,6 @@
 
 ```shell
 op inject --force -i .env.tpl -o .env
-export $(cat .env)
 
 poetry install
 poetry shell
