@@ -4,7 +4,7 @@
 # Copy and set API key
 cp .env.tpl .env
 
-python main.py
+./.venv/bin/python main.py
 ```
 
 ## Note
