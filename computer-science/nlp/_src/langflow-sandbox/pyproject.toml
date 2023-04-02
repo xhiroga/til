@@ -1,12 +1,13 @@
 [tool.poetry]
-name = "langflow"
+name = "langflow-sandbox"
 version = "0.1.0"
 description = ""
 authors = ["xhiroga <13391129+xhiroga@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.9.12"
+langflow = "^0.0.46"
 
 
 [build-system]

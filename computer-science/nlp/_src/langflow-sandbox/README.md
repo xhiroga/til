@@ -1,6 +1,9 @@
 # LangFlow
 
 ```shell
+poetry install 
+poetrh shell
+
 langflow
 ```
 
