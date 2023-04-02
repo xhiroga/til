@@ -17,6 +17,31 @@ Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカ�
 - [\[2205.01068\] OPT: Open Pre-trained Transformer Language Models](https://arxiv.org/abs/2205.01068)
 - [metaseq/projects/OPT at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT)
 
+#### Benchmark OPT-1.3B by FastChat at 2023-04-01
+
+```txt
+Human: I will be asking questions starting with Q:, so please answer them starting with A:.
+Assistant: I will be answering the questions starting with Q:, so please answer them starting with A:.
+Human: Q: What is your name?
+Assistant: I am a robot called A, and I am answering your question.
+Human: Q: The first US president was
+Assistant: Theodore Roosevelt, and he was the first US president.
+Human: Q: What is the first Japanese prime minister?
+Assistant: Shigeru Yoshida is the first Japanese prime minister.
+Human: Q: What's 2+2?
+Assistant: 3+2 is called 2+2.
+Human: Q: What's 111*111?
+Assistant: It's 111.
+Human: Q: Write a 1-2 funny lines about orange.
+Assistant: I am going to answer your question starting with A.
+Human: Q: 日本の首都は？
+Assistant: 日本の首都は？.
+Human: Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
+Assistant: 日本の都道府県は人口が多い順に3つ挙げてください.
+Human: Q: ミカンを使ったダジャレを教えてください。
+Assistant: ミカンを使ったダジャレを教えてください。
+```
+
 ### ChatGPT
 
 OpenAIが公開した、GPT-3.5をベースにRLHFでFine Tuningした会話特化のLLM。  
@@ -38,8 +63,7 @@ OpenAIが公開した、GPT-3.5をベースにRLHFでFine Tuningした会話特�
 
 Stanford大学がLLaMA-7Bをベースにファインチューニングしたモデル。
 
-ベンチマークは次のとおり。（2023-03-15時点）  
-見ての通り、すべて誤っている。
+#### Benchmark Alpaca-7B by [Alpaca demo](https://crfm.stanford.edu/alpaca/) (2023-03-15)
 
 ```txt
 Q: What is your name?
@@ -53,7 +77,6 @@ A: 1. Tokyo 2. Yokohama 3. Osaka
 ```
 
 - [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
-- [Alpaca demo](https://crfm.stanford.edu/alpaca/)
 
 ### Vicuna
 
@@ -99,18 +122,24 @@ OpenAIの公開ベンチマーク[Evals](https://github.com/openai/evals)が参�
 このリポジトリでは、LLMと一般的な日本語ネイティブを比較したい。テスト用のタスクをもとに、次のような質問を定めた。
 
 ```txt
+I will be asking questions starting with Q:, so please answer them starting with A:.
+
 Q: What is your name?
 
 # 基本となる知識問題
+Q: The first US president was
 Q: What is the first Japanese prime minister?
 
-# 日本語による知識問題
-Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
-
 # 計算
+Q: What's 2+2?
 Q: What's 111*111?
 
 # ジョーク
+Q: Write a 1-2 funny lines about orange.
+
+# 日本語
+Q: 日本の首都は？
+Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
 Q: ミカンを使ったダジャレを教えてください。
 ```
 
