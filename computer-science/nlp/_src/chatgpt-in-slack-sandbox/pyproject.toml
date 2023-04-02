@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "chatgpt-in-slack-sandbox"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <xhiroga@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "chatgpt_in_slack_sandbox"}]
+
+[tool.poetry.dependencies]
+python = "3.11.2"
+slack-bolt = ">=1.17.0,<2"
+openai = ">=0.27,<0.28"
+tiktoken = ">=0.3.0,<0.4"
+
+
+[tool.poetry.group.dev.dependencies]
+python-dotenv = {extras = ["cli"], version = "^1.0.0"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
