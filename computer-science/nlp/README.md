@@ -22,22 +22,31 @@ Open Pre-trained Transformer。2022年5月にMetaが発表したLLM。ローカ�
 ```txt
 Human: I will be asking questions starting with Q:, so please answer them starting with A:.
 Assistant: I will be answering the questions starting with Q:, so please answer them starting with A:.
+
 Human: Q: What is your name?
 Assistant: I am a robot called A, and I am answering your question.
+
 Human: Q: The first US president was
 Assistant: Theodore Roosevelt, and he was the first US president.
+
 Human: Q: What is the first Japanese prime minister?
 Assistant: Shigeru Yoshida is the first Japanese prime minister.
+
 Human: Q: What's 2+2?
 Assistant: 3+2 is called 2+2.
+
 Human: Q: What's 111*111?
 Assistant: It's 111.
+
 Human: Q: Write a 1-2 funny lines about orange.
 Assistant: I am going to answer your question starting with A.
+
 Human: Q: 日本の首都は？
 Assistant: 日本の首都は？.
+
 Human: Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
 Assistant: 日本の都道府県は人口が多い順に3つ挙げてください.
+
 Human: Q: ミカンを使ったダジャレを教えてください。
 Assistant: ミカンを使ったダジャレを教えてください。
 ```
@@ -65,7 +74,7 @@ Stanford大学がLLaMA-7Bをベースにファインチューニングしたモ�
 
 - [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
 
-#### Benchmark Alpaca-7B by [Alpaca demo](https://crfm.stanford.edu/alpaca/) (2023-03-15)
+#### Benchmark Alpaca-7B by [Alpaca demo](https://crfm.stanford.edu/alpaca/) at 2023-03-15
 
 ```txt
 Q: What is your name?
