@@ -20,3 +20,7 @@ Traceback (most recent call last):
     from dotenv import load_dotenv
 ModuleNotFoundError: No module named 'dotenv'
 ```
+
+## References
+
+- [ChatGPT→LangChainをもくもく学習した話｜しらいはかせ(作家)｜note](https://note.com/o_ob/n/n8387ba5beec8)
