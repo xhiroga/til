@@ -63,6 +63,8 @@ OpenAIが公開した、GPT-3.5をベースにRLHFでFine Tuningした会話特�
 
 Stanford大学がLLaMA-7Bをベースにファインチューニングしたモデル。
 
+- [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
+
 #### Benchmark Alpaca-7B by [Alpaca demo](https://crfm.stanford.edu/alpaca/) (2023-03-15)
 
 ```txt
@@ -75,8 +77,6 @@ A: 111 * 111 = 1231.
 Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
 A: 1. Tokyo 2. Yokohama 3. Osaka
 ```
-
-- [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
 
 ### Vicuna
 
