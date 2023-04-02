@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "langflow"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <13391129+xhiroga@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
