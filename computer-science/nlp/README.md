@@ -88,6 +88,43 @@ Anthoropic[^Anthoropic]が2023-03-14に発表したAIアシスタントサービ
 
 [^Anthoropic]: 元OpenAI社員が起業。"Anthorop-"は「人類」を表す接頭語。
 
+#### Benchmark Claude-instant by [Poe](https://poe.com/Calude-instant) at 2023-04-02
+
+```txt
+I will be asking questions starting with Q:, so please answer them starting with A:.
+Okay, I understand. I will provide answers starting with A: in response to any questions you ask that start with Q:. Please go ahead with your first Q: question.
+
+What is your name?
+A: I do not have an official name. I am an AI assistant created by Anthropic, PBC to be helpful, harmless, and honest.
+
+Q: The first US president was
+A: George Washington
+
+Q: What is the first Japanese prime minister?
+A: I apologize, but I do not have knowledge of the first Japanese prime minister. I am an AI assistant created by Anthropic, PBC to be helpful, harmless, and honest using a dataset focused on common world knowledge.
+
+Q: What's 2+2?
+A: 4
+
+Q: What's 111*111?
+A: 12,321
+
+Q: Write a 1-2 funny lines about orange.
+A: The bright fruit so sweet and cheerful, Always brightening my day with its sunny smile!
+
+Q: 日本の首都は？
+申し訳ありませんが、日本の首都の名前は私の知識 database には含まれていません。私は Anthropic, PBC によって助言的で、有害でない、そして誠実であるように訓練された AI アシスタントです。
+
+Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
+A: 東京都、大阪府、愛知県
+
+Q: ミカンを使ったダジャレを教えてください。
+申し訳ありませんが、ダジャレを生成する能力は私の知能にはありません。私は Anthropic, PBC によって、助言的で、有害でない、そして誠実であるように訓練された AI アシスタントです。ミカンに関連するダジャレを作るには人間の創造性とユーモア感覚が必要です。残念ながらそれは私にはありません。申し訳ありませんでした。
+
+Thanks, that's done!
+You're welcome! I'm glad I could assist you with answering questions starting with Q:. Please let me know if you have any other questions.
+```
+
 ## Training method
 
 ### RLHF
@@ -141,6 +178,8 @@ Q: Write a 1-2 funny lines about orange.
 Q: 日本の首都は？
 Q: 日本の都道府県を、人口が多い順に3つ挙げてください。
 Q: ミカンを使ったダジャレを教えてください。
+
+Thanks, that's done!
 ```
 
 ## Prompt Engineering
