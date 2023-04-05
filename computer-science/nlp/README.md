@@ -68,11 +68,11 @@ OpenAIが公開した、GPT-3.5をベースにRLHFでFine Tuningした会話特�
 - [facebookresearch/llama: Inference code for LLaMA models | GitHub](https://github.com/facebookresearch/llama)
 - [\[2302.13971v1\] LLaMA: Open and Efficient Foundation Language Models](https://arxiv.org/abs/2302.13971v1)
 
-### Stanford Alpaca
+### Alpaca
 
-Stanford大学がLLaMA-7Bをベースにファインチューニングしたモデル。
+Stanford大学がLLaMA-7Bをベースにファインチューニングしたモデル。[^Alpaca]  
 
-- [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
+[^Alpaca]: [tatsu-lab/stanford_alpaca | GitHub](https://github.com/tatsu-lab/stanford_alpaca)
 
 #### Benchmark Alpaca-7B by [Alpaca demo](https://crfm.stanford.edu/alpaca/) at 2023-03-15
 
@@ -99,11 +99,13 @@ Anthoropic[^Anthoropic]が2023-03-14に発表したAIアシスタントサービ
 
 ### Koala
 
-BAIR (カリフォルニア大学バークレー校AI研究所)が発表したLLM[^koala]。小規模かつパブリックなモデルでChatGPTのようなパフォーマンスを発揮するための研究。  
+BAIR (カリフォルニア大学バークレー校AI研究所)が発表したLLM[^koala]。小規模かつパブリックなモデルでChatGPTのようなパフォーマンスを発揮するための研究。パラメータ数は13B。  
 LLaMaのfine-tuningモデルで、蒸留データのみでトレーニングされたKoala-Distillと、蒸留データ＋オープンソースデータでトレーニングされたKoala-Allがある。驚くべきことに、Koala−Distillのほうが僅かに性能が良かったらしい。  
 プレスリリースではこの結果を受けて、コミュニティはデータセットを高品質化することにより努力を払うべきかもしれない、と書かれている。
 
 [^koala]: [Koala: A Dialogue Model for Academic Research – The Berkeley Artificial Intelligence Research Blog](https://bair.berkeley.edu/blog/2023/04/03/koala/)
+
+性能比較においては、[Alpaca](#alpaca)が用いている[Self-Instructions](https://github.com/yizhongw/self-instruct/blob/main/human_eval/user_oriented_instructions.jsonl)だけでなく、実際のチャットデータを元に新規作成した[Koala test set](https://github.com/arnav-gudibande/koala-test-set/blob/main/koala_test_set.jsonl)を用いている。同じLLaMa派生モデルでも、会話に重点を置いているのがAlpacaとの差異と言えるのかもしれない（@xhirogaの解釈）。
 
 #### Benchmark Claude-instant by [Poe](https://poe.com/Calude-instant) at 2023-04-02
 
