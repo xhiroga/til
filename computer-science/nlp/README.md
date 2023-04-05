@@ -97,6 +97,14 @@ Anthoropic[^Anthoropic]が2023-03-14に発表したAIアシスタントサービ
 
 [^Anthoropic]: 元OpenAI社員が起業。"Anthorop-"は「人類」を表す接頭語。
 
+### Koala
+
+BAIR (カリフォルニア大学バークレー校AI研究所)が発表したLLM[^koala]。小規模かつパブリックなモデルでChatGPTのようなパフォーマンスを発揮するための研究。  
+LLaMaのfine-tuningモデルで、蒸留データのみでトレーニングされたKoala-Distillと、蒸留データ＋オープンソースデータでトレーニングされたKoala-Allがある。驚くべきことに、Koala−Distillのほうが僅かに性能が良かったらしい。  
+プレスリリースではこの結果を受けて、コミュニティはデータセットを高品質化することにより努力を払うべきかもしれない、と書かれている。
+
+[^koala]: [Koala: A Dialogue Model for Academic Research – The Berkeley Artificial Intelligence Research Blog](https://bair.berkeley.edu/blog/2023/04/03/koala/)
+
 #### Benchmark Claude-instant by [Poe](https://poe.com/Calude-instant) at 2023-04-02
 
 ```txt
