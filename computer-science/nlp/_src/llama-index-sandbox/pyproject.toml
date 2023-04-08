@@ -9,7 +9,11 @@ packages = [{include = "llama_index_sandbox"}]
 [tool.poetry.dependencies]
 python = "3.9.12"
 llama-index = "^0.5.10"
+html2text = "^2020.1.16"
 
+
+[tool.poetry.group.dev.dependencies]
+python-dotenv = {extras = ["cli"], version = "^1.0.0"}
 
 [build-system]
 requires = ["poetry-core"]
