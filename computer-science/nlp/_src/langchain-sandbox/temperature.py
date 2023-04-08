@@ -1,12 +1,6 @@
-import os
 from langchain.agents import load_tools
 from langchain.agents import initialize_agent
 from langchain.llms import OpenAI
-
-from dotenv import load_dotenv
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(dotenv_path)
 
 llm = OpenAI(temperature=0)
 
