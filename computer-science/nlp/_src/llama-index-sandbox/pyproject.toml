@@ -9,7 +9,8 @@ packages = [{include = "llama_index_sandbox"}]
 [tool.poetry.dependencies]
 python = "3.9.12"
 llama-index = "^0.5.10"
-html2text = "^2020.1.16"
+html2text = "^2020.1.16" # SimpleWebPageReader
+feedparser = "^6.0.10" # RssReader
 
 
 [tool.poetry.group.dev.dependencies]
