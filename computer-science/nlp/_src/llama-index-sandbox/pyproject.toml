@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "llama-index-sandbox"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <xhiroga@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "llama_index_sandbox"}]
+
+[tool.poetry.dependencies]
+python = "3.9.12"
+llama-index = "^0.5.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
