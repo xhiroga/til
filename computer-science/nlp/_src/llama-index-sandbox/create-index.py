@@ -1,4 +1,3 @@
-# create-index.py
 import csv
 from llama_index import GPTSimpleVectorIndex, SimpleWebPageReader
 
