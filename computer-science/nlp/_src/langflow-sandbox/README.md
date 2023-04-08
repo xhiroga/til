@@ -2,7 +2,7 @@
 
 ```shell
 poetry install 
-poetrh shell
+poetry shell
 
 langflow
 ```
