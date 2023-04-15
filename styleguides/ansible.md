@@ -56,10 +56,10 @@ Ansibleでは多用な方法で変数を指定できる。以下に挙げたも�
 - `vars_prompt`: プロンプトで変数を入力する場合（例: パスワード）
 
 逆に、以下に挙げるものは基本的に使用しないことにする。
+
 - `play vars`: 環境ごとに値を変えたい場合に不便なため。
 - `play vars_files`: `play vars_prompt` よりも優先されるという仕様を忘れやすいため。
 - `role vars`: `play vars_prompt` や `play vars_files` よりも優先されるという仕様を忘れやすいため。
-
 
 ### その他の文法
 
@@ -67,18 +67,17 @@ Ansibleでは多用な方法で変数を指定できる。以下に挙げたも�
 - `true` と `yes` では、Ansibleの公式Collectionのドキュメントで使われている`yes` を用いる。ただし、今後方針を変えるかもしれない。
 
 - copy or template or file or replace
-	- わからん、変数を使わない場合はcopyで良さそう。
+  - わからん、変数を使わない場合はcopyで良さそう。
 [Choosing between Ansible's copy and template modules \| Enable Sysadmin](https://www.redhat.com/sysadmin/ansibles-copy-template-modules)
 
 - lineinfile, blockinfile or replace について、追加なら lineinefile, blockinfile を、置換なら replace を用いる。
-    - lineinfileは置換だけでなく追加もするので、そのような挙動が望ましくないならreplaceを使うべき。
-    - 置換の際には、[実行するたびに重複が発生する](https://logmi.jp/tech/articles/325477)ようなケースを避けるべく、正規表現では行頭から行末までを指定するのが望ましい。
+  - lineinfileは置換だけでなく追加もするので、そのような挙動が望ましくないならreplaceを使うべき。
+  - 置換の際には、[実行するたびに重複が発生する](https://logmi.jp/tech/articles/325477)ようなケースを避けるべく、正規表現では行頭から行末までを指定するのが望ましい。
 
 ## Formatting Rule
 
 - 二重波括弧と変数名の間にスペースを挿入する（例: `{{ name }}`）
-    - [API — Jinja Documentation \(3\.0\.x\)](https://jinja.palletsprojects.com/en/3.0.x/api/#basics)
-
+  - [API — Jinja Documentation \(3\.0\.x\)](https://jinja.palletsprojects.com/en/3.0.x/api/#basics)
 
 ## Meta Rule
 
@@ -87,16 +86,17 @@ Ansibleでは多用な方法で変数を指定できる。以下に挙げたも�
 ### ファイル、フォルダ
 
 YAMLファイルの拡張子は `.yml` を用いる。
+
 - [Tips and tricks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html)
 - moleculeで生成されるYAMLファイルの拡張子も`.yml`である。
 - copyコマンドなのでコピーするファイルは、`.yml`ではなく`.yaml`でも構わない。
-
 
 ### 運用
 
 Makefileで運用する
 
 ## 参考
+
 - [Best Practices — Ansible Documentation](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html)
 - [openshift/openshift\-ansible: Install and config an OpenShift 3\.x cluster](https://github.com/openshift/openshift-ansible)
 - [Azure/sonic\-mgmt: Configuration management examples for SONiC](https://github.com/Azure/sonic-mgmt)
