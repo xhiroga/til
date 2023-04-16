@@ -18,6 +18,9 @@ poetry add --dev black isort flake8 flake8-bugbear mypy
 poetry install
 # `Cmd + Shift + P` で コマンドパレットを開き、 `python.setInterpreter` を実行し、 `.venv` を選択してください。
 # isortはワークスペースのPythonから実行されます。
+
+# Jupyter Notebookを利用する場合
+poetry add --dev ipykernel
 ```
 
 - pyenvとpoetryでPythonのバージョン指定方法が異なる。
