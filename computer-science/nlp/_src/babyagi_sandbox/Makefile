@@ -1,6 +1,6 @@
 .PHONY:run;
 
-run:
+run: babyagi pyproject.toml babyagi/.env;
 	./.venv/bin/python ./babyagi/babyagi.py
 
 babyagi:
