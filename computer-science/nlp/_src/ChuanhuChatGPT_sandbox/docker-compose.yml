@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  chuanhu-chat-gpt:
+    image: ghcr.io/xhiroga/chuanhu-chat-gpt
+    container_name: chuanhu-chat-gpt
+    volumes:
+      - ./ChuanhuChatGPT/config.json:/app/config.json
+    ports:
+      - "7860:7860"
+    restart: always
