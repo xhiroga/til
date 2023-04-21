@@ -3,8 +3,8 @@ services:
   slack-gpt:
     image: slack-gpt
     build:
-      context: .
-      dockerfile: ./slack-gpt/Dockerfile
+      context: ./slack-gpt
+      dockerfile: Dockerfile
     env_file:
       - .env
     restart: always
