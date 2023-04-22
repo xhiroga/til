@@ -1,5 +1,6 @@
 # LlamaIndex debugging
 
 ```shell
-make
+make llama_index
+make  poetry-install
 ```
