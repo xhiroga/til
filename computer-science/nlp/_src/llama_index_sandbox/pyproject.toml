@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "llama-index-sandbox"
+name = "llama_index_sandbox"
 version = "0.1.0"
 description = ""
 authors = ["xhiroga <xhiroga@users.noreply.github.com>"]
