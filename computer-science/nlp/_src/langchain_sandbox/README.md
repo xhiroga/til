@@ -5,9 +5,8 @@
 cp .env.tpl .env
 
 poetry install
-poetry shell
-dotenv run -- python main.py
-dotenv run -- python temperature.py
+.venv/bin/python main.py
+.venv/bin/python temperature.py
 ```
 
 ## References

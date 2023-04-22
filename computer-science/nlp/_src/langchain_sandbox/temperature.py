@@ -1,6 +1,9 @@
-from langchain.agents import load_tools
-from langchain.agents import initialize_agent
+from dotenv import load_dotenv
+from langchain.agents import initialize_agent, load_tools
 from langchain.llms import OpenAI
+
+load_dotenv()
+
 
 llm = OpenAI(temperature=0)
 
