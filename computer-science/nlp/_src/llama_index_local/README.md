@@ -1,0 +1,5 @@
+# LlamaIndex debugging
+
+```shell
+make
+```
