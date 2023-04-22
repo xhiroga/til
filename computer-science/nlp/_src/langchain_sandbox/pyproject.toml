@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "langchain-sandbox"
+name = "langchain_sandbox"
 version = "0.1.0"
 description = ""
 authors = ["xhiroga <13391129+xhiroga@users.noreply.github.com>"]
