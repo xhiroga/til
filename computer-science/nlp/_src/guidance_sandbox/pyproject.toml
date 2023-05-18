@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "guidance_sandbox"
+version = "0.1.0"
+description = ""
+authors = ["xhiroga <xhiroga@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "guidance_sandbox"}]
+
+[tool.poetry.dependencies]
+python = "3.9.12"
+guidance = "^0.0.47"
+python-dotenv = "^1.0.0"
+numpy = "^1.24.3"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+flake8-bugbear = "^23.3.23"
+mypy = "^1.2.0"
+ipykernel = "^6.23.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
