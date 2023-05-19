@@ -8,9 +8,9 @@ packages = [{include = "guidance_sandbox"}]
 
 [tool.poetry.dependencies]
 python = "3.9.12"
-guidance = "^0.0.47"
 python-dotenv = "^1.0.0"
-numpy = "^1.24.3"
+guidance = "^0.0.47"
+numpy = "^1.24.3"   # [add numpy as dep · microsoft/guidance@19e5586](https://github.com/microsoft/guidance/commit/19e5586871a19f5fc91feb3b28e6c653963905f8)
 
 
 [tool.poetry.group.dev.dependencies]
