@@ -4,63 +4,160 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "Event 1",
-                "year": 1914
+                "name": "ガンディーの誕生",
+                "year": 1869
             },
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    -0.1276474,
-                    51.5073219
+                    70.794922,
+                    21.641706
                 ]
             }
         },
         {
-          "type": "Feature",
-          "properties": {
-            "name": "Event 2",
-            "year": 1939
-          },
-          "geometry": {
-            "type": "LineString",
-            "coordinates": [
-              [13.4050, 52.5200],
-              [13.4060, 52.5205] 
-            ]
-          }
-        },
-        {
-          "type": "Feature",
-          "properties": {
-            "name": "Event 3",
-            "year": 1945
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [100.0, 0.0],
-                [101.0, 0.0],
-                [101.0, 1.0],
-                [100.0, 1.0],
-                [100.0, 0.0] 
-              ]
-            ]
-          }
-        },
-        {
             "type": "Feature",
             "properties": {
-                "name": "Coors Field",
-                "amenity": "Baseball Stadium",
-                "popupContent": "This is where the Rockies play!",
-                "year": 1950
+                "name": "ロンドン法科大学への入学",
+                "year": 1888
             },
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    -104.99404,
-                    39.75621
+                    -0.116600,
+                    51.523767
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "南アフリカへの移住",
+                "year": 1893
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    31.465866,
+                    -28.479262
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "民間不服従運動の開始",
+                "year": 1906
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    31.465866,
+                    -28.479262
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "インドへの帰国",
+                "year": 1915
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "塩の行進",
+                "year": 1930
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            72.586274,
+                            23.025085
+                        ],
+                        [
+                            72.579422,
+                            22.307167
+                        ],
+                        [
+                            71.849111,
+                            21.193415
+                        ],
+                        [
+                            72.842605,
+                            20.460718
+                        ],
+                        [
+                            73.119413,
+                            20.646591
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "第二次世界大戦中の抗議活動",
+                "year": 1942
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "インド独立",
+                "year": 1947
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "パキスタンとの分離",
+                "year": 1947
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    70.791292,
+                    30.375321
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ガンディーの暗殺",
+                "year": 1948
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
                 ]
             }
         }
