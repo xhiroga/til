@@ -19,7 +19,8 @@
             "type": "Feature",
             "properties": {
                 "name": "ロンドン法科大学への入学",
-                "year": 1888
+                "year": 1888,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Gandhi_student.jpg"
             },
             "geometry": {
                 "type": "Point",
