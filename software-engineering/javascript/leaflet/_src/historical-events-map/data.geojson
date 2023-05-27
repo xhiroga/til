@@ -1,28 +1,68 @@
 {
     "type": "FeatureCollection",
     "features": [
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "Event 1",
-          "year": 1914
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Event 1",
+                "year": 1914
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.1276474,
+                    51.5073219
+                ]
+            }
         },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [-0.1276474, 51.5073219]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "Event 2",
-          "year": 1939
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Event 2",
+            "year": 1939
+          },
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [13.4050, 52.5200],
+              [13.4060, 52.5205] 
+            ]
+          }
         },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [13.4050, 52.5200]
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Event 3",
+            "year": 1945
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [100.0, 0.0],
+                [101.0, 0.0],
+                [101.0, 1.0],
+                [100.0, 1.0],
+                [100.0, 0.0] 
+              ]
+            ]
+          }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Coors Field",
+                "amenity": "Baseball Stadium",
+                "popupContent": "This is where the Rockies play!",
+                "year": 1950
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -104.99404,
+                    39.75621
+                ]
+            }
         }
-      }
     ]
-  }
-  
+}
