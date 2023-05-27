@@ -1,0 +1,28 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Event 1",
+          "year": 1914
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.1276474, 51.5073219]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Event 2",
+          "year": 1939
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [13.4050, 52.5200]
+        }
+      }
+    ]
+  }
+  

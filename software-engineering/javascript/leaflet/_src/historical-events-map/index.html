@@ -11,28 +11,7 @@
 <body>
     <div id="map"></div>
     <input id="slider" type="range" min="1900" max="2023" step="1" value="1900" oninput="updateMap(this.value)">
-
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 2);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
-
-        var geojsonLayer = L.geoJson().addTo(map);
-
-        function updateMap(year) {
-            // Fetch your GeoJSON data
-            fetch(`path_to_your_data/${year}.geojson`)
-                .then(response => response.json())
-                .then(data => {
-                    geojsonLayer.clearLayers();
-                    geojsonLayer.addData(data);
-                });
-        }
-
-        // initialize the map with the first year
-        updateMap(document.getElementById("slider").value);
-    </script>
+    <span id="slider-value">1900</span>
+    <script src="app.js"></script>
 </body>
 </html>
