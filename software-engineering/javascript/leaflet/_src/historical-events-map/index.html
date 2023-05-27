@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Historical Events Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map { height: 80vh; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <input id="slider" type="range" min="1900" max="2023" step="1" value="1900" oninput="updateMap(this.value)">
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        var geojsonLayer = L.geoJson().addTo(map);
+
+        function updateMap(year) {
+            // Fetch your GeoJSON data
+            fetch(`path_to_your_data/${year}.geojson`)
+                .then(response => response.json())
+                .then(data => {
+                    geojsonLayer.clearLayers();
+                    geojsonLayer.addData(data);
+                });
+        }
+
+        // initialize the map with the first year
+        updateMap(document.getElementById("slider").value);
+    </script>
+</body>
+</html>
