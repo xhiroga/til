@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Historical Events Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map { height: 80vh; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <input id="slider" type="range" min="1850" max="1950" step="1" value="1850" oninput="updateMap(this.value)">
+    <span id="slider-value">1850</span>
+    <script src="app.js"></script>
+</body>
+</html>
