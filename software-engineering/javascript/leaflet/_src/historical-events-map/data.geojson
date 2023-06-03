@@ -5,7 +5,8 @@
             "type": "Feature",
             "properties": {
                 "name": "ガンディーの誕生",
-                "year": 1869
+                "year": 1869,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Gandhi_and_Laxmidas_2.jpg"
             },
             "geometry": {
                 "type": "Point",
@@ -34,21 +35,8 @@
             "type": "Feature",
             "properties": {
                 "name": "南アフリカへの移住",
-                "year": 1893
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    31.465866,
-                    -28.479262
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "民間不服従運動の開始",
-                "year": 1906
+                "year": 1893,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Gandhi_South-Africa.jpg"
             },
             "geometry": {
                 "type": "Point",
@@ -62,7 +50,8 @@
             "type": "Feature",
             "properties": {
                 "name": "インドへの帰国",
-                "year": 1915
+                "year": 1915,
+                "image": "https://orientalgate.jp/wp-content/uploads/2021/05/a0301410_10401334.jpg"
             },
             "geometry": {
                 "type": "Point",
@@ -76,7 +65,8 @@
             "type": "Feature",
             "properties": {
                 "name": "塩の行進",
-                "year": 1930
+                "year": 1930,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Marche_sel.jpg"
             },
             "geometry": {
                 "type": "Polygon",
@@ -110,7 +100,8 @@
             "type": "Feature",
             "properties": {
                 "name": "第二次世界大戦中の抗議活動",
-                "year": 1942
+                "year": 1942,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Gandhi_and_Nehru_in_1946.jpg"
             },
             "geometry": {
                 "type": "Point",
@@ -124,7 +115,8 @@
             "type": "Feature",
             "properties": {
                 "name": "インド独立",
-                "year": 1947
+                "year": 1947,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Nehru_Gandhi_1937_touchup.jpg"
             },
             "geometry": {
                 "type": "Point",
@@ -138,7 +130,8 @@
             "type": "Feature",
             "properties": {
                 "name": "パキスタンとの分離",
-                "year": 1947
+                "year": 1947,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/4/46/Gandhi_Jinnah_1944.jpg"
             },
             "geometry": {
                 "type": "Point",
