@@ -4,14 +4,17 @@
     <title>Historical Events Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@14.6.4/distribute/nouislider.min.css">
     <style>
         #map { height: 80vh; width: 100%; }
+        #slider { margin: 20px; }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <input id="slider" type="range" min="1850" max="1950" step="1" value="1850" oninput="updateMap(this.value)">
-    <span id="slider-value">1850</span>
+    <div id="slider"></div>
+    <span id="slider-start-value"></span> - <span id="slider-end-value"></span>
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@14.6.4/distribute/nouislider.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
