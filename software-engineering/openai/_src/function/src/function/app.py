@@ -46,17 +46,28 @@ def run_conversation():
         function_call="auto",
     )
 
+    print(response)
     message = response["choices"][0]["message"]
 
     # Step 2, check if the model wants to call a function
     if message.get("function_call"):
         function_name = message["function_call"]["name"]
 
+        # location = message.get("location")
+        # unit = message.get("unit")
+        # print(location, unit) # None None
+
+        # 公式サンプルのままだと動かなかった。これ文字列型なのは [codehex](https://zenn.dev/codehex/articles/4b22a01e0b7592)さんの例でもそうらしい。
+        arguments = json.loads(message.get("function_call").get("arguments"))
+        location = arguments.get("location")
+        unit = arguments.get("unit")
+        print(location, unit)
+
         # Step 3, call the function
         # Note: the JSON response from the model may not be valid JSON
         function_response = get_current_weather(
-            location=message.get("location"),
-            unit=message.get("unit"),
+            location=location,
+            unit=unit,
         )
 
         # Step 4, send model the info on the function call and function response
