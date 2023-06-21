@@ -1,0 +1,17 @@
+schema {
+  query: Query
+}
+
+type Query {
+  users: [User!]!
+}
+
+type User {
+  name: String
+}
+
+query ALL_USERS {
+  users {
+    name
+  }
+}
