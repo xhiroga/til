@@ -1,0 +1,159 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ガンディーの誕生",
+                "year": 1869,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Gandhi_and_Laxmidas_2.jpg"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    70.794922,
+                    21.641706
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ロンドン法科大学への入学",
+                "year": 1888,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Gandhi_student.jpg"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.116600,
+                    51.523767
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "南アフリカへの移住",
+                "year": 1893,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Gandhi_South-Africa.jpg"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    31.465866,
+                    -28.479262
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "インドへの帰国",
+                "year": 1915,
+                "image": "https://orientalgate.jp/wp-content/uploads/2021/05/a0301410_10401334.jpg"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "塩の行進",
+                "year": 1930,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Marche_sel.jpg"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            72.586274,
+                            23.025085
+                        ],
+                        [
+                            72.579422,
+                            22.307167
+                        ],
+                        [
+                            71.849111,
+                            21.193415
+                        ],
+                        [
+                            72.842605,
+                            20.460718
+                        ],
+                        [
+                            73.119413,
+                            20.646591
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "第二次世界大戦中の抗議活動",
+                "year": 1942,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Gandhi_and_Nehru_in_1946.jpg"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "インド独立",
+                "year": 1947,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Nehru_Gandhi_1937_touchup.jpg"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "パキスタンとの分離",
+                "year": 1947,
+                "image": "https://upload.wikimedia.org/wikipedia/commons/4/46/Gandhi_Jinnah_1944.jpg"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    70.791292,
+                    30.375321
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ガンディーの暗殺",
+                "year": 1948
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    77.216721,
+                    28.644800
+                ]
+            }
+        }
+    ]
+}
