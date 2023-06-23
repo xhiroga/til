@@ -11,7 +11,7 @@ redis-cli --tls -u ${KV_URL}
 
 ```shell
 pnpm dev
-open localhost:3000/api/user
+open localhost:3000/api
 ```
 
 ## References
