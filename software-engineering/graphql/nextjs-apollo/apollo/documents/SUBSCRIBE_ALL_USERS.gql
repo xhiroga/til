@@ -1,0 +1,5 @@
+subscription SUBSCRIBE_ALL_USERS {
+  users {
+    name
+  }
+}

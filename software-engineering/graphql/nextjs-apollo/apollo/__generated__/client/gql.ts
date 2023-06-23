@@ -13,7 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "mutation AddUser($name: String!) {\n  addUser(name: $name) {\n    name\n  }\n}": types.AddUserDocument,
     "query ALL_USERS {\n  users {\n    name\n  }\n}": types.All_UsersDocument,
+    "subscription SUBSCRIBE_ALL_USERS {\n  users {\n    name\n  }\n}": types.Subscribe_All_UsersDocument,
 };
 
 /**
@@ -33,7 +35,15 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "mutation AddUser($name: String!) {\n  addUser(name: $name) {\n    name\n  }\n}"): (typeof documents)["mutation AddUser($name: String!) {\n  addUser(name: $name) {\n    name\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "query ALL_USERS {\n  users {\n    name\n  }\n}"): (typeof documents)["query ALL_USERS {\n  users {\n    name\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "subscription SUBSCRIBE_ALL_USERS {\n  users {\n    name\n  }\n}"): (typeof documents)["subscription SUBSCRIBE_ALL_USERS {\n  users {\n    name\n  }\n}"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

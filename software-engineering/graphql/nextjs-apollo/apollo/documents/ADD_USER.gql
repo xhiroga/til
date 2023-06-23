@@ -1,0 +1,5 @@
+mutation AddUser($name: String!) {
+  addUser(name: $name) {
+    name
+  }
+}

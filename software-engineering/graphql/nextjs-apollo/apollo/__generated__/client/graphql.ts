@@ -16,9 +16,24 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addUser: User;
+};
+
+
+export type MutationAddUserArgs = {
+  name: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  users?: Maybe<Array<User>>;
 };
 
 export type User = {
@@ -26,10 +41,24 @@ export type User = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+export type AddUserMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type AddUserMutation = { __typename?: 'Mutation', addUser: { __typename?: 'User', name?: string | null } };
+
 export type All_UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type All_UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', name?: string | null }> };
 
+export type Subscribe_All_UsersSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
+
+export type Subscribe_All_UsersSubscription = { __typename?: 'Subscription', users?: Array<{ __typename?: 'User', name?: string | null }> | null };
+
+
+export const AddUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<AddUserMutation, AddUserMutationVariables>;
 export const All_UsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_USERS"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<All_UsersQuery, All_UsersQueryVariables>;
+export const Subscribe_All_UsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"SUBSCRIBE_ALL_USERS"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<Subscribe_All_UsersSubscription, Subscribe_All_UsersSubscriptionVariables>;

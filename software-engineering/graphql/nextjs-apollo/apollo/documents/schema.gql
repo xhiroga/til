@@ -1,17 +1,21 @@
 schema {
   query: Query
+  mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
   users: [User!]!
 }
 
-type User {
-  name: String
+type Mutation {
+  addUser(name: String!): User!
 }
 
-query ALL_USERS {
-  users {
-    name
-  }
+type Subscription {
+  users: [User!]
+}
+
+type User {
+  name: String
 }
