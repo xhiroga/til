@@ -1,5 +1,11 @@
 # Using Prisma with MongoDB
 
+## Debug
+
+```shell
+npx ts-node index.ts
+```
+
 ## References
 
 - [Using Prisma with MongoDB](https://www.prisma.io/docs/guides/database/mongodb)
