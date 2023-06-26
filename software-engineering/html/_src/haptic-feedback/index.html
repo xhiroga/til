@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vibration API Demo</title>
+  <meta charset="UTF-8">
+  <style>
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <p>2023-06-27現在、iOS Safariではバイブレーションはサポートされていません。</p>
+  <button id="vibrateShort">短い振動</button>
+  <button id="vibrateLong">長い振動</button>
+  <button id="vibratePattern">パターン振動</button>
+
+  <script>
+    document.getElementById('vibrateShort').addEventListener('click', function () {
+      if (navigator.vibrate) {
+        // Vibrate for 200ms
+        navigator.vibrate(200);
+      } else {
+        alert('ごめんなさい、このデバイスでは振動機能はサポートされていません。');
+      }
+    });
+
+    document.getElementById('vibrateLong').addEventListener('click', function () {
+      if (navigator.vibrate) {
+        // Vibrate for 2 seconds
+        navigator.vibrate(2000);
+      } else {
+        alert('ごめんなさい、このデバイスでは振動機能はサポートされていません。');
+      }
+    });
+
+    document.getElementById('vibratePattern').addEventListener('click', function () {
+      if (navigator.vibrate) {
+        // Vibrate with a pattern
+        navigator.vibrate([500, 200, 1000]);
+      } else {
+        alert('ごめんなさい、このデバイスでは振動機能はサポートされていません。');
+      }
+    });
+  </script>
+</body>
+</html>
