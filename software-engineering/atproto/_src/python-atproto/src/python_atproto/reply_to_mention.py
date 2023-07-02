@@ -50,9 +50,8 @@ def main():
         facets = feed_view.post.record.facets
         if facets is not None and any([any([is_mention(feature, DID) for feature in facet.features]) for facet in facets]):
             reply = generate_reply(feed_view.post.record.text)
-            author = feed_view.post.author.handle
 
-            client.send_post(text=f"@{author} {reply}", reply_to=reply_to(feed_view.post))
+            client.send_post(text=f"{reply}", reply_to=reply_to(feed_view.post))
 
 
 if __name__ == '__main__':
