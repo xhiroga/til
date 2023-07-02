@@ -12,7 +12,7 @@ def on_message_handler(message) -> None:
         return
 
     car = CAR.from_bytes(commit.blocks)
-    print(car)
+    print(car.root, car.blocks)
 
 
 client.start(on_message_handler)
