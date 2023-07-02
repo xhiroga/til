@@ -1,5 +1,5 @@
 [project]
-name = "event-stream"
+name = "python-atproto"
 version = "0.1.0"
 description = "Add a short description here"
 authors = [
@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "atproto~=0.0.16",
     "python-dotenv~=1.0.0",
+    "openai~=0.27.8",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
