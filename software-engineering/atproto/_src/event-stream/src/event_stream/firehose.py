@@ -1,10 +1,18 @@
-from atproto.firehose import FirehoseSubscribeReposClient, parse_subscribe_repos_message
+from atproto import CAR, models
+from atproto.firehose import (FirehoseSubscribeReposClient,
+                              parse_subscribe_repos_message)
 
 client = FirehoseSubscribeReposClient()
 
 
 def on_message_handler(message) -> None:
-    print(message.header, parse_subscribe_repos_message(message))
+    commit = parse_subscribe_repos_message(message)
+    # we need to be sure that it's commit message with .blocks inside
+    if not isinstance(commit, models.ComAtprotoSyncSubscribeRepos.Commit):
+        return
+
+    car = CAR.from_bytes(commit.blocks)
+    print(car)
 
 
 client.start(on_message_handler)
