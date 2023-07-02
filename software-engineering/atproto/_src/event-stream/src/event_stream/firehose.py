@@ -11,6 +11,7 @@ def on_message_handler(message) -> None:
     if not isinstance(commit, models.ComAtprotoSyncSubscribeRepos.Commit):
         return
 
+    # CARとは、コンテンツのアーカイブファイル。IPFSなどで使われている。
     car = CAR.from_bytes(commit.blocks)
     print(car.root, car.blocks)
 

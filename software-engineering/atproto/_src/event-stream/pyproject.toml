@@ -25,3 +25,4 @@ allow-direct-references = true
 [tool.rye.scripts]
 getting_started = { cmd = "python ./src/event_stream/getting_started.py" }
 firehose = { cmd = "python ./src/event_stream/firehose.py" }
+home_timeline = { cmd = "python ./src/event_stream/home_timeline.py" }
