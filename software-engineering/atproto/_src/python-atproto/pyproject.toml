@@ -27,3 +27,4 @@ allow-direct-references = true
 getting_started = { cmd = "python ./src/python_atproto/getting_started.py" }
 firehose = { cmd = "python ./src/python_atproto/firehose.py" }
 home_timeline = { cmd = "python ./src/python_atproto/home_timeline.py" }
+reply_to_mention = { cmd = "python ./src/python_atproto/reply_to_mention.py" }
