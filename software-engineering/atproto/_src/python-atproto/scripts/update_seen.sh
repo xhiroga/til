@@ -3,15 +3,17 @@ set -euo pipefail  # -e: エラー時のスクリプト終了, -u: 未設定変�
 
 export $(cat .env | grep -v ^# | xargs)
 
-response=$(curl -s POST "https://bsky.social/xrpc/com.atproto.server.createSession"\
+response=$(curl -s -X POST "https://bsky.social/xrpc/com.atproto.server.createSession"\
   -H 'Content-Type: application/json' \
   -d "{\"identifier\": \"$HANDLE\", \"password\": \"$PASSWORD\"}" \
 )
 access_jwt=$(echo $response | jq -r .accessJwt)
 
-# seenAt=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-# {"error":"InvalidRequest","message":"The seenAt parameter is unsupported"}
+seenAt=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+json_data="{\"seenAt\": \"${seenAt}\"}"
+echo "$json_data"
 
-curl --http1.1 -vX GET "https://bsky.social/xrpc/app.bsky.notification.listNotifications" \
+curl -vX POST "https://bsky.social/xrpc/app.bsky.notification.updateSeen" \
+-H "Content-Type: application/json" \
 -H "Authorization: Bearer $access_jwt" \
--H 'Content-Type: application/json'
+-d "$json_data"
