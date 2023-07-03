@@ -9,9 +9,6 @@ response=$(curl -s POST "https://bsky.social/xrpc/com.atproto.server.createSessi
 )
 access_jwt=$(echo $response | jq -r .accessJwt)
 
-# seenAt=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-# {"error":"InvalidRequest","message":"The seenAt parameter is unsupported"}
-
-curl --http1.1 -vX GET "https://bsky.social/xrpc/app.bsky.notification.listNotifications" \
+curl --http1.1 -vX GET 'https://bsky.social/xrpc/app.bsky.notification.getUnreadCount' \
 -H "Authorization: Bearer $access_jwt" \
 -H 'Content-Type: application/json'
