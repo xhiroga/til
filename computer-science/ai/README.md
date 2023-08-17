@@ -1,6 +1,6 @@
-# Natural Language Processing
+# AI
 
-自然言語処理。モデルについては[機械学習](../machine-learning/README.qmd)もご覧ください。
+大規模言語モデルを含むAI。モデルについては[機械学習](../machine-learning/README.qmd)もご覧ください。
 
 ## LLM
 
