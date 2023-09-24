@@ -40,13 +40,15 @@ ORDER
 
 - `groupId`: キャメルケース
 - `sourceIPAddress != 'cloudformation.amazonaws.com'`: CFnのケースを除外
-    - ちなみに `!=` の代わりに `<>` も利用可能
+  - ちなみに `!=` の代わりに `<>` も利用可能
 
 なお、マネジメントコンソールからの操作の場合、`sourceIPAddress` が `AWS Internal` になる。
 
-# Investigate manually created resources
+## Investigate manually created resources
 
 ```sql
+SELECT
+    *
 FROM
     cdc27250-6e9b-4cfb-afaf-4c14eacd649d
 WHERE
