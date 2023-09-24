@@ -1,0 +1,31 @@
+###
+GET http://localhost:9200/
+
+###
+POST http://localhost:9200/logs-my_app-default/_doc
+Content-Type: application/json
+
+{
+  "@timestamp": "2099-05-06T16:21:15.000Z",
+  "event": {
+    "original": "192.0.2.42 - - [06/May/2099:16:21:15 +0000] \"GET /images/bg.jpg HTTP/1.0\" 200 24736"
+  }
+}
+
+### Search
+GET http://localhost:9200/logs-my_app-default/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": { }
+  },
+  "sort": [
+    {
+      "@timestamp": "desc"
+    }
+  ]
+}
+
+### Clean up
+DELETE http://localhost:9200/_data_stream/logs-my_app-default
