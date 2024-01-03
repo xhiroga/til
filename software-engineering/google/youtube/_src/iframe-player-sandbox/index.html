@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Player Demo</title>
+</head>
+<body>
+    <!-- YouTubeプレイヤーを埋め込む -->
+    <div id="player"></div>
+
+    <!-- 動画情報を表示する -->
+    <div id="videoInfo">
+        <h3>現在の動画情報</h3>
+        <p id="currentVideoTitle">タイトル: 未取得</p>
+        <p id="currentVideoDuration">再生時間: 未取得</p>
+    </div>
+
+    <!-- 次の動画を選ぶ -->
+    <div id="nextVideo">
+        <h3>次の動画を選ぶ</h3>
+        <p>例: 8c1X6A2Tyh0</p>
+        <input type="text" id="nextVideoId" placeholder="YouTube動画ID">
+        <button onclick="loadNextVideo()">次の動画を読み込む</button>
+    </div>
+
+    <!-- YouTube IFrame Player APIを読み込む -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- カスタムJavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
