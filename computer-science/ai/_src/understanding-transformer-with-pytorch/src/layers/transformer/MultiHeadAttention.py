@@ -1,7 +1,7 @@
 # Copyright 2022 @YadaYuki. All Rights Reserved.
 
 import torch
-from layers.transformer.ScaleDotProductAttention import ScaleDotProductAttention
+from layers.transformer.ScaledDotProductAttention import ScaledDotProductAttention
 from torch import nn
 
 
@@ -21,7 +21,7 @@ class MultiHeadAttention(nn.Module):
         self.W_q = nn.Parameter(torch.Tensor(h, d_model, self.d_k))
         self.W_v = nn.Parameter(torch.Tensor(h, d_model, self.d_v))
 
-        self.scaled_dot_product_attention = ScaleDotProductAttention(self.d_k)
+        self.scaled_dot_product_attention = ScaledDotProductAttention(self.d_k)
 
         self.linear = nn.Linear(h * self.d_v, d_model)
 
