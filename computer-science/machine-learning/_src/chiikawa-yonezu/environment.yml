@@ -73,6 +73,7 @@ dependencies:
   - intel-openmp=2023.2.0=h57928b3_50497
   - ipykernel=6.28.0=pyha63f2e9_0
   - ipython=8.19.0=pyh7428d3b_0
+  - jaconv=0.3.4=pyhd8ed1ab_0
   - jedi=0.19.1=pyhd8ed1ab_0
   - jinja2=3.1.2=pyhd8ed1ab_1
   - jupyter_client=8.6.0=pyhd8ed1ab_0
