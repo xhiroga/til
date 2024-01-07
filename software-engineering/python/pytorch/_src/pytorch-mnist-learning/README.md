@@ -2,5 +2,4 @@
 
 ```python
 conda create -f environment.yml
-conda run -n pytorch-mnist-learning python src/train.py
 ```
