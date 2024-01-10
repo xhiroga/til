@@ -19,3 +19,7 @@ The home item is expected in the about section.
 ```
 
 So I added `home` to `about` in `gradio/meta.yaml`.
+
+## References
+
+- [Conda-ForgeにPythonパッケージを公開する手順](https://zenn.dev/geb/articles/220520_condaforgepublish)
