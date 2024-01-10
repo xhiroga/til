@@ -70,8 +70,10 @@ demo = gr.Interface(
     inputs="textbox",
     outputs="label",
     examples=[
-        "炊き立て・・・・ってコト！？",
-        "晴れた空に種を蒔こう",
+        "守りたいんだ",
+        "どうしてどうしてどうして",
+        "そこから見ていてね",
+        "ヤンパパン"
     ],
 )
 
