@@ -1,5 +1,6 @@
 data/
 figures/
 models/*
+!models/model.safetensors
 
 __pycache__
