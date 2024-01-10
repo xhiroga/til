@@ -42,23 +42,25 @@ def _classify_text(text, model, device, tokenizer, max_length=20):
     return chiikawa_prob, yonezu_prob
 
 
+is_cuda = torch.cuda.is_available()
+device = torch.device("cuda" if is_cuda else "cpu")
+pprint(f"device: {device}")
+
+model_save_path = "models/model.safetensors"
+tensors = {}
+with safe_open(model_save_path, framework="pt", device="cpu") as f:
+    for key in f.keys():
+        tensors[key] = f.get_tensor(key)
+
+inference_model: torch.nn.Module = ClassifierModel().to(device)
+inference_model.load_state_dict(tensors)
+
+tokenizer = BertTokenizer.from_pretrained(
+    "cl-tohoku/bert-base-japanese-whole-word-masking"
+)
+
+
 def classify_text(text):
-    is_cuda = torch.cuda.is_available()
-    device = torch.device("cuda" if is_cuda else "cpu")
-    pprint(f"device: {device}")
-
-    model_save_path = "models/model.safetensors"
-    tensors = {}
-    with safe_open(model_save_path, framework="pt", device="cpu") as f:
-        for key in f.keys():
-            tensors[key] = f.get_tensor(key)
-
-    inference_model: torch.nn.Module = ClassifierModel().to(device)
-    inference_model.load_state_dict(tensors)
-
-    tokenizer = BertTokenizer.from_pretrained(
-        "cl-tohoku/bert-base-japanese-whole-word-masking"
-    )
     chii_prob, yone_prob = _classify_text(text, inference_model, device, tokenizer)
     return {"ちいかわ": chii_prob, "米津玄師": yone_prob}
 
