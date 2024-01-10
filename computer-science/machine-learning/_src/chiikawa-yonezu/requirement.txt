@@ -1,0 +1,4 @@
+gradio
+safetensors
+torch
+transformers
