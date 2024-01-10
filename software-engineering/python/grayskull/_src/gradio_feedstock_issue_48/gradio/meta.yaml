@@ -63,6 +63,7 @@ test:
     - pip
 
 about:
+  home: https://pypi.org/project/gradio/
   summary: Python library for easily interacting with trained machine learning models
   license: MIT AND Apache-2.0
   license_file:
