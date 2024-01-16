@@ -10,7 +10,7 @@ sdk_version: 4.13.0
 ## How to run
 
 ```powershell
-conda create -f environment.yml
+conda env create -f environment.yml
 # Note: `gradio` is isntalled by pip, caused by [`gradio deploy` not works with conda-installed `gradio-script.py` · Issue #48 · conda-forge/gradio-feedstock](https://github.com/conda-forge/gradio-feedstock/issues/48)
 
 conda run -n til-gradio-quickstart python app.py
