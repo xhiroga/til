@@ -6,7 +6,7 @@ sdk_version: 4.13.0
 ---
 
 ```powershell
-conda create -f environment.yml
+conda env create -f environment.yml
 conda activate chiikawa-yonezu
 pip install fugashi ipadic
 ```
