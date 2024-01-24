@@ -24,11 +24,13 @@ dependencies:
   - aws-crt-cpp=0.26.0=hed7b20b_8
   - aws-sdk-cpp=1.11.210=h20b5662_10
   - beartype=0.16.2=pyhd8ed1ab_0
+  - beautifulsoup4=4.12.3=pyha770c72_0
   - blas=2.120=mkl
   - blas-devel=3.9.0=20_win64_mkl
   - brotli=1.1.0=hcfcfb64_1
   - brotli-bin=1.1.0=hcfcfb64_1
   - brotli-python=1.1.0=py311h12c1d0e_1
+  - bs4=4.12.3=hd8ed1ab_0
   - bzip2=1.0.8=hcfcfb64_5
   - c-ares=1.25.0=hcfcfb64_0
   - ca-certificates=2023.11.17=h56e8100_0
@@ -215,6 +217,7 @@ dependencies:
   - sip=6.7.12=py311h12c1d0e_0
   - six=1.16.0=pyh6c4a22f_0
   - snappy=1.1.10=hfb803bf_0
+  - soupsieve=2.5=pyhd8ed1ab_1
   - stack_data=0.6.2=pyhd8ed1ab_0
   - sympy=1.12=pyh04b8f61_3
   - tbb=2021.11.0=h91493d7_0
