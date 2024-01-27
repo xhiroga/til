@@ -1,6 +1,7 @@
 import gradio as gr
 import torch
 from PIL import Image
+from safetensors import safe_open
 from torchvision import transforms
 from utils.SimpleCNN import SimpleCNN
 
@@ -13,8 +14,15 @@ transform = transforms.Compose([
 ])
 
 # Load the trained model
+model_save_path = "models/model.safetensors"
+tensors = {}
+with safe_open(model_save_path, framework="pt", device="cpu") as f:
+    for key in f.keys():
+        tensors[key] = f.get_tensor(key)
+
 model = SimpleCNN(image_size=image_size)
-model.load_state_dict(torch.load('models/SimpleCNN_1_256x256.pth'))
+model.load_state_dict(tensors)
+
 model.eval()
 
 def classify_image(input_image: Image):
