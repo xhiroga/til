@@ -1,5 +1,3 @@
 data/
-models/*
-!models/model.safetensors
-
+models/snapshots/
 __pycache__
