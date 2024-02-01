@@ -32,15 +32,14 @@ def classify_image(input_image: Image):
     
     # Forward pass the input through the model
     output = model(input_tensor)
+    print(output)
     
-    # Get the predicted class
-    predicted_class = torch.argmax(output, dim=1).item()
+    probabilities = torch.nn.functional.softmax(output, dim=1)
     
-    # Return the class name
-    return 'Pokemon' if predicted_class == 0 else 'Pal'
+    return {'Pokemon': probabilities[0][0], 'Pal': probabilities[0][1]}
 
 # Define the Gradio interface
-demo = gr.Interface(fn=classify_image, inputs=gr.Image(type='pil'), outputs='text')
+demo = gr.Interface(fn=classify_image, inputs=gr.Image(type='pil'), outputs='label')
 
 # Launch the application
 demo.launch()
