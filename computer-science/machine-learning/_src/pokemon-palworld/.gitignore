@@ -1,3 +1,4 @@
 data/*
+db/*
 models/snapshots/
 __pycache__
