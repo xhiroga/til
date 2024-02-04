@@ -7,6 +7,7 @@ import numpy as np
 import os
 import re
 import sqlite3
+import time
 import torch
 
 from carvekit.api.high import HiInterface
@@ -166,6 +167,8 @@ class Pipeline:
         last_executed_at = read_last_executed_at(output_step)
         unprocessed_metadata = read_metadata_from(input_step, last_executed_at)
         logging.info(f"Job {output_step.value} started, processing {len(unprocessed_metadata)} items.")
+        if len(unprocessed_metadata) == 0:
+            return
 
         for unprocessed in unprocessed_metadata:
             if not os.path.exists(unprocessed.full_path):
@@ -239,3 +242,4 @@ if __name__ == "__main__":
     while True:
         pipeline.node(pipeline.process_nobg, Step.raw, Step.nobg)
         pipeline.node(pipeline.process_crop, Step.nobg, Step.cropped)
+        time.sleep(10)
