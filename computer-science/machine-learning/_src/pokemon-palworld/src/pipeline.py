@@ -31,6 +31,10 @@ class Metadata:
     label: Label
     created_at: datetime
 
+    @property
+    def full_path(self) -> str:
+        return os.path.join(self.bucket, self.path)
+
 
 def root_dir(path: str) -> str:
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,7 +46,19 @@ def data_dir(path: str):
 
 
 DB_NAME = root_dir('db/pipeline.db')
-interface: Optional[HiInterface] = None
+
+
+def calculate_hash(image: Image, ext: Optional[str]) -> str:
+    img_byte_arr = io.BytesIO()
+    image.save(img_byte_arr, format=ext or image.format)
+    img_byte_arr = img_byte_arr.getvalue()
+    hash_obj =  hashlib.sha256(img_byte_arr)
+    return hash_obj.hexdigest()
+
+def generate_path(original_path: str, hash: str, ext: str):
+    match = re.search(r'(.*)(_\w{8})?\.(\w+)', original_path)
+    path_head, _hashed, _ext = match.groups() if match else (None, None, None)
+    return f"{path_head}_{hash[:8]}.{ext}"
 
 
 def create_tables_if_not_exists():
@@ -66,7 +82,6 @@ def create_tables_if_not_exists():
     conn.commit()
     conn.close()
 
-
 def read_metadata_from(step: Step, last_executed_at: datetime | None):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -76,8 +91,7 @@ def read_metadata_from(step: Step, last_executed_at: datetime | None):
         cursor.execute("SELECT * FROM metadata WHERE step = ?", (step.value,))
     rows = cursor.fetchall()
     conn.close()
-    return [Metadata(*row) for row in rows]
-
+    return [Metadata(row[0], row[1], Step(row[2]), Label(row[3]), row[4]) for row in rows]
 
 def read_metadata_by(step: Step, bucket: str, path: str):
     conn = sqlite3.connect(DB_NAME)
@@ -85,8 +99,7 @@ def read_metadata_by(step: Step, bucket: str, path: str):
     cursor.execute("SELECT * FROM metadata WHERE step = ? AND bucket = ? AND path = ?", (step.value, bucket, path))
     row = cursor.fetchone()
     conn.close()
-    return Metadata(*row) if row else None
-
+    return Metadata(row[0], row[1], Step(row[2]), Label(row[3]), row[4]) if row else None
 
 def create_metadata(metadata: Metadata):
     conn = sqlite3.connect(DB_NAME)
@@ -96,7 +109,6 @@ def create_metadata(metadata: Metadata):
     conn.commit()
     conn.close()
 
-
 def read_last_executed_at(step: Step) -> Optional[datetime]:
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -105,82 +117,68 @@ def read_last_executed_at(step: Step) -> Optional[datetime]:
     conn.close()
     return result[0] if result else None
 
-
 def create_job(step: Step, executed_at: datetime):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO jobs (step, executed_at) VALUES (?, ?)", 
-    (step.value, executed_at))
+    cursor.execute("INSERT INTO jobs (step, executed_at) VALUES (?, ?)", (step.value, executed_at))
     conn.commit()
     conn.close()
 
 
-def calculate_hash(image: Image) -> str:
-    img_byte_arr = io.BytesIO()
-    image.save(img_byte_arr, format=image.format)
-    img_byte_arr = img_byte_arr.getvalue()
-    hash_obj =  hashlib.sha256(img_byte_arr)
-    return hash_obj.hexdigest()
+class Pipeline:
+    def __init__(self):
+        self.interface: Optional[HiInterface] = None
 
+    def node_nobg(self):
+        input_step = Step.raw
+        last_executed_at = read_last_executed_at(input_step)
+        non_processed_metadata = read_metadata_from(input_step, last_executed_at)
+        print(f"Job nobg started at {datetime.now()}, processing {len(non_processed_metadata)} items.")
+        for metadata in non_processed_metadata:
+            self.process_nobg(metadata)
+        print(f"Job nobg ended at {datetime.now()}.")
+        create_job(Step.nogb, datetime.now())
 
-def generate_path(original_path: str, hash: str, ext: str):
-    match = re.search(r'(.*)_(\w+)\.(\w+)', original_path)
-    path_head, _hash, _ext = match.groups() if match else (None, None, None)
-    return f"{path_head}_{hash[:8]}.{ext}"
+    def process_nobg(self, metadata: Metadata, bucket: str = data_dir(Step.nogb.value)):
+        if self.interface is None:
+            self.interface = HiInterface(
+                object_type="object",  # Can be "object" or "hairs-like".
+                batch_size_seg=5,
+                batch_size_matting=1,
+                device='cuda' if torch.cuda.is_available() else 'cpu',
+                seg_mask_size=640,  # Use 640 for Tracer B7 and 320 for U2Net
+                matting_mask_size=2048,
+                trimap_prob_threshold=231,
+                trimap_dilation=30,
+                trimap_erosion_iters=5,
+                fp16=False
+            )
 
+        images_without_background = self.interface([metadata.full_path])
+        image_wo_bg = images_without_background[0]
 
-def node_nobg():
-    input_step = Step.raw
-    last_executed_at = read_last_executed_at(input_step)
-    non_processed_metadata = read_metadata_from(input_step, last_executed_at)
-    print(f"Job started at {datetime.now()}, processing {len(non_processed_metadata)} items.")
-    for metadata in non_processed_metadata:
-        process_nobg(metadata)
-    print(f"Job ended at {datetime.now()}.")
-    create_job(Step.nogb, datetime.now())
+        ext = "png"
+        nobg_hash = calculate_hash(image_wo_bg, ext)
+        path = generate_path(metadata.path, nobg_hash, ext)
+        nobg_metadata = Metadata(bucket=bucket, path=path, step=Step.nogb, label=metadata.label, created_at=datetime.now())
+        os.makedirs(os.path.dirname(nobg_metadata.full_path), exist_ok=True)
+        image_wo_bg.save(nobg_metadata.full_path)
+        create_metadata(nobg_metadata)
 
+    def node_crop(self):
+        input_step = Step.nogb
+        # TODO: last_executed_at
+        # TODO: metadatas = get_new_data(input_step, last_executed_at)
+        pass
 
-def process_nobg(metadata: Metadata, bucket: str = data_dir(Step.nogb.value)):
-    if interface is None:
-        interface = HiInterface(
-            object_type="object",  # Can be "object" or "hairs-like".
-            batch_size_seg=5,
-            batch_size_matting=1,
-            device='cuda' if torch.cuda.is_available() else 'cpu',
-            seg_mask_size=640,  # Use 640 for Tracer B7 and 320 for U2Net
-            matting_mask_size=2048,
-            trimap_prob_threshold=231,
-            trimap_dilation=30,
-            trimap_erosion_iters=5,
-            fp16=False
-        )
-
-    images_without_background = interface([metadata.path])
-    image_wo_bg = images_without_background[0]
-
-    ext = "png"
-    nobg_hash = calculate_hash(image_wo_bg)
-    path = generate_path(metadata.name, nobg_hash, ext)
-    output_file_path = os.path.join(bucket, path)
-    image_wo_bg.save(output_file_path)
-    nobg_metadata = Metadata(bucket=bucket, path=path, step=Step.nogb, label=metadata.label, created_at=datetime.datetime.now())
-    create_metadata(nobg_metadata)
-
-
-def node_crop():
-    input_step = Step.nogb
-    # TODO: last_executed_at
-    # TODO: metadatas = get_new_data(input_step, last_executed_at)
-    pass
-
-
-def process_crop(metadata: Metadata):
-    output_step = Step.cropped
-    # TODO: 
-    pass
+    def process_crop(self, metadata: Metadata):
+        output_step = Step.cropped
+        # TODO: 
+        pass
 
 
 if __name__ == "__main__":
+    pipeline = Pipeline()
     while True:
-        node_nobg()
-        node_crop()
+        pipeline.node_nobg()
+        pipeline.node_crop()
