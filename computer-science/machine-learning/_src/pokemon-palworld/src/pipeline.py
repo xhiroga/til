@@ -163,7 +163,7 @@ class Pipeline:
     def __init__(self):
         self.interface: Optional[HiInterface] = None
 
-    def node(self, process_function, input_step: Step, output_step: Step, ):
+    def node(self, process_function, input_step: Step, output_step: Step):
         last_executed_at = read_last_executed_at(output_step)
         unprocessed_metadata = read_metadata_from(input_step, last_executed_at)
         logging.info(f"Job {output_step.value} started, processing {len(unprocessed_metadata)} items.")
@@ -204,13 +204,13 @@ class Pipeline:
         nobg_hash = calculate_hash(image_wo_bg, ext)
         path = generate_path(metadata.path, nobg_hash, ext)
         nobg_metadata = Metadata(bucket=bucket, path=path, step=Step.nobg, label=metadata.label, created_at=datetime.utcnow())
-        os.makedirs(os.path.dirname(image_wo_bg.full_path), exist_ok=True)
+        os.makedirs(os.path.dirname(nobg_metadata.full_path), exist_ok=True)
         image_wo_bg.save(nobg_metadata.full_path)
         
         return [nobg_metadata]
     
     def process_crop(self, metadata: Metadata, bucket: str = data_dir(Step.cropped.value)):
-        min_height, min_width = 64, 64
+        min_height, min_width = 512, 512    # YouTubeから保存した画像が1920x1080という前提で、キャラクターが中心の画面では高さか幅の短い方が512ピクセルを超えているように見えるため
 
         image = Image.open(metadata.full_path)
         contours = get_object_bounding_boxes(image)
