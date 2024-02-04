@@ -20,3 +20,17 @@ python app.py
 conda activate pokemon-pal
 gradio deploy
 ```
+
+## Development
+
+### Preprocessing
+
+```powershell
+python ./src/pipeline.py --logging-level INFO
+```
+
+
+### Test
+```powershell
+python -m unittest discover tests
+```
