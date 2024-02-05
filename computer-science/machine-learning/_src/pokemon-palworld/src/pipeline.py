@@ -14,6 +14,7 @@ from carvekit.api.high import HiInterface
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+from logging.handlers import RotatingFileHandler
 from typing import List, Optional
 from PIL import Image
 
@@ -50,8 +51,21 @@ def data_dir(path: str):
     return os.path.normpath(os.path.join(root_dir('data'), path))
 
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+file_handler = RotatingFileHandler('logs/log.tsv', maxBytes=1024*1024, backupCount=100)
+stream_handler = logging.StreamHandler()
+
+formatter = logging.Formatter('%(asctime)s\t%(levelname)s\t%(message)s')
+file_handler.setFormatter(formatter)
+stream_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
 logging.basicConfig(
-    level=logging.INFO,
+    level=logger.info,
     format='%(asctime)s %(levelname)s %(message)s',
     datefmt='%Y-%m-%dT%H:%M:%S'
 )
@@ -93,7 +107,7 @@ def create_tables_if_not_exists():
     conn.close()
 
 def read_metadata_from(step: Step, last_executed_at: datetime | None):
-    logging.debug(f"Reading metadata from step: {step}, last executed at: {last_executed_at}")
+    logger.debug(f"Reading metadata from step: {step}, last executed at: {last_executed_at}")
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     if last_executed_at:
@@ -102,21 +116,21 @@ def read_metadata_from(step: Step, last_executed_at: datetime | None):
         cursor.execute("SELECT * FROM metadata WHERE step = ?", (step.value,))
     rows = cursor.fetchall()
     conn.close()
-    logging.debug(f"Read metadata: {rows[:5]}...")
+    logger.debug(f"Read metadata: {rows[:5]}...")
     return [Metadata(row[0], row[1], Step(row[2]), Label(row[3]), row[4]) for row in rows]
 
 def read_metadata_by(step: Step, bucket: str, path: str):
-    logging.debug(f"Reading metadata by step: {step}, bucket: {bucket}, path: {path}")
+    logger.debug(f"Reading metadata by step: {step}, bucket: {bucket}, path: {path}")
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM metadata WHERE step = ? AND bucket = ? AND path = ?", (step.value, bucket, path))
     row = cursor.fetchone()
     conn.close()
-    logging.debug(f"Read metadata: {row}")
+    logger.debug(f"Read metadata: {row}")
     return Metadata(row[0], row[1], Step(row[2]), Label(row[3]), row[4]) if row else None
 
 def create_metadata(metadata: Metadata):
-    logging.debug(f"Creating metadata: {metadata}")
+    logger.debug(f"Creating metadata: {metadata}")
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("INSERT INTO metadata (bucket, path, step, label, created_at) VALUES (?, ?, ?, ?, ?)", 
@@ -125,17 +139,17 @@ def create_metadata(metadata: Metadata):
     conn.close()
 
 def read_last_executed_at(step: Step) -> Optional[datetime]:
-    logging.debug(f"Reading last executed at for step: {step}")
+    logger.debug(f"Reading last executed at for step: {step}")
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT MAX(executed_at) FROM jobs WHERE step = ?", (step.value,))
     result = cursor.fetchone()
     conn.close()
-    logging.debug(f"Read last executed at: {result[0] if result else None}")
+    logger.debug(f"Read last executed at: {result[0] if result else None}")
     return result[0] if result else None
 
 def create_job(step: Step, executed_at: datetime):
-    logging.debug(f"Creating job for step: {step}, executed at: {executed_at}")
+    logger.debug(f"Creating job for step: {step}, executed at: {executed_at}")
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("INSERT INTO jobs (step, executed_at) VALUES (?, ?)", (step.value, executed_at))
@@ -166,20 +180,20 @@ class Pipeline:
     def node(self, process_function, input_step: Step, output_step: Step):
         last_executed_at = read_last_executed_at(output_step)
         unprocessed_metadata = read_metadata_from(input_step, last_executed_at)
-        logging.info(f"Job {output_step.value} started, processing {len(unprocessed_metadata)} items.")
+        logger.info(f"Job {output_step.value} started, processing {len(unprocessed_metadata)} items.")
         if len(unprocessed_metadata) == 0:
             return
 
         for unprocessed in unprocessed_metadata:
             if not os.path.exists(unprocessed.full_path):
-                logging.warn(f"File {unprocessed.full_path} does not exist. Skipping.")
+                logger.warn(f"File {unprocessed.full_path} does not exist. Skipping.")
                 continue
 
             processeds = process_function(unprocessed)
             for processed in processeds:
                 create_metadata(processed)
 
-        logging.info(f"Job {output_step.value} ended.")
+        logger.info(f"Job {output_step.value} ended.")
         create_job(output_step, datetime.utcnow())
 
     def process_nobg(self, metadata: Metadata, bucket: str = data_dir(Step.nobg.value)) -> List[Metadata]:
@@ -210,7 +224,7 @@ class Pipeline:
         return [nobg_metadata]
     
     def process_crop(self, metadata: Metadata, bucket: str = data_dir(Step.cropped.value)):
-        min_height, min_width = 512, 512    # YouTubeから保存した画像が1920x1080という前提で、キャラクターが中心の画面では高さか幅の短い方が512ピクセルを超えているように見えるため
+        min_height, min_width = 256, 256    # YouTubeから保存した画像が1920x1080という前提。キャラクターが普通に写っている場合は高さか幅が256pxを超えているように見える。
 
         image = Image.open(metadata.full_path)
         contours = get_object_bounding_boxes(image)
@@ -236,7 +250,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--logging-level', default='INFO', help='Set logging level')
     args = parser.parse_args()
-    logging.getLogger().setLevel(args.logging_level)
+    logger.setLevel(args.logging_level)
 
     pipeline = Pipeline()
     while True:

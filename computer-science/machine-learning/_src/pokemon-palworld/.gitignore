@@ -1,5 +1,7 @@
 data/*
 !data/.gitkeep
+logs/*
+!logs/.gitkeep
 db/*
 models/snapshots/
 __pycache__
