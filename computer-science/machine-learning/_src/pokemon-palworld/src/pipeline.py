@@ -54,7 +54,7 @@ def data_dir(path: str):
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-file_handler = RotatingFileHandler('logs/log.tsv', maxBytes=1024*1024, backupCount=100)
+file_handler = RotatingFileHandler(root_dir('logs/log.tsv'), maxBytes=1024*1024, backupCount=100)
 stream_handler = logging.StreamHandler()
 
 formatter = logging.Formatter('%(asctime)s\t%(levelname)s\t%(message)s')
@@ -72,6 +72,14 @@ logging.basicConfig(
 
 DB_NAME = root_dir('db/pipeline.db')
 
+
+def part_path(root: str, filename: str, bucket: str) -> {'bucket': str, 'path': str}:
+    fullpath = os.path.join(root, filename)
+    path = os.path.relpath(fullpath, bucket)
+    return {
+        'bucket': os.path.abspath(bucket),
+        'path': path
+    }
 
 def calculate_hash(image: Image, ext: Optional[str]) -> str:
     img_byte_arr = io.BytesIO()
