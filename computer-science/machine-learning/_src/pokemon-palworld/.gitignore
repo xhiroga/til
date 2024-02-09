@@ -4,4 +4,6 @@ logs/*
 !logs/.gitkeep
 db/*
 models/snapshots/
+
 __pycache__
+wandb/
