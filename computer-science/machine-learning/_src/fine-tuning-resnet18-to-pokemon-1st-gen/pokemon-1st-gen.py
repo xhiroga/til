@@ -10,9 +10,7 @@ with open('data/pokemon-1st-gen-labels.json') as f:
 
 model = models.resnet18(pretrained=True)
 
-# 訓練時は150種類いると思っていた
-num_classes = 150
-model.fc = torch.nn.Linear(model.fc.in_features, num_classes)
+model.fc = torch.nn.Linear(model.fc.in_features, len(labels))
 
 model_save_path = "models/model.safetensors"
 tensors = {}
@@ -40,9 +38,8 @@ def classify_image(input_image: Image):
     
     probabilities = torch.nn.functional.softmax(output, dim=1)
 
-    # モデル訓練時、150種類いると勘違いしていたが、実際には143種類しかなかった。
     actual_class_size = len(labels) # 143
-    label_to_prob = {labels[i]: prob for i, prob in enumerate(probabilities[0][:actual_class_size])}
+    label_to_prob = {labels[i]: prob for i, prob in enumerate(probabilities[0])}
     return label_to_prob
 
 demo = gr.Interface(fn=classify_image, inputs=gr.Image(type='pil'), outputs='label')
