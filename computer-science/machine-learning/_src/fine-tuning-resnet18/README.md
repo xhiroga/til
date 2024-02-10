@@ -3,5 +3,8 @@
 ```powershell
 conda activate til-machine-learning
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json -OutFile ./data/imagenet-simple-labels.json
-python app.py
+python resnet18.py
+
+# After fine-tuning
+python pokemon-1st-gen.py
 ```

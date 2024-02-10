@@ -2,16 +2,27 @@ import gradio as gr
 import json
 import torch
 from PIL import Image
+from safetensors import safe_open
 from torchvision import models, transforms
 
-with open('data/imagenet-simple-labels.json') as f:
+with open('data/pokemon-1st-gen-labels.json') as f:
     labels = json.load(f)
 
-# 事前訓練済みのResNet18をロード
 model = models.resnet18(pretrained=True)
-model.eval()  # 推論モードに設定
 
-# 画像の前処理を定義
+# 訓練時は150種類いると思っていた
+num_classes = 150
+model.fc = torch.nn.Linear(model.fc.in_features, num_classes)
+
+model_save_path = "models/model.safetensors"
+tensors = {}
+with safe_open(model_save_path, framework="pt", device="cpu") as f:
+    for key in f.keys():
+        tensors[key] = f.get_tensor(key)
+
+model.load_state_dict(tensors, strict=False)
+model.eval()
+
 preprocess = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
@@ -28,11 +39,11 @@ def classify_image(input_image: Image):
         output = model(batch_t)
     
     probabilities = torch.nn.functional.softmax(output, dim=1)
-    label_to_prob = {labels[i]: prob for i, prob in enumerate(probabilities[0])}
+
+    # モデル訓練時、150種類いると勘違いしていたが、実際には143種類しかなかった。
+    actual_class_size = len(labels) # 143
+    label_to_prob = {labels[i]: prob for i, prob in enumerate(probabilities[0][:actual_class_size])}
     return label_to_prob
 
-# Define the Gradio interface
 demo = gr.Interface(fn=classify_image, inputs=gr.Image(type='pil'), outputs='label')
-
-# Launch the application
 demo.launch()
