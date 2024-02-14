@@ -4,6 +4,7 @@ logs/*
 !logs/.gitkeep
 db/*
 models/snapshots/
+# For deploy to gradio, models/model.safetensors is ignored by parent directory's .gitignore.
 
 __pycache__
 wandb/
