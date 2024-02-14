@@ -2,5 +2,5 @@
 
 ```powershell
 conda env create -f environment.yml
-conda activate huggingface-datasets-vision
+conda activate huggingface-datasets-vision-v2
 ```
