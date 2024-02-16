@@ -1,4 +1,12 @@
+---
+title: bread-or-dog
+app_file: app.py
+sdk: gradio
+sdk_version: 4.19.0
+---
 # Fine-Tuning VGG16 to detect bread or dog
+
+See <https://huggingface.co/spaces/xhiroga/bread-or-dog>.
 
 ## Prerequisites
 
@@ -11,7 +19,17 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/anishathalye/imagenet-s
 ## Demo
 
 ```powershell
+# Before Fine-Tuning
 python vgg16.py
+
+# After Fine-Tunin
+python app.py
+```
+
+## Deploy
+
+```powershell
+gradio deploy
 ```
 
 ## References

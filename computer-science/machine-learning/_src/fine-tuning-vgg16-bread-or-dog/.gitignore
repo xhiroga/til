@@ -1,4 +1,5 @@
 data/*
 !data/.gitkeep
-models/*
+models/snapshots/*
+!models/snapshots/.gitkeep
 wandb
