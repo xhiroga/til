@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 
 const createWindow = () => {
@@ -15,6 +15,7 @@ const createWindow = () => {
 
 // on('ready', ...) のラッパー
 app.whenReady().then(() => {
+  ipcMain.handle('ping', () => 'pong')
   createWindow()
 
   // アプリがreadyかつinactivateというのはmacOSのベストプラクティスを想定した挙動なので、
