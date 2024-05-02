@@ -1,0 +1,14 @@
+curl -X POST http://localhost:11434/api/generate -d '{
+  "model": "llama3",
+  "prompt":"Why is the sky blue?"
+ }'
+
+###
+
+curl http://localhost:11434/api/tags
+
+###
+
+curl http://localhost:11434/api/show -d '{
+  "name": "starcoder2:3b"
+}'
