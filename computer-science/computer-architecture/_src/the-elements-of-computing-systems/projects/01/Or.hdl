@@ -1,0 +1,11 @@
+CHIP Or {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    Nand(a=a, b=a, out=nota);
+    Nand(a=b, b=b, out=notb);
+
+    // NandのOutがOrになるためには、ChipのInが0,0の時にNandのInが1,1か1,0，ChipのInが1,1か1,0の時にNandのInが0,0である必要がある。
+    Nand(a=nota, b=notb, out=out);
+}
