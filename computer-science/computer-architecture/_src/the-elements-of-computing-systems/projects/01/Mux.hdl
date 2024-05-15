@@ -1,0 +1,13 @@
+// マルチプレクサ、セレクタとも呼ばれる。
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    // selが0の時aを、1の時bを返す。
+    // And(a, Not(sel)), And(b, Sel)を用いれば、選択した方の値を保持しつつ、もう片方の値は0に出来るはずだ。
+    Not(in=sel, out=notsel);
+    And(a=a, b=notsel, out=filtered_a);
+    And(a=b, b=sel, out=filtered_b);
+    Or(a=filtered_a, b=filtered_b, out=out);
+}

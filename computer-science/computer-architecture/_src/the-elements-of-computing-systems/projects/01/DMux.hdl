@@ -1,0 +1,11 @@
+// デマルチプレクサ、選択ビットに従って入力をaまたはbに流す。選択されなかった方は0のまま。
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    // 選択ビットの値に従って、inがaとbに流れる前にマスクするイメージで良さそうだ。
+    Not(in=sel, out=notsel);
+    And(a=in, b=notsel, out=a);
+    And(a=in, b=sel, out=b);
+}
