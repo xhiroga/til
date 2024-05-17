@@ -37,14 +37,27 @@
 
 ### 計数ソート
 
-[計数ソート | アルゴリズムビジュアル大事典
-](https://yutaka-watanobe.github.io/star-aida/1.0/algorithms/counting_sort/print.html)を参照。
+[計数ソート | アルゴリズムビジュアル大事典](https://yutaka-watanobe.github.io/star-aida/1.0/algorithms/counting_sort/print.html)を参照。
 
 ## 10章 ヒープ
 
 - 最小ヒープは、親が子よりも小さく、根が最小になるヒープ。単にヒープといえば最小ヒープ。
 - 最大ヒープはその逆となる。
 
+## 14章 高度なデータ構造
+
+### Union-Find
+
+互いに素な集合がある時に、ある2つの要素が同じ集合に属しているか？を調べることをUnion-Findという。
+
+集合を木構造で表したとき、同じ集合に属しているか？を調べるのは根を求めることに等しく、計算量が$O(N)$となりえる。
+
+しかし、union by rank を行うことで$O(log N) に、さらに経路圧縮を行うことで$O(α(N))$となる。$α(N)$はアッカーマンの逆関数と呼ばれ、増加がとても遅いことで知られる。[^Union-Find]
+
+- union by rank: 2つの木を合体させるとき、背の高い木に背の低い木をつなげる
+- 経路圧縮: find処理時、中間節点を全て根に繋ぎなおす
+
+[^Union-Find]: [Union-Find の 2 つの工夫](https://algo-method.com/descriptions/133)
 
 ## 参考
 
