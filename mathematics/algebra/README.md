@@ -30,6 +30,13 @@
 
 > 内積の値は −→ a と −→b が垂直ならば 0 で、その値が正になるためには、−→b が少し −→ a の『内側』の方に入らないといけないから、これを『内積』と呼ぶ。
 
+## Matrix（行列）
+
+### 行列の積
+
+![](/images/行列の積.svg)
+
+
 ### その他の参考文献
 
 - 🔐[数学B 改訂版 - 数研出版](https://www.zotero.org/groups/4682340/hiroga-books/items/8ZRH3IKI/item-details)

@@ -1,11 +1,11 @@
 ---
-title: Machine Learning
+title: Machine Learning (機械学習)
 lang: jp
 editor:
   render-on-save: true
 ---
 
-# Machine Learning
+# Machine Learning (機械学習)
 
 機械学習には次のようなモデルがあります。
 
@@ -22,6 +22,10 @@ editor:
 [^cnn]: Convolutional neural network, 畳み込みニューラルネットワーク
 [^rnn]: Recurrent neural network, 再帰型（回帰型）ニューラルネットワーク
 [^gan]: Generative Adversarial Network, 敵対的生成ネットワーク
+
+## k近傍法
+
+教師あり学習の手法の一つ。ラベルが未知の入力データに対して、入力データと全データの間の距離を測定する。例えば、環境（気温・湿度・風速）から天気を予測する分類問題なら、気温・湿度・風速の3次元空間でのデータ間の距離を測定する。距離はユークリッド距離を使うことが多いが、原理的にはマンハッタン距離などでも構わない。
 
 ## Neural Network
 
@@ -120,3 +124,5 @@ plt.show()
 [^optimizer]: [【最適化手法】SGD・Momentum・AdaGrad・RMSProp・Adamを図と数式で理解しよう。](https://kunassy.com/oprimizer/)を参照。
 
 訓練中の予測結果と実際の値の誤差を各パラメータに戻し、パラメータを更新することで、誤差が最小になるようにパラメータを更新していく。
+
+## 

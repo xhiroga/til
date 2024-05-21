@@ -6,6 +6,9 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 ### Computer Science
 
+- [コンピュータアーキテクチャ・OS・デジタル回路](./computer-science/computer-architecture/README.md)
+- [データ構造・アルゴリズム](./computer-science/data-structures-algorithms/README.md)
+- [形式言語](./computer-science/formal-language/README.md)
 - [機械学習](./computer-science/machine-learning/README.qmd)
 - [自然言語処理](./computer-science/nlp/README.md)
 
@@ -13,6 +16,9 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 - [代数](./mathematics/algebra/README.md)
 - [微分積分](./mathematics/calculus/README.qmd)
+- [離散数学](./mathematics/discrete/README.md)
+- [幾何学](./mathematics/geometory/README.md)
+- [確率・統計](./mathematics/probability-statistics/README.md)
 
 ### Software Engineering
 
