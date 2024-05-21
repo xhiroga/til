@@ -14,11 +14,12 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 ### Mathematics
 
-- [代数](./mathematics/algebra/README.md)
-- [微分積分](./mathematics/calculus/README.qmd)
-- [離散数学](./mathematics/discrete/README.md)
-- [幾何学](./mathematics/geometory/README.md)
-- [確率・統計](./mathematics/probability-statistics/README.md)
+- [数学](./mathematics/README.md)
+  - [代数](./mathematics/algebra/README.md)
+  - [微分積分](./mathematics/calculus/README.qmd)
+  - [離散数学](./mathematics/discrete/README.md)
+  - [幾何学](./mathematics/geometory/README.md)
+  - [確率・統計](./mathematics/probability-statistics/README.md)
 
 ### Software Engineering
 
