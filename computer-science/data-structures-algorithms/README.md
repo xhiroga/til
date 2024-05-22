@@ -190,24 +190,30 @@
   - proper subgraph(真部分グラフ): subgraphであって、$G$と等しくないもの
   - isomorphic(同型): $G$と$G’$が、それぞれ対応する頂点と辺を持っている時、$G$と$G'$は同型
   - induced subgraph(誘導部分グラフ): $E'=E∩\binom{V}{2}$、つまり部分グラフ内のすべての頂点は、元のグラフ$G$で持っていた辺を持っている、ということ
-  - spanning subgraph(全域部分グラフ): $V'=V$である部分グラフ。$G-e$や$G-F$で表される。
+  - spanning subgraph(全域部分グラフ): $V'=V$である部分グラフ。$G-e$や$G-F$で表される
+    - spanning tree(全域木)
+      - minimum spanning tree(最小全域木): 全域木のうち、合計の重みが最も軽い木。「すべての地域に電力を届けるための最も安いネットワークは？」といった応用がある。
+      - shortest path spanning tree(最短路全域木): 単にshortest path tree(最短路木)といってこれを指すことが多い印象。
   - induced spanning subgraph(誘導全域部分グラフ): 定義する必要なし（それって同型なので）
 
 なぜ誘導グラフと呼ぶかについては、[「生成部分グラフ」という用語について](http://www.co.mi.i.nagoya-u.ac.jp/~yagiura/surijoho8/induced_subgraph.pdf)を参照。
 
+- reversal(逆): $G$のすべての辺$u→w$を$w→u$に取り換えたグラフ
+
 - component(成分): 極大な連結部分グラフ
+  - strongly connected component, strong component(強連結成分)
   - source component(ソース成分)
   - sink component(シンク成分)
-- strong component graph(強連結成分グラフ): 強連結成分を1つの頂点にまとめたグラフ。
+- strong component graph(強連結成分グラフ): 強連結成分を1つの頂点にまとめたグラフ
 
 ### グラフの問題
 
 - 到達可能性
+- 成分の検出
+- Articulation (関節点)の検出
 - longest path(最長路)
 - SSSP(Single Source Shortest Path, 単一始点最短経路、または単に最短路)
 - APSP(All Pair Shortest Path, 全点対最短経路)
-- 成分の検出
-- Articulation (関節点)の検出
 
 ### グラフのデータ構造
 
@@ -225,16 +231,61 @@
 | 幅優先探索   | キュー                           |              |
 | 最良優先探索 | 優先度付きキュー                 |              |
 | 最良優先探索 | 優先度付きキュー（辺の重み）     | 最小全域木   |
-| 最良優先探索 | 優先度付きキュー（辺の重みの和） | 最短路       |
+| 最良優先探索 | 優先度付きキュー（辺の重みの和） | 最短路木     |
 | 最良優先探索 | 優先度付きキュー（路の幅）       | 最幅路       |
 
-### Prim's algorithm（プリム法）
+### Topological Sort（トポロジカルソート）
 
-- 最小全域木を求めるのに用いる。
+- 自分なりに言い換えると「左手法」。迷路の左手法と考え方が同じだから。
+- 左手法の要領でグラフを探索し、そこから先は行き止まり、というところまで行ったら現在地をリストに記録する。
+- 行き止まりから引き返すごとに、そこから先が行き止まりなら現在地をリストに記録するし、分岐があれば分岐に進む。
+- [Topological Sort Visualized and Explained | Carl the Person](https://www.youtube.com/watch?v=7J3GadLzydI)が短くて分かりやすい。
+
+### Strong Component(強連結成分)・Articulation(関節点)
+
+強連結成分を計算するためのアルゴリズムは次の通り。線形時間で計算するための工夫がポイント。
+
+- グラフの頂点全てに対して、お互いに到達できる点を何か優先探索で計算する（$O(VE)$）
+- Kosaraju(コサラジュ)とSharir(シャリア)のアルゴリズム
+  - 逆グラフの帰りがけ順に辿った頂点を、さらに逆順に何か優先探索する時に、何か優先探索がシンク成分の内側に留まることを利用したアルゴリズム
+  <!-- TODO - 単にグラフの帰りがけ順ではない -->
+- Tarjan(タージャン)のアルゴリズム
+  <!-- TODO -->
+
+<!-- TODO 関節点を求めるのに用いるのもTarjanやKosaraju? -->
+
+### Minimum Spanning Tree, MST(最小全域木)アルゴリズム
+
+いくつもアルゴリズムがあるが、次に述べる戦略の実装違いといえる。
+
+その戦略とは、入力グラフ$G$に対して、その頂点だけからなる$F$（つまり、$F=(V, ∅)$）をintermediate spanning forest(中間全域森)として定義し、$F$に*いい感じ*の辺を徐々に加えていく戦略である。
+
+#### Borůvka's algorighm(ブルーフカ法)
+
+<!-- 解説 -->
+
+```python
+def boruvka(V, E):
+  F = (V, ∅)
+  count = count_and_label(F) # 成分数
+  while count > 1:
+    add_all_safe_edges(E, F, count)
+    count ← count_and_label(F)
+  return F
+```
+
+#### Jarník's (Prim's) algorithm(プリム法)
+
 - 二分ヒープを用いることで高速化できる。
 - [プリム法 (Prim's Algorithm) | サルでもわかるアルゴリズム](https://www.youtube.com/watch?v=anuJPP3FZ8c)が分かりやすかった。
 
-### Dijkstra's algorithm（ダイクストラ法）
+#### Kruskal's algorighm(クラスカル法)
+
+<!-- TODO -->
+
+### Shortest Path(最短路)
+
+#### Dijkstra's algorithm(ダイクストラ法)
 
 - 自分なりに言い換えると、「近さランキング法」。
 - 単一始点最短経路を求めるのに用いる。計算量は$O(|V|^2)$になる。
@@ -248,25 +299,33 @@
   - 注: 同じ場所を2回訪問することはない。言い換えると、探索候補の中で一番近い場所だけは、後からより近いルートが見つかることは無い。
 - 螺旋本には、隣接リストと二分ヒープを用いると、計算量は$O((|V|+|E|)log|V|)$になる、とあるが...正直言って優先度付きキューでの実装より複雑だし計算量も変わらないので、私は理解していません...。
 
-### Bellman Ford's algorithm（ベルマンフォード法）
+#### Bellman Ford's algorithm(ベルマンフォード法)
 
 - ダイクストラ法とは異なり、負の重みがあっても機能する。
 - また、負の閉路を検出できる。
 - 完全にイメージだけの説明になるが…例えば本のページを逆から読んでいたとして、1周目に意味が理解できるのは1ページ目だけになる。2周目には、前の周回で1ページ目を読んでいるから2ページ目が理解できる。そのようにして、最悪でもページ数分周回すれば本の内容が理解できる、ということになる。という感じのアルゴリズム。
 - [Bellman-Ford in 5 minutes | Michael Sambol](https://www.youtube.com/watch?v=obWXjtg0L64)が分かりやすい。
 
-### Floyd–Warshall Algorithm（ワーシャルフロイド法）
+#### Johnson's algorithm(ジョンソン法)
 
-### Topological Sort（トポロジカルソート）
+- グラフに負の重みがある場合、ダイクストラ法が機能しない。
+- 重みを変更し、負の重みをなくすことで、ダイクストラ法を機能させる方法。
+<!-- TODO -->
+- アルゴリズムの教科書では全組最短路のアルゴリズムとして紹介されている。
 
-- 自分なりに言い換えると「左手法」。迷路の左手法と考え方が同じだから。
-- 左手法の要領でグラフを探索し、そこから先は行き止まり、というところまで行ったら現在地をリストに記録する。
-- 行き止まりから引き返すごとに、そこから先が行き止まりなら現在地をリストに記録するし、分岐があれば分岐に進む。
-- [Topological Sort Visualized and Explained | Carl the Person](https://www.youtube.com/watch?v=7J3GadLzydI)が短くて分かりやすい。
+### All Pairs Shortest Path Problem(全組最短路)
 
-### Tarjan's algorithm（Tarjanのアルゴリズム）
+#### 動的計画法による全組最短路
 
-- 関節点を
+<!-- TODO -->
+
+#### 動的計画法＋分割統治による全組最短路
+
+<!-- TODO -->
+
+#### Floyd–Warshall Algorithm（ワーシャルフロイド法）
+
+<!-- TODO -->
 
 ### グラフの参考
 
