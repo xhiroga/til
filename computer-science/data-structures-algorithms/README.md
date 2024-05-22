@@ -83,7 +83,7 @@
   - 通りがけ順
     - 西から順番に印を付けるイメージ。
   - 帰りがけ順
-    - 最も左の葉がトーナメントを勝ち上がっていくイメージ。
+    - 個人的には行き止まり順だと思っている。
 - 幅優先探索
 
 ### アルゴリズム: 参考
@@ -138,11 +138,74 @@
 
 ## グラフ
 
+### グラフの性質
+
+#### グラフの要素
+
+- vertex(頂点) または node(ノード)
+  - 辺$uv$および$u→v$について、頂点$u$と$v$を endpoint(端点)
+    - $u→v$について、$u$をtail(尾), $v$をhead(頭)
+  - source(ソース): 有向グラフにおいて、ある頂点に向かう辺がない頂点
+  - sink(シンク): 有向グラフにおいて、ある頂点から出る辺がない頂点。シンクは沈む、流すといった意味
+  
+- edge(辺) または arc(アーク)
+  - 特に有向辺をarcと呼ぶ場合もある
+  - tree edge(木辺): ?
+  - forward edge(前方辺): ?
+  - backward edge(後方辺): ?
+  - cross edge(交差辺): ?
+
+- sequence(列): 頂点の列
+  - walk(歩道): 隣接する頂点からなる列
+
+#### グラフの種類
+
+- 辺に向きがあるかどうか
+  - directed graph(有効グラフ)
+  - undirected graph(無向グラフ) または unordered graph
+
+- ループ・多重辺を持っているか
+  - simple: ループ・多重辺を持たないグラフ
+  - multigraph(多重グラフ): ループ・多重辺を持つグラフ
+
+- グラフ上のどの頂点からでも、他の頂点に行けるか？
+  - connected graph(連結グラフ)
+  - disconnected graph(非連結グラフ)
+  - strongly connected(強連結): 有向グラフにおいて、どの頂点からでも他の頂点に行けること
+
+- 閉路を含むか
+  - cyclic graph(巡回グラフ)
+  - acyclic graph(非巡回グラフ)
+
+他に次のような定義がある。
+
+- forest(森): 非巡回グラフ
+- tree(木): 連結非巡回グラフ
+
+#### グラフどうしの関係
+
+グラフ$G=(V,E)$に対して、次のように定義される。
+
+- subgraph(部分グラフ): 頂点と辺のいずれも$G$に含まれるグラフ
+  - proper subgraph(真部分グラフ): subgraphであって、$G$と等しくないもの
+  - isomorphic(同型): $G$と$G’$が、それぞれ対応する頂点と辺を持っている時、$G$と$G'$は同型
+  - induced subgraph(誘導部分グラフ): $E'=E∩\binom{V}{2}$、つまり部分グラフ内のすべての頂点は、元のグラフ$G$で持っていた辺を持っている、ということ
+  - spanning subgraph(全域部分グラフ): $V'=V$である部分グラフ。$G-e$や$G-F$で表される。
+  - induced spanning subgraph(誘導全域部分グラフ): 定義する必要なし（それって同型なので）
+
+なぜ誘導グラフと呼ぶかについては、[「生成部分グラフ」という用語について](http://www.co.mi.i.nagoya-u.ac.jp/~yagiura/surijoho8/induced_subgraph.pdf)を参照。
+
+- component(成分): 極大な連結部分グラフ
+  - source component(ソース成分)
+  - sink component(シンク成分)
+- strong component graph(強連結成分グラフ): 強連結成分を1つの頂点にまとめたグラフ。
+
 ### グラフの問題
 
 - 到達可能性
-- SSSP (Single Source Shortest Path, 単一始点最短経路、または単に最短路)
-- APSP (All Pair Shortest Path, 全点対最短経路)
+- longest path(最長路)
+- SSSP(Single Source Shortest Path, 単一始点最短経路、または単に最短路)
+- APSP(All Pair Shortest Path, 全点対最短経路)
 - 成分の検出
 - Articulation (関節点)の検出
 
