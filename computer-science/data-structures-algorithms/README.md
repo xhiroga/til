@@ -2,6 +2,24 @@
 
 ## データ構造
 
+### スタック・キュー・両端キュー
+
+先頭または末尾にデータを追加・削除できるデータ構造を次に述べる。
+
+- stack(スタック)
+- queue(キュー)
+- deque(両端キュー、デック)
+
+それぞれのPythonにおける実装とデータ追加・削除の操作をまとめた。（`pop()`するのはスタック？キュー？といつも迷うので）
+
+| データ構造\実装 | list                                     | collections.deque                           | queue.Queue                  |
+| --------------- | ---------------------------------------- | ------------------------------------------- | ---------------------------- |
+| スタック        | 追加: append(), 取り出し: pop()          | 追加: append(), 取り出し: pop()             | -                            |
+| キュー          | 追加: append(), 取り出し: pop(0)         | 追加: append(), 取り出し: popleft()         | 追加: put(), 取り出し: get() |
+| 両端キュー      | 追加: append(), 取り出し: pop() / pop(0) | 追加: append(), 取り出し: pop() / popleft() | -                            |
+
+末尾を取得するのが`pop()`と覚えておけば良さそうだ。なお、先頭を取得するのが`pull()`の言語もあるようだが、Pythonは違う。
+
 ### ヒープ
 
 - 最小ヒープは、親が子よりも小さく、根が最小になるヒープ。単にヒープといえば最小ヒープ。
@@ -26,6 +44,7 @@
 
 - 10章 ヒープ
 - 14章 高度なデータ構造
+- [Pythonのスタックとキューには何を使えばいいのか（各データ構造の速度比較）](https://qiita.com/saba/items/107c4237206e31acdbef)
 
 ## アルゴリズム
 
@@ -159,18 +178,18 @@
 - vertex(頂点) または node(ノード)
   - 辺$uv$および$u→v$について、頂点$u$と$v$を endpoint(端点)
     - $u→v$について、$u$をtail(尾), $v$をhead(頭)
+  - カット点
   - source(ソース): 有向グラフにおいて、ある頂点に向かう辺がない頂点
   - sink(シンク): 有向グラフにおいて、ある頂点から出る辺がない頂点。シンクは沈む、流すといった意味
   
 - edge(辺) または arc(アーク)
   - 特に有向辺をarcと呼ぶ場合もある
-  - tree edge(木辺): ?
-  - forward edge(前方辺): ?
-  - backward edge(後方辺): ?
-  - cross edge(交差辺): ?
+  - 橋
 
 - sequence(列): 頂点の列
   - walk(歩道): 隣接する頂点からなる列
+
+親、根、木辺などは<#探索木(森)の性質>を参照。
 
 #### グラフの種類
 
@@ -215,7 +234,7 @@
 - reversal(逆): $G$のすべての辺$u→w$を$w→u$に取り換えたグラフ
 
 - component(成分): 極大な連結部分グラフ
-  - strongly connected component, strong component(強連結成分)
+  - strongly connected component, SCC(強連結成分), strong component(強成分)
   - source component(ソース成分)
   - sink component(シンク成分)
 - strong component graph(強連結成分グラフ): 強連結成分を1つの頂点にまとめたグラフ
@@ -247,6 +266,15 @@
 | 最良優先探索 | 優先度付きキュー（辺の重み）     | 最小全域木   |
 | 最良優先探索 | 優先度付きキュー（辺の重みの和） | 最短路木     |
 | 最良優先探索 | 優先度付きキュー（路の幅）       | 最幅路       |
+
+#### 探索木(森)の性質
+
+- root(根)
+- parent(親)
+- tree edge(木辺): ?
+- forward edge(前方辺): ?
+- backward edge(後方辺): ?
+- cross edge(交差辺): ?
 
 ### Topological Sort（トポロジカルソート）
 
@@ -353,5 +381,5 @@ def boruvka(V, E):
 
 - [プログラミングコンテスト攻略のためのアルゴリズムとデータ構造](https://amzn.to/3QAHDSk)
 - [Algorithms | Jeff Erickson (inzkyk訳)](https://booth.pm/ja/items/1633486)
-- [アルゴリズムイントロダクション 第3版 - 3 関数の増加](https://amzn.to/4avVZdK)
+- [アルゴリズムイントロダクション 第3版](https://amzn.to/4avVZdK)
 - [アルゴリズム | ともめも](https://www.tomotaku.com/category/algorithm/)
