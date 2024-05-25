@@ -2,7 +2,7 @@
 title: pokemon-palworld
 app_file: app.py
 sdk: gradio
-sdk_version: 4.16.0
+sdk_version: 4.17.0
 ---
 # パルワールドで最もポケモンに似ているパルは何か？
 

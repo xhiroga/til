@@ -1,5 +1,6 @@
 data/*
 !data/.gitkeep
+flagged
 logs/*
 !logs/.gitkeep
 db/*
