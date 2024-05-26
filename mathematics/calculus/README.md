@@ -1,6 +1,10 @@
-# 微分積分
+# Calculus（微分積分学）
 
-## Derivative
+## Differential calculus（微分）
+
+
+
+### Derivative
 
 微分係数または導関数のこと。たぶん日本人が「微分」と呼ぶのと同じ感覚でラフに使われる。正確には、微分係数は"Differential Cofficient"、導関数は"Derived Function"。
 
@@ -84,3 +88,34 @@ plt.show()
 ## dy/dx
 
 yをxで微分する、と読む。y=x^2のように変数がyとxだけなら「微分する」だけでも通じるが、y=ax^2+bx+cのような複数の変数がある場合は困ってしまう。そのための表し方。
+
+### 微分の性質
+
+- 線形性
+  - $\frac{d}{dx}\{f(x)+g(x)\} = f'(x) + g'(x)$
+  - $\frac{d}{dx}\{cf(x)\} = cf'(x)$
+- Leibniz則: $\frac{d}{dx}\{f(x)g(x)\} = f'(x)g(x) + f(x)g'(x)$
+- 合成関数の微分: $\frac{d}{dx}f(g(x)) = g'(x)f'(g(x))$
+
+線形性という言葉について補足する。$f(x)$のような関数（更には写像）について、任意の$x, y, a$に対して、$f(ax) = af(x), f(x+y) = f(x) + (y)$が成り立つとき、線形関数（一次関数）のような挙動になるから線形性を持つ、という。
+
+合成関数の微分について、次の通り証明と日本語の書き下しを添える。
+
+$$
+\begin{align}
+\lim_{h \to 0} \frac{f(g(x+h)) - f(g(x))}{h}
+= \lim_{h \to 0} \frac{f(g(x+h)) - f(g(x))}{g(x+h) - g(x)} \cdot \frac{g(x+h) - g(x)}{h}
+= f'(g(x))g'(x)
+\end{align}
+$$
+
+これは、「外部関数$f(g(x))$の内部変数$x$に対する変化率を知りたいのであれば、まず$x$に対する内部関数の変化率を求め、次にその変化率に対する外部関数を求めて、最後にかけ合わせなさい」と言っています。
+
+## Partial derivative（偏微分）
+
+## Riemann integral（リーマン積分）
+
+## 参考
+
+- [微分積分キャンパス・ゼミ 改訂9](https://amzn.to/3ywWc37)
+- [東京大学工学教室 - 基礎系数学 微積分](https://amzn.to/4bRVgVE)
