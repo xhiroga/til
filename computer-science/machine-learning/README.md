@@ -73,12 +73,6 @@
 
 2000年代に研究が再燃し、画像のノイズ除去などに用いられるようになる。
 
-### Transformer
-
-#### Self-Attention
-
-#### Encoder/Decoder
-
 ## Activation Function
 
 活性化関数。非線形性（non-linearity）の1つ。
@@ -151,9 +145,9 @@ plt.show()
 
 訓練中の予測結果と実際の値の誤差を各パラメータに戻し、パラメータを更新することで、誤差が最小になるようにパラメータを更新していく。
 
-## 教師あり学習
+## 大規模事前学習
 
-## 転移学習
+### 転移学習
 
 深層学習モデルが学習を通じてデータの表現とタスク固有の学習を行っていることに着目し、すでに学習済みのモデルの重みを用いて新たなタスクの学習を行うこと。
 
@@ -166,7 +160,7 @@ plt.show()
 
 事前学習が教師あり学習の場合は、汎用的な表現を得ることそのものが学習目的ではないため、例えば牧草が写っていたら牛と分類してしまうようなショートカット学習が行われることがあり、これがファインチューニングの妨げになる。
 
-## 自己教師あり学習
+### 自己教師あり学習
 
 ネットワーク構造の工夫より大量のデータを用意することでモデルの性能が向上すること、また転移学習により汎用的なモデルが固有タスクにおいても性能を発揮することを背景として、大量のラベル無しデータから学習する方法が模索された。
 
@@ -176,14 +170,59 @@ plt.show()
 
 評価の方法としては、ラベル付き分類データを用いて埋め込みを取得し（全結合層で変換する手前の値）、k近傍法を用いるもの、シンプルに下流タスク用のヘッドを取り付けて性能を測るもの、下流タスクのための層を加えてフルパラメータのファインチューニングを行うものなどがある。
 
-### 対比学習（対照学習）
+#### 対比学習（対照学習）
 
 事前学習としての表現学習に用いられる手段の一つ。エンコーダとしての多層ニューラルネットワークと射影ヘッドからなるモデルに対して、ミニバッチで複数のデータ拡張された画像を与える。
 
 対比学習の手法の1つ、SimCLRではInfoNCE損失関数([Desmos](https://www.desmos.com/calculator/nh1ntozu9o)[[🔐](https://www.desmos.com/calculator/mbn55ivvh6)])を用いる。
 ミニバッチ内の同じ画像のデータ拡張から得たベクトルのコサイン類似度は近くなるように、そうでないベクトルのコサイン類似度は遠くなるように学習を進める。(正例のコサイン類似度/負例のコサイン類似度合計)にマイナスを付けて損失にするが、exponentialを取ってから自然対数を取り直す一工夫が入っている（正例・負例の部分を逆数にした方が、マイナスが取れて式がシンプルでは？）
 
-## 半教師あり学習
+### Transformer (2017)[^vaswani_2017]
+
+[^vaswani_2017]: [A. Vaswani et al., “Attention is All you Need,” in Advances in Neural Information Processing Systems, Curran Associates, Inc., 2017.](https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html)
+
+#### Self-Attention
+
+#### Encoder/Decoder
+
+### CLIP (2021)[^radford_2021]
+
+[^radford_2021]: [A. Radford et al., “Learning Transferable Visual Models From Natural Language Supervision.” arXiv, Feb. 26, 2021. doi: 10.48550/arXiv.2103.00020.](https://doi.org/10.48550/arXiv.2103.00020)
+
+大規模事前学習による画像言語モデル。画像・キャプションのペアを用いた対比学習による自己教師あり学習を行う。損失関数は次の通り（式の出典はCyCLIP[^goel_2022]）
+
+$$
+\mathcal{L}_{\text{CLIP}} =
+-\frac{1}{2N} \sum_{j=1}^N \log \left[
+\frac{\exp \left( \left\langle I^e_j, T^e_j \right\rangle / \tau \right)}{\sum_{k=1}^N \exp \left( \left\langle I^e_j, T^e_k \right\rangle / \tau \right)}
+\right]
+-\frac{1}{2N} \sum_{k=1}^N \log \left[
+\frac{\exp \left( \left\langle I^e_k, T^e_k \right\rangle / \tau \right)}{\sum_{j=1}^N \exp \left( \left\langle I^e_j, T^e_k \right\rangle / \tau \right)}
+\right]
+$$
+
+[^goel_2022]: [S. Goel, H. Bansal, S. Bhatia, R. A. Rossi, V. Vinay, and A. Grover, “CyCLIP: Cyclic Contrastive Language-Image Pretraining.” arXiv, Oct. 26, 2022. doi: 10.48550/arXiv.2205.14459.](https://arxiv.org/abs/2205.14459)
+
+#### CyCLIP (2022)[^goel_2022]
+
+CLIPは正例と近い負例・遠い負例の距離に注意を払っていないため、画像をプロンプトで分類した場合と正解ラベル付き画像を用いてk-近傍法で分類した場合で結果に差が出ることがある。
+
+次の考え方に基づいて損失を調整することで、精度を改善することができる。具体的にはそれぞれの距離の差の二乗を損失に加えている。
+
+1. 画像jとキャプションkの距離感は、画像kとキャプションjの距離感と同じであるべき
+2. 画像jと画像kの距離感は、キャプションjとキャプションkの距離感と同じであるべき
+
+#### PAINT (2022)[^ilharco_2022]
+
+[^ilharco_2022]: [Patching open-vocabulary models by interpolating weights](https://arxiv.org/abs/2208.05592)
+
+### VL-Checklist[^zhao_2023]
+
+[^zhao_2023]: [T. Zhao et al., “VL-CheckList: Evaluating Pre-trained Vision-Language Models with Objects, Attributes and Relations.” arXiv, Jun. 22, 2023. doi: 10.48550/arXiv.2207.00221.](https://arxiv.org/abs/2207.00221)
+
+<!-- ## BLIP-2 -->
+
+<!-- ## LLaVA -->
 
 ## References
 
