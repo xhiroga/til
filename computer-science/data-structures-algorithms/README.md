@@ -1,5 +1,29 @@
 # Data structures and algorithms (データ構造・アルゴリズム)
 
+> [!NOTE]
+> $O(NM)$の処理では、よく二重ループが登場する。文字列探索におけるナイーブ法を例に、Pythonにおける個人的に好ましい書き方を考える。
+>
+> ```python
+> def partial_match(s: str, t, str) -> bool:
+>   i = 0
+>   while i < len(s):
+>     j = 0
+>     while j < len(t):
+>       if s[i+j] != t[j]:
+>         break # 文字列が一致しないことはここで明らかなのに、ループを抜けた後に一致の判定がある
+>       j += 1
+>     if j == len(t): # 一致の判定
+>       return True
+>     i += 1
+> 
+>   return False
+> ```
+>
+> Pythonには、Javaにあるような`ラベル付きbreak/continue`がない。そのため、ループは内側→外側の順で抜けるしかなく、結果として内側のループを抜けたとき、ループの結果を改めて判定することになってしまう。  
+> 実はPythonでも`ラベル付きbreak/continue`の提案はあったようだ。[^pep3136]しかしRejectされているため、代替案として「例外処理を用いる」「内側のループを関数で括り、不一致時にはreturnする」などの方法が考えられる。けれど見づらいし、関数や例外処理は感覚的にコストが重そうなので、例示の通り内側のループ直後に改めて結果の判定を行うことにする。
+
+[^pep3136]: [PEP 3136 – Labeled break and continue](https://peps.python.org/pep-3136/)
+
 ## データ構造
 
 ### スタック・キュー・両端キュー
