@@ -1,22 +1,22 @@
 # 代数学
 
-## Linear Algebra
+## 線形代数 (linear algebra)
 
-線形代数学。
+線形代数学
 
-## Vector
+## ベクトル (vector)
 
 ベクトル。19世紀に様々な数学者が独自の定義を発表する中で、ポーランドの高校の数学教師だったグラスマンの理論が現在に続いている。[^vector]
 
 [^vector]: [地球惑星数理演習 ベクトルとテンソル - 吉田茂生](https://www.zotero.org/groups/4682218/hiroga-scholar/collections/MA5LXYUI/items/2D27XYT8/item-details)
 
-### Norm （ノルム）
+### ノルム (norm)
 
 ベクトルの長さ。ピタゴラスの定理を用いて、各次元の2乗の和のルート2で求める。
 
 ![ノルム](/images/ノルム.svg)
 
-### Dot Product （内積）
+### 内積 (dot product)
 
 0でない2つのベクトルを$\vec{a}, \vec{b}$とする。1点$O$を定め、$\vec{a}=\vec{OA}, \vec{b}=\vec{OB}$となる点$A,B$を取る。このとき、半直線$OA, OB$のなす角Θのうち、0<=Θ<=180であるものをベクトル$\vec{a}, \vec{b}$のなす角という。このとき、積$|\vec{a}||\vec{b}|cosΘ$をベクトルの内積といい、記号$\vec{a}\cdot \vec{b}$で表す。
 
@@ -43,7 +43,7 @@
 
 [Desmos](https://www.desmos.com/calculator/pm7m6hdypq)([🔐](https://www.desmos.com/calculator/x7bw9a2yue))も参照。
 
-## Matrix（行列）
+## 行列 (matrix)
 
 ### 行列の積
 

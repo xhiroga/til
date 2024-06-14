@@ -1,4 +1,4 @@
-# Geometry (幾何学)
+# 幾何学 (geometry)
 
 ## 距離
 

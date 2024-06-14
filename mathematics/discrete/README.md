@@ -1,1 +1,1 @@
-# Discrete Mathematics (離散数学)
+# 離散数学 (Discrete mathematics)
