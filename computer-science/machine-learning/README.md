@@ -1,4 +1,4 @@
-# Machine Learning（機械学習）
+# 機械学習 (machine learning)
 
 ## 基本概念
 
@@ -7,7 +7,7 @@
 > [!NOTE]
 行は集合の要素のために取っておきたかった、という意図なら、個人的には納得がいく。
 
-## Machine Learning（機械学習）（深層学習を除く）
+## 機械学習 (machine learning) （深層学習を除く）
 
 機械学習の手法は、パラメトリックとノンパラメトリックに大別されます。
 
@@ -45,7 +45,7 @@ $E = \frac{1}{2} \sum_{n=1}^N{(f(x_n)-t_n)^2}$
 
 $P = \prod_{n=1}^{N} N(t_n|f(x_n), \sigma^2)$
 
-### Perceptron（パーセプトロン）
+### パーセプトロン (perceptron)
 
 目的関数の式は次の通り。ただし2値分類の問題とし、$f(x,y)$と0の大小関係で分類するものとする。また、誤って分類された点のみの合計とする。
 
@@ -67,7 +67,9 @@ $W_new = W_old - \nabla E(w)$
 
 ロジスティック回帰という名前だが分類のアルゴリズム。[ロジスティック回帰は回帰か分類か](https://scrapbox.io/nishio/ロジスティック回帰は回帰か分類か)も参照。
 
-### k-nearest neighbor algorithm（k近傍法）
+### k平均法
+
+### k近傍法 (k-nearest neighbor algorithm)
 
 教師あり学習の手法の一つ。ラベルが未知の入力データに対して、入力データと全データの間の距離を測定する。例えば、環境（気温・湿度・風速）から天気を予測する分類問題なら、気温・湿度・風速の3次元空間でのデータ間の距離を測定する。距離はユークリッド距離を使うことが多いが、原理的にはマンハッタン距離などでも構わない。
 
@@ -95,7 +97,7 @@ $W_new = W_old - \nabla E(w)$
 - Recision-Recall Curve（PR曲線）
   - 縦軸に適合率、横軸に再現率を置いたグラフ
 
-## Neural Network（ニューラルネットワーク） & Deep Learning（深層学習）
+## ニューラルネットワーク (neural network), 深層学習 (deep learning)
 
 深い[^deep]層を持つニューラルネットワークをディープニューラルネットワークといい、ディープニューラルネットワークを用いた機械学習を深層学習と呼ぶ。
 
@@ -116,7 +118,7 @@ $W_new = W_old - \nabla E(w)$
 ![ニューラルネットワークの構造](https://miyabi-lab.space/assets/imgs/blog/upload/images/nn_fig17.001_ut1523588254.jpeg)
 > [初心者必読！MNIST実行環境の準備から手書き文字識別までを徹底解説！ - MIYABI Lab](https://miyabi-lab.space/blog/10)
 
-## CAPs(Credit Assignment Paths)
+## CAPs (Credit Assignment Paths)
 
 ### RNN
 

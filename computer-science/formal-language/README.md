@@ -1,1 +1,1 @@
-# Formal language (形式言語)
+# 形式言語 (formal language)

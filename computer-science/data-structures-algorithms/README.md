@@ -1,4 +1,4 @@
-# Data structures and algorithms (データ構造・アルゴリズム)
+# データ構造・アルゴリズム (data structures and algorithms)
 
 > [!NOTE]
 > $O(NM)$の処理では、よく二重ループが登場する。文字列探索におけるナイーブ法を例に、Pythonにおける個人的に好ましい書き方を考える。
@@ -30,14 +30,14 @@
 
 先頭または末尾にデータを追加・削除できるデータ構造を次に述べる。
 
-- stack（スタック）
-- queue（キュー）
-- deque(double-ended queue)（両端キュー、デック）
+- スタック (stack)
+- キュー (queue)
+- 両端キュー, デック (deque, double-ended queue)
 
 それぞれのPythonにおける実装とデータ追加・削除の操作をまとめた。（`pop()`するのはスタック？キュー？といつも迷うので）
 
 | データ構造\実装 | list                                     | collections.deque                           | queue.Queue                  |
-| --------------- | ---------------------------------------- | ------------------------------------------- | ---------------------------- |
+| --------------- | ---------------------------------------- | ------------------------------------------- |
 | スタック        | 追加: append(), 取り出し: pop()          | 追加: append(), 取り出し: pop()             | -                            |
 | キュー          | 追加: append(), 取り出し: pop(0)         | 追加: append(), 取り出し: popleft()         | 追加: put(), 取り出し: get() |
 | 両端キュー      | 追加: append(), 取り出し: pop() / pop(0) | 追加: append(), 取り出し: pop() / popleft() | -                            |
@@ -159,17 +159,17 @@ KMP法は、一度比較した文字は、なるべく2回比較したくない�
 
 ![漸近記法](/images/漸近記法.svg)
 
-- Θ記法: theta notation(シータ記法)
-- 𝑂記法: big-o notation(ビッグオー記法)
-  - アルファベットのO(オー)ではなく、ギリシャ文字のΟ(オミクロン)。
+- Θ記法, シータ記法 (theta notation)
+- 𝑂記法、ビッグオー記法(big-o notation)
+  - アルファベットのO (オー)ではなく、ギリシャ文字のΟ (オミクロン)。
   - $f(x)=Ο(g(x))$のとき、$f(x)$が$g(x)$の定数倍と同じかそれより小さいことを指す。
-- 𝑜記法: little-o notation(リトルオー記法, スモールオー記法)
+- 𝑜記法, リトルオー記法, スモールオー記法 (little-o notation)
   - $f(x)=ο(g(x))$のとき、$f(x)$が$g(x)$の定数倍より小さいことを指す。
-- Ω記法: big-omega notation(ビッグオメガ記法)
+- Ω記法, ビッグオメガ記法 (big-omega notation)
   - $f(x)=Ω(g(x))$のとき、$f(x)$が$g(x)$の定数倍と同じかそれより大きいことを指す。
-- 𝜔記法: little-omega notation(リトルオメガ記法)
+- 𝜔記法, リトルオメガ記法 (little-omega notation)
 
-なお、Ο(オミクロン)を変換するのが面倒なので、以降はアルファベットのO(オー)を用いる。
+なお、Ο (オミクロン)を変換するのが面倒なので、以降はアルファベットのO (オー)を用いる。
 
 ### アルゴリズムの解析: 参考
 
@@ -234,76 +234,76 @@ KMP法は、一度比較した文字は、なるべく2回比較したくない�
 
 #### グラフの要素
 
-- vertex(頂点) または node(ノード)
+- 頂点 (vertex), ノード (node)
   - 辺$uv$および$u→v$について、頂点$u$と$v$を endpoint(端点)
     - $u→v$について、$u$をtail(尾), $v$をhead(頭)
   - カット点
-  - source(ソース): 有向グラフにおいて、ある頂点に向かう辺がない頂点
-  - sink(シンク): 有向グラフにおいて、ある頂点から出る辺がない頂点。シンクは沈む、流すといった意味
+  - ソース (source): 有向グラフにおいて、ある頂点に向かう辺がない頂点
+  - シンク (sink): 有向グラフにおいて、ある頂点から出る辺がない頂点。シンクは沈む、流すといった意味
   
-- edge(辺) または arc(アーク)
+- 辺 (edge), アーク (arc)
   - 特に有向辺をarcと呼ぶ場合もある
   - 橋
 
-- sequence(列): 頂点の列
-  - walk(歩道): 隣接する頂点からなる列
+- 列 (sequence): 頂点の列
+  - 歩道 (walk): 隣接する頂点からなる列
 
 親、根、木辺などは<#探索木(森)の性質>を参照。
 
 #### グラフの種類
 
 - 辺に向きがあるかどうか
-  - directed graph(有効グラフ)
-  - undirected graph(無向グラフ) または unordered graph
+  - 有効グラフ (directed graph)
+  - 無向グラフ (undirected graph, unordered graph)
 
 - ループ・多重辺を持っているか
   - simple: ループ・多重辺を持たないグラフ
-  - multigraph(多重グラフ): ループ・多重辺を持つグラフ
+  - 多重グラフ (multigraph): ループ・多重辺を持つグラフ
 
 - グラフ上のどの頂点からでも、他の頂点に行けるか？
-  - connected graph(連結グラフ)
-  - disconnected graph(非連結グラフ)
-  - strongly connected(強連結): 有向グラフにおいて、どの頂点からでも他の頂点に行けること
+  - 連結グラフ (connected graph)
+  - 非連結グラフ (disconnected graph)
+  - 強連結 (strongly connected): 有向グラフにおいて、どの頂点からでも他の頂点に行けること
 
 - 閉路を含むか
-  - cyclic graph(巡回グラフ)
-  - acyclic graph(非巡回グラフ)
+  - 巡回グラフ (cyclic graph)
+  - 非巡回グラフ (acyclic graph)
 
 他に次のような定義がある。
 
-- forest(森): 非巡回グラフ
-- tree(木): 連結非巡回グラフ
+- 森 (forest): 非巡回グラフ
+- 木 (tree): 連結非巡回グラフ
 
 #### グラフどうしの関係
 
 グラフ$G=(V,E)$に対して、次のように定義される。
 
-- subgraph(部分グラフ): 頂点と辺のいずれも$G$に含まれるグラフ
-  - proper subgraph(真部分グラフ): subgraphであって、$G$と等しくないもの
-  - isomorphic(同型): $G$と$G’$が、それぞれ対応する頂点と辺を持っている時、$G$と$G'$は同型
-  - induced subgraph(誘導部分グラフ): $E'=E∩\binom{V}{2}$、つまり部分グラフ内のすべての頂点は、元のグラフ$G$で持っていた辺を持っている、ということ
-  - spanning subgraph(全域部分グラフ): $V'=V$である部分グラフ。$G-e$や$G-F$で表される
-    - spanning tree(全域木)
-      - minimum spanning tree(最小全域木): 全域木のうち、合計の重みが最も軽い木。「すべての地域に電力を届けるための最も安いネットワークは？」といった応用がある。
-      - shortest path spanning tree(最短路全域木): 単にshortest path tree(最短路木)といってこれを指すことが多い印象。
-  - induced spanning subgraph(誘導全域部分グラフ): 定義する必要なし（それって同型なので）
+- 部分グラフ (subgraph): 頂点と辺のいずれも$G$に含まれるグラフ
+  - 真部分グラフ (proper subgraph): subgraphであって、$G$と等しくないもの
+  - 同型 (isomorphic): $G$と$G’$が、それぞれ対応する頂点と辺を持っている時、$G$と$G'$は同型
+  - 誘導部分グラフ (induced subgraph): $E'=E∩\binom{V}{2}$、つまり部分グラフ内のすべての頂点は、元のグラフ$G$で持っていた辺を持っている、ということ
+  - 全域部分グラフ (spanning subgraph): $V'=V$である部分グラフ。$G-e$や$G-F$で表される
+    - 全域木 (spanning tree)
+      - 最小全域木 (minimum spanning tree): 全域木のうち、合計の重みが最も軽い木。「すべての地域に電力を届けるための最も安いネットワークは？」といった応用がある。
+      - 最短路全域木 (shortest path spanning tree): 単にshortest path tree(最短路木)といってこれを指すことが多い印象。
+  - 誘導全域部分グラフ (induced spanning subgraph): 定義する必要なし（それって同型なので）
 
 なぜ誘導グラフと呼ぶかについては、[「生成部分グラフ」という用語について](http://www.co.mi.i.nagoya-u.ac.jp/~yagiura/surijoho8/induced_subgraph.pdf)を参照。
 
-- reversal(逆): $G$のすべての辺$u→w$を$w→u$に取り換えたグラフ
+- 逆 (reversal): $G$のすべての辺$u→w$を$w→u$に取り換えたグラフ
 
-- component(成分): 極大な連結部分グラフ
-  - strongly connected component, SCC(強連結成分), strong component(強成分)
-  - source component(ソース成分)
-  - sink component(シンク成分)
-- strong component graph(強連結成分グラフ): 強連結成分を1つの頂点にまとめたグラフ
+- 成分 (component): 極大な連結部分グラフ
+  - 強連結成分 (SCC, strongly connected component), 強成分 (strong component)
+  - ソース成分 (source component)
+  - シンク成分 (sink component)
+- 強連結成分グラフ (strong component graph): 強連結成分を1つの頂点にまとめたグラフ
 
 ### グラフの問題
 
 - 到達可能性
 - 成分の検出
-- Articulation (関節点)の検出
-- longest path(最長路)
+- 関節点 (articulation)の検出
+- 最長路 (longest path)
 - SSSP(Single Source Shortest Path, 単一始点最短経路、または単に最短路)
 - APSP(All Pair Shortest Path, 全点対最短経路)
 
@@ -335,14 +335,14 @@ KMP法は、一度比較した文字は、なるべく2回比較したくない�
 - backward edge(後方辺): ?
 - cross edge(交差辺): ?
 
-### Topological Sort（トポロジカルソート）
+### トポロジカルソート (topological sort)
 
 - 自分なりに言い換えると「左手法」。迷路の左手法と考え方が同じだから。
 - 左手法の要領でグラフを探索し、そこから先は行き止まり、というところまで行ったら現在地をリストに記録する。
 - 行き止まりから引き返すごとに、そこから先が行き止まりなら現在地をリストに記録するし、分岐があれば分岐に進む。
 - [Topological Sort Visualized and Explained | Carl the Person](https://www.youtube.com/watch?v=7J3GadLzydI)が短くて分かりやすい。
 
-### Strong Component(強連結成分)・Articulation(関節点)
+### 強連結成分 (strong component), 関節点 (articulation)
 
 強連結成分を計算するためのアルゴリズムは次の通り。線形時間で計算するための工夫がポイント。
 
@@ -355,7 +355,7 @@ KMP法は、一度比較した文字は、なるべく2回比較したくない�
 
 <!-- TODO 関節点を求めるのに用いるのもTarjanやKosaraju? -->
 
-### Minimum Spanning Tree, MST(最小全域木)アルゴリズム
+### 最小全域木 (MST, Minimum Spanning Tree) アルゴリズム
 
 いくつもアルゴリズムがあるが、次に述べる戦略の実装違いといえる。
 
@@ -363,7 +363,7 @@ KMP法は、一度比較した文字は、なるべく2回比較したくない�
 
 <!-- ただの全域木の場合はO(E)なのに対して、最小全域木の場合はO(?)である理由 -->
 
-#### Borůvka's algorighm(ブルーフカ法)
+#### ブルーフカ法 (Borůvka's algorighm)
 
 <!-- 解説 -->
 
@@ -377,18 +377,18 @@ def boruvka(V, E):
   return F
 ```
 
-#### Jarník's (Prim's) algorithm(プリム法)
+#### プリム法 (Jarník's (Prim's) algorithm)
 
 - 二分ヒープを用いることで高速化できる。
 - [プリム法 (Prim's Algorithm) | サルでもわかるアルゴリズム](https://www.youtube.com/watch?v=anuJPP3FZ8c)が分かりやすかった。
 
-#### Kruskal's algorighm(クラスカル法)
+#### クラスカル法 (Kruskal's algorithm)
 
 <!-- TODO -->
 
-### Shortest Path(最短路)
+### 最短路 (shortest path)
 
-#### Dijkstra's algorithm(ダイクストラ法)
+#### ダイクストラ法 (Dijkstra's algorithm)
 
 - 自分なりに言い換えると、「近さランキング法」。
 - 単一始点最短経路を求めるのに用いる。計算量は$O(|V|^2)$になる。
@@ -402,21 +402,21 @@ def boruvka(V, E):
   - 注: 同じ場所を2回訪問することはない。言い換えると、探索候補の中で一番近い場所だけは、後からより近いルートが見つかることは無い。
 - 螺旋本には、隣接リストと二分ヒープを用いると、計算量は$O((|V|+|E|)log|V|)$になる、とあるが...正直言って優先度付きキューでの実装より複雑だし計算量も変わらないので、私は理解していません...。
 
-#### Bellman Ford's algorithm(ベルマンフォード法)
+#### ベルマンフォード法 (Bellman Ford's algorithm)
 
 - ダイクストラ法とは異なり、負の重みがあっても機能する。
 - また、負の閉路を検出できる。
 - 完全にイメージだけの説明になるが…例えば本のページを逆から読んでいたとして、1周目に意味が理解できるのは1ページ目だけになる。2周目には、前の周回で1ページ目を読んでいるから2ページ目が理解できる。そのようにして、最悪でもページ数分周回すれば本の内容が理解できる、ということになる。という感じのアルゴリズム。
 - [Bellman-Ford in 5 minutes | Michael Sambol](https://www.youtube.com/watch?v=obWXjtg0L64)が分かりやすい。
 
-#### Johnson's algorithm(ジョンソン法)
+#### ジョンソン法 (Johnson's algorithm)
 
 - グラフに負の重みがある場合、ダイクストラ法が機能しない。
 - 重みを変更し、負の重みをなくすことで、ダイクストラ法を機能させる方法。
 <!-- TODO -->
 - アルゴリズムの教科書では全組最短路のアルゴリズムとして紹介されている。
 
-### All Pairs Shortest Path Problem(全組最短路)
+### 全組最短路 (APSP, All Pairs Shortest Path)
 
 #### 動的計画法による全組最短路
 
@@ -426,7 +426,7 @@ def boruvka(V, E):
 
 <!-- TODO -->
 
-#### Floyd–Warshall Algorithm（ワーシャルフロイド法）
+#### ワーシャルフロイド法 (Floyd–Warshall Algorithm)
 
 <!-- TODO -->
 
@@ -435,6 +435,8 @@ def boruvka(V, E):
 - 12章 グラフ
 - 13章 重み付きグラフ
 - 15章 高度なグラフアルゴリズム
+
+## 簡潔データ構造 (succinct data structure)
 
 ## 参考
 
