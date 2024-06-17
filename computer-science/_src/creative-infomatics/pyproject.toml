@@ -5,7 +5,10 @@ description = "Add your description here"
 authors = [
     { name = "Hiroaki Ogasawara", email = "13391129+xhiroga@users.noreply.github.com" }
 ]
-dependencies = []
+dependencies = [
+    "numpy>=2.0.0",
+    "matplotlib>=3.9.0",
+]
 readme = "README.md"
 requires-python = ">= 3.8"
 
