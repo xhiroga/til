@@ -22,7 +22,6 @@ decorator==5.1.1
 executing==2.0.1
     # via stack-data
 ipykernel==6.29.4
-    # via src
 ipython==8.25.0
     # via ipykernel
 jedi==0.19.1
