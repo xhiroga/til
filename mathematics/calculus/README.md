@@ -155,11 +155,11 @@ $$
 
 ある関数がn回微分できるとき、その関数は地点$x_0$において1階微分, 2階微分, ..., n階微分の重み付きの和で近似できる。
 <!-- TODO: 厳密性 -->
-とはいえ、近似できるのは$x_0$の付近だけであり、ある閾値を超えると近似式が暴れ出す。その閾値をダランベールの収束半径と呼ぶ。[Desmos](https://www.desmos.com/calculator/gzneazvqb1)[Edit🔐](https://www.desmos.com/calculator/thy0smdtik)を参照。
+とはいえ、近似できるのは$x_0$の付近だけであり、ある閾値を超えると近似式が暴れ出す。その閾値をダランベールの収束半径と呼ぶ。[Desmos](https://www.desmos.com/calculator/gzneazvqb1)[🔐](https://www.desmos.com/calculator/thy0smdtik)を参照。
 
 <!-- TODO: なぜダランベールの判定法でTaylor展開を求めたことになるのか？ -->
 
-ちなみに、それぞれの項を足して近似するということは、それぞれの項はものすごく小さいのでは？という疑問が出てくる。グラフを書いて確かめるとその通りで、平べったい関数になっている。[Desmos](https://www.desmos.com/calculator/rkhguo3wkf)[Edit🔐](https://www.desmos.com/calculator/0j5dqoy1pu)を参照。
+ちなみに、それぞれの項を足して近似するということは、それぞれの項はものすごく小さいのでは？という疑問が出てくる。グラフを書いて確かめるとその通りで、平べったい関数になっている。[Desmos](https://www.desmos.com/calculator/rkhguo3wkf)[🔐](https://www.desmos.com/calculator/0j5dqoy1pu)を参照。
 
 また、$(0,t)$付近でTaylor展開することをマクローリン展開と呼ぶ。
 
