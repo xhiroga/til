@@ -1,6 +1,6 @@
 # Style Guides
 
-styleguide for me
+styleguide of styleguide.
 
 ## Style Guide の構成
 
