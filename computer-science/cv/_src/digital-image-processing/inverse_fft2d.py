@@ -2,6 +2,7 @@
 # https://visiome.neuroinf.jp/database/item/6448
 
 # python -i inverse_fft2d.py
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.fft import fft2, ifft2, fftshift, ifftshift
@@ -80,7 +81,9 @@ def draw(
 
 
 def main():
-    image_path = "data/Farmhouse_in_Provence.jpg"  # 画像のパスを指定
+    args = sys.argv
+    print(f"{args=}")
+    image_path = args[1]  # 画像のパスを指定
     original_img = load_image(image_path)
 
     # 2次元フーリエ変換の計算
@@ -102,7 +105,7 @@ def main():
 
     print("Please click on the image to select Fourier components.")
 
-    def onclick(event):
+    def on_press(event):
         print(f"onclick, {event=}, {event.xdata=}, {event.ydata=}")
         nonlocal reconstructed_img, current_sine_wave
         x, y = int(event.xdata), int(event.ydata)
@@ -117,7 +120,7 @@ def main():
             current_sine_wave=current_sine_wave,
         )
 
-    fig.canvas.mpl_connect("button_press_event", onclick)
+    fig.canvas.mpl_connect("motion_notify_event", on_press)
     plt.show()
 
 
