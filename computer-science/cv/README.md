@@ -2,13 +2,6 @@
 
 ## 基礎知識
 
-### 3次元座標系
-
-X,Y,Zの3軸を考えたとき、Z軸を奥から手前向きに、Y軸を下から上向きに固定した際、X軸が右向き（右手系）か左向き（左手系）かの違い。または、X軸を右向きに固定した際、Y軸が上向き（右手系）か下向き（左手系）かの違い。言い換えると、座標(0,0)が左下（右手系）か左下（左手系）かの違い。
-
-学校の数学では座標(0,0)が左下なのに対して、テレビでは座標(0,0)が左上だったことが違いを生んでいると言われている。[^stackoverflow_2011]
-[^stackoverflow_2011]: [Historic reasons for Left-Handed Coordinate System](https://stackoverflow.com/questions/6698817/historic-reasons-for-left-handed-coordinate-system)
-
 ### デジタル画像の撮影
 
 歪曲収差 (distortion) とは、撮影した画像が樽型または糸巻き型に歪むこと。被写体から出た光がレンズの主点を通るとき、出射角と入射角が等しくならないことから生じる。
