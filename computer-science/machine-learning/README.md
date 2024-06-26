@@ -39,6 +39,28 @@
 
 $E = \frac{1}{2} \sum_{n=1}^N{(f(x_n)-t_n)^2}$
 
+次に、誤差関数の値である訓練二乗誤差を最小にする方程式を求める。前提として、モデルを多項式とする。多項式にはn次多項式や三角多項式などあるが、それらを一般化して扱うため、複数の基底関数φによってxを変形し、重みΘを掛けた和と考える。
+
+考え方に慣れるため、まず多項式の1つ目の項$\theta^1$についての偏微分を行う。
+
+誤差関数のうち、$f(x_n)-t_n$を残差という。誤差関数は残差を二乗和して1/2した合成関数と言えるから、パラメータ$\theta^1$について連鎖律で偏微分できる。
+
+残差を $r_n = f(x_n)-t_n = \theta^1 \phi(x^1) + \theta^2 \phi(x^2) .. \theta^m \phi(x^m)$ とおいたとき、偏微分導関数は次の通り。
+
+$\frac{\partial E}{\partial \theta^1} = \frac{\partial E}{\partial r}\frac{\partial r}{\partial \theta^1} = \sum_{n=1}^N((r_n) \cdot \phi(x_n^1))$
+
+これを展開して、
+
+$\sum_{n=1}^N f(x_n) \cdot \phi(x_n^1) - \sum_{n=1}^N t_n \cdot \phi(x_n^1)$
+
+さらに、前式の偏微分導関数を行列の式として表す。
+
+$f(x_n)^{T=1\times N} \cdot \phi(x_n^1)^{N \times 1} - t_n^{T=1\times N} \cdot \phi(x_n^1)^{N \times 1}$
+
+行列の式として表せたので、全てのパラメータについて並列で計算することを考える。また、偏微分係数が0になったとき誤差が最小なので、右辺に0をおく。
+
+$f(x_n)^{T=1\times N} \cdot \phi(x_n^m)^{N \times M} - t_n^{T=1\times N} \cdot \phi(x_n^m)^{N \times M} = 0$
+
 ### 最尤推定法
 
 尤度関数は次の通り。なお、確率分布として正規分布を採用している。
@@ -112,11 +134,6 @@ $W_new = W_old - \nabla E(w)$
 [^deep]: 何層からが深いかの厳密な定義はない。多くの研究者が、CAPが2より多い場合に深いと考えているという主張がある。[^sugiyama_2019]初期の深層学習の論文[^hinton_2006]では隠れ層が3層あるため、3層以上を深いともいえる。
 [^sugiyama_2019]: [Human Behavior and Another Kind in Consciousness](https://amzn.to/3VpevAm) / [Google Books](https://books.google.com/books?id=9CqQDwAAQBAJ&pg=PA15)
 [^hinton_2006]: [A fast learning algorithm for deep belief nets](https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf)
-
-### Neural Network（ニューラルネットワーク）
-
-![ニューラルネットワークの構造](https://miyabi-lab.space/assets/imgs/blog/upload/images/nn_fig17.001_ut1523588254.jpeg)
-> [初心者必読！MNIST実行環境の準備から手書き文字識別までを徹底解説！ - MIYABI Lab](https://miyabi-lab.space/blog/10)
 
 ## CAPs (Credit Assignment Paths)
 
@@ -206,6 +223,11 @@ plt.show()
 
 訓練中の予測結果と実際の値の誤差を各パラメータに戻し、パラメータを更新することで、誤差が最小になるようにパラメータを更新していく。
 
+### グラフニューラルネットワーク (GNN)
+
+（要レビュー）ニューラルネットワークは一般的に、データを多次元変数として捉えた上で、変数の重み付きの和を新たな次元とすることで特徴量を自動で作る。CNNでは周辺のマスの重み付き和を、Transformerでは全範囲の重み付き和を用いる。これは、入力の範囲をグラフ構造で与えることで一般化できる。物体の各点が近い点からの相互作用を受けることに着目し、GNNを用いて自然なシミュレーションを行った応用などがある。[^joisino_2024]
+[^joisino_2024]: [僕たちがグラフニューラルネットワークを学ぶ理由](https://speakerdeck.com/joisino/pu-tatigagurahuniyurarunetutowakuwoxue-buli-you)
+
 ## 大規模事前学習
 
 ### 転移学習
@@ -289,6 +311,17 @@ CLIPは正例と近い負例・遠い負例の距離に注意を払っていな�
 <!-- ## BLIP-2 -->
 
 <!-- ## LLaVA -->
+
+## MLOps
+
+### 能動学習
+
+データの量が多い、専門性が高い等の理由からラベル付けのコストが高く付きそうな場合、学ぶデータに優先順位を付けるのが有向になる。アルゴリズムで新たに学習するデータを選ぶ手法を能動学習と呼ぶ。新たに学習するデータとしては、分類に迷うデータを選んだり、出現率が高いデータを選択する。
+
+### Human-in-the-Loop機械学習
+
+広義には機械学習の訓練・運用のプロセスに人間が参加することを言うようだ。[^itmedia_2022]狭義には、継続的に能動学習を行うことで人間の知見を取り込むことを指すようにみえる。
+[^itmedia_2022]: [ヒューマン・イン・ザ・ループ（HITL ：Human-in-the-Loop）とは？](https://atmarkit.itmedia.co.jp/ait/articles/2203/10/news019.html)
 
 ## References
 
