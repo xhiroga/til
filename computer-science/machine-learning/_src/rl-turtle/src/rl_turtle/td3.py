@@ -23,15 +23,25 @@ class DrawingEnv(gym.Env):
         super(DrawingEnv, self).__init__()
 
         self.size = size
-        self.agent_image = np.zeros((self.size, self.size), dtype=np.uint8)
-        image = Image.open(target_image).convert("L")  # モノクロに変換
 
+        self.screen = turtle.Screen()
+        # ウィンドウサイズはウィンドウのマージン込なので、多めに取らないと全範囲が見えない
+        self.screen.setup(width=self.size + 64, height=self.size + 64)
+        self.agent = turtle.Turtle()
+
+        image = Image.open(target_image).convert("L")  # モノクロに変換
         self.target_image = np.array(image.resize((self.size, self.size)))
-        self.target_image_transposed = self.target_image[
-            None, :, :
-        ]  # チャネル次元を追加
+        self.target_image_transposed = self.target_image[None, :, :]
+
+        self.agent_image = np.ones((self.size, self.size), dtype=np.uint8)
+        self.absdiff = self._get_absdiff()
+        self.previous_mean_diff = np.mean(self.absdiff[None, :, :])
+
         self.observation_space = gym.spaces.Dict(
             {
+                "absdiff": gym.spaces.Box(
+                    low=0, high=255, shape=(1, self.size, self.size), dtype=np.uint8
+                ),
                 "agent": gym.spaces.Box(
                     low=0, high=255, shape=(1, self.size, self.size), dtype=np.uint8
                 ),
@@ -46,28 +56,26 @@ class DrawingEnv(gym.Env):
             low=0, high=1, shape=(self.action_space_degree,), dtype=np.float32
         )
 
-        self.screen = turtle.Screen()
-        # ウィンドウサイズはウィンドウのマージン込なので、多めに取らないと全範囲が見えない
-        self.screen.setup(width=self.size + 64, height=self.size + 64)
-        self.agent = turtle.Turtle()
-
-        self.previous_mean_diff = None
-
         self.max_step = self.size / 2  # 勘
 
         self.reset()
 
+    def _get_absdiff(self):
+        return cv2.absdiff(self.agent_image, self.target_image)
+
     def _get_obs(self):
         return {
-            "agent": self.agent_image[None, :, :],  # チャネル次元を追加
+            "absdiff": self.absdiff[None, :, :],
+            "agent": self.agent_image[None, :, :],
             "target": self.target_image_transposed,
         }
 
     def _calc_reward(self):
-        diff = cv2.absdiff(self.agent_image, self.target_image)
+        diff = self.absdiff[None, :, :]
         mean_diff = np.mean(diff)
         improvement = mean_diff - self.previous_mean_diff
         wow = improvement - 255 / self.max_step
+        print(f"{mean_diff=}, {self.previous_mean_diff=}, {improvement=}, {wow=}")
         self.previous_mean_diff = mean_diff
         # 単にimprovementを用いると途中からほとんど線を引かなくなる（目標が高すぎ現象）
         # improvement if improvement > 0 else -mean_diff とすると、自分で黒い線を引く → 白い線で上書きする、でスコアを稼げてしまう...
@@ -84,7 +92,8 @@ class DrawingEnv(gym.Env):
         self.current_step = 0
 
         self.agent_image = np.ones((self.size, self.size), dtype=np.uint8)
-        self.previous_mean_diff = self._calc_reward()
+        self.absdiff = self._get_absdiff()
+        self.previous_mean_diff = np.mean(self.absdiff[None, :, :])
 
         return self._get_obs(), {}
 
@@ -123,6 +132,7 @@ class DrawingEnv(gym.Env):
             .convert("L")
             .resize((self.size, self.size))
         )
+        self.absdiff = cv2.absdiff(self.agent_image, self.target_image)
 
         reward = self._calc_reward()
         observation = self._get_obs()
