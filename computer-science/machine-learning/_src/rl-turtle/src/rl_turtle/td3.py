@@ -2,6 +2,7 @@ import datetime
 import io
 import os
 import turtle
+from colorsys import hsv_to_rgb
 
 import cv2
 import gymnasium as gym
@@ -11,6 +12,9 @@ from PIL import Image
 from stable_baselines3 import TD3
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.noise import NormalActionNoise
+
+import wandb
+from wandb.integration.sb3 import WandbCallback
 
 
 class DrawingEnv(gym.Env):
@@ -47,7 +51,7 @@ class DrawingEnv(gym.Env):
         self.screen.setup(width=self.size + 64, height=self.size + 64)
         self.agent = turtle.Turtle()
 
-        self.previous_mean_diff = -255
+        self.previous_mean_diff = None
 
         self.max_step = self.size / 2  # 勘
 
@@ -66,18 +70,21 @@ class DrawingEnv(gym.Env):
         # 色相は0~180なのに、彩度と明度は0~255なので、単に平均を取っていいのか？という話はある
         diff = cv2.absdiff(img1_hsv, img2_hsv)
         mean_diff = np.mean(diff)
-        reward = mean_diff - self.previous_mean_diff
+        improvement = mean_diff - self.previous_mean_diff
         self.previous_mean_diff = mean_diff
-        return reward * 10
+        # TODO: 目標達成したときのrewardもどこかで加えたほうが良い
+        return improvement if improvement > 0 else -mean_diff
 
     def reset(self, seed=None, options=None):
         self.screen.clearscreen()
         self.agent.reset()
+        self.agent.hideturtle()
         self.agent.speed(0)
         self._show_drawing_area()
         self.agent.teleport(0, 0)
         self.agent.pensize(self.size // 16 + 1)  # これも勘
         self.current_step = 0
+        self.previous_mean_diff = 255
 
         self.agent_image = np.zeros((self.size, self.size, 3), dtype=np.uint8)
 
@@ -92,9 +99,11 @@ class DrawingEnv(gym.Env):
             self.agent.left(90)
 
     def step(self, action):
-        (x, y, distance, r, g, b) = action
+        (x, y, distance, h, s, v) = action
         x = x * self.size - self.size / 2
         y = y * self.size - self.size / 2
+        # action spaceをHSVで定義したほうが明度が似る
+        r, g, b = hsv_to_rgb(h, s, v)
         distance = distance * self.size
 
         self.agent.teleport(x, y)
@@ -189,36 +198,60 @@ class CustomCallBack(BaseCallback):
 target_image_path = "data/star.bmp"
 env = DrawingEnv(target_image_path)
 
-n_actions = env.action_space_degree
+
+policy_type = "MultiInputPolicy"
 action_noise = NormalActionNoise(
-    mean=np.zeros(n_actions), sigma=0.5 * np.ones(n_actions)
+    mean=np.zeros(env.action_space_degree),
+    sigma=0.5 * np.ones(env.action_space_degree),
+)
+buffer_size = 1000
+learning_rate = 0.01  # 膠着を打破するためにデフォルトの10倍にしてみる
+total_timesteps = 512
+
+config = {
+    "policy_type": policy_type,
+    "action_noise": action_noise,
+    "buffer_size": buffer_size,
+    "learning_rate": learning_rate,
+    "total_timesteps": total_timesteps,
+}
+run = wandb.init(
+    project="rl-turtle",
+    sync_tensorboard=True,
+    config=config,
+    name="reward=(improvement if improvement > 0 else -mean_diff), action=(x, y, distance, h, s, v)",
+    save_code=True,
 )
 
 # buffer_sizeを指定しないと、`buffers.py:241: UserWarning: This system does not have apparently enough memory to store the complete replay buffer 24.61GB > 6.86GB` のようにエラーになる
 model = TD3(
-    "MultiInputPolicy",
+    policy_type,
     env,
     action_noise=action_noise,
-    buffer_size=1000,
-    learning_rate=0.01,  # 膠着を打破するためにデフォルトの10倍にしてみる
+    buffer_size=buffer_size,
+    learning_rate=learning_rate,
     verbose=1,
 )
 model.learn(
-    total_timesteps=1000,
+    total_timesteps=total_timesteps,
     log_interval=4,
-    callback=CustomCallBack(
-        f"drawing_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}", verbose=1
-    ),
+    callback=[
+        CustomCallBack(
+            f"drawing_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}", verbose=1
+        ),
+        WandbCallback(verbose=1),
+    ],
 )
-model.save("td3_drawing")
+run.finish()
+# model.save("td3_drawing")
 
-del model  # remove to demonstrate saving and loading
+# del model  # remove to demonstrate saving and loading
 
-model = TD3.load("td3_drawing")
+# model = TD3.load("td3_drawing")
 
-obs, info = env.reset()
-while True:
-    action, _states = model.predict(obs, deterministic=True)
-    obs, reward, terminated, truncated, info = env.step(action)
-    if terminated or truncated:
-        obs, info = env.reset()
+# obs, info = env.reset()
+# while True:
+#     action, _states = model.predict(obs, deterministic=True)
+#     obs, reward, terminated, truncated, info = env.step(action)
+#     if terminated or truncated:
+#         obs, info = env.reset()

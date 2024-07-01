@@ -9,6 +9,8 @@
 #   generate-hashes: false
 
 -e file:.
+absl-py==2.1.0
+    # via tensorboard
 certifi==2024.6.2
     # via requests
     # via sentry-sdk
@@ -37,6 +39,8 @@ gitdb==4.0.11
     # via gitpython
 gitpython==3.1.43
     # via wandb
+grpcio==1.64.1
+    # via tensorboard
 gymnasium==0.29.1
     # via rl-turtle
     # via stable-baselines3
@@ -46,8 +50,11 @@ jinja2==3.1.4
     # via torch
 kiwisolver==1.4.5
     # via matplotlib
+markdown==3.6
+    # via tensorboard
 markupsafe==2.1.5
     # via jinja2
+    # via werkzeug
 matplotlib==3.9.0
     # via stable-baselines3
 mpmath==1.3.0
@@ -62,6 +69,7 @@ numpy==2.0.0
     # via pandas
     # via rl-turtle
     # via stable-baselines3
+    # via tensorboard
 opencv-python-headless==4.10.0.84
     # via rl-turtle
 packaging==24.1
@@ -72,7 +80,8 @@ pillow==10.3.0
     # via matplotlib
 platformdirs==4.2.2
     # via wandb
-protobuf==5.27.2
+protobuf==4.25.3
+    # via tensorboard
     # via wandb
 psutil==6.0.0
     # via wandb
@@ -92,16 +101,22 @@ sentry-sdk==2.7.1
 setproctitle==1.3.3
     # via wandb
 setuptools==70.1.1
+    # via tensorboard
     # via wandb
 six==1.16.0
     # via docker-pycreds
     # via python-dateutil
+    # via tensorboard
 smmap==5.0.1
     # via gitdb
 stable-baselines3==2.3.2
     # via rl-turtle
 sympy==1.12.1
     # via torch
+tensorboard==2.17.0
+    # via rl-turtle
+tensorboard-data-server==0.7.2
+    # via tensorboard
 torch==2.3.1
     # via rl-turtle
     # via stable-baselines3
@@ -115,3 +130,5 @@ urllib3==2.2.2
     # via sentry-sdk
 wandb==0.17.3
     # via rl-turtle
+werkzeug==3.0.3
+    # via tensorboard
