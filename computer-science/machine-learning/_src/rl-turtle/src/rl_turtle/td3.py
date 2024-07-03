@@ -32,8 +32,10 @@ class DrawingEnv(gym.Env):
         image = Image.open(target_image).convert("L")  # モノクロに変換
         self.target_image = np.array(image.resize((self.size, self.size)))
         self.target_image_transposed = self.target_image[None, :, :]
+        self.target_image_inverted = 255 - self.target_image
 
         self.agent_image = np.ones((self.size, self.size), dtype=np.uint8)
+        self.previous_agent_image = self.agent_image
         self.absdiff = self._get_absdiff()
         self.previous_mean_diff = np.mean(self.absdiff[None, :, :])
 
@@ -51,12 +53,13 @@ class DrawingEnv(gym.Env):
             }
         )
 
-        self.action_space_degree = 4
+        self.action_space_degree = 3
         self.action_space = gym.spaces.Box(
             low=0, high=1, shape=(self.action_space_degree,), dtype=np.float32
         )
 
         self.max_step = self.size / 2  # 勘
+        self.expected_growth_rate = 128 ** (1 / self.max_step)
 
         self.reset()
 
@@ -70,16 +73,16 @@ class DrawingEnv(gym.Env):
             "target": self.target_image_transposed,
         }
 
+    # 前回からの差分が、絵をどれだけ完成に近づけた or 遠ざけたかを評価する
     def _calc_reward(self):
-        diff = self.absdiff[None, :, :]
-        mean_diff = np.mean(diff)
-        improvement = mean_diff - self.previous_mean_diff
-        wow = improvement - 255 / self.max_step
-        print(f"{mean_diff=}, {self.previous_mean_diff=}, {improvement=}, {wow=}")
-        self.previous_mean_diff = mean_diff
-        # 単にimprovementを用いると途中からほとんど線を引かなくなる（目標が高すぎ現象）
-        # improvement if improvement > 0 else -mean_diff とすると、自分で黒い線を引く → 白い線で上書きする、でスコアを稼げてしまう...
-        return wow
+        # 白が255, 黒が0なので`前回 - 今回`で正しい
+        書き足した部分 = self.previous_agent_image - self.agent_image
+        書き足した部分_正規化 = 書き足した部分 / 255
+        書き足した部分の中でお手本にある部分 = (
+            書き足した部分_正規化 * self.target_image_inverted
+        )
+        reward = sum(sum(書き足した部分の中でお手本にある部分 / 255))
+        return (reward, 書き足した部分, 書き足した部分の中でお手本にある部分)
 
     def reset(self, seed=None, options=None):
         self.screen.clearscreen()
@@ -92,6 +95,7 @@ class DrawingEnv(gym.Env):
         self.current_step = 0
 
         self.agent_image = np.ones((self.size, self.size), dtype=np.uint8)
+        self.previous_agent_image = self.agent_image
         self.absdiff = self._get_absdiff()
         self.previous_mean_diff = np.mean(self.absdiff[None, :, :])
 
@@ -107,14 +111,14 @@ class DrawingEnv(gym.Env):
             self.agent.forward(self.size + 2)
 
     def step(self, action):
-        (x, y, distance, gray) = action
+        (x, y, distance) = action
         x = x * self.size - self.size / 2
-        # おまじない程度だが、アクションはCNNに合わせて右手系になっていると解釈し、step内で左手系に直す
+        # おまじない程度だが、アクションはCNNに合わせて左手系になっていると解釈し、step内で右手系に直す
         y = self.size / 2 - y * self.size
-        distance = distance * self.size
+        distance = distance * self.size / 2
 
         self.agent.teleport(x, y)
-        self.agent.pencolor(gray, gray, gray)  # モノクロに設定
+        self.agent.pencolor(0, 0, 0)
         self.agent.forward(distance)
 
         self.current_step += 1
@@ -134,10 +138,24 @@ class DrawingEnv(gym.Env):
         )
         self.absdiff = cv2.absdiff(self.agent_image, self.target_image)
 
-        reward = self._calc_reward()
+        reward, 書き足した部分, 書き足した部分の中でお手本にある部分 = (
+            self._calc_reward()
+        )
+
         observation = self._get_obs()
         terminated = self.current_step >= self.max_step
-        return observation, reward, terminated, False, {}
+
+        self.previous_agent_image = self.agent_image
+        return (
+            observation,
+            reward,
+            terminated,
+            False,
+            {
+                "書き足した部分": 書き足した部分,
+                "書き足した部分の中でお手本にある部分": 書き足した部分の中でお手本にある部分,
+            },
+        )
 
     def close(self):
         self.screen.bye()
@@ -181,6 +199,16 @@ class CustomCallBack(BaseCallback):
                 img_array = img_array.squeeze()  # 形状を (height, width) に変更
                 img = Image.fromarray(img_array, mode="L")  # モノクロとして保存
                 img.save(f"{self.log_dir}/observation_{self.n_calls}.png")
+            書き足した部分 = self.locals["infos"][0]["書き足した部分"]
+            Image.fromarray(書き足した部分, mode="L").save(
+                f"{self.log_dir}/書き足した部分_{self.n_calls}.png"
+            )
+            書き足した部分の中でお手本にある部分 = self.locals["infos"][0][
+                "書き足した部分の中でお手本にある部分"
+            ]
+            Image.fromarray(書き足した部分の中でお手本にある部分, mode="L").save(
+                f"{self.log_dir}/書き足した部分の中でお手本にある部分{self.n_calls}.png"
+            )
 
         return True
 
@@ -204,13 +232,13 @@ class CustomCallBack(BaseCallback):
             f.write(message + "\n")
 
 
-target_image_path = "data/monostar.bmp"
+target_image_path = "data/bw.bmp"
 env = DrawingEnv(target_image_path)
 
 policy_type = "MultiInputPolicy"
 action_noise = NormalActionNoise(
     mean=np.zeros(env.action_space_degree),
-    sigma=0.5 * np.ones(env.action_space_degree),
+    sigma=0.3 * np.ones(env.action_space_degree),
 )
 buffer_size = 1000
 learning_rate = 0.01  # 膠着を打破するためにデフォルトの10倍にしてみる
@@ -251,3 +279,22 @@ model.learn(
     ],
 )
 run.finish()
+
+model.save("td3_drawing")
+
+del model  # remove to demonstrate saving and loading
+
+model = TD3.load(
+    "td3_drawing",
+    action_noise=NormalActionNoise(
+        mean=np.zeros(env.action_space_degree),
+        sigma=np.zeros(env.action_space_degree),
+    ),
+)
+
+obs, info = env.reset()
+while True:
+    action, _states = model.predict(obs, deterministic=True)
+    obs, reward, terminated, truncated, info = env.step(action)
+    if terminated or truncated:
+        obs, info = env.reset()
