@@ -1,20 +1,59 @@
 # プログラミング言語論 (programming language theory)
 
-## 字句解析
+ページの構成にあたって、次の本を参考にした。
 
-## 構文解析
+- [コンピュータシステムの理論と実装](https://amzn.to/3RRkRGI)
+- [最新コンパイラ構成技法](https://amzn.to/3xJRDCI)
+- [型システム入門 −プログラミング言語と型の理論](https://amzn.to/4elvECy)
+- [Programming Language Design and Implementation](https://www.springerprofessional.de/en/programming-language-design-and-implementation/23739088)
+- [Concept of Programming Languages](https://www.sci.brooklyn.cuny.edu/~chuang/books/sebesta.pdf)
+- [Foundations of Programming Languages](https://link.springer.com/book/10.1007/978-3-319-70790-7)
 
-## 抽象構文
+## プログラミング言語の歴史
 
-## 意味解析
+## コンパイラ
 
-## GC (garbage collect)
+### 字句解析
 
-## オブジェクト指向
+### 構文解析
 
-## 関数型
+#### 式の評価
 
-## ループ
+数式やプログラムを記述する方法として、次の3つが挙げられる。
+
+- 前置記法 (ポーランド記法, PN, Polish notation)
+- 中置記法 (infix notation, IN)
+- 後置記法 (逆ポーランド記法, RPN, reverse Polish notation)
+
+#### LR Grammar
+
+LR(Left-to-right, Rightmost derivation)文法は、ボトムアップ構文解析に使用される文法のクラスである。LR構文解析は、効率的で広く使用されている構文解析手法の1つである。
+
+### 抽象構文
+
+抽象構文木 (AST, abstract syntax tree) は、プログラムの構文構造を表す木構造のデータ構造である。構文解析の結果として生成され、意味解析やコード最適化などのコンパイラの後続のフェーズで使用される。
+
+### 意味解析
+
+### 中間表現
+
+### 最適化
+
+### コード生成
+
+## 設計と実装
+
+### 構文 (syntax)
+
+### メモリ管理 (memory management)
+
+GC (garbage collect) は、プログラムが動的に割り当てたメモリのうち、もはや使用されていないメモリを自動的に解放するメモリ管理手法である。プログラマがメモリの割り当てと解放を手動で管理する必要がなくなり、メモリリークなどのバグを防ぐことができる。
+
+### スコープ, 関数, パラメータ渡し (scopes, functions and parameter passing)
+
+### 制御構造 (control structures)
+
+#### ループ
 
 配列などの要素を順番に処理するにあたって、インデックスをインクリメントするのは冗長だが、配列をコピーしてpop()させるのはメモリの使用量が多い。そこで、現在が何周目かの状態を持ったオブジェクトを生成し、配列の要素の取り出しを任せよう、という発想で使うのがイテレータである。Pythonにおいては、マジックメソッドである`__iter__`を実装したクラスをイテラブルという。
 
@@ -54,16 +93,18 @@ def one_two_three():
     yield 3
 ```
 
-## 同期処理
+### 型 (types)
+
+## パラダイム
+
+### オブジェクト指向プログラミング (OOP, object oriented programming)
+
+### 関数型プログラミング (functional programming)
+
+### 論理プログラミング (logical programming)
+
+### 並行 / 並列 / 非同期プログラミング (concurrent / parallel / asynchronous programming)
 
 <!-- セマフォ -->
 
-## 非同期処理
-
-## 並行・並列処理
-
 <!-- コルーチン, ゴルーチンとの違いも -->
-
-## References
-
-[型システム入門 −プログラミング言語と型の理論](https://amzn.to/4elvECy)
