@@ -392,6 +392,10 @@ CLIPは正例と近い負例・遠い負例の距離に注意を払っていな�
 広義には機械学習の訓練・運用のプロセスに人間が参加することを言うようだ。[^itmedia_2022]狭義には、継続的に能動学習を行うことで人間の知見を取り込むことを指すようにみえる。
 [^itmedia_2022]: [ヒューマン・イン・ザ・ループ（HITL ：Human-in-the-Loop）とは？](https://atmarkit.itmedia.co.jp/ait/articles/2203/10/news019.html)
 
+## 連合学習 (Federated Learning)
+
+WIP
+
 ## References
 
 - [機械学習 (東京大学工学教程)](https://amzn.to/4bS8SjZ)

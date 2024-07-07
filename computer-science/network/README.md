@@ -233,6 +233,11 @@ SSL/TLSでは、公開鍵暗号方式を採用している。
 
 <!-- > [!NOTE] TCP/IPが暗号化をサポートすれば、HTTPSやSSHなどが個別に対応しなくてよかったんじゃないの？ -->
 
+## 未分類 (uncategorized)
+
+- C-LAN
+- O-LAN
+
 ## References
 
 [マスタリングTCP/IP](https://amzn.to/3x7Mq7z)
