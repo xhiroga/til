@@ -18,18 +18,6 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 - [自然言語処理 (natural language processing)](./computer-science/nlp/README.md)
 - [プログラミング言語論 (programming language theory)](./computer-science/programming-language-theory/README.md)
 
-### [数学 (mathematics)](./mathematics/README.md)
-
-- [代数学 (algebra)](./mathematics/algebra/README.md)
-- [微分積分学 (calculus)](./mathematics/calculus/README.qmd)
-- [離散数学 (discrete mathematics)](./mathematics/discrete/README.md)
-- [幾何学 (geometry)](./mathematics/geometory/README.md)
-- [確率, 統計 (probability and statistics)](./mathematics/probability-statistics/README.md)
-
-### 機械工学 (mechanical engineering)
-
-- [ロボット工学](./mechanical-engineering/robotics/README.md)
-
 ### [Software Engineering](./software-engineering/README.md)
 
 - [Ajax](./software-engineering/ajax/README.md)
@@ -95,6 +83,22 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 <!-- - [VSCode Extension](./software-engineering/vscode-extension/) -->
 - [VNC](./software-engineering/vnc/README.md)
 - [Web API](./software-engineering/web-api/README.md)
+
+### 自然科学 (natural science)
+
+#### [数学 (mathematics)](./mathematics/README.md)
+
+- [代数学 (algebra)](./mathematics/algebra/README.md)
+- [微分積分学 (calculus)](./mathematics/calculus/README.qmd)
+- [離散数学 (discrete mathematics)](./mathematics/discrete/README.md)
+- [幾何学 (geometry)](./mathematics/geometory/README.md)
+- [確率, 統計 (probability and statistics)](./mathematics/probability-statistics/README.md)
+
+### 工学 (engineering)
+
+#### 機械工学 (mechanical engineering)
+
+- [ロボット工学](./engineering/mechanical-engineering/robotics/README.md)
 
 ## Contributing
 
