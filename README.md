@@ -26,6 +26,10 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 - [幾何学 (geometry)](./mathematics/geometory/README.md)
 - [確率, 統計 (probability and statistics)](./mathematics/probability-statistics/README.md)
 
+### 機械工学 (mechanical engineering)
+
+- [ロボット工学](./mechanical-engineering/robotics/README.md)
+
 ### [Software Engineering](./software-engineering/README.md)
 
 - [Ajax](./software-engineering/ajax/README.md)
