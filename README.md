@@ -26,7 +26,7 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 - [幾何学 (geometry)](./mathematics/geometory/README.md)
 - [確率, 統計 (probability and statistics)](./mathematics/probability-statistics/README.md)
 
-### Software Engineering
+### [Software Engineering](./software-engineering/README.md)
 
 - [Ajax](./software-engineering/ajax/README.md)
 - [Android Application](./software-engineering/andorid/README.md)
