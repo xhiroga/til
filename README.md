@@ -6,19 +6,25 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 ### Computer Science
 
-- [コンピュータアーキテクチャ・OS・デジタル回路](./computer-science/computer-architecture/README.md)
-- [データ構造・アルゴリズム](./computer-science/data-structures-algorithms/README.md)
-- [形式言語](./computer-science/formal-language/README.md)
-- [機械学習](./computer-science/machine-learning/README.qmd)
-- [自然言語処理](./computer-science/nlp/README.md)
+- [CG (computer graphics)](./computer-science/cg/README.md)
+- [コンピュータアーキテクチャ, OS, 電子回路, 論理回路 (computer architecture, operating system, electronic circuit, logical circuit)](./computer-science/computer-architecture/README.md)
+- [CV (computer vision)](./computer-science/cv/README.md)
+- [暗号理論 (cryptography)](./computer-science/cryptography/README.md)
+- [データ構造, アルゴリズム (data structures and algorithms)](./computer-science/data-structures-algorithms/README.md)
+- [形式言語 (formal language)](./computer-science/formal-language/README.md)
+- [情報理論 (information theory)](./computer-science/infomation-theory/README.md)
+- [機械学習 (machine learning)](./computer-science/machine-learning/README.md)
+- [ネットワーク (network)](./computer-science/network/README.md)
+- [自然言語処理 (natural language processing)](./computer-science/nlp/README.md)
+- [プログラミング言語論 (programming language theory)](./computer-science/programming-language-theory/README.md)
 
-### [Mathematics](./mathematics/README.md)
+### [数学 (mathematics)](./mathematics/README.md)
 
-- [代数](./mathematics/algebra/README.md)
-- [微分積分](./mathematics/calculus/README.qmd)
-- [離散数学](./mathematics/discrete/README.md)
-- [幾何学](./mathematics/geometory/README.md)
-- [確率・統計](./mathematics/probability-statistics/README.md)
+- [代数学 (algebra)](./mathematics/algebra/README.md)
+- [微分積分学 (calculus)](./mathematics/calculus/README.qmd)
+- [離散数学 (discrete mathematics)](./mathematics/discrete/README.md)
+- [幾何学 (geometry)](./mathematics/geometory/README.md)
+- [確率, 統計 (probability and statistics)](./mathematics/probability-statistics/README.md)
 
 ### Software Engineering
 

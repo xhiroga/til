@@ -1,4 +1,4 @@
-# データ構造・アルゴリズム (data structures and algorithms)
+# データ構造, アルゴリズム (data structures and algorithms)
 
 > [!NOTE]
 > $O(NM)$の処理では、よく二重ループが登場する。文字列探索におけるナイーブ法を例に、Pythonにおける個人的に好ましい書き方を考える。

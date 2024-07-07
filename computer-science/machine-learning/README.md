@@ -61,6 +61,8 @@ $f(x_n)^{T=1\times N} \cdot \phi(x_n^1)^{N \times 1} - t_n^{T=1\times N} \cdot \
 
 $f(x_n)^{T=1\times N} \cdot \phi(x_n^m)^{N \times M} - t_n^{T=1\times N} \cdot \phi(x_n^m)^{N \times M} = 0$
 
+<!-- 正則化項, CS 2018-02 2 -->
+
 ### 最尤推定法
 
 尤度関数は次の通り。なお、確率分布として正規分布を採用している。

@@ -1,4 +1,4 @@
-# CV (Computer Vision)
+# CV (computer vision)
 
 ## 基礎知識
 

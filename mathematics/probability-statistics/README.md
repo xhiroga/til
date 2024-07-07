@@ -1,4 +1,4 @@
-# 確率・統計 (probability and statistics)
+# 確率, 統計 (probability and statistics)
 
 ## 期待値, 分散, 標準偏差 (expected value, variance, and standard deviation)
 

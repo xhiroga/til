@@ -1,4 +1,4 @@
-# コンピュータアーキテクチャ・OS・電子回路・論理回路
+# コンピュータアーキテクチャ, OS, 電子回路, 論理回路 (computer architecture, operating system, electronic circuit, logical circuit)
 
 ## 電子回路
 

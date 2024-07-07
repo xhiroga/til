@@ -1,4 +1,4 @@
-# CG (Computer Graphics)
+# CG (computer graphics)
 
 ## 基礎知識
 
