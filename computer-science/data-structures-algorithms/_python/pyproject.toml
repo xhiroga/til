@@ -4,7 +4,9 @@ version = "0.1.0"
 authors = [
     { name = "Hiroaki Ogasawara", email = "13391129+xhiroga@users.noreply.github.com" }
 ]
-dependencies = []
+dependencies = [
+    "bitarray>=2.9.2",
+]
 readme = "README.md"
 requires-python = ">= 3.8"
 

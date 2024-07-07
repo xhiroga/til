@@ -9,3 +9,5 @@
 #   generate-hashes: false
 
 -e file:.
+bitarray==2.9.2
+    # via data-structures-algorithms

@@ -13,6 +13,8 @@ appnope==0.1.4
     # via ipykernel
 asttokens==2.4.1
     # via stack-data
+bitarray==2.9.2
+    # via data-structures-algorithms
 comm==0.2.2
     # via ipykernel
 debugpy==1.8.1
