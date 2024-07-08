@@ -87,6 +87,8 @@ $AA^{-1} = A^{-1}A = I$ が成り立つ時、$A$を正則行列または可逆�
 > 次の通り成り立つ。
 > ![formula](https://i.gyazo.com/thumb/3759/e6fcda33692973bec76a2fbdf3c2ce4a-heic.jpg)
 
+<!-- 疑似逆行列 -->
+
 #### 直交行列 (orthogonal matrix)
 
 $R^TR = RR^T = I$ となる正方行列を、直交行列と呼ぶ。言い換えると、自身を転置した行列が逆行列の場合、直交行列である。

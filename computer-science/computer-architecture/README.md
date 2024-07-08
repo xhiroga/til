@@ -215,6 +215,17 @@ CPUがメモリをフェッチする、という表現が不思議だったの�
 - 3D Stacking: WIP
 - RISC-V: WIP
 - プリフェッチャ: WIP
+- スレッドレベル並列投機実行: WIP
+- ECL: WIP
+- SIMD (Single Instruction Multiple Data): WIP
+- パイプラインハザード: WIP
+- GPUアーキテクチャ関連: WIP
+- スーパスカラ: WIP
+- スーパーパイプライン: WIP
+- ひずみゲージ: WIP
+- TLB: WIP
+- ワイヤードロジック制御方式とマイクロプログラム制御方式: WIP
+- スヌープキャッシュ: WIP
 
 ## References
 

@@ -52,6 +52,8 @@ GC (garbage collect) は、プログラムが動的に割り当てたメモリ�
 
 ### スコープ, 関数, パラメータ渡し (scopes, functions and parameter passing)
 
+<!-- > [!NOTE] ラムダ式と無名関数と匿名関数って同じ意味で使っていいの？ -->
+
 ### 制御構造 (control structures)
 
 #### ループ
@@ -119,3 +121,13 @@ def one_two_three():
 ### Foreign function interface (FFI)
 
 FFIとは異なるプログラミング言語によって書かれたモジュールを呼び出すための仕組みを言う。例えばPythonには`ctypes`ライブラリが存在し、C/C++で書かれた共有オブジェクトライブラリを読み込んでメソッド等の実行を可能にする。元々C/C++向けに書かれたコードを`ctypes`で呼び出す場合は、データ型の変換等は`ctypes`が担う。しかし、C/C++でPython向けのライブラリを実装する場合は、C/C++からPythonのメモリにアクセスする必要がある。そのような場合には、`<Python.h>`を用いるとよく、これもFFIと言える。
+
+## 未分類 (uncategorized)
+
+- リアルタイム性: WIP
+- JITコンパイラ: WIP
+- クロージャ（閉包）: WIP
+- 第一級オブジェクト: WIP
+- 末尾関数: WIP
+- 参照透明性: WIP
+- 計測における不確かさ: WIP

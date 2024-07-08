@@ -396,6 +396,18 @@ CLIPは正例と近い負例・遠い負例の距離に注意を払っていな�
 
 WIP
 
+## Uncategorized
+
+- ランダムフォレスト: WIP
+- カルマンフィルタ: WIP
+- モンテカルロ法: WIP
+- 主成分分析: WIP
+- 隠れマルコフモデル: WIP
+- ベイズの定理: WIP
+- ベクトル量子化: WIP...次元削減との違いは？
+- 分枝限定法: WIP
+- MinMax法: WIP
+
 ## References
 
 - [機械学習 (東京大学工学教程)](https://amzn.to/4bS8SjZ)

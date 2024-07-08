@@ -75,3 +75,12 @@ $(a+b)^n = \sum_{k=0}^n \binom{n}{k}a^{n-k}{b^k}$
 それ自体は中学校の数学で習うのだが、この式はそのまま、「成功か失敗かのいずれかの結果になる事象をn回行い、k回成功する確率」を求めるために利用できる。
 
 ## 連続型確率分布 (continuous probability distribution)
+
+## 未分類 (uncategorized)
+
+- カルバック・ライブラー・ダイバージェンス: WIP
+- サロゲートデータ法: WIP
+- 共分散分析 (ANCOVA): WIP
+- 中心極限定理: WIP
+- ベイジアンネットワーク: WIP
+- 不偏推定量: WIP

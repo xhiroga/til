@@ -32,3 +32,7 @@ URLにおいて`#`から始まる文字列。IDを加えたURLにリンクする
 ## 組み込みシステム (embedded system)
 
 ## セキュリティ (security)
+
+## 未分類 (uncategorized)
+
+- ミューテックス: WIP
