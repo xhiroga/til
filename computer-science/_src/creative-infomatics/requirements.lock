@@ -9,6 +9,8 @@
 #   generate-hashes: false
 
 -e file:.
+bitarray==2.9.2
+    # via creative-infomatics
 contourpy==1.2.1
     # via matplotlib
 cycler==0.12.1

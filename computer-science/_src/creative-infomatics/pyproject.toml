@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "numpy>=2.0.0",
     "matplotlib>=3.9.0",
+    "bitarray>=2.9.2",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
