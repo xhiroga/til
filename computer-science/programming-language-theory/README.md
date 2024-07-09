@@ -1,6 +1,6 @@
 # プログラミング言語論 (programming language theory)
 
-ページの構成にあたって、次の本を参考にした。
+ページ構成にあたって次の情報源を参考にした。
 
 - [コンピュータシステムの理論と実装](https://amzn.to/3RRkRGI)
 - [最新コンパイラ構成技法](https://amzn.to/3xJRDCI)

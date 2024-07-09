@@ -407,6 +407,9 @@ WIP
 - ベクトル量子化: WIP...次元削減との違いは？
 - 分枝限定法: WIP
 - MinMax法: WIP
+- GRU
+- 勾配消失
+- 勾配爆発
 
 ## References
 
