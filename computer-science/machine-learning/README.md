@@ -374,9 +374,38 @@ CLIPは正例と近い負例・遠い負例の距離に注意を払っていな�
 広義には機械学習の訓練・運用のプロセスに人間が参加することを言うようだ。[^itmedia_2022]狭義には、継続的に能動学習を行うことで人間の知見を取り込むことを指すようにみえる。
 [^itmedia_2022]: [ヒューマン・イン・ザ・ループ（HITL ：Human-in-the-Loop）とは？](https://atmarkit.itmedia.co.jp/ait/articles/2203/10/news019.html)
 
-## 連合学習 (Federated Learning)
+### 連合学習 (Federated Learning)
 
 WIP
+
+### 評価
+
+ページ構成の際、次の情報源を参考にした。
+
+- [ChatGPT🔐](https://chatgpt.com/c/0c69a86c-096a-4a84-a265-c6df17de88cb)
+
+#### BLEU[^papineni_2002]
+
+[^papineni_2002]: [BLUE: a Method for Automatic Evaluation of Machine Translation](https://aclanthology.org/P02-1040.pdf)
+
+BLEU (Bilingual Evaluation Understudy, 発音はBlueと同じ)は、機械翻訳等の評価に広く利用される評価指標。
+
+#### ROUGE[^lin_2004]
+
+[^lin_2004]: [ROUGE: A Package for Automatic Evaluation of Summaries](https://aclanthology.org/W04-1013.pdf)
+
+ROUGE (Recall-Oriented Understudy for Gisting Evaluation, ルージュ)は、要約タスクで用いられる評価指標。参照する要約と生成した要約の一致度を測ることを試みる。
+
+最も基本的なROUGE-Nでは、N-gramの単位で、人手の要約と機械の要約との共起を測る。N-gramがUnigramの場合、ROUGE-1と呼ばれる。[^icoxfog417_2017]
+[^icoxfog417_2017]: [ROUGEを訪ねて三千里:より良い要約の評価を求めて](https://qiita.com/icoxfog417/items/65faecbbe27d3c53d212)
+
+ここでは、ROUGE-1で次の要約を評価する。
+
+- 参照する要約: The artist chose a deep rouge for the lips
+- 生成した要約: The lips were painted with a deep shade of red lipstick
+
+参照する要約の単語をどれだけ当てられたかがRecallとなるため、$3/10 = 0.3$。また、生成した要約の単語がどれだけ参照元出身かがPrecisionなので、$3/8=0.375$。
+したがってF1スコアを求めると、$2*(0.3*0.375)/(0.3+0.375)=0.333...$となる。
 
 ## Uncategorized
 
