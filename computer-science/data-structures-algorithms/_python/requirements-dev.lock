@@ -47,6 +47,8 @@ matplotlib-inline==0.1.7
     # via ipython
 nest-asyncio==1.6.0
     # via ipykernel
+networkx==3.3
+    # via data-structures-algorithms
 numpy==2.0.0
     # via contourpy
     # via data-structures-algorithms
