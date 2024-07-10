@@ -11,3 +11,5 @@
 -e file:.
 bitarray==2.9.2
     # via data-structures-algorithms
+numpy==2.0.0
+    # via data-structures-algorithms
