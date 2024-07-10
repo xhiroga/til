@@ -76,6 +76,9 @@ $(a+b)^n = \sum_{k=0}^n \binom{n}{k}a^{n-k}{b^k}$
 
 ## 連続型確率分布 (continuous probability distribution)
 
+- [ガンマ関数(2D) 🔐](https://www.desmos.com/calculator/av8pojjzxt?lang=ja)
+- [ガンマ関数(3D) 🔐](https://www.desmos.com/3D/03sdf3jqz9?lang=ja)
+
 ## 未分類 (uncategorized)
 
 - カルバック・ライブラー・ダイバージェンス: WIP
