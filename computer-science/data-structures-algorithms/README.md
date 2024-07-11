@@ -64,6 +64,10 @@
 
 [^union_find]: [Union-Find の 2 つの工夫](https://algo-method.com/descriptions/133)
 
+> [!NOTE] Union-Findでfind時に経路圧縮すると、rankと木の高さが一致しないのでは？
+> その通り。rankと木の高さが常に等しいとは限らない。rankの代わりに木のサイズを用いても時間計算量は$O(N)$で変わらないため、説明しやすさのためにそちらを用いても良い。[^saka_pon_2022]
+[^saka_pon_2022]: [Union-Find の実装方法まとめ](https://qiita.com/saka_pon/items/2f18c84f1b6834e4fe4a#union-by-size)
+
 ### データ構造: 参考
 
 - 10章 ヒープ
