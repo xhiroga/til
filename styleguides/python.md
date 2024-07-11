@@ -4,13 +4,13 @@
 
 ### Debug
 
-Python3.8から、f文字列で`=`指定子(=specifier)が使えるようになったため、積極的に用いる。[^f-string]
+Python3.8から、f文字列で`=`指定子(`=`specifier)が使えるようになったため、積極的に用いる。[^f-string]
 [^f-string]: [f-strings support = for self-documenting expressions and debugging](https://docs.python.org/3/whatsnew/3.8.html#f-strings-support-for-self-documenting-expressions-and-debugging)
 
 ```python
 # Good
 user = "xhiroga"
-print(f"{xhiroga=}")
+print(f"{user=}")
 ```
 
 ```python
