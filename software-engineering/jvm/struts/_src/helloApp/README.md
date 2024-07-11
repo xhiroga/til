@@ -2,7 +2,7 @@
 
 Struts1.xのアプリケーションをGradleでビルドしてDocker+Tomcatで動かすサンプル。  
 
-```Console
+```console
 gradle build -p hello
 docker build -t struts-hello .
 docker run -ip 18080:8080 struts-hello

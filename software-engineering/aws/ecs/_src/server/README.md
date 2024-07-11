@@ -1,7 +1,7 @@
 # fargate
 
 
-```Console
+```console
 docker build -t flask-fargate:latest .
 ```
 

@@ -2,7 +2,7 @@
 webからファイルをgetするためのツール。  
 
 ## 使い方
-```Console
+```console
 wget https://github.com/gitbucket/gitbucket/archive/4.22.0.tar.gz
 wget -q https://github.com/gitbucket/gitbucket/archive/4.22.0.tar.gz # ログを出力しない(quiet)
 ```

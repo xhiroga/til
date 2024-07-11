@@ -52,7 +52,8 @@
 [^rouge]: [Languages.md | rouge](https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers)
 [^vscode]: [markdownEngine.ts | VSCode](https://github.com/microsoft/vscode/blob/main/extensions/markdown-language-features/src/markdownEngine.ts)
 
-なお、Shell Scriptの言語識別子は`shell`とする。調査したすべての環境で利用でき、かつシェルの種類を特定しない書き方であるため。
+- Shell Scriptの言語識別子は`shell`とする。調査したすべての環境で利用でき、かつシェルの種類を特定しない書き方であるため。
+- コンソールの出力に対する言語識別子は`console`とする。linguistとrougeで共通で利用できるため。highlight.jsにはコンソール出力のための言語識別子が存在しない上、`console`は`shell`のエイリアスに充てられているが、妥協する。
 
 ### Line breaking
 

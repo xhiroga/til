@@ -7,7 +7,7 @@
 
 # 使い方
 ## Dockerイメージの作成→削除
-```Console:
+```console:
 apt-get install docker.io # インストール
 docker images # イメージの確認
 docker pull nginx:1.10.0 # DockerHubからイメージをインストール
@@ -15,7 +15,7 @@ docker build -t image:tag . # カレントのDockerfileからイメージ作成,
 ```
 
 ## Dockerコンテナーの実行→削除
-```Console:
+```console:
 docker run -d nginx:1.10.0 # -dはdetach(バックグラウンド起動), コンテナ名だけを表示する
 docker run -p 55555:8080 nginx:1.10.0 # -pでポート転送。ホスト:コンテナ
 docker run -it ubuntu_test # -iでインタラクティブ -tで擬似端末の割り当て（矢印とか使えるようになる）

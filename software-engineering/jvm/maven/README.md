@@ -1,7 +1,7 @@
 # Maven
 
 ## プロジェクトの構築
-```Console
+```console
 mvn archetype:generate
 # 引数でMainクラスを指定する場合、pom.xmlでの指定は不要
 mvn compile
@@ -13,7 +13,7 @@ ex) cc.hiroga
 ex) sampleApp
 
 ## Webアプリケーションプロジェクトの構築
-```Console
+```console
 mvn archetype:generate -DgroupId=cc.hiroga.testbbs -DartifactId=testbbs -DarchetypeArtifactId=maven-archetype-webapp
 # archetypeArtifactIdパラメータを明示的に指定する(これまではmaven-archetype-quickstart が使用されていた)
 # src/main/java を手動で作成する
