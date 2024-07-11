@@ -24,7 +24,7 @@ print(f"user={xhiroga}")
 `expected`が先、`actual`が後。`unittest.TestCase`においては`assertEqual(first, second, msg=None)`のように順序を指定しない。しかし、可読性の観点から`expected`を先に書く。[^mortensen_2010]
 [^mortensen_2010]: [Why are assertEquals() parameters in the order (expected, actual)?](https://stackoverflow.com/questions/2404978)
 
-```py
+```python
 assert expected == actual, print(f"{expected=}, {actual=}")
 ```
 

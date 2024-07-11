@@ -2,6 +2,6 @@
 
 https://knowledge.sakura.ad.jp/24150/
 
-```sh
+```shell
 deno run --allow-net echo_server.ts
 ```

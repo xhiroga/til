@@ -1,7 +1,7 @@
 # Get started
 
 # Usage
-```bash
+```shell
 dokcer-compose up
 docker-compose stop # 一時停止
 docker-compose down # Ctrl+CでもOK

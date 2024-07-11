@@ -145,7 +145,7 @@ $W_new = W_old - \nabla E(w)$
 
 #### Standard Sigmoid Function
 
-```{python}
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -164,7 +164,7 @@ plt.show()
 
 ソフトマックス関数とは、数値の配列を確率の配列に変換する関数。
 
-```{python}
+```python
 import numpy as np
 
 def softmax(x: float):
@@ -181,7 +181,7 @@ print(y)  # [0.66524096 0.09003057 0.24472847]
 
 レルー（ランプ関数、正規化線形ユニット（Rectified Linear Unit））は、主にディープニューラルネットワークの中間層で用いられる活性化関数。
 
-```{python}
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 

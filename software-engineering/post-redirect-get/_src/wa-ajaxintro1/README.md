@@ -2,7 +2,7 @@
 
 ## Run
 
-```bash
+```shell
 source .venv/bin/activate
 pip install -r requirements.txt
 open http://localhost:5000

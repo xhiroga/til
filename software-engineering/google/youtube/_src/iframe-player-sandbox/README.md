@@ -4,7 +4,7 @@ Implemented by ChatGPT.
 
 ## How to run
 
-```sh
+```shell
 python -m http.server
 open http://localhost:8000
 ```

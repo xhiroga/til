@@ -1,6 +1,6 @@
 # Beginner Guide on “Poetry”, New Python dependency management tool
 
-```sh
+```shell
 # Add deps
 poetry add pendulum
 

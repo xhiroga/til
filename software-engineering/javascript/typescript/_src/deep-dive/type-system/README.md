@@ -4,7 +4,7 @@
 
 ## How to run
 
-```sh
+```shell
 deno run src/types.ts
 ```
 

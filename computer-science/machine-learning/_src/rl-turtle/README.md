@@ -2,7 +2,7 @@
 
 Drawing by reinforcement learning.
 
-```bash
+```shell
 rye run wandb login
 rye run python ./src/rl_turtle/td3.py
 ```

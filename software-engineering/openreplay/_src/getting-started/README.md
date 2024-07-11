@@ -2,7 +2,7 @@
 
 ## Run
 
-```bash
+```shell
 pnpm run --dir app dev
 ```
 

@@ -2,7 +2,7 @@
 
 ## Run
 
-```bash
+```shell
 yarn start
 ```
 

@@ -4,7 +4,7 @@ Hello! This project allows you to quickly get started with Reason and BuckleScri
 
 # Build
 
-```bash
+```shell
 # for yarn
 yarn build
 
@@ -14,7 +14,7 @@ npm run build
 
 # Build + Watch
 
-```bash
+```shell
 # for yarn
 yarn start
 

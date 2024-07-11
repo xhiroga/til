@@ -40,7 +40,7 @@
 - 式で表すと絵面が同じ
 - y = x ^ 2 で簡単のために x = 1 を例に用いると、導関数のグラフと接線のグラフの傾きが一致してしまう。
 
-```{python}
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 

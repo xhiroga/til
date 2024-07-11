@@ -1,6 +1,6 @@
 # Compile ARM assembly on Apple Silicon
 
-```bash
+```shell
 make
 ./hello
 ```

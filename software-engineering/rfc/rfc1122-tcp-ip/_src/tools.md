@@ -15,7 +15,7 @@
 
 TCP/UDP の読み書きのための万能ツール。
 
-```sh
+```shell
 # TCPクライアント
 nc localhost 3456
 
@@ -36,7 +36,7 @@ nc -vz localhost 1-65535 2>&1 | grep succeeded
 
 基本的には対象のホストやポート/プロトコルを絞り込んでキャプチャする。
 
-```bash
+```shell
 tcpdump host google.com
 tcpdump tcp # httpのようにアプリケーションレイヤーのプロトコルは指定できないようだ。
 tcpdump port 80

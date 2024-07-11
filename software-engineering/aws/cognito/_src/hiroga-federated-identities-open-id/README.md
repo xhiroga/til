@@ -4,7 +4,7 @@ To understand Federated Identity - Facebook connection.
 
 ## How to do
 
-```sh
+```shell
 FacebookAppId=${FacebookAppId}
 aws cloudformation deploy \
     --template-file "template.yml" \
@@ -15,14 +15,14 @@ aws cloudformation deploy \
     --region ap-northeast-1
 ```
 
-```sh
+```shell
 gem install facebook-cli
 facebook-cli config --appid=${FacebookAppId} --appsecret=${FacebookSecret}
 facebook-cli login
 open ~/.facebook-clirc
 ```
 
-```sh
+```shell
 AccessToken=${AccessToken}
 FederatedIdentityId=${FederatedIdentityId}
 aws cognito-identity get-id \
