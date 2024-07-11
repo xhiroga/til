@@ -51,6 +51,8 @@
 
 $P = \prod_{n=1}^{N} N(t_n|f(x_n), \sigma^2)$
 
+<!-- https://i.gyazo.com/thumb/2420/c36546337d0c0125e4fefcbfdcad1d5d-heic.jpg -->
+
 ### パーセプトロン (perceptron)
 
 目的関数の式は次の通り。ただし2値分類の問題とし、$f(x,y)$と0の大小関係で分類するものとする。また、誤って分類された点のみの合計とする。
