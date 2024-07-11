@@ -4,11 +4,11 @@
 
 オブジェクト指向インターフェースを用いる。
 
-### Formatting Rules
+## Formatting Rules
 
 Axesオブジェクトの変数名には`ax`または`axs`を用い、Axisオブジェクトの変数名は略さずに`[x|y]axis`を用いる。ちなみに、`axes`は`axis`の複数形で、`ax`の複数形としての`axes(ˈæksiːz, アクスィーズ)`とは異なり`axes(ǽksiz, アクスィズ)`と発音する。
 
-### Meta Rules
+## Meta Rules
 
 ## References
 

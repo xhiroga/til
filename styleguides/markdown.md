@@ -2,6 +2,10 @@
 
 ## Style Rules
 
+### Footnote
+
+脚注の識別子には、番号ではなく出典や著者情報を用いる。詳細は検討中。
+
 ### Heading (Style Rules)
 
 - URLのパスに用いられることがあるので、簡潔な英語を推奨する。
@@ -30,11 +34,31 @@
 
 - (`##` と `--` のどちらを用いるか、調整中...)
 
-### Code Block for Shell
+### Code Block
 
-(shellとbashのどちらを用いるか、調整中...)
+ふつう、言語識別子 (language identifier)には、言語名または拡張子名を用いることができる。しかし、拡張子名は言語名に対するエイリアスとして設定されている場合が多い。したがって、言語識別子としては言語名を用いる。判断にあたっては、次のライブラリを参考にした。
 
-## Link
+| Name                        | Use Cases                   |
+| --------------------------- | --------------------------- |
+| highlight.js[^highlight.js] | VSCode                      |
+| linguist[^linguist]         | GitHub[^github]             |
+| rouge[^rouge]               | GitHub Pages[^github_pages] |
+| VSCode[^vscode]             |                             |
+
+[^github]: [Creating and highlighting code blocks | GitHub](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks#syntax-highlighting)
+[^github_pages]: [About GitHub Pages and Jekyll | GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#syntax-highlighting)
+[^highlight.js]: [SUPPORTED_LANGUAGES.md | highlight.js](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md)
+[^linguist]: [languages.yml | linguist](https://github.com/github-linguist/linguist/blob/master/lib/linguist/languages.yml)
+[^rouge]: [Languages.md | rouge](https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers)
+[^vscode]: [markdownEngine.ts | VSCode](https://github.com/microsoft/vscode/blob/main/extensions/markdown-language-features/src/markdownEngine.ts)
+
+なお、Shell Scriptの言語識別子は`shell`とする。調査したすべての環境で利用でき、かつシェルの種類を特定しない書き方であるため。
+
+### Line breaking
+
+(スペース2つと改行2階のどちらが好ましいか、調整中...)
+
+### Link
 
 マークダウンのリンクで、リンクテキスト内で`-`や`(`などをエスケープするかどうかは任意とする。
 
