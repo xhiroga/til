@@ -21,6 +21,7 @@ managed = true
 dev-dependencies = [
     "ipykernel>=6.29.4",
     "matplotlib>=3.9.1",
+    "nb-mypy>=1.0.5",
 ]
 
 [tool.hatch.metadata]

@@ -11,6 +11,8 @@
 -e file:.
 appnope==0.1.4
     # via ipykernel
+astor==0.8.1
+    # via nb-mypy
 asttokens==2.4.1
     # via stack-data
 bitarray==2.9.2
@@ -32,6 +34,7 @@ fonttools==4.53.1
 ipykernel==6.29.4
 ipython==8.25.0
     # via ipykernel
+    # via nb-mypy
 jedi==0.19.1
     # via ipython
 jupyter-client==8.6.2
@@ -45,6 +48,11 @@ matplotlib==3.9.1
 matplotlib-inline==0.1.7
     # via ipykernel
     # via ipython
+mypy==1.10.1
+    # via nb-mypy
+mypy-extensions==1.0.0
+    # via mypy
+nb-mypy==1.0.5
 nest-asyncio==1.6.0
     # via ipykernel
 networkx==3.3
@@ -97,5 +105,7 @@ traitlets==5.14.3
     # via jupyter-client
     # via jupyter-core
     # via matplotlib-inline
+typing-extensions==4.12.2
+    # via mypy
 wcwidth==0.2.13
     # via prompt-toolkit
