@@ -6,12 +6,14 @@
 - [論理回路入門 | 坂井修一](https://amzn.to/4aLvj99)
 - [論理回路入門 | 浜辺隆二](https://amzn.to/4bL7Y8L)
 - [コンピュータアーキテクチャ](https://amzn.to/463PAWD)
+- [GPUを支える技術](https://amzn.to/3VZxX5Y)
 
 ## 電子回路
 
-TTLやCMOSなどの論理回路について語る上で、トランジスタを含む電子回路図を用いる。論理回路の教科書と演習のための最低限の知識を次にまとめた。
+電子回路の中でも半導体を用いて微細な回路を作ったものを集積回路 (IC, integrated circuit)といい、中でも支配的な技術がCMOS (Complementary Metal Oxide Semiconductor, 相補型金属酸化膜半導体)である。
 
-<!-- TODO -->
+CMOSはプロセッサだけでなく、無線通信のための回路にも用いられており、これをCMOS RF技術と呼ぶ。[^xtech_CMOS_RF]
+[^xtech_CMOS_RF]: [第1回：ワイヤレス通信とRF回路の歴史からCMOS RF回路への道を見る](https://xtech.nikkei.com/dm/article/LECTURE/20100804/184798/)
 
 ## 数体系・符号体系
 
@@ -272,9 +274,28 @@ CPUがメモリをフェッチする、という表現が不思議だったの�
 
 ハザードを減らして命令の並列度を上げるために、コンパイラが機械語プログラムを最適化することを静的最適化 (static optimization)という。それに対して、命令をスケジューリングする際に順序を入れ替えることをアウトオブオーダ (out of order)処理といい、逆に入れ替えをしないことをインオーダー (in order)処理という。アウトオブオーダ処理の中でも、命令を演算実行ステージに入れる順番の入れ替えをアウトオブオーダ実行、実行結果をレジスタに格納する順番の入れ替えをアウトオブオーダ完了という。
 
+## GPU
+
+CPUが汎用的な計算を素早く行うのに対して、GPUは並列計算を得意としている。例えばIntel Core i9は24コアを搭載し、各コアが複数のALUを持つ。それに対して、NVIDIA RTX4090は16,384個のCUDA Coreを持つ。
+
+### GPUプログラミング
+
+CPUの世界では命令セットアーキテクチャに沿ったプロセッサの開発が行われているのに対して、GPUのハードウェアでは会社・世代を超えた機械命令の互換性がない。したがって、NVIDIAはPTX (Parallel Thread Execution)という命令セットを公開し、そのレイヤーで互換性を保証している。
+
+#### CUDA
+
+NVIDIAのGPUプログラミング環境。
+
+#### OpenCL
+
+NVIDIAやAMDなどGPUを問わずに使えるGPUプログラミング環境。
+
+#### Metal
+
+macOSやiOSなどでサポートされるCG, GPGPUプログラミングのためのAPI。MSL (Metal Shading Language)を用いてプログラミングを行う。
+
 ## 未分類
 
-- CMOS: WIP
 - CNFET: WIP
 - ファジング: WIP
 - トランザクショナルメモリ: WIP
@@ -286,7 +307,6 @@ CPUがメモリをフェッチする、という表現が不思議だったの�
 - プリフェッチャ: WIP
 - ECL: WIP
 - SIMD (Single Instruction Multiple Data): WIP
-- GPUアーキテクチャ関連: WIP
 - スーパーパイプライン: WIP
 - ひずみゲージ: WIP
 - ワイヤードロジック制御方式とマイクロプログラム制御方式: WIP
