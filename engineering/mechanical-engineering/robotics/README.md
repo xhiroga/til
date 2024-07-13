@@ -40,6 +40,11 @@
 
 ### ROS
 
+### DDS
+
+ROS2に採用されているPub/Sub形式の通信プロトコル。主にUDPを用いて通信し、信頼性についてはDDSのレイヤーで担保しているが、TCPを用いる実装もある。[^youtalk_dds]
+[^youtalk_dds]: [DDS (Data Distribution Service) とは](https://www.youtalk.jp/2017/05/28/dds.html)
+
 ## 設計
 
 - バイオミメティクス: WIP
