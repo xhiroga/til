@@ -90,6 +90,12 @@ $(a+b)^n = \sum_{k=0}^n \binom{n}{k}a^{n-k}{b^k}$
 
 ![ベルヌーイ分布, 二項分布の期待値, 分散の導出](https://i.gyazo.com/thumb/2306/dca4ddec4e49108543cdca0d271b86c1-heic.jpg)
 
+#### ポアソン分布 (Poisson distribution)
+
+単位時間あたりにn回成功するベルヌーイ試行が、m回成功する確率分布をポアソン分布という。
+
+![ポアソン分布の導出](https://i.gyazo.com/thumb/2106/873e132dcb31231b19b55eaf97f5d03e-heic.jpg)
+
 #### 幾何分布 (geometric distribution)
 
 ベルヌーイ試行が初めて成功するまでに何回かかるかの確率分布を幾何分布という。
