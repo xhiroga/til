@@ -16,6 +16,9 @@
 x = 5+6 # 文
 ```
 
+上付き文字、下付き文字は、英語では"superscript", "subscript"という。上付き文字、下付き文字で修飾されていることは、それぞれ「サブ」「スープ」と呼ぶガイドラインがある。[^accessinghigherground_2013]例えば、$x_a^b$は「エックス サブ エー スープ ビー」でよい。
+[^accessinghigherground_2013]: [MATHSPEAK](https://accessinghigherground.org/handouts2013/HTCTU%20Alt%20Format%20Manuals/Math%20Accommodations/07%20MATHSPEAK.pdf)
+
 ## 演算
 
 割り算の法と合同について。ある数aとbをmで割ったときの余りが等しい時、「aとbはmを法として合同」という。フェノールとカテコールはヒドロキシ基を法としてどちらもベンゼン環が残る、みたいな話。
