@@ -1,4 +1,4 @@
-# 確率, 統計 (probability and statistics)
+# 確率論 (probability theory)
 
 ## 期待値, 分散, 標準偏差 (expected value, variance, and standard deviation)
 
@@ -24,6 +24,8 @@
 > 標準偏差の代わりに、分散の分子だけを平方根で括った指標で不都合があることを、次の通り証明します。
 > ![formula](https://i.gyazo.com/thumb/3024/568e1dc7cfddb4ce0a1a6eff369f940d-heic.jpg)
 
+- 中心極限定理: WIP
+
 ### 演算の公式
 
 期待値・分散の世界にも、微分積分の世界における合成関数のような概念があり、変数変換と呼ぶ。
@@ -38,18 +40,6 @@
   - $V[Y] = a^2V[X]$
 
 <!-- なぜ分散のbは無視して良い？ -->
-
-## ベイズの定理 (bayes' theorem)
-
-ベイズの定理における用語は次の通り。
-
-![ベイズの定理](https://i.gyazo.com/thumb/1635/7109ff2f8edfcbb2b28ee88a44c759c5-heic.jpg)
-
-また、[ベイズの定理を面積と計算グラフで表す](https://hiroga.hatenablog.com/entry/2024/05/07/111028)も参照。
-
-> [!NOTE] 仮説を選ぶ際、事後分布を使う必要はある？同時確率で十分では？
-> 確かに、事後分布は同時確率の比を百分率で表したに過ぎないから、同時確率を使って仮説を選んでもいい。
-> ただし、同時確率はデータの珍しさに影響されてしまう。珍しいデータの時も、そうでない時も、一貫した意思決定をするためには、事後分布に基準を設けるのがよいだろう。
 
 ## k次のモーメント・モーメント母関数, 積率母関数 (moments and moment generating functions)
 
@@ -114,6 +104,27 @@ $(a+b)^n = \sum_{k=0}^n \binom{n}{k}a^{n-k}{b^k}$
 - [ガンマ関数(3D) 🔐](https://www.desmos.com/3D/03sdf3jqz9?lang=ja)
 
 ## 統計 (statistics)
+
+- サロゲートデータ法: WIP
+- 共分散分析 (ANCOVA): WIP
+- 不偏推定量: WIP
+
+## ベイズ統計学 (Bayesian statistics)
+
+### ベイズの定理 (bayes' theorem)
+
+ベイズの定理における用語は次の通り。
+
+![ベイズの定理](https://i.gyazo.com/thumb/1635/7109ff2f8edfcbb2b28ee88a44c759c5-heic.jpg)
+
+また、[ベイズの定理を面積と計算グラフで表す](https://hiroga.hatenablog.com/entry/2024/05/07/111028)も参照。
+
+> [!NOTE] 仮説を選ぶ際、事後分布を使う必要はある？同時確率で十分では？
+> 確かに、事後分布は同時確率の比を百分率で表したに過ぎないから、同時確率を使って仮説を選んでもいい。
+> ただし、同時確率はデータの珍しさに影響されてしまう。珍しいデータの時も、そうでない時も、一貫した意思決定をするためには、事後分布に基準を設けるのがよいだろう。
+
+- ベイジアンネットワーク: WIP
+- 共役: WIP
 
 ## 情報理論 (information theory)
 
@@ -209,12 +220,3 @@ https://www2.kobe-u.ac.jp/~bunji/files/lecture/bayes/bayes-07-MCMC2.pdf
 ケンドールの記法によって、次の通り表される。
 
 ### 待ち行列の応用
-
-## 未分類 (uncategorized)
-
-- サロゲートデータ法: WIP
-- 共分散分析 (ANCOVA): WIP
-- 中心極限定理: WIP
-- ベイジアンネットワーク: WIP
-- 不偏推定量: WIP
-- 共役: WIP

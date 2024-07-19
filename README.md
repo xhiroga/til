@@ -86,13 +86,13 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 
 ### 自然科学 (natural science)
 
-#### [数学 (mathematics)](./mathematics/README.md)
+#### [数学 (mathematics)](./natural-science/mathematics/README.md)
 
-- [代数学 (algebra)](./mathematics/algebra/README.md)
-- [微分積分学 (calculus)](./mathematics/calculus/README.qmd)
-- [離散数学 (discrete mathematics)](./mathematics/discrete/README.md)
-- [幾何学 (geometry)](./mathematics/geometory/README.md)
-- [確率, 統計 (probability and statistics)](./mathematics/probability-statistics/README.md)
+- [代数学 (algebra)](./natural-science/mathematics/algebra/README.md)
+- [微分積分学 (calculus)](./natural-science/mathematics/calculus/README.qmd)
+- [離散数学 (discrete mathematics)](./natural-science/mathematics/discrete/README.md)
+- [幾何学 (geometry)](./natural-science/mathematics/geometory/README.md)
+- [確率論 (probability theory)](./natural-science/mathematics/probability-theory/README.md)
 
 ### 工学 (engineering)
 
