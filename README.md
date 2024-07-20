@@ -12,7 +12,6 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 - [暗号理論 (cryptography)](./computer-science/cryptography/README.md)
 - [データ構造, アルゴリズム (data structures and algorithms)](./computer-science/data-structures-algorithms/README.md)
 - [形式言語 (formal language)](./computer-science/formal-language/README.md)
-- [情報理論 (information theory)](./computer-science/infomation-theory/README.md)
 - [機械学習 (machine learning)](./computer-science/machine-learning/README.md)
 - [ネットワーク (network)](./computer-science/network/README.md)
 - [自然言語処理 (natural language processing)](./computer-science/nlp/README.md)
