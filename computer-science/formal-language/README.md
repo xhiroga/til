@@ -20,7 +20,7 @@
 > 実際に使われている。Pythonの`Automata`における`DFA`クラスでは、まさに状態、アルファベット、遷移関数、開始状態、受理状態の集合の5つ組の引数を取る。[^python-automata]ただしアルファベットは`input_symbol`となっている。個人的にはその方が分かりやすいのでとても良いと思う。
 [^python-automata]: [Finite Automata Examples](https://caleb531.github.io/automata/examples/fa-examples/)
 
-ここで有限とは、
+ここで有限とは、(WIP)
 
 ### 非決定性有限オートマトン (NFA, nondeterministic finite automaton)
 
