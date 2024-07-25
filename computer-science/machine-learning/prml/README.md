@@ -8,23 +8,21 @@
 
 観測変数$X$、潜在変数$Z$を持つモデルを考える。目的関数は次の対数尤度関数である。
 
-$\ln p(x_1,x_2,...x_n|\theta) = \ln \prod_{n=1}^N p(x_n|\theta) = \sum_{n=1}^N \ln p(x_n|\theta) = \ln p(X|\theta)$
+$\ln p(X|\theta) = \ln \prod_{n=1}^N p(x_n|\theta) = \sum_{n=1}^N \ln p(x_n|\theta)$
 
-この対数尤度関数に含まれる確率を潜在変数Zの確率に対する周辺確率と見なすと、乗法定理によってXとZの同時確率$p(X,Z|\theta)$と事後確率$p(Z|X, \theta)$に分解できる。以降、対数周辺尤度、対数同時尤度、対数事後尤度と呼ぶ。
+この対数尤度関数に含まれる確率を潜在変数$Z$の確率に対する周辺確率と見なすと、条件付き確率の定義により$X$と$Z$の同時確率$p(X,Z|\theta)$と事後確率$p(Z|X, \theta)$に分解できる。
 
 $\ln p(X|\theta) = \ln p(X,Z|\theta) - \ln p(Z|X,\theta)$
 
-右辺の項について、集合を用いた表記は尤度であることを忘れがちなので、次の通り総積・総和を用いても示しておく。
+右辺の項について、総和を用いて次のように表すこともできる。
 
-$\ln p(X,Z|\theta) = \ln \prod_{n=1}^N p(x_n,z_n|\theta) = \sum_{n=1}^N \ln p(x_n,z_n|\theta)$
+$\ln p(X,Z|\theta) = \sum_{n=1}^N \ln p(x_n,z_n|\theta)$
 
-$\ln p(Z|X,\theta) = \ln \prod_{n=1}^N p(z_n|x_n,\theta) = \sum_{n=1}^N \ln p(z_n|x_n,\theta)$
+$\ln p(Z|X,\theta) = \sum_{n=1}^N \ln p(z_n|x_n,\theta)$
 
-$x_n$に対して$z_n$が一意に定まる場合、つまり完全データ集合$\{X,Z\}$が与えられている場合は、最尤推定によって$\theta$を計算できる。しかし$Z$は潜在変数であり与えられていない。
+$x_n$に対して$z_n$が一意に定まる場合、つまり完全データ集合${X,Z}$が与えられている場合は、最尤推定によって$\theta$を計算できる。しかし$Z$は潜在変数であり与えられていない。
 
-ここで、対数周辺尤度を対数同時尤度と対数事後尤度に分解した等式について、おもむろにxが与えられた上でのzの条件付き確率（負担率）である$q(z)$を用いて期待値を取る。と言っても、左辺の対数周辺尤度$\ln p(X|\theta)$はzを含まないため、そのままで良い。
-
-<!-- おもむろではない説明がしたい -->
+ここで、$Z$の真の分布が未知であるため、近似分布$q(Z)$を導入する。$q(Z)$は$X$が与えられた上での$Z$の条件付き確率（負担率）を表す。この$q(Z)$を用いて、先ほどの等式の期待値を取る。と言っても、左辺の対数周辺尤度$\ln p(X|\theta)$はzを含まないため、そのままで良い。
 
 $\ln p(X|\theta) = \sum_Z q(Z) \ln p(X,Z|\theta) - \sum_Z q(Z) \ln p(Z|X,\theta)$
 
@@ -34,20 +32,25 @@ $\ln p(X|\theta) =
 \sum_{n=1}^N (\sum_{k=1}^K  q(z=k|x_n) \ln p(x_n,z=k|\theta)) -
 \sum_{n=1}^N (\sum_{k=1}^K  q(z=k|x_n) \ln p(z=k|x_n,\theta))$
 
-等式を変形し、$\ln p(X|\theta)$がパタメータの更新によって増加することを示す。
+次に、この等式を変形し、$\ln p(X|\theta)$がパラメータの更新によって増加することを示す。
 
 $\ln p(X|\theta) = \sum_Z q(Z) \ln p(X,Z|\theta) - \sum_Z q(Z) \ln p(Z|X,\theta) + \sum_Z q(Z) \ln q(Z) - \sum_Z q(Z) \ln q(Z)$
+$= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} - \sum_Z q(Z) \ln \frac{p(Z|X,\theta)}{q(Z)}$
+$= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} + \sum_Z q(Z) \ln \frac{q(Z)}{p(Z|X,\theta)}$
 
-$= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} - \sum_Z q(Z) \ln \{\frac{p(Z|X,\theta)}{q(Z)}\}$
+変形した等式の右辺の第1項を$\mathcal{L}(q,\theta)$で表し、変分下限(ELBO, Evidence Lower Bound)と呼ぶ。また、第2項は$q(Z)$を真の分布、$p(Z|X,\theta)$を近似分布と見做したKLダイバージェンス$KL(q||p_\theta)$である。ここで$p_\theta$は$p(Z|X,\theta)$を表す。従って、次の関係が成り立つ。
 
-$= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} + \sum_Z q(Z) \ln \{\frac{q(Z)}{p(Z|X,\theta)}\}$
+$\ln p(X|\theta) = \mathcal{L}(q,\theta) + KL(q||p_\theta)$
 
-変形した等式の右辺の1項目を$\mathcal{L}(q,\theta)$で表し、変分下限(ELBO, Evidence Lower Bound)と呼ぶ。また、2項目は$q(z)$を真の分布、$p(Z|X,\theta)$を近似分布と見做したKLダイバージェンス$KL(q||p)$である。従って、次の関係が成り立つ。
+この式を用いてEMアルゴリズムを以下のように定義する：
 
-$\ln p(X|\theta) = \mathcal{L}(q,\theta) + KL(q||p)$
+- Eステップ：$\theta$を固定して$q(Z)$を更新する。具体的には、$q(Z) = p(Z|X,\theta)$とする。これにより$KL(q||p_\theta)$が0になり、$\ln p(X|\theta) = \mathcal{L}(q,\theta)$となる。
+- Mステップ：Eステップで得られた$q(Z)$を用いて$\mathcal{L}(q,\theta)$を$\theta$について最大化する。これにより、$\ln p(X|\theta)$の下限を上げる。
 
-この式の意味を考え、次にこの式を用いてEMアルゴリズムを定義する。まず$\mathcal{L}(q,\theta)$は、$q(z)$が$p(Z|X)$と一致した際に$\ln p(X)$と等しい。次に$KL(q||p)$は常に非負である。
+EMアルゴリズムの各反復において、以下のことが保証される：
 
-Eステップでは、$\theta$を固定して$q(z)$を更新する。$\ln p(X|\theta)$は$q(z)$に依存しないから、Eステップは対数尤度を据え置く。
+- Eステップでは、$q(Z)$を$p(Z|X,\theta)$に設定する。これにより$KL(q||p_\theta)$は0になるが、$\ln p(X|\theta)$自体は$q(Z)$に依存しないため変化しない。むしろ、$\mathcal{L}(q,\theta)$が$\ln p(X|\theta)$に等しくなる。
+- Mステップでは$\mathcal{L}(q,\theta)$が増加するため、$\ln p(X|\theta)$も必ず増加する。
 
-Mステップでは、Eステップでより確からしくなった$q(z)$を用いて$\theta$を更新する。しかしながら、zの分布から求められるzの期待値は、潜在変数zの真の値とは当然一致しない（カテゴリカル分布等ではなく多項式を用いても完全一致しないことの方が多いだろう）したがって、$\ln p(X|\theta)$と$\mathcal{L}(q,\theta)$との間には差が生じる。その差が新たなKLダイバージェンスである。
+したがって、EMアルゴリズムは各反復で$\ln p(X|\theta)$を単調増加させ、局所最適解に収束する。ただし、$\mathcal{L}(q,\theta)$の最大化が解析的に行えない場合は、数値的な最適化手法を用いる必要がある。
+この証明により、EMアルゴリズムが対数尤度関数を確実に極大化することが示された。
