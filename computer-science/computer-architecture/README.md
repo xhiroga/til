@@ -417,5 +417,4 @@ DRAMからのメモリ・ロードは何百クロック・サイクルにも及�
 - プリフェッチャ: WIP
 - SIMD (Single Instruction Multiple Data): WIP
 - スーパーパイプライン: WIP
-- ひずみゲージ: WIP
 - ワイヤードロジック制御方式とマイクロプログラム制御方式: WIP
