@@ -73,6 +73,9 @@
 また、金属材料の導体を向かい合わせに設置することで、距離の違いによる静電容量の違いを検出する手法もあり、これを静電容量式という。[^omron_forcesensor]
 [^omron_forcesensor]: [「力覚センサ」とは？ロボットによる匠の技の再現を実現](https://www.fa.omron.co.jp/product/special/library/robotics/forcesensor/)
 
+触覚センサが実際に触れることを必要とする一方で、センサと物体表面が近距離にある場合に触覚を検出できるセンサを近接覚センサという。近接覚センサは触覚センサと距離センサの中間ということができる。例えば手先を物体に近づけるとき、素早い速度でぶつかると衝撃がある。触覚センサはぶつかってからしか測定ができないので、ゆっくりと近づかざるを得ない。しかし近接覚センサがあれば、近づくまでは高速に動作することができる。超音波反射式や光反射式などの方式がある。[^jisedai-tech-labo_proximitysensor]
+[^jisedai-tech-labo_proximitysensor]: [近接覚センサとは？](https://jisedai-tech-labo.nanoxeed.co.jp/proximitysensor/)
+
 - LiDAR: WIP
 - カルマンフィルタ: WIP
 - 自己受容感覚（proprioception）: WIP
@@ -167,6 +170,5 @@ ZMP法に基づく歩行は、人間や動物の自然な歩き方とは異な�
 - ラグランジュの運動方程式: WIP
 - ステップ応答と伝達関数: WIP
 - H∞制御: WIP
-- 近接覚センサとその原理: WIP
 - インパルス応答とステップ応答とその関係: WIP
 - PID制御: WIP
