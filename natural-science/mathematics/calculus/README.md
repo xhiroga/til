@@ -170,6 +170,20 @@ $$
 
 $f(x)$が区間内で二階微分可能なとき、下に凸なら$f''(x) \ge 0$、上に凸なら$f''(x) \le 0$である。
 
+#### Jensenの不等式
+
+上に凸な関数について、次の不等式が成立する。
+
+$$
+\begin{align}
+\sum_i \lambda_i f(x_i) \ge f(\sum_i \lambda_i x_i)
+\end{align}
+$$
+
+また、下に凸な関数については、不等号を逆向きにした不等式が成立する。
+
+[DesmosによるJensenの不等式のグラフ](https://www.desmos.com/calculator/ipbkvs3c3r)も参照。
+
 ### 級数と一様収束
 
 ## 偏微分 (partial derivative)

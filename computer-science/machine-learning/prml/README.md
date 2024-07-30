@@ -28,15 +28,23 @@ $\ln p(X|\theta) = \sum_Z q(Z) \ln p(X,Z|\theta) - \sum_Z q(Z) \ln p(Z|X,\theta)
 
 総和を用いても示す。
 
-$\ln p(X|\theta) =
+$$
+\begin{align}
+\ln p(X|\theta) =
 \sum_{n=1}^N (\sum_{k=1}^K  q(z=k|x_n) \ln p(x_n,z=k|\theta)) -
-\sum_{n=1}^N (\sum_{k=1}^K  q(z=k|x_n) \ln p(z=k|x_n,\theta))$
+\sum_{n=1}^N (\sum_{k=1}^K  q(z=k|x_n) \ln p(z=k|x_n,\theta))
+\end{align}
+$$
 
 次に、この等式を変形し、$\ln p(X|\theta)$がパラメータの更新によって増加することを示す。
 
-$\ln p(X|\theta) = \sum_Z q(Z) \ln p(X,Z|\theta) - \sum_Z q(Z) \ln p(Z|X,\theta) + \sum_Z q(Z) \ln q(Z) - \sum_Z q(Z) \ln q(Z)$
-$= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} - \sum_Z q(Z) \ln \frac{p(Z|X,\theta)}{q(Z)}$
-$= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} + \sum_Z q(Z) \ln \frac{q(Z)}{p(Z|X,\theta)}$
+$$
+\begin{align}
+\ln p(X|\theta) &= \sum_Z q(Z) \ln p(X,Z|\theta) - \sum_Z q(Z) \ln p(Z|X,\theta) + \sum_Z q(Z) \ln q(Z) - \sum_Z q(Z) \ln q(Z) \\
+&= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} - \sum_Z q(Z) \ln \frac{p(Z|X,\theta)}{q(Z)} \\
+&= \sum_Z q(Z) \ln \frac{p(X,Z|\theta)}{q(Z)} + \sum_Z q(Z) \ln \frac{q(Z)}{p(Z|X,\theta)}
+\end{align}
+$$
 
 変形した等式の右辺の第1項を$\mathcal{L}(q,\theta)$で表し、変分下限(ELBO, Evidence Lower Bound)と呼ぶ。また、第2項は$q(Z)$を真の分布、$p(Z|X,\theta)$を近似分布と見做したKLダイバージェンス$KL(q||p_\theta)$である。ここで$p_\theta$は$p(Z|X,\theta)$を表す。従って、次の関係が成り立つ。
 
