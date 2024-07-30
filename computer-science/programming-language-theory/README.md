@@ -8,6 +8,7 @@
 - [Programming Language Design and Implementation](https://www.springerprofessional.de/en/programming-language-design-and-implementation/23739088)
 - [Concept of Programming Languages](https://www.sci.brooklyn.cuny.edu/~chuang/books/sebesta.pdf)
 - [Foundations of Programming Languages](https://link.springer.com/book/10.1007/978-3-319-70790-7)
+- [プログラミング言語論](https://web.sfc.keio.ac.jp/~hattori/prog-theory/ja/index.html)
 - [Claude🔐](https://claude.ai/chat/bd1635ce-06a1-4ac4-8174-66569a915c73)
 
 ## プログラミング言語の歴史
@@ -106,7 +107,13 @@ GC (garbage collect) は、プログラムが動的に割り当てたメモリ�
 
 ### スコープ, 関数, パラメータ渡し (scopes, functions and parameter passing)
 
+関数において、関数定義において引数を受け取る変数と、呼び出し時に渡される値を、それぞれ仮引数(formal parameter)、実引数(actual parameter)と呼んで区別する。
+
 <!-- > [!NOTE] ラムダ式と無名関数と匿名関数って同じ意味で使っていいの？ -->
+
+- クロージャ（閉包）: WIP
+- 第一級オブジェクト: WIP
+- 末尾関数: WIP
 
 ### 制御構造 (control structures)
 
@@ -162,6 +169,8 @@ def one_two_three():
 
 ### 関数型プログラミング (functional programming)
 
+- 参照透明性: WIP
+
 ### 論理プログラミング (logical programming)
 
 ### 並行 / 並列 / 非同期プログラミング (concurrent / parallel / asynchronous programming)
@@ -170,16 +179,10 @@ def one_two_three():
 
 <!-- コルーチン, ゴルーチンとの違いも -->
 
+- リアルタイム性: WIP
+
 ### ドメイン固有言語 (DSL, domain specific language)
 
 ### Foreign function interface (FFI)
 
 FFIとは異なるプログラミング言語によって書かれたモジュールを呼び出すための仕組みを言う。例えばPythonには`ctypes`ライブラリが存在し、C/C++で書かれた共有オブジェクトライブラリを読み込んでメソッド等の実行を可能にする。元々C/C++向けに書かれたコードを`ctypes`で呼び出す場合は、データ型の変換等は`ctypes`が担う。しかし、C/C++でPython向けのライブラリを実装する場合は、C/C++からPythonのメモリにアクセスする必要がある。そのような場合には、`<Python.h>`を用いるとよく、これもFFIと言える。
-
-## 未分類 (uncategorized)
-
-- リアルタイム性: WIP
-- クロージャ（閉包）: WIP
-- 第一級オブジェクト: WIP
-- 末尾関数: WIP
-- 参照透明性: WIP
