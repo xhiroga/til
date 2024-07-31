@@ -418,9 +418,13 @@ ROUGE (Recall-Oriented Understudy for Gisting Evaluation, ルージュ)は、要
 
 [^vaswani_2017]: [A. Vaswani et al., “Attention is All you Need,” in Advances in Neural Information Processing Systems, Curran Associates, Inc., 2017.](https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html)
 
-##### Self-Attention
-
-##### Encoder/Decoder
+- Self-Attention
+- Encoder/Decoder
+- Multi-head attention
+- 位置符号化
+- Cross-Attention
+- 残差結合
+- 層正規化
 
 #### CLIP (2021)[^radford_2021]
 
