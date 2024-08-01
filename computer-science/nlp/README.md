@@ -4,6 +4,7 @@
 
 - [自然言語処理の基礎](https://amzn.to/3VXZB2W)
 - [IT Text 自然言語処理の基礎](https://amzn.to/3Lh9uEk)
+- [ゼロから作るDeep Learning ❷](https://amzn.to/3zSlbif)
 
 ## 辞書とコーパス
 

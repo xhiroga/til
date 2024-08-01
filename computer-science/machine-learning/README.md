@@ -98,11 +98,15 @@ $P = \prod_{n=1}^{N} N(t_n|f(x_n), \sigma^2)$
 
 ロジスティック回帰という名前だが分類のアルゴリズム。[ロジスティック回帰は回帰か分類か](https://scrapbox.io/nishio/ロジスティック回帰は回帰か分類か)も参照。
 
-#### k平均法
-
 #### k近傍法 (k-nearest neighbor algorithm)
 
-教師あり学習の手法の一つ。ラベルが未知の入力データに対して、入力データと全データの間の距離を測定する。例えば、環境（気温・湿度・風速）から天気を予測する分類問題なら、気温・湿度・風速の3次元空間でのデータ間の距離を測定する。距離はユークリッド距離を使うことが多いが、原理的にはマンハッタン距離などでも構わない。
+分類アルゴリズムの一つ。例えば、天気を予測する問題を考える。気温・湿度・風速が与えられており、過去のデータ（教師データ）が利用できるとする。このとき、入力データを気温・湿度・風速の3軸からなる3次元空間にプロットし、最も近いk個のデータのラベルで多数決を取って、そのラベルを入力データのラベルの予測とする。このアルゴリズムをk近傍法といい、特にk=1の時に最近謗法という。データセット上のすべてのテントの距離を計算する必要があるため、データのサイズが大きい時にそのまま使うと時間がかかる。
+
+また、過去のデータをそのまま用いるのではなく、ラベル毎にデータの重心を求め、入力データから最も近い重心のラベルを予測に用いるアルゴリズムをNCC (Nearest Centroid Classifier, あえて訳せば最近傍重心法)という。
+
+#### k平均法 (k-nearest means algorithm)
+
+クラスタリングの手法。NCCを教師なし学習で行う。といっても、教師データがないためにラベルがないから、適切な重心がどこだか分からない。そこで、初めに適当な位置に重心をばらまく。次に、重心毎に入力データを分類し、分類されたデータの重心を新たな重心とすることを繰り返す。このアルゴリズムをk平均法という。
 
 #### EMアルゴリズム
 
@@ -241,7 +245,17 @@ plt.show()
 
 #### 畳み込みニューラルネットワーク (CNN, Convolutional Neural Network)
 
+画像の分類タスクを考える。例えば、トラとライオンを分類するとする。トラには縞模様があるから、ニューラルネットワークの下位レイヤーは模様を検出しそうだ。そのような働きを促進するため、訓練可能なフィルターを設けることを考える。具体的には、入力データと積和演算を行う適当なサイズの行列（例えば、3x3）を作り、そのフィルターを1ピクセルづつ（この間隔は調整できる）ずらしていく。このような層を畳み込み層という。
+
+また、画像処理は1ピクセルのズレに対して鈍感であってほしい。トラの画像をトリムしたり回転させてもトラであるため。そこで、入力データを縮小することを考える。具体的には、適当なサイズ（例えば、2x2）ごとに入力データのの最大値や平均を取って、新たな行列の要素とする。この対象領域をウィンドウと呼ぶが、例えばウィンドウが2x2なら、入力に対する出力のサイズは1/4になる。このような層をプーリング層という。
+
 #### リカレントニューラルネットワーク (RNN, Recurrent Neural Network)
+
+ニューラルネットワークによる文章の生成を考える。文章は単語や文字をベクトル（例：one-hot encodingや単語埋め込み）に変換することでコンピュータが扱える形式になる。そのため、ベクトルを入力にベクトルを出力するニューラルネットワークを考えれば良い。
+
+しかし、単純な実装ではトークン数とベクトルの次元の積の入力が必要となる。この方式は入力可能なトークン数に限度があるし、限度を変更する度に再度訓練が必要になる。そこで、トークンは1つづつ処理することにする。代わりに、前のトークンを入力にした隠れ層を次のトークンの入力と合わせて使う。この隠れ層は過去の情報を要約して保持する役割を果たす。これを循環的に行うことで、入力サイズは固定長でありながら、自由な長さの文字列を扱うことができる。このモデルをRNNという。
+
+RNNは長い系列を扱える一方で、系列が長くなると過去の情報を保持しにくくなる課題もある。
 
 #### LSTM
 
@@ -337,9 +351,15 @@ plt.show()
 
 観測データの特徴変数$x$から目的変数$y$を推測するにあたって、$P(y|x)$の条件付き確率のみを用いるモデルを識別モデル(discriminative model)と呼ぶ。逆に、目的変数$y$が与えられた際に特徴変数が$x$である尤度$P(x|y)$と、$y$が観測できる事前確率$P(y)$を用いて、同時確率$P(x,y)$を最大化する$y$を求めるモデルを生成モデル(generative model)と呼ぶ。
 
-### 生成モデルのアーキテクチャ
+### 生成モデルの学習手法
 
 #### 敵対的生成ネットワーク (GAN, Generative Adversarial Networks)
+
+生成モデルの学習フレームワークの1つ。生成モデルでは、これまで存在しなかったような画像などを生成する場合、元画像が存在しない。そのため、ニューラルネットワークへのフィードバックにあたって、元画像と生成画像を比較して尤もらしさを算出することができない。
+
+これに対しては、すでに訓練済みの画像分類モデル（例えばResNet）などを用いる方法が考えられる。しかし、生成したい分野の訓練済みモデルが都合良くあるとは限らない。また、分類モデルは画像が生成されたかどうかを見破ることに特化されていないため、生成された画像がある程度尤もらしくなると、それ以上の品質向上に貢献できないかもしれない。そこで、生成器(generator)と併せて識別器(discriminator)を訓練することを考える。これをGANという。
+
+### 生成モデルのアーキテクチャ
 
 #### オートエンコーダ
 
@@ -347,7 +367,7 @@ plt.show()
 （検索した限り、元論文には"autoencoder"という単語はないようだ。）[^Learning_internal_representations_by_error_propagation]
 
 [^Autoencoders_Unsupervised_Learning_and_Deep_Architectures]: [Baldi, P. (2012, June). Autoencoders, unsupervised learning, and deep architectures. In Proceedings of ICML workshop on unsupervised and transfer learning (pp. 37-49). JMLR Workshop and Conference Proceedings.](http://proceedings.mlr.press/v27/baldi12a/baldi12a.pdf)
-: [Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1985). Learning internal representations by error propagation. California Univ San Diego La Jolla Inst for Cognitive Science.](https://cs.uwaterloo.ca/~y328yu/classics/bp.pdf)
+[^Learning_internal_representations_by_error_propagation]: [Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1985). Learning internal representations by error propagation. California Univ San Diego La Jolla Inst for Cognitive Science.](https://cs.uwaterloo.ca/~y328yu/classics/bp.pdf)
 
 2000年代に研究が再燃し、画像のノイズ除去などに用いられるようになる。
 
@@ -466,7 +486,7 @@ CLIPは正例と近い負例・遠い負例の距離に注意を払っていな�
 対比学習の手法の1つ、SimCLRではInfoNCE損失関数([Desmos](https://www.desmos.com/calculator/nh1ntozu9o)[[🔐](https://www.desmos.com/calculator/mbn55ivvh6)])を用いる。
 ミニバッチ内の同じ画像のデータ拡張から得たベクトルのコサイン類似度は近くなるように、そうでないベクトルのコサイン類似度は遠くなるように学習を進める。(正例のコサイン類似度/負例のコサイン類似度合計)にマイナスを付けて損失にするが、exponentialを取ってから自然対数を取り直す一工夫が入っている（正例・負例の部分を逆数にした方が、マイナスが取れて式がシンプルでは？）
 
-### VL-Checklist (2023)[^zhao_2023]
+#### VL-Checklist (2023)[^zhao_2023]
 
 [^zhao_2023]: [T. Zhao et al., “VL-CheckList: Evaluating Pre-trained Vision-Language Models with Objects, Attributes and Relations.” arXiv, Jun. 22, 2023. doi: 10.48550/arXiv.2207.00221.](https://arxiv.org/abs/2207.00221)
 
