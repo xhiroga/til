@@ -56,6 +56,8 @@ $G_1$の各行を書き換え規則(substitution rule)という。書き換え�
 プログラミング言語の文法を厳密に示すことは、コンパイラの環境差異に関わる現実的な問題であった。ALGOL 60において、文法の規則にはスタックを用いることができる文脈自由文法が採用され、その記述のためにバッカス・ナウア記法が考案された。2024年現在では、BNFを拡張したEBNFが標準的に用いられている。例えば、Pythonの文法はEBNFを用いて定義され、公開されている。[^python_grammar]
 [^python_grammar]: [Full Grammar Specification](https://docs.python.org/3/reference/grammar.html)
 
+<!-- WIP 例が欲しい -->
+
 BNFやその拡張仕様を用いることで、プログラミング言語の開発において、既存の構文解析器やドキュメント生成ツールを用いることができる。
 
 - PEG:WIP

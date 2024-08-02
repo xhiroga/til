@@ -8,6 +8,10 @@
 - [アルゴリズム | ともめも](https://www.tomotaku.com/category/algorithm/)
 - [Claude🔐](https://claude.ai/chat/faa01c3e-fb05-40f0-9f0e-6a6bb2b80d0f)
 
+<!-- ページの設計思想
+- WIP
+ -->
+
 ## 基礎知識
 
 ### 漸近記法

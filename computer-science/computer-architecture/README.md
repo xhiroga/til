@@ -10,7 +10,7 @@
 - [GPUを支える技術](https://amzn.to/3VZxX5Y)
 - [グラフィックスとGPUコンピューティング (コンピュータの構成と設計 ボーナスコンテンツ)](https://bookplus.nikkei.com/atcl/catalog/14/P98420/)
 
-<!-- 設計思想
+<!-- ページの設計思想
 - ページ全体の流れは低レイヤーから高レイヤーに向かうようにしている。ただし、nand2tetrisや坂井先生の教科書に倣って冒頭は論理演算である
 - ページの章レベルと教科書の章レベルを揃えている
 - 章タイトルはパタヘネを参考にしつつ、簡潔にしている
@@ -183,6 +183,8 @@ CMOSはプロセッサだけでなく、無線通信のための回路にも用�
   - GAL
   - FPGA
   - CPLD
+
+<!-- WIP: ページ構成 -->
 
 ### ハードウェア記述言語 (HDL, hardware description language)
 
@@ -373,6 +375,7 @@ Webアプリケーション開発においては、キャッシュと言えばCl
 - SIMD
 - MIMD
 
+<!-- WIP -->
 [^miyazaki_2023]: [SIMD命令／GPGPU（最強DB講義「計算機の進歩とデータベース技術の進化」by 宮崎純 Part4）](https://www.youtube.com/watch?v=Cm-yMSWFCz8&t=20s)
 
 ### GPU
