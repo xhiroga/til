@@ -77,7 +77,6 @@
 [^jisedai-tech-labo_proximitysensor]: [近接覚センサとは？](https://jisedai-tech-labo.nanoxeed.co.jp/proximitysensor/)
 
 - LiDAR: WIP
-- カルマンフィルタ: WIP
 - 自己受容感覚（proprioception）: WIP
 - interoception
 - exteroception
