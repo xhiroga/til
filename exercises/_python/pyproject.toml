@@ -16,6 +16,15 @@ requires-python = ">= 3.8"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["aoj"]
+
+[tool.ruff]
+extend-include = ["*.ipynb"]
+
 [tool.rye]
 managed = true
 dev-dependencies = [
@@ -23,9 +32,3 @@ dev-dependencies = [
     "matplotlib>=3.9.1",
     "nb-mypy>=1.0.5",
 ]
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["aoj"]
