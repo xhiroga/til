@@ -44,10 +44,9 @@ TypeScriptをJavaScriptに変換するような、ターゲット言語が機械
 | LL(k)法    | LL(k)文法        | O(N)   | トップダウン | 再帰下降構文解析に適している   |
 | LR(k)法    | LR(k)文法        | O(N)   | ボトムアップ | シフト還元法を使用             |
 
-再帰下降構文解析(recursive descent parsing)では、パーサを再帰的なメソッドで構成する。例えば`parseWhileStatement()`は`while`トークンを解析し、残りのトークンを次のメソッドに渡す、という流れでパースできる。
+与えられたトークンの集合を、1つの変数から2つの変数が生成される規則に則った二分木として解釈し、規則を満たす組合せを探索するアルゴリズムをCYK法という。名前は人名に因む。動的計画法で実装できる。CYK法では、1変数（非終端記号）が2つの非終端記号または1つの葉（終端記号）を生成する制約に則った生成規則を必要とし、これをチョムスキー標準形という。
 
-- チョムスキー標準形: WIP
-- シフト還元法: WIP
+再帰下降構文解析(recursive descent parsing)では、パーサを再帰的なメソッドで構成する。例えば`parseWhileStatement()`は`while`トークンを解析し、残りのトークンを次のメソッドに渡す、という流れでパースできる。
 
 文脈自由文法およびその部分集合について、次の表にまとめた。
 
@@ -71,13 +70,13 @@ TypeScriptをJavaScriptに変換するような、ターゲット言語が機械
 
 VMには、次のような種類がある。なお、厳密にはLLVMはVMではなくコンパイラのバックエンドだが、IRからコード生成を行うプログラムとしてまとめて表にした。
 
-| VM/Compiler        | IR                    | Source Language                      | Note               |
-| ------------------ | --------------------- | ------------------------------------ | ------------------ |
-| JVM                | Java Bytecode         | Java, Kotlin, Scala, Groovy, Clojure | - 強力な最適化とGC |
-| .NET CLR           | CIL                   | C#, F#, Visual Basic .NET            | - Microsoftが開発  |
-| GraalVM            | Truffle AST, Graal IR | Java, JavaScript                     | - Oracleが開発     |
-| LLVM               | LLVM IR               | C, C++, Rust, Swift, Objective-C     | - コンパイラ基盤   |
-| V8, Wasmer, etc... | WebAssembly bytecode  | C, C++, Rust, AssemblyScript         | - ブラウザ内で動作 |
+| VM/Compiler        | IR                    | Source Language                      | Note             |
+| ------------------ | --------------------- | ------------------------------------ | ---------------- |
+| JVM                | Java Bytecode         | Java, Kotlin, Scala, Groovy, Clojure | 強力な最適化とGC |
+| .NET CLR           | CIL                   | C#, F#, Visual Basic .NET            | Microsoftが開発  |
+| GraalVM            | Truffle AST, Graal IR | Java, JavaScript                     | Oracleが開発     |
+| LLVM               | LLVM IR               | C, C++, Rust, Swift, Objective-C     | コンパイラ基盤   |
+| V8, Wasmer, etc... | WebAssembly bytecode  | C, C++, Rust, AssemblyScript         | ブラウザ内で動作 |
 
 ### 最適化
 
@@ -176,8 +175,6 @@ def one_two_three():
 ### 並行 / 並列 / 非同期プログラミング (concurrent / parallel / asynchronous programming)
 
 システムがIO処理を行うとき、待ち時間にCPUで処理を行うことで処理性能を引き上げられる。そのための手段として自然に思いつくのがマルチスレッドだが、並行数が予め分かっているのであれば、もっと簡単な書き方が考えられる。即ち、並行処理は処理状態をオブジェクトとして返し、かつ同期的な文法を用いることである。このように、実行途中であっても処理を呼び出し元に返し、非同期で並行して処理を進める関数をコルーチンという。JavaScriptの`async/await`はコルーチンである。
-
-<!-- セマフォ -->
 
 ### ドメイン固有言語 (DSL, domain specific language)
 
