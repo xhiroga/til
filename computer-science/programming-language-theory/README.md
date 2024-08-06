@@ -179,8 +179,6 @@ def one_two_three():
 
 <!-- セマフォ -->
 
-- リアルタイム性: WIP
-
 ### ドメイン固有言語 (DSL, domain specific language)
 
 ### Foreign function interface (FFI)
