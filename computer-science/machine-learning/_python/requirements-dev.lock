@@ -49,10 +49,14 @@ nest-asyncio==1.6.0
 numpy==2.0.1
     # via contourpy
     # via matplotlib
+    # via pandas
     # via python
+    # via scipy
 packaging==24.1
     # via ipykernel
     # via matplotlib
+pandas==2.2.2
+    # via python
 parso==0.8.4
     # via jedi
 pexpect==4.9.0
@@ -76,9 +80,14 @@ pyparsing==3.1.2
 python-dateutil==2.9.0.post0
     # via jupyter-client
     # via matplotlib
+    # via pandas
+pytz==2024.1
+    # via pandas
 pyzmq==26.1.0
     # via ipykernel
     # via jupyter-client
+scipy==1.14.0
+    # via python
 six==1.16.0
     # via asttokens
     # via python-dateutil
@@ -94,5 +103,7 @@ traitlets==5.14.3
     # via jupyter-client
     # via jupyter-core
     # via matplotlib-inline
+tzdata==2024.1
+    # via pandas
 wcwidth==0.2.13
     # via prompt-toolkit
