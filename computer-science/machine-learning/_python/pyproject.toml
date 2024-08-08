@@ -4,7 +4,10 @@ version = "0.1.0"
 authors = [
     { name = "Hiroaki Ogasawara", email = "13391129+xhiroga@users.noreply.github.com" }
 ]
-dependencies = []
+dependencies = [
+    "numpy>=2.0.1",
+    "matplotlib>=3.9.1.post1",
+]
 readme = "README.md"
 requires-python = ">= 3.11"
 
@@ -14,7 +17,9 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "ipykernel>=6.29.5",
+]
 
 [tool.hatch.metadata]
 allow-direct-references = true

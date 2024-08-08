@@ -9,3 +9,27 @@
 #   generate-hashes: false
 
 -e file:.
+contourpy==1.2.1
+    # via matplotlib
+cycler==0.12.1
+    # via matplotlib
+fonttools==4.53.1
+    # via matplotlib
+kiwisolver==1.4.5
+    # via matplotlib
+matplotlib==3.9.1.post1
+    # via python
+numpy==2.0.1
+    # via contourpy
+    # via matplotlib
+    # via python
+packaging==24.1
+    # via matplotlib
+pillow==10.4.0
+    # via matplotlib
+pyparsing==3.1.2
+    # via matplotlib
+python-dateutil==2.9.0.post0
+    # via matplotlib
+six==1.16.0
+    # via python-dateutil
