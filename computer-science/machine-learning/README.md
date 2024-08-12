@@ -313,7 +313,7 @@ plt.show()
 
 また、勾配の値を正規化することも考えられる。同じ層のすべての勾配のノルムが閾値になるように調整すれば良い。これを勾配クリッピングという。
 
-勾配消失・勾配爆発は、時系列データを扱うRNNで特に問題となる。詳しくは[LSTM](#lstm)を参照。
+勾配消失・勾配爆発は、時系列データを扱うRNNで特に問題となる。詳しくは[LSTM](#lstm-long-short-term-memory)を参照。
 
 #### 残差接続
 
@@ -349,6 +349,10 @@ Elman RNN(LSTMではないシンプルなRNNを指す)やLSTMは、分類や予�
 LSTMでは、系列の分類タスクや、系列のタイムステップと出力が1:1で対応するようなタスクを処理できた。次に、系列から系列を予測・生成するが、タイムステップどうしが必ずしも1:1で対応しないタスクを考える。例えば、日本語から英語への翻訳である。
 
 系列から系列の変換タスクでは、一度全ての入力情報が隠れ状態に含まれるのを待ち、それから出力を始める。したがって、入力が完了したことを示す工夫などが求められる。そこで、入力を隠れ状態へと変換するLSTM（エンコーダ）と、隠れ状態を元に系列を生成するLSTM（デコーダ）を繋げることを考える。2つのLSTMで役割を分担することで、エンコード・デコードに特化した学習や機能の導入が簡単になる。このようなアーキテクチャをエンコーダ・デコーダモデルといい、エンコーダ・デコーダモデルを含む系列から系列への変換を行うモデルをseq2seqという。
+
+#### seq2seq with attention
+
+エンコーダ・デコーダモデルによる翻訳タスクを考える。固定長である。
 
 #### グラフニューラルネットワーク (GNN)
 
@@ -523,9 +527,9 @@ ROUGE (Recall-Oriented Understudy for Gisting Evaluation, ルージュ)は、要
 
 ### 大規模事前学習のアーキテクチャ
 
+#### BERT
+
 #### Transformer (2017)[^vaswani_2017]
-
-
 
 [^vaswani_2017]: [A. Vaswani et al., “Attention is All you Need,” in Advances in Neural Information Processing Systems, Curran Associates, Inc., 2017.](https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html)
 
