@@ -253,6 +253,7 @@ KMP法は、一度比較した文字は、なるべく2回比較したくない�
 - 閉路を含むか
   - 巡回グラフ (cyclic graph)
   - 非巡回グラフ (acyclic graph)
+  - コーダルグラフ (chordal graph): 4つ以上の頂点の閉路が全て弦を持つグラフ。言い換えると、三角形から構成されるグラフ。
 
 他に次のような定義がある。
 
@@ -272,6 +273,7 @@ KMP法は、一度比較した文字は、なるべく2回比較したくない�
       - 最小全域木 (minimum spanning tree): 全域木のうち、合計の重みが最も軽い木。「すべての地域に電力を届けるための最も安いネットワークは？」といった応用がある。
       - 最短路全域木 (shortest path spanning tree): 単にshortest path tree(最短路木)といってこれを指すことが多い印象。
   - 誘導全域部分グラフ (induced spanning subgraph): 定義する必要なし（それって同型なので）
+  - クリーク (clique): 完全部分グラフともいう。その部分グラフに含まれるすべての頂点はお互いに辺を持つ必要がある。
 
 なぜ誘導グラフと呼ぶかについては、[「生成部分グラフ」という用語について](http://www.co.mi.i.nagoya-u.ac.jp/~yagiura/surijoho8/induced_subgraph.pdf)を参照。
 
