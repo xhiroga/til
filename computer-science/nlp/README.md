@@ -116,9 +116,18 @@ lamb, wombat
 
 > [!NOTE] IDFの底は？
 > 数学的には何でも構わない。通常2を使用するが、`sklearn`など実装によっては自然対数を用いることもあるという書き込みを見つけた。[^stackoverflow_56002611]出典の論文へのアクセス権がないため、それ以上の調査はできていない。
+
 [^stackoverflow_56002611]: [When to use which base of log for tf-idf?](https://stackoverflow.com/questions/56002611/when-to-use-which-base-of-log-for-tf-idf)
 
 ## 単語ベクトル表現
+
+単語をベクトルで表したものを単語埋め込み(word embedding)ということがある。
+
+CBoW: WIP
+
+### 単語ベクトルの応用
+
+コサイン類似度
 
 ## ニューラルネットワーク
 
