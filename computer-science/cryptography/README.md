@@ -2,7 +2,7 @@
 
 ページ構成の際、次の情報源を参考にした。
 
-- [暗号理論入門 原書第3版](https://amzn.to/4fA1TP0)
+- [暗号理論入門 原書第3版](https://amzn.to/4fA1TP0)（[丸善出版](https://www.maruzen-publishing.co.jp/item/b294238.html)）
 - [Claude🔐](https://claude.ai/chat/eb58612f-ac93-4fac-b4dd-13b50a3b93f4)
 
 ## DESアルゴリズム
@@ -10,6 +10,13 @@
 ## AWS暗号化アルゴリズム
 
 ## 公開鍵方式
+
+## デジタル署名
+
+### ヒステリシス署名
+
+ブロックチェーンのように、デジタル署名の連鎖によってデータの改竄検知、連続性の担保を行う技術。PoWのような合意形成の仕組みは無いため、ブロックチェーンとは違い中央サーバーが必要な点が大きく異なる。日本の大学および日立製作所による共同研究。[^hitachi_2003]
+[^hitachi_2003]: [ヒステリシス署名](https://web.archive.org/web/20090906015858/http://www.hitachi.co.jp/Div/jkk/glossary/0410.html)
 
 ## 認証
 
