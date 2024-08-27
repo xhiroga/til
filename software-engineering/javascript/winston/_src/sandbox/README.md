@@ -1,6 +1,6 @@
 # winston to log node.js applications
 
-```sh
+```shell
 nodemon bin/www         # start application localhost:3000
 ```
 

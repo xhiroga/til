@@ -2,7 +2,7 @@
 
 ## How to run
 
-```shell script
+```shell
 tar xfz lib.tar.gz -C ex1
 tar xfz lib.tar.gz -C ex2
 tar xfz lib.tar.gz -C ex3

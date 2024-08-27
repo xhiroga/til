@@ -1,6 +1,6 @@
 # Selenium Webdriver - Python
 
-```bash
+```shell
 source .venv/bin/activate
 pip install -r requirements.txt
 python get.py

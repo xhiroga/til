@@ -2,7 +2,7 @@
 
 ## Get Started
 
-```sh
+```shell
 bun install
 bun ./src/index.ts
 ```

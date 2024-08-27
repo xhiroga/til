@@ -13,7 +13,7 @@ makeをタスクランナーとして使用するための、個人的なMakefil
 
 以下が推奨されるターゲットの順序です。
 
-```md
+```markdown
 1. all (any name you like)
 2. .PHONY
 3. (その他のタスク)

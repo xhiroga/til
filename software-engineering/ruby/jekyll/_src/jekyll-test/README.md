@@ -44,7 +44,7 @@
 
 (上に空行が必要)
 
-```rb
+```ruby
 puts 'Hello, World'
 ```
 </details>

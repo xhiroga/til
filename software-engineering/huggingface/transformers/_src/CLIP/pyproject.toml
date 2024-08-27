@@ -8,7 +8,6 @@ authors = [
 dependencies = [
     "requests>=2.32.3",
     "transformers>=4.41.1",
-    "ipykernel>=6.29.4",
     "pillow>=10.3.0",
     "torch>=2.3.0",
     "torchvision>=0.18.0",
@@ -23,7 +22,9 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "ipykernel>=6.29.4",
+]
 
 [tool.hatch.metadata]
 allow-direct-references = true

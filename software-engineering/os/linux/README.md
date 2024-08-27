@@ -2,7 +2,7 @@
 Linuxの仕組み
 
 # セットアップ
-```Console:
+```console:
 docker run -it ubuntu_test
 ```
 
@@ -21,7 +21,7 @@ docker run -it ubuntu_test
 3. 実行可能ファイルを取得しなかった場合、ソースを取得&make
 4. 不要なファイルの除去
 
-```Console:
+```console:
 apt-get update && apt-get upgrade -q -y && \
 # パッケージの一覧を更新 & 導入済パッケージを更新
 

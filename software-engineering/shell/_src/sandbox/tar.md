@@ -4,6 +4,6 @@
 まとめたものをgzip形式で圧縮すると*.tar.gz などになる。  
 
 # 使い方
-```Console
+```console
 tar -xzf <archive-filename> # z: gz圧縮の解凍も行う
 ```

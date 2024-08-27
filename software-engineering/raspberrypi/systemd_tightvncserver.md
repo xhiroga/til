@@ -1,7 +1,7 @@
 # systemdでtightvncserverを動かす
 
 # Usage
-```bash
+```shell
 vi /etc/systemd/system/vncserver@.service
 
 #  MEMO: .serviceの設定が厄介で、とりあえず以下に従えば動くことを検証した。

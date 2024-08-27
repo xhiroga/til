@@ -1,6 +1,6 @@
 # チュートリアル | Electron
 
-```bash
+```shell
 npm run start
 
 npm run make

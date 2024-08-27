@@ -3,7 +3,7 @@ JVMで動くオブジェクト指向言語かつ関数型言語。
 
 ## sbt
 Scalaのビルドツール。build.sbtで設定可能。  
-```Console
+```console
 sbt:scala> compile
 sbt:scala> run
 

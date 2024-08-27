@@ -12,7 +12,7 @@
 リポジトリをアーカイブする場合、その前に `README.md` に以下の記述を追加する。  
 後からリポジトリを発見したメンバーが経緯を把握するのに役立つ。
 
-```md
+```markdown
 # Deprecated
 
 [![No Maintenance Intended](https://unmaintained.tech/badge.svg)](http://unmaintained.tech/)

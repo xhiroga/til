@@ -1,5 +1,5 @@
 # printenv
-```bash
+```shell
 # 環境変数を表示する
 export foo=baa
 printenv foo # baa
@@ -10,7 +10,7 @@ printenv
 
 # MEMO
 シェル変数を環境変数にセットする場合、それは参照渡しになっている
-```bash
+```shell
 set -a
 greeting=hello
 printenv greeting # hello

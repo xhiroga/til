@@ -2,7 +2,7 @@
 
 Groovyで記述する汎用ビルドツール。  
 
-```Console
+```console
 gradle -q hello
 # カレントディレクトリの.gradleスクリプトからhelloタスクを探して実行する。
 # -qオプションはログの出力を抑制する(quite)

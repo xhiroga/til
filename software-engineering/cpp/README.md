@@ -3,7 +3,7 @@
 ## 使い方
 g++でコンパイルし、実行可能ファイル(.out)を作成する。  
 
-```bash
+```shell
 $ g++ space.cpp -o space.out  
 ```
 
