@@ -1,29 +1,19 @@
 [project]
-name = "src"
+name = "python"
 version = "0.1.0"
 description = "Add your description here"
-authors = [
-    { name = "Hiroaki Ogasawara", email = "13391129+xhiroga@users.noreply.github.com" }
-]
-dependencies = []
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = ">=3.12"
+dependencies = []
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
 [tool.hatch.build.targets.wheel]
 packages = ["."]
 
-[tool.ruff]
-extend-include = ["*.ipynb"]
-
-[tool.rye]
-managed = true
+[tool.uv]
 dev-dependencies = [
-    "ipykernel>=6.29.4",
+    "ipykernel>=6.29.5",
 ]
