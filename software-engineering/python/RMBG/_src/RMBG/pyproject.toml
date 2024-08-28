@@ -27,5 +27,6 @@ packages = ["src/rmbg"]
 [tool.uv]
 dev-dependencies = [
     "ipykernel>=6.29.5",
+    "types-pillow>=10.2.0.20240822",
 ]
 extra-index-url = ["https://download.pytorch.org/whl/cu121"]
