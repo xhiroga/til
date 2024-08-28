@@ -1,42 +1,43 @@
-import sys
-
-sys.path.append('RMBG-1.4')
-
 import os
+import sys
 import time
 from multiprocessing import Pool
 from typing import Optional
 
 import torch
-from briarmbg import BriaRMBG
 from PIL import Image
 from skimage import io
-from utilities import postprocess_image, preprocess_image
+
+sys.path.append("RMBG-1.4")
+
+from briarmbg import BriaRMBG  # noqa: E402
+from utilities import postprocess_image, preprocess_image  # noqa: E402
 
 net = BriaRMBG()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 net = BriaRMBG.from_pretrained("briaai/RMBG-1.4")
 net.to(device)
-net.eval()    
+net.eval()
+
 
 def remove_background(im_path) -> Optional[Image]:
     try:
         # prepare input
-        model_input_size = [1024,1024]
+        model_input_size = [1024, 1024]
         orig_im = io.imread(im_path)
-        orig_im = orig_im[:,:,:3] # remove alpha channel
+        orig_im = orig_im[:, :, :3]  # remove alpha channel
         orig_im_size = orig_im.shape[0:2]
         image = preprocess_image(orig_im, model_input_size).to(device)
 
-        # inference 
-        result=net(image)
+        # inference
+        result = net(image)
 
         # post process
         result_image = postprocess_image(result[0][0], orig_im_size)
 
         # save result
         pil_im = Image.fromarray(result_image)
-        no_bg_image = Image.new("RGBA", pil_im.size, (0,0,0,0))
+        no_bg_image = Image.new("RGBA", pil_im.size, (0, 0, 0, 0))
         orig_image = Image.open(im_path)
         no_bg_image.paste(orig_image, mask=pil_im)
         return no_bg_image
@@ -65,14 +66,20 @@ def remove_background_multiprocess(image_paths, num_processes=4):
         p.map(process_image, image_paths)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Benchmarking
-    directory = 'data/pokemon/Pikachu'
-    image_paths = [os.path.join(directory, filename) for filename in os.listdir(directory) if os.path.splitext(filename)[1].lower() in [".jpg", ".png"]]
+    directory = "data/pokemon/Pikachu"
+    image_paths = [
+        os.path.join(directory, filename)
+        for filename in os.listdir(directory)
+        if os.path.splitext(filename)[1].lower() in [".jpg", ".png"]
+    ]
 
     start_time = time.time()
     remove_background_multiprocess(image_paths)
     end_time = time.time()
     execution_time = end_time - start_time
 
-    print(f"Background removal benchmark completed. Total execution time: {execution_time} seconds.")
+    print(
+        f"Background removal benchmark completed. Total execution time: {execution_time} seconds."
+    )
