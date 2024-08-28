@@ -1,0 +1,32 @@
+[project]
+name = "rmbg"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "imageio>=2.35.1",
+    "matplotlib>=3.9.2",
+    "scikit-image>=0.24.0",
+    "torch==2.2.0+cu121",
+    "torchvision==0.17.0+cu121",
+    "pillow>=10.2.0",
+    "numpy>=1.26.3",
+    "typing>=3.10.0.0",
+    "huggingface-hub>=0.24.6",
+    "safetensors>=0.4.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rmbg"]
+
+[tool.uv]
+dev-dependencies = [
+    "ipykernel>=6.29.5",
+    "types-pillow>=10.2.0.20240822",
+]
+extra-index-url = ["https://download.pytorch.org/whl/cu121"]
