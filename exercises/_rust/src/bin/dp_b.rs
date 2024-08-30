@@ -1,28 +1,27 @@
 use proconio::input;
+use std::cmp::min;
 
 // dp[j-1]: 1,j間の最小コスト（jは1オリジン）
 fn solve(j: usize, k: usize, h: &[i32], dp: &mut Vec<Option<i32>>) -> i32{
-    match dp[j-1]{
-        Some(value) => return value,
-        None => {}
+    if let Some(value) = dp[j-1] {
+        return value;
     }
     
     if k == 0 {
         unreachable!("k must be 1 <= k <= 100");
     }
 
-    let mut min_cost = i32::MAX;
-    for l in 1..k+1 {
-        let current = if l < j {
-            (h[j-1] - h[j-l-1]).abs() + solve(j-l, k, h, dp)
-        } else {
-            i32::MAX
-        };
-        min_cost = min_cost.min(current);
-    }
+    // j=2, k=3の場合、l=1のみ試す
+    // j=3, k=2の場合、l=1,2を試す
+    // j=10, k=20の場合、l=l=1,2,...,9を試す
+    // つまり, ストライドは min(k, j-1) となる。
+    let cost = (1..=min(k, j-1))
+        .map(|l| (h[j-1] - h[j-l-1]).abs() + solve(j-l, k, h, dp))
+        .min()
+        .unwrap();
 
-    dp[j-1] = Some(min_cost);
-    min_cost
+    dp[j-1] = Some(cost);
+    cost
 }
 
 fn wrapper(n: usize, k: usize, h: &[i32]) -> i32{
