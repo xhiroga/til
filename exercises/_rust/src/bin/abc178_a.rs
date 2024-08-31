@@ -1,7 +1,7 @@
 use proconio::input;
 
 fn main() {
-    input!{
+    input! {
         x: i32,
     }
     let output: i32;

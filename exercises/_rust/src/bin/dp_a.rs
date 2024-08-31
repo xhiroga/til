@@ -2,7 +2,7 @@ use proconio::input;
 use std::cmp;
 
 fn solve(n: usize, h: &Vec<i32>, dp: &mut Vec<Option<i32>>) -> i32 {
-    match dp[n-1] {
+    match dp[n - 1] {
         Some(value) => return value,
         None => {}
     };
@@ -16,12 +16,12 @@ fn solve(n: usize, h: &Vec<i32>, dp: &mut Vec<Option<i32>>) -> i32 {
         )
     } else {
         cmp::min(
-            (h[n-1] - h[n-2]).abs() + solve(n-1, h, dp),
-            (h[n-1] - h[n-3]).abs() + solve(n-2, h, dp),
+            (h[n - 1] - h[n - 2]).abs() + solve(n - 1, h, dp),
+            (h[n - 1] - h[n - 3]).abs() + solve(n - 2, h, dp),
         )
     };
 
-    dp[n-1] = Some(result);
+    dp[n - 1] = Some(result);
     result
 }
 
@@ -50,7 +50,7 @@ mod tests {
 
     #[test]
     fn sample2() {
-        assert_eq!(wrapper(2, vec![10,10]), 0);
+        assert_eq!(wrapper(2, vec![10, 10]), 0);
     }
 
     #[test]
