@@ -1,6 +1,8 @@
 use log::warn;
 use ndarray::{Array2, ShapeError};
 
+use super::lu::lu;
+
 // 行列式
 pub fn det(mat: Array2<f64>) -> Result<f64, ShapeError> {
     // 正方行列でない場合はエラー
@@ -12,8 +14,13 @@ pub fn det(mat: Array2<f64>) -> Result<f64, ShapeError> {
         ));
     }
 
+    let (_, _, u) = lu(&mat);
+
     // 行列式を計算
-    let determinant = todo!();
+    let mut determinant = 1.0;
+    for i in 0..u.shape()[0] {
+        determinant *= u[[i, i]];
+    }
 
     Ok(determinant)
 }
