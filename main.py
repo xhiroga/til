@@ -55,6 +55,7 @@ class InformedSender(nn.Module):
     ):
         super().__init__()
         self.temperature = temperature
+        self.num_images = num_images
         self.one_hot = one_hot
 
         # "The informed sender also first embeds the images into a 'game-specific' space."
@@ -73,7 +74,7 @@ class InformedSender(nn.Module):
 
     def forward(self, batch_images: list[list[torch.Tensor]]) -> torch.Tensor:
         # images: (batch_size, num_images, input_dim)
-        assert len(batch_images[0]) == self.num_images
+        assert len(batch_images[0]) == self.num_images, f"{len(batch_images[0])=}"
 
         # Note: images[0] is target image, images[1:] is distractor images
         embedded = [self.embedding(img) for img in chain.from_iterable(batch_images)]
@@ -146,16 +147,21 @@ class Receiver(nn.Module):
 
 # Envに改名するかも？
 class Agents:
-    def __init__(self, vocabulary: list[str]):
-        #
+    def __init__(self, vocabulary: list[str], train=True):
         self.encoder = ImageEncoder(use_softmax=False)
         self.sender = InformedSender(
             input_dim=self.encoder.output_dim,
             embed_dim=50,
             num_filters=20,
             vocab_size=len(vocabulary),
+            num_images=2,
+            one_hot=not train,
         )
-        self.receiver = Receiver()
+        self.receiver = Receiver(
+            input_dim=self.encoder.output_dim,
+            embed_dim=50,
+            vocab_size=len(vocabulary),
+        )
 
     def encode_images(self, images: list[torch.Tensor]):
         return [self.encoder.encode(img) for img in images]
@@ -210,7 +216,7 @@ def main():
     encoded_images = agents.encode_images(images)
     target, distractor = encoded_images[0], encoded_images[1]
 
-    message = agents.sender(target, distractor)
+    message = agents.sender([[target, distractor]])
 
     # Receiver selects a image with hint illustration (In 1st version, use ascii art)
     # > the receiver, instead, sees the two images in random order
