@@ -1,4 +1,6 @@
 import random
+from itertools import chain
+from logging import basicConfig, root
 
 import torch
 import torch.nn as nn
@@ -8,8 +10,6 @@ import torchvision.transforms as transforms
 from PIL import Image
 
 from constants import symbols
-from logging import basicConfig, root
-
 
 basicConfig(level="DEBUG")
 
@@ -51,9 +51,11 @@ class InformedSender(nn.Module):
         temperature: float = 10,
         vocab_size: int = 10,
         num_images: int = 2,
+        one_hot: bool = False,
     ):
         super().__init__()
         self.temperature = temperature
+        self.one_hot = one_hot
 
         # "The informed sender also first embeds the images into a 'game-specific' space."
         self.embedding = nn.Linear(input_dim, embed_dim)
@@ -69,12 +71,12 @@ class InformedSender(nn.Module):
         # "The resulting feature maps are combined through another filter (kernel size f x1, where f is the number of filters on the image embeddings), to produce scores for the vocabulary symbols."
         self.conv2 = nn.Conv1d(1, vocab_size, kernel_size=num_filters)
 
-    def forward(self, images: list[torch.Tensor]):
+    def forward(self, batch_images: list[list[torch.Tensor]]) -> torch.Tensor:
         # images: (batch_size, num_images, input_dim)
-        assert len(images) == self.num_images
+        assert len(batch_images[0]) == self.num_images
 
         # Note: images[0] is target image, images[1:] is distractor images
-        embedded = [self.embedding(img) for img in images]
+        embedded = [self.embedding(img) for img in chain.from_iterable(batch_images)]
         stacked = torch.stack(embedded)
         root.debug(f"{stacked.shape=}")  # (batch_size, num_images, embed_dim)
 
@@ -93,26 +95,53 @@ class InformedSender(nn.Module):
         squeezed = scores.squeeze(2)
         root.debug(f"{squeezed.shape=}")  # (batch_size, vocab_size)
 
-        prob = F.softmax(scores / self.temperature, dim=-1)
-
         # "a single symbol s is sampled from the resulting probability distribution."
-        symbols = torch.multinomial(prob, num_samples=1)
-        root.debug(f"{symbols.shape=}")  # (batch_size, 1)
+        gumbel = F.gumbel_softmax(squeezed / self.temperature, tau=1, hard=self.one_hot)
+        root.debug(f"{gumbel.shape=}")  # (batch_size, vocab_size)
 
-        return symbols
+        return gumbel
 
 
 class Receiver(nn.Module):
-    def __init__(self, input_dim, hidden_dim, vocab_size):
+    def __init__(
+        self,
+        input_dim,
+        embed_dim: int = 50,
+        temperature: float = 10,
+        vocab_size: int = 10,
+    ):
         super().__init__()
-        self.fc1 = nn.Linear(input_dim * 2 + vocab_size, hidden_dim)
-        self.fc2 = nn.Linear(hidden_dim, 1)
-        self.relu = nn.ReLU()
+        self.temperature = temperature
 
-    def forward(self, message, img1, img2):
-        x = torch.cat([message, img1, img2], dim=1)
-        x = self.relu(self.fc1(x))
-        return self.fc2(x)
+        # "It embeds the images and the symbol into its own 'game-specific' space."
+        self.image_embedding = nn.Linear(input_dim, embed_dim)
+        self.symbol_embedding = nn.Embedding(vocab_size, embed_dim)
+
+    def forward(self, images: torch.Tensor, symbol: torch.Tensor):
+        # images: (batch_size, num_images, input_dim)
+        # symbol: (batch_size, 1)
+
+        embedded_images = self.image_embedding(images)
+        embedded_symbol = self.symbol_embedding(symbol)
+
+        # "It then computes dot products between the symbol and image embeddings."
+        similarities = [
+            torch.sum(embedded_symbol * img, dim=1, keepdim=True)
+            for img in embedded_images
+        ]
+
+        # Stack similarities
+        stacked_similarities = torch.cat(
+            similarities, dim=1
+        )  # (batch_size, num_images)
+
+        # "The two dot products are converted to a Gibbs distribution (with temperature τ)"
+        probs = F.softmax(stacked_similarities / self.temperature, dim=1)
+
+        # "the receiver 'points' to an image by sampling from the resulting distribution."
+        chosen_image = torch.multinomial(probs, num_samples=1)
+
+        return chosen_image
 
 
 # Envに改名するかも？
@@ -128,7 +157,6 @@ class Agents:
         )
         self.receiver = Receiver()
 
-    # VGG16を用いるが、VAEに変更する可能性もある
     def encode_images(self, images: list[torch.Tensor]):
         return [self.encoder.encode(img) for img in images]
 
