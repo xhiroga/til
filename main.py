@@ -72,23 +72,25 @@ class InformedSender(nn.Module):
         # "The resulting feature maps are combined through another filter (kernel size f x1, where f is the number of filters on the image embeddings), to produce scores for the vocabulary symbols."
         self.conv2 = nn.Conv1d(1, vocab_size, kernel_size=num_filters)
 
-    def forward(self, batch_images: list[list[torch.Tensor]]) -> torch.Tensor:
+    def forward(self, images: torch.Tensor) -> torch.Tensor:
         # images: (batch_size, num_images, input_dim)
-        assert len(batch_images[0]) == self.num_images, f"{len(batch_images[0])=}"
+        assert images.shape[1] == self.num_images, f"{images.shape[1]=}"
 
-        # Note: images[0] is target image, images[1:] is distractor images
-        embedded = [self.embedding(img) for img in chain.from_iterable(batch_images)]
-        stacked = torch.stack(embedded)
-        root.debug(f"{stacked.shape=}")  # (batch_size, num_images, embed_dim)
+        # Note: images[:, 0] is target image, images[:, 1:] is distractor images
+        embedded = self.embedding(images.view(-1, images.shape[-1])).view(
+            images.shape[0], images.shape[1], -1
+        )
+        root.debug(f"{embedded.shape=}")  # (batch_size, num_images, embed_dim)
 
-        permuted = stacked.permute(0, 2, 1)
+        permuted = embedded.permute(0, 2, 1)
         root.debug(f"{permuted.shape=}")  # (batch_size, embed_dim, num_images)
 
         conv1_out = self.conv1(permuted)
         root.debug(f"{conv1_out.shape=}")  # (batch_size, num_filters, 1)
 
         sigmoid_out = self.sigmoid(conv1_out)
-        root.debug(f"{sigmoid_out.shape=}")  # (batch_size, num_filters, 1)
+        sigmoid_out = sigmoid_out.transpose(1, 2)
+        root.debug(f"{sigmoid_out.shape=}")  # (batch_size, 1, num_filters)
 
         scores = self.conv2(sigmoid_out)
         root.debug(f"{scores.shape=}")  # (batch_size, vocab_size, 1)
@@ -99,6 +101,7 @@ class InformedSender(nn.Module):
         # "a single symbol s is sampled from the resulting probability distribution."
         gumbel = F.gumbel_softmax(squeezed / self.temperature, tau=1, hard=self.one_hot)
         root.debug(f"{gumbel.shape=}")  # (batch_size, vocab_size)
+        root.debug(f"{gumbel=}")
 
         return gumbel
 
@@ -216,7 +219,10 @@ def main():
     encoded_images = agents.encode_images(images)
     target, distractor = encoded_images[0], encoded_images[1]
 
-    message = agents.sender([[target, distractor]])
+    # tensorに変換
+    batch_images = torch.stack([target, distractor]).unsqueeze(0)  # (1, 2, input_dim)
+
+    message = agents.sender(batch_images)
 
     # Receiver selects a image with hint illustration (In 1st version, use ascii art)
     # > the receiver, instead, sees the two images in random order
