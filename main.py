@@ -238,21 +238,25 @@ def evaluate(agents, cats, dogs, num_tests):
 
         cat_image = load_image(cat)
         dog_image = load_image(dog)
-        images = [cat_image, dog_image]
+        images = torch.stack([cat_image, dog_image])
 
-        target_index = random.randint(0, 1)
-
+        # Encode images
         encoded_images = agents.encode_images(images)
-        batch_images = torch.stack(encoded_images).unsqueeze(0)
+        batch_images = encoded_images.unsqueeze(0)
 
         with torch.no_grad():
+            # Sender generates a message
             message = agents.sender(batch_images)
-            shuffled_images = encoded_images.copy()
-            random.shuffle(shuffled_images)
-            shuffled_batch = torch.stack(shuffled_images).unsqueeze(0)
-            chosen_image = agents.receiver(shuffled_batch, message)
 
-        if chosen_image.argmax().item() == target_index:
+            # Randomly shuffle the images
+            indices = torch.randperm(2)
+            target_index = torch.where(indices == 0)[0]
+            shuffled_batch = batch_images[:, indices, :]
+
+            # Receiver tries to identify the target image
+            prob = agents.receiver(shuffled_batch, message)
+
+        if prob.argmax().item() == target_index.item():
             correct_predictions += 1
 
     return correct_predictions / num_tests
