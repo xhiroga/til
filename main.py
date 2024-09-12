@@ -1,13 +1,14 @@
 import random
-from itertools import chain
 from logging import basicConfig, root
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.optim as optim
 import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
+from tqdm import tqdm
 
 from constants import symbols
 
@@ -30,7 +31,9 @@ class ImageEncoder:
         with torch.no_grad():
             if image.dim() == 3:
                 image = image.unsqueeze(0)
-            return self.vgg(image)
+            features = self.vgg(image)
+            root.debug(f"{features.shape=}")  # (batch_size, embedding_dim)
+            return features
 
 
 # > The agnostic sender is a generic neural network that maps the original image vectors onto a “gamespecific” embedding space (in the sense that the embedding is learned while playing the game) followed by a sigmoid nonlinearity. Fully-connected weights are applied to the embedding concatenation to produce scores over vocabulary symbols.
@@ -51,12 +54,10 @@ class InformedSender(nn.Module):
         temperature: float = 10,
         vocab_size: int = 10,
         num_images: int = 2,
-        one_hot: bool = False,
     ):
         super().__init__()
         self.temperature = temperature
         self.num_images = num_images
-        self.one_hot = one_hot
 
         # "The informed sender also first embeds the images into a 'game-specific' space."
         self.embedding = nn.Linear(input_dim, embed_dim)
@@ -99,7 +100,8 @@ class InformedSender(nn.Module):
         root.debug(f"{squeezed.shape=}")  # (batch_size, vocab_size)
 
         # "a single symbol s is sampled from the resulting probability distribution."
-        gumbel = F.gumbel_softmax(squeezed / self.temperature, tau=1, hard=self.one_hot)
+        # もしかしたら訓練中は hard=False にしたほうが良いかも？
+        gumbel = F.gumbel_softmax(squeezed / self.temperature, tau=1, hard=True).int()
         root.debug(f"{gumbel.shape=}")  # (batch_size, vocab_size)
         root.debug(f"{gumbel=}")
 
@@ -123,34 +125,40 @@ class Receiver(nn.Module):
 
     def forward(self, images: torch.Tensor, symbol: torch.Tensor):
         # images: (batch_size, num_images, input_dim)
-        # symbol: (batch_size, 1)
+        # symbol: (batch_size, vocab_size)
+        root.debug(f"{images.shape=}, {images.dtype=}")
+        root.debug(f"{symbol.shape=}, {symbol.dtype=}, {symbol=}")
+
+        # Convert one-hot to index
+        symbol_index = symbol.argmax(dim=1)
 
         embedded_images = self.image_embedding(images)
-        embedded_symbol = self.symbol_embedding(symbol)
+        embedded_symbol = self.symbol_embedding(symbol_index)
+        root.debug(f"{embedded_images.shape=}")  # (batch_size, num_images, embed_dim)
+        root.debug(f"{embedded_symbol.shape=}")  # (batch_size, embed_dim)
 
         # "It then computes dot products between the symbol and image embeddings."
-        similarities = [
-            torch.sum(embedded_symbol * img, dim=1, keepdim=True)
-            for img in embedded_images
-        ]
-
-        # Stack similarities
-        stacked_similarities = torch.cat(
-            similarities, dim=1
+        similarities = torch.bmm(embedded_images, embedded_symbol.unsqueeze(2)).squeeze(
+            2
+        )
+        root.debug(
+            f"{similarities.shape=}, {similarities=}"
         )  # (batch_size, num_images)
 
         # "The two dot products are converted to a Gibbs distribution (with temperature τ)"
-        probs = F.softmax(stacked_similarities / self.temperature, dim=1)
+        prob = F.softmax(similarities / self.temperature, dim=1)
+        root.debug(f"{prob.shape=}, {prob=}")
 
         # "the receiver 'points' to an image by sampling from the resulting distribution."
-        chosen_image = torch.multinomial(probs, num_samples=1)
+        chosen_image = prob.argmax(dim=1, keepdim=True)
+        root.debug(f"{chosen_image.shape=}, {chosen_image=}")
 
         return chosen_image
 
 
 # Envに改名するかも？
 class Agents:
-    def __init__(self, vocabulary: list[str], train=True):
+    def __init__(self, vocabulary: list[str]):
         self.encoder = ImageEncoder(use_softmax=False)
         self.sender = InformedSender(
             input_dim=self.encoder.output_dim,
@@ -158,7 +166,6 @@ class Agents:
             num_filters=20,
             vocab_size=len(vocabulary),
             num_images=2,
-            one_hot=not train,
         )
         self.receiver = Receiver(
             input_dim=self.encoder.output_dim,
@@ -166,11 +173,13 @@ class Agents:
             vocab_size=len(vocabulary),
         )
 
-    def encode_images(self, images: list[torch.Tensor]):
-        return [self.encoder.encode(img) for img in images]
+    # TODO: 引数と返り値の型を torch.Tensor にしたほうが良いかも
+    def encode_images(self, images: torch.Tensor) -> list[torch.Tensor]:
+        # images: (num_images, input_dim)
+        return self.encoder.encode(images)
 
 
-def load_image(path: str):
+def load_image(path: str) -> torch.Tensor:
     transform = transforms.Compose(
         [
             transforms.Resize((224, 224)),
@@ -182,56 +191,122 @@ def load_image(path: str):
     return img_tensor
 
 
-def calc_loss():
-    pass
+def calc_loss(chosen_image, target_index):
+    return F.cross_entropy(chosen_image, target_index)
+
+
+def train_step(agents, optimizer, images: torch.Tensor, target_index):
+    # images: (num_images, input_dim)
+    optimizer.zero_grad()
+
+    # Encode images
+    encoded_images = agents.encode_images(images)
+    root.debug(f"{encoded_images.shape=}")  # (num_images, input_dim)
+    batch_images = encoded_images.unsqueeze(0)
+    root.debug(f"{batch_images.shape=}")  # (1, num_images, input_dim)
+
+    # Sender generates a message
+    message = agents.sender(batch_images)
+
+    # Receiver tries to identify the target image
+    indices = torch.randperm(len(images))
+    shuffled_batch = batch_images[:, indices, :]
+    chosen_image = agents.receiver(shuffled_batch, message)
+
+    # Calculate loss
+    loss = calc_loss(chosen_image, target_index)
+
+    # Backpropagate and update weights
+    loss.backward()
+    optimizer.step()
+
+    return loss.item(), (chosen_image.argmax().item() == target_index)
+
+
+def evaluate(agents, cats, dogs, num_tests):
+    correct_predictions = 0
+
+    for _ in range(num_tests):
+        cat = random.choice(cats)
+        dog = random.choice(dogs)
+
+        cat_image = load_image(cat)
+        dog_image = load_image(dog)
+        images = [cat_image, dog_image]
+
+        target_index = random.randint(0, 1)
+
+        encoded_images = agents.encode_images(images)
+        batch_images = torch.stack(encoded_images).unsqueeze(0)
+
+        with torch.no_grad():
+            message = agents.sender(batch_images)
+            shuffled_images = encoded_images.copy()
+            random.shuffle(shuffled_images)
+            shuffled_batch = torch.stack(shuffled_images).unsqueeze(0)
+            chosen_image = agents.receiver(shuffled_batch, message)
+
+        if chosen_image.argmax().item() == target_index:
+            correct_predictions += 1
+
+    return correct_predictions / num_tests
 
 
 # > We explore two vocabulary sizes: 10 and 100 symbols.
 config = {
     "vocab_size": 10,
+    "num_epochs": 10,
+    "batch_size": 2,
 }
-
-symbols_10 = symbols[:10]
-symbols_100 = symbols
 
 
 def main():
-    # 2^3 = 8通り
-    # 1. informed sender or agnostic sender
-    # 2. visual representationのsoftmax or fc
-    # 3. voc size
-    agents = Agents(
-        vocabulary=symbols_10 if config["vocab_size"] == 10 else symbols_100
+    agents = Agents(vocabulary=symbols[:10] if config["vocab_size"] == 10 else symbols)
+
+    optimizer = optim.Adam(
+        list(agents.sender.parameters()) + list(agents.receiver.parameters())
     )
 
     data = "./language-learning/data"
-    cats = [f"{data}/images/cat/{i}.jpg" for i in range(12)]
-    dogs = [f"{data}/images/dog/{i}.jpg" for i in range(1, 10)]
-    cat = random.choice(cats)
-    dog = random.choice(dogs)
-    root.debug(f"cat: {cat}, dog: {dog}")
+    cats = [f"{data}/images/cat/{i}.jpg" for i in [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11]]
+    dogs = [f"{data}/images/dog/{i}.jpg" for i in [1, 2, 3, 5, 6, 7, 8, 9]]
 
-    cat_image = load_image(cat)
-    dog_image = load_image(dog)
-    images = [cat_image, dog_image]
+    num_epochs = config["num_epochs"]
+    batch_size = config["batch_size"]
 
-    # このコードだと InformedSender 限定になる
-    encoded_images = agents.encode_images(images)
-    target, distractor = encoded_images[0], encoded_images[1]
+    for epoch in tqdm(range(num_epochs)):
+        epoch_loss = 0
+        correct_predictions = 0
 
-    # tensorに変換
-    batch_images = torch.stack([target, distractor]).unsqueeze(0)  # (1, 2, input_dim)
+        for _ in range(batch_size):
+            cat = random.choice(cats)
+            dog = random.choice(dogs)
 
-    message = agents.sender(batch_images)
+            cat_image = load_image(cat)
+            dog_image = load_image(dog)
+            images = torch.stack([cat_image, dog_image])
+            root.debug(f"{images.shape=}")
 
-    # Receiver selects a image with hint illustration (In 1st version, use ascii art)
-    # > the receiver, instead, sees the two images in random order
-    random.shuffle(encoded_images)
-    shuffled1, shuffled2 = encoded_images[0], encoded_images[1]
+            # Randomly choose target
+            target_index = random.randint(0, 1)
 
-    # If selected image is correct, increment the reward
+            loss, is_correct = train_step(agents, optimizer, images, target_index)
 
-    # Updating agent's weights
+            epoch_loss += loss
+            if is_correct:
+                correct_predictions += 1
+
+        avg_loss = epoch_loss / batch_size
+        accuracy = correct_predictions / batch_size
+
+        if epoch % 10 == 0:
+            print(
+                f"Epoch {epoch}: Avg Loss = {avg_loss:.4f}, Accuracy = {accuracy:.2f}"
+            )
+
+    # Test the trained model
+    test_accuracy = evaluate(agents, cats, dogs, num_tests=100)
+    print(f"Test Accuracy: {test_accuracy:.2f}")
 
 
 if __name__ == "__main__":
