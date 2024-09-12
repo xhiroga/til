@@ -149,11 +149,7 @@ class Receiver(nn.Module):
         prob = F.softmax(similarities / self.temperature, dim=1)
         root.debug(f"{prob.shape=}, {prob=}")
 
-        # "the receiver 'points' to an image by sampling from the resulting distribution."
-        chosen_image = prob.argmax(dim=1, keepdim=True)
-        root.debug(f"{chosen_image.shape=}, {chosen_image=}")
-
-        return chosen_image
+        return prob
 
 
 # Envに改名するかも？
@@ -191,11 +187,16 @@ def load_image(path: str) -> torch.Tensor:
     return img_tensor
 
 
-def calc_loss(chosen_image, target_index):
-    return F.cross_entropy(chosen_image, target_index)
+def calc_loss(prob: torch.Tensor, target_index: tuple):
+    label = torch.zeros_like(prob)
+    label[:, target_index] = 1.0
+    root.debug(f"{label.shape=}, {label=}")
+    loss = F.binary_cross_entropy(prob, label)
+    root.debug(f"{loss.shape=}. {loss=}")
+    return loss
 
 
-def train_step(agents, optimizer, images: torch.Tensor, target_index):
+def train_step(agents, optimizer, images: torch.Tensor):
     # images: (num_images, input_dim)
     optimizer.zero_grad()
 
@@ -210,17 +211,22 @@ def train_step(agents, optimizer, images: torch.Tensor, target_index):
 
     # Receiver tries to identify the target image
     indices = torch.randperm(len(images))
+    root.debug(f"{indices.shape=}, {indices=}")
+    target_index = torch.where(indices == 0)
+    root.debug(f"{target_index=}")
     shuffled_batch = batch_images[:, indices, :]
-    chosen_image = agents.receiver(shuffled_batch, message)
+    prob = agents.receiver(shuffled_batch, message)
 
     # Calculate loss
-    loss = calc_loss(chosen_image, target_index)
+    loss = calc_loss(prob, target_index)
 
     # Backpropagate and update weights
     loss.backward()
     optimizer.step()
 
-    return loss.item(), (chosen_image.argmax().item() == target_index)
+    is_correct = prob.argmax().item() == target_index
+    root.debug(f"{loss.item()=}, {is_correct=}")
+    return loss.item(), is_correct
 
 
 def evaluate(agents, cats, dogs, num_tests):
@@ -285,12 +291,10 @@ def main():
             cat_image = load_image(cat)
             dog_image = load_image(dog)
             images = torch.stack([cat_image, dog_image])
+            random.shuffle(images)
             root.debug(f"{images.shape=}")
 
-            # Randomly choose target
-            target_index = random.randint(0, 1)
-
-            loss, is_correct = train_step(agents, optimizer, images, target_index)
+            loss, is_correct = train_step(agents, optimizer, images)
 
             epoch_loss += loss
             if is_correct:
