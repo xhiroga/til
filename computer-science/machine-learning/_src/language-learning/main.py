@@ -7,7 +7,8 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.models as models
 import torchvision.transforms as transforms
-import wandb
+
+# import wandb
 from PIL import Image
 from tqdm import tqdm
 
@@ -197,25 +198,27 @@ def calc_loss(prob: torch.Tensor, target_index: tuple):
     return loss
 
 
-def train_step(agents, optimizer, images: torch.Tensor):
+def train_step(agents, optimizer, batch: torch.Tensor):
     # images: (num_images, input_dim)
     optimizer.zero_grad()
 
     # Encode images
-    encoded_images = agents.encode_images(images)
-    root.debug(f"{encoded_images.shape=}")  # (num_images, input_dim)
-    batch_images = encoded_images.unsqueeze(0)
-    root.debug(f"{batch_images.shape=}")  # (1, num_images, input_dim)
+    encoded_batch_images = []
+    for images in batch:
+        encoded_images = agents.encode_images(images)
+        encoded_batch_images.append(encoded_images)
+    encoded_batch_tensor = torch.stack(encoded_batch_images)
+    root.debug(f"{encoded_batch_tensor.shape=}")  # (batch_size, num_images, input_dim)
 
     # Sender generates a message
-    message = agents.sender(batch_images)
+    message = agents.sender(encoded_batch_tensor)
 
     # Receiver tries to identify the target image
-    indices = torch.randperm(len(images))
+    indices = torch.randperm(len(batch[0]))
     root.debug(f"{indices.shape=}, {indices=}")
     target_index = torch.where(indices == 0)
     root.debug(f"{target_index=}")
-    shuffled_batch = batch_images[:, indices, :]
+    shuffled_batch = encoded_batch_tensor[:, indices, :]
     prob = agents.receiver(shuffled_batch, message)
 
     # Calculate loss
@@ -230,37 +233,59 @@ def train_step(agents, optimizer, images: torch.Tensor):
     return loss.item(), is_correct
 
 
-def evaluate(agents, cats, dogs, num_tests):
-    correct_predictions = 0
+def evaluate(agents, batch):
+    batch_size = batch.shape[0]
 
-    for _ in range(num_tests):
+    with torch.no_grad():
+        encoded_batch_images = []
+        for images in batch:
+            encoded_images = agents.encode_images(images)
+            encoded_batch_images.append(encoded_images)
+        encoded_batch_tensor = torch.stack(encoded_batch_images)
+        root.debug(
+            f"{encoded_batch_tensor.shape=}"
+        )  # (batch_size, num_images, input_dim)
+
+        # Sender generates messages for the whole batch
+        messages = agents.sender(encoded_batch_tensor)
+
+        # Randomly shuffle the images for each item in the batch
+        indices = torch.randperm(2).expand(batch_size, -1)
+        target_indices = torch.where(indices == 0)[0]
+        shuffled_batch = encoded_batch_tensor.gather(
+            1, indices.unsqueeze(-1).expand(-1, -1, encoded_batch_tensor.shape[-1])
+        )
+
+        # Receiver tries to identify the target images
+        probs = agents.receiver(shuffled_batch, messages)
+
+    # Check if the predictions are correct
+    correct_predictions = (probs.argmax(dim=1) == target_indices).float()
+
+    return correct_predictions.mean().item()
+
+
+def choice_images(dir: str, batch_size: int) -> torch.Tensor:
+    if dir != "./language-learning/data":
+        raise ValueError(f"Invalid directory: {dir}")
+
+    cats = [f"{dir}/images/cat/{i}.jpg" for i in [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11]]
+    dogs = [f"{dir}/images/dog/{i}.jpg" for i in [1, 2, 3, 5, 6, 7, 8, 9]]
+
+    batch = []
+    for _ in range(batch_size):
         cat = random.choice(cats)
         dog = random.choice(dogs)
 
         cat_image = load_image(cat)
         dog_image = load_image(dog)
-        images = torch.stack([cat_image, dog_image])
+        images = [cat_image, dog_image]
+        random.shuffle(images)
+        images_tensor = torch.stack(images)
+        root.debug(f"{images_tensor.shape=}")
+        batch.append(images_tensor)
 
-        # Encode images
-        encoded_images = agents.encode_images(images)
-        batch_images = encoded_images.unsqueeze(0)
-
-        with torch.no_grad():
-            # Sender generates a message
-            message = agents.sender(batch_images)
-
-            # Randomly shuffle the images
-            indices = torch.randperm(2)
-            target_index = torch.where(indices == 0)[0]
-            shuffled_batch = batch_images[:, indices, :]
-
-            # Receiver tries to identify the target image
-            prob = agents.receiver(shuffled_batch, message)
-
-        if prob.argmax().item() == target_index.item():
-            correct_predictions += 1
-
-    return correct_predictions / num_tests
+    return torch.stack(batch)
 
 
 # > We explore two vocabulary sizes: 10 and 100 symbols.
@@ -268,21 +293,20 @@ config = {
     "vocab_size": 10,
     "num_epochs": 10,
     "batch_size": 2,
+    "num_tests": 20,
+    "train_data": "./language-learning/data",
+    "test_data": "./language-learning/data",
 }
 
 
 def main():
-    wandb.init(project="language-learning", config=config)
+    # wandb.init(project="language-learning", config=config)
 
     agents = Agents(vocabulary=symbols[:10] if config["vocab_size"] == 10 else symbols)
 
     optimizer = optim.Adam(
         list(agents.sender.parameters()) + list(agents.receiver.parameters())
     )
-
-    data = "./language-learning/data"
-    cats = [f"{data}/images/cat/{i}.jpg" for i in [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11]]
-    dogs = [f"{data}/images/dog/{i}.jpg" for i in [1, 2, 3, 5, 6, 7, 8, 9]]
 
     num_epochs = config["num_epochs"]
     batch_size = config["batch_size"]
@@ -291,26 +315,18 @@ def main():
         epoch_loss = 0
         correct_predictions = 0
 
-        for _ in range(batch_size):
-            cat = random.choice(cats)
-            dog = random.choice(dogs)
+        batch = choice_images(config["train_data"], batch_size)
+        root.debug(f"{batch.shape=}")
+        loss, is_correct = train_step(agents, optimizer, batch)
 
-            cat_image = load_image(cat)
-            dog_image = load_image(dog)
-            images = torch.stack([cat_image, dog_image])
-            random.shuffle(images)
-            root.debug(f"{images.shape=}")
-
-            loss, is_correct = train_step(agents, optimizer, images)
-
-            epoch_loss += loss
-            if is_correct:
-                correct_predictions += 1
+        epoch_loss += loss
+        if is_correct:
+            correct_predictions += 1
 
         avg_loss = epoch_loss / batch_size
         accuracy = correct_predictions / batch_size
 
-        wandb.log({"epoch": epoch, "avg_loss": avg_loss, "accuracy": accuracy})
+        # wandb.log({"epoch": epoch, "avg_loss": avg_loss, "accuracy": accuracy})
 
         if epoch % 10 == 0:
             print(
@@ -318,11 +334,12 @@ def main():
             )
 
     # Test the trained model
-    test_accuracy = evaluate(agents, cats, dogs, num_tests=100)
+    batch = choice_images(config["test_data"], config["num_tests"])
+    test_accuracy = evaluate(agents, batch)
     print(f"Test Accuracy: {test_accuracy:.2f}")
 
-    wandb.log({"test_accuracy": test_accuracy})
-    wandb.finish()
+    # wandb.log({"test_accuracy": test_accuracy})
+    # wandb.finish()
 
 
 if __name__ == "__main__":
