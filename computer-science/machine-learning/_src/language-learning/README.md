@@ -1,6 +1,8 @@
 # Multi-Agent Cooperation and the Emergence of (Natural) Language (Unofficial Implementation)
 
 ```shell
+make
+wandb login
 uv run main.py
 ```
 

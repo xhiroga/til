@@ -7,6 +7,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.models as models
 import torchvision.transforms as transforms
+import wandb
 from PIL import Image
 from tqdm import tqdm
 
@@ -271,6 +272,8 @@ config = {
 
 
 def main():
+    wandb.init(project="language-learning", config=config)
+
     agents = Agents(vocabulary=symbols[:10] if config["vocab_size"] == 10 else symbols)
 
     optimizer = optim.Adam(
@@ -307,6 +310,8 @@ def main():
         avg_loss = epoch_loss / batch_size
         accuracy = correct_predictions / batch_size
 
+        wandb.log({"epoch": epoch, "avg_loss": avg_loss, "accuracy": accuracy})
+
         if epoch % 10 == 0:
             print(
                 f"Epoch {epoch}: Avg Loss = {avg_loss:.4f}, Accuracy = {accuracy:.2f}"
@@ -315,6 +320,9 @@ def main():
     # Test the trained model
     test_accuracy = evaluate(agents, cats, dogs, num_tests=100)
     print(f"Test Accuracy: {test_accuracy:.2f}")
+
+    wandb.log({"test_accuracy": test_accuracy})
+    wandb.finish()
 
 
 if __name__ == "__main__":
