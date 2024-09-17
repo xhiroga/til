@@ -1,9 +1,10 @@
 # Multi-Agent Cooperation and the Emergence of (Natural) Language (Unofficial Implementation)
 
 ```shell
+uv sync
+uv run wandb login
 make
-wandb login
-uv run main.py
+uv run src/language-learning/main.py
 ```
 
 ## References

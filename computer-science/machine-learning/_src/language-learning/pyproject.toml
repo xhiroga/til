@@ -10,3 +10,6 @@ dependencies = [
     "tqdm>=4.66.5",
     "wandb>=0.18.0",
 ]
+
+[tool.setuptools]
+packages = ["language-learning"]
