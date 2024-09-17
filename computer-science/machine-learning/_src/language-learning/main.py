@@ -1,5 +1,5 @@
 import random
-from logging import basicConfig, root
+from logging import basicConfig, getLogger, root
 
 import torch
 import torch.nn as nn
@@ -8,7 +8,7 @@ import torch.optim as optim
 import torchvision.models as models
 import torchvision.transforms as transforms
 
-# import wandb
+import wandb
 from PIL import Image
 from tqdm import tqdm
 
@@ -20,6 +20,7 @@ basicConfig(level="DEBUG")
 # > We apply to each image a forward-pass through the pretrained VGG ConvNet (Simonyan & Zisserman, 2014), and represent it with the activations from either the top 1000-D softmax layer (sm) or the second-to-last 4096-D fully connected layer (fc).
 class ImageEncoder:
     def __init__(self, use_softmax=True):
+        self.logger = getLogger(self.__class__.__name__)
         self.vgg = models.vgg16(weights=models.VGG16_Weights.DEFAULT)
         if use_softmax:
             self.softmax = torch.nn.Softmax(dim=1)
@@ -29,12 +30,12 @@ class ImageEncoder:
             self.output_dim = 4096
         self.vgg.eval()
 
-    def encode(self, image: torch.Tensor):
+    def encode(self, image: torch.Tensor) -> torch.Tensor:
         with torch.no_grad():
             if image.dim() == 3:
                 image = image.unsqueeze(0)
             features = self.vgg(image)
-            root.debug(f"{features.shape=}")  # (batch_size, embedding_dim)
+            self.logger.debug(f"{features.shape=}")  # (batch_size, embedding_dim)
             return features
 
 
@@ -58,6 +59,7 @@ class InformedSender(nn.Module):
         num_images: int = 2,
     ):
         super().__init__()
+        self.logger = getLogger(self.__class__.__name__)
         self.temperature = temperature
         self.num_images = num_images
 
@@ -83,29 +85,29 @@ class InformedSender(nn.Module):
         embedded = self.embedding(images.view(-1, images.shape[-1])).view(
             images.shape[0], images.shape[1], -1
         )
-        root.debug(f"{embedded.shape=}")  # (batch_size, num_images, embed_dim)
+        self.logger.debug(f"{embedded.shape=}")  # (batch_size, num_images, embed_dim)
 
         permuted = embedded.permute(0, 2, 1)
-        root.debug(f"{permuted.shape=}")  # (batch_size, embed_dim, num_images)
+        self.logger.debug(f"{permuted.shape=}")  # (batch_size, embed_dim, num_images)
 
         conv1_out = self.conv1(permuted)
-        root.debug(f"{conv1_out.shape=}")  # (batch_size, num_filters, 1)
+        self.logger.debug(f"{conv1_out.shape=}")  # (batch_size, num_filters, 1)
 
         sigmoid_out = self.sigmoid(conv1_out)
         sigmoid_out = sigmoid_out.transpose(1, 2)
-        root.debug(f"{sigmoid_out.shape=}")  # (batch_size, 1, num_filters)
+        self.logger.debug(f"{sigmoid_out.shape=}")  # (batch_size, 1, num_filters)
 
         scores = self.conv2(sigmoid_out)
-        root.debug(f"{scores.shape=}")  # (batch_size, vocab_size, 1)
+        self.logger.debug(f"{scores.shape=}")  # (batch_size, vocab_size, 1)
 
         squeezed = scores.squeeze(2)
-        root.debug(f"{squeezed.shape=}")  # (batch_size, vocab_size)
+        self.logger.debug(f"{squeezed.shape=}")  # (batch_size, vocab_size)
 
         # "a single symbol s is sampled from the resulting probability distribution."
         # もしかしたら訓練中は hard=False にしたほうが良いかも？
         gumbel = F.gumbel_softmax(squeezed / self.temperature, tau=1, hard=True).int()
-        root.debug(f"{gumbel.shape=}")  # (batch_size, vocab_size)
-        root.debug(f"{gumbel=}")
+        self.logger.debug(f"{gumbel.shape=}")  # (batch_size, vocab_size)
+        self.logger.debug(f"{gumbel=}")
 
         return gumbel
 
@@ -119,6 +121,7 @@ class Receiver(nn.Module):
         vocab_size: int = 10,
     ):
         super().__init__()
+        self.logger = getLogger(self.__class__.__name__)
         self.temperature = temperature
 
         # "It embeds the images and the symbol into its own 'game-specific' space."
@@ -128,53 +131,179 @@ class Receiver(nn.Module):
     def forward(self, images: torch.Tensor, symbol: torch.Tensor):
         # images: (batch_size, num_images, input_dim)
         # symbol: (batch_size, vocab_size)
-        root.debug(f"{images.shape=}, {images.dtype=}")
-        root.debug(f"{symbol.shape=}, {symbol.dtype=}, {symbol=}")
+        self.logger.debug(f"{images.shape=}, {images.dtype=}")
+        self.logger.debug(f"{symbol.shape=}, {symbol.dtype=}, {symbol=}")
 
         # Convert one-hot to index
         symbol_index = symbol.argmax(dim=1)
 
         embedded_images = self.image_embedding(images)
         embedded_symbol = self.symbol_embedding(symbol_index)
-        root.debug(f"{embedded_images.shape=}")  # (batch_size, num_images, embed_dim)
-        root.debug(f"{embedded_symbol.shape=}")  # (batch_size, embed_dim)
+        self.logger.debug(
+            f"{embedded_images.shape=}"
+        )  # (batch_size, num_images, embed_dim)
+        self.logger.debug(f"{embedded_symbol.shape=}")  # (batch_size, embed_dim)
 
         # "It then computes dot products between the symbol and image embeddings."
         similarities = torch.bmm(embedded_images, embedded_symbol.unsqueeze(2)).squeeze(
             2
         )
-        root.debug(
+        self.logger.debug(
             f"{similarities.shape=}, {similarities=}"
         )  # (batch_size, num_images)
 
         # "The two dot products are converted to a Gibbs distribution (with temperature τ)"
         prob = F.softmax(similarities / self.temperature, dim=1)
-        root.debug(f"{prob.shape=}, {prob=}")
+        self.logger.debug(f"{prob.shape=}, {prob=}")
 
         return prob
 
 
-# Envに改名するかも？
-class Agents:
-    def __init__(self, vocabulary: list[str]):
-        self.encoder = ImageEncoder(use_softmax=False)
+class MultiAgentsEnvironment:
+    def __init__(self, config: dict, vocabulary: list[str]):
+        self.config = config
+        self.use_softmax = config["use_softmax"]
+        self.embed_dim = config["embed_dim"]
+        self.num_filters = config["num_filters"]
+        self.num_images = config["num_images"]
+        self.vocab_size = config["vocab_size"]
+        self.num_epochs = config["num_epochs"]
+        self.batch_size = config["batch_size"]
+        self.num_tests = config["num_tests"]
+        self.train_data = config["train_data"]
+        self.test_data = config["test_data"]
+
+        self.encoder = ImageEncoder(use_softmax=self.use_softmax)
+        self.logger = getLogger(self.__class__.__name__)
         self.sender = InformedSender(
             input_dim=self.encoder.output_dim,
-            embed_dim=50,
-            num_filters=20,
+            embed_dim=self.embed_dim,
+            num_filters=self.num_filters,
             vocab_size=len(vocabulary),
-            num_images=2,
+            num_images=self.num_images,
         )
         self.receiver = Receiver(
             input_dim=self.encoder.output_dim,
-            embed_dim=50,
+            embed_dim=self.embed_dim,
             vocab_size=len(vocabulary),
         )
+        self.optimizer = optim.Adam(
+            list(self.sender.parameters()) + list(self.receiver.parameters())
+        )
 
-    # TODO: 引数と返り値の型を torch.Tensor にしたほうが良いかも
-    def encode_images(self, images: torch.Tensor) -> list[torch.Tensor]:
-        # images: (num_images, input_dim)
-        return self.encoder.encode(images)
+    def encode_images(self, images: torch.Tensor) -> torch.Tensor:
+        # batch_size or num_tests, num_images, channel, height, width = images.shape
+        batch_size, num_images, channel, height, width = images.shape
+        assert num_images == self.num_images, f"{num_images=}"
+        assert channel == 3, f"{channel=}"
+        assert height == 224, f"{height=}"
+        assert width == 224, f"{width=}"
+
+        flattened = images.view(-1, channel, height, width)
+        assert flattened.shape == (batch_size * num_images, channel, height, width)
+
+        encoded = self.encoder.encode(flattened)
+
+        reshaped = encoded.view(batch_size, num_images, -1)
+        assert reshaped.shape == (batch_size, num_images, self.encoder.output_dim)
+
+        return reshaped
+
+    def shuffle_encoded(
+        self, encoded: torch.Tensor
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        # encoded: (batch_size or num_tests, num_images, input_dim)
+        batch_size, num_images, _ = encoded.shape
+        assert num_images == self.num_images, f"{num_images=}"
+
+        indices = torch.stack([torch.randperm(num_images) for _ in range(batch_size)])
+        shuffled = torch.stack([encoded[i][indices[i]] for i in range(batch_size)])
+        target_indices = torch.argmin(indices, dim=1)
+
+        return shuffled, indices, target_indices
+
+    def calc_loss(
+        self, prob: torch.Tensor, target_indices: torch.Tensor
+    ) -> torch.Tensor:
+        label = torch.zeros_like(prob)
+        batch_indices = torch.arange(prob.size(0))
+        label[batch_indices, target_indices] = 1.0
+        self.logger.debug(f"{label.shape=}, {label=}")
+        loss = F.binary_cross_entropy(prob, label)
+        self.logger.debug(f"{loss.shape=}. {loss=}")
+        return loss
+
+    def train(self):
+        self.optimizer.zero_grad()
+
+        for epoch in tqdm(range(self.num_epochs)):
+            # TODO: Epochごとに異なるデータを使う
+            dataset = choice_images(self.train_data, self.batch_size)
+            self.logger.debug(f"{dataset.shape=}")
+            # dataset: (batch_size, num_images, channel, height, width)
+
+            encoded = self.encode_images(dataset)
+            self.logger.debug(f"{epoch=}, {encoded.shape=}")
+            # (batch_size, num_images, input_dim)
+
+            message = self.sender(encoded)
+            self.logger.debug(f"{epoch=}, {message.shape=}")
+
+            shuffled, indices, target_indices = self.shuffle_encoded(encoded)
+            self.logger.debug(f"{shuffled.shape=}")
+            self.logger.debug(f"{indices.shape=}, {indices=}")
+            self.logger.debug(f"{target_indices.shape=}, {target_indices=}")
+
+            prob = self.receiver(shuffled, message)
+            self.logger.debug(f"{epoch=}, {prob.shape=}, {prob=}")
+
+            loss = self.calc_loss(prob, target_indices)
+            self.logger.debug(f"{epoch=}, {loss.shape=}, {loss=}")
+
+            loss.backward()
+            self.optimizer.step()
+
+            correct_predictions = (prob.argmax(dim=1) == target_indices).sum().item()
+            accuracy = correct_predictions / self.batch_size
+            self.logger.debug(f"{epoch=}, {correct_predictions=}, {accuracy=}")
+
+            wandb.log({"epoch": epoch, "loss": loss, "accuracy": accuracy})
+
+    def evaluate(self):
+        with torch.no_grad():
+            dataset = choice_images(self.test_data, self.num_tests)
+            self.logger.debug(f"{dataset.shape=}")
+
+            encoded = self.encode_images(dataset)
+            self.logger.debug(f"{encoded.shape=}")
+
+            message = self.sender(encoded)
+            self.logger.debug(f"{message.shape=}")
+
+            shuffled, indices, target_indices = self.shuffle_encoded(encoded)
+
+            prob = self.receiver(shuffled, message)
+            self.logger.debug(f"{prob.shape=}, {prob=}")
+
+            shuffled, indices, target_indices = self.shuffle_encoded(encoded)
+            self.logger.debug(f"{shuffled.shape=}")
+            self.logger.debug(f"{indices.shape=}, {indices=}")
+            self.logger.debug(f"{target_indices.shape=}, {target_indices=}")
+
+            prob = self.receiver(shuffled, message)
+            self.logger.debug(f"{prob.shape=}, {prob=}")
+
+            loss = self.calc_loss(prob, target_indices)
+            self.logger.debug(f"{loss.shape=}, {loss=}")
+
+            correct_predictions = (prob.argmax(dim=1) == target_indices).sum().item()
+            accuracy = correct_predictions / self.num_tests
+            self.logger.debug(f"{correct_predictions=}, {accuracy=}")
+
+            return (loss, accuracy)
+
+    def save(self):
+        pass
 
 
 def load_image(path: str) -> torch.Tensor:
@@ -187,82 +316,6 @@ def load_image(path: str) -> torch.Tensor:
     img = Image.open(path).convert("RGB")
     img_tensor = transform(img)
     return img_tensor
-
-
-def calc_loss(prob: torch.Tensor, target_index: tuple):
-    label = torch.zeros_like(prob)
-    label[:, target_index] = 1.0
-    root.debug(f"{label.shape=}, {label=}")
-    loss = F.binary_cross_entropy(prob, label)
-    root.debug(f"{loss.shape=}. {loss=}")
-    return loss
-
-
-def train_step(agents, optimizer, batch: torch.Tensor):
-    # images: (num_images, input_dim)
-    optimizer.zero_grad()
-
-    # Encode images
-    encoded_batch_images = []
-    for images in batch:
-        encoded_images = agents.encode_images(images)
-        encoded_batch_images.append(encoded_images)
-    encoded_batch_tensor = torch.stack(encoded_batch_images)
-    root.debug(f"{encoded_batch_tensor.shape=}")  # (batch_size, num_images, input_dim)
-
-    # Sender generates a message
-    message = agents.sender(encoded_batch_tensor)
-
-    # Receiver tries to identify the target image
-    indices = torch.randperm(len(batch[0]))
-    root.debug(f"{indices.shape=}, {indices=}")
-    target_index = torch.where(indices == 0)
-    root.debug(f"{target_index=}")
-    shuffled_batch = encoded_batch_tensor[:, indices, :]
-    prob = agents.receiver(shuffled_batch, message)
-
-    # Calculate loss
-    loss = calc_loss(prob, target_index)
-
-    # Backpropagate and update weights
-    loss.backward()
-    optimizer.step()
-
-    is_correct = prob.argmax().item() == target_index
-    root.debug(f"{loss.item()=}, {is_correct=}")
-    return loss.item(), is_correct
-
-
-def evaluate(agents, batch):
-    batch_size = batch.shape[0]
-
-    with torch.no_grad():
-        encoded_batch_images = []
-        for images in batch:
-            encoded_images = agents.encode_images(images)
-            encoded_batch_images.append(encoded_images)
-        encoded_batch_tensor = torch.stack(encoded_batch_images)
-        root.debug(
-            f"{encoded_batch_tensor.shape=}"
-        )  # (batch_size, num_images, input_dim)
-
-        # Sender generates messages for the whole batch
-        messages = agents.sender(encoded_batch_tensor)
-
-        # Randomly shuffle the images for each item in the batch
-        indices = torch.randperm(2).expand(batch_size, -1)
-        target_indices = torch.where(indices == 0)[0]
-        shuffled_batch = encoded_batch_tensor.gather(
-            1, indices.unsqueeze(-1).expand(-1, -1, encoded_batch_tensor.shape[-1])
-        )
-
-        # Receiver tries to identify the target images
-        probs = agents.receiver(shuffled_batch, messages)
-
-    # Check if the predictions are correct
-    correct_predictions = (probs.argmax(dim=1) == target_indices).float()
-
-    return correct_predictions.mean().item()
 
 
 def choice_images(dir: str, batch_size: int) -> torch.Tensor:
@@ -288,8 +341,12 @@ def choice_images(dir: str, batch_size: int) -> torch.Tensor:
     return torch.stack(batch)
 
 
-# > We explore two vocabulary sizes: 10 and 100 symbols.
 config = {
+    "use_softmax": False,
+    "embed_dim": 50,
+    "num_filters": 20,
+    "num_images": 2,
+    # > We explore two vocabulary sizes: 10 and 100 symbols.
     "vocab_size": 10,
     "num_epochs": 10,
     "batch_size": 2,
@@ -300,46 +357,19 @@ config = {
 
 
 def main():
-    # wandb.init(project="language-learning", config=config)
+    wandb.init(project="language-learning", config=config)
 
-    agents = Agents(vocabulary=symbols[:10] if config["vocab_size"] == 10 else symbols)
-
-    optimizer = optim.Adam(
-        list(agents.sender.parameters()) + list(agents.receiver.parameters())
+    env = MultiAgentsEnvironment(
+        config=config,
+        vocabulary=symbols[:10] if config["vocab_size"] == 10 else symbols,
     )
 
-    num_epochs = config["num_epochs"]
-    batch_size = config["batch_size"]
+    env.train()
 
-    for epoch in tqdm(range(num_epochs)):
-        epoch_loss = 0
-        correct_predictions = 0
+    test_loss, test_accuracy = env.evaluate()
 
-        batch = choice_images(config["train_data"], batch_size)
-        root.debug(f"{batch.shape=}")
-        loss, is_correct = train_step(agents, optimizer, batch)
-
-        epoch_loss += loss
-        if is_correct:
-            correct_predictions += 1
-
-        avg_loss = epoch_loss / batch_size
-        accuracy = correct_predictions / batch_size
-
-        # wandb.log({"epoch": epoch, "avg_loss": avg_loss, "accuracy": accuracy})
-
-        if epoch % 10 == 0:
-            print(
-                f"Epoch {epoch}: Avg Loss = {avg_loss:.4f}, Accuracy = {accuracy:.2f}"
-            )
-
-    # Test the trained model
-    batch = choice_images(config["test_data"], config["num_tests"])
-    test_accuracy = evaluate(agents, batch)
-    print(f"Test Accuracy: {test_accuracy:.2f}")
-
-    # wandb.log({"test_accuracy": test_accuracy})
-    # wandb.finish()
+    wandb.log({"test_loss": test_loss, "test_accuracy": test_accuracy})
+    wandb.finish()
 
 
 if __name__ == "__main__":
