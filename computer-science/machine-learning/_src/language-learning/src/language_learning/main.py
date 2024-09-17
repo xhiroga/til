@@ -6,7 +6,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.models as models
-import torchvision.transforms as transforms
 from constants import symbols
 from torch.utils.data import DataLoader, Subset
 from torchvision import transforms
@@ -15,7 +14,7 @@ from tqdm import tqdm
 
 import wandb
 
-basicConfig(level="DEBUG")
+basicConfig(level="INFO")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 root.debug(f"{device=}")
@@ -276,6 +275,7 @@ class MultiAgentsEnvironment:
 
             avg_loss = epoch_loss / self.total_train_pairs
             accuracy = correct_predictions / self.total_train_pairs
+            self.logger.info(f"{epoch=}, {avg_loss=}, {accuracy=}")
             wandb.log({"epoch": epoch, "avg_loss": avg_loss, "accuracy": accuracy})
 
     def evaluate(self):
@@ -321,6 +321,7 @@ class MultiAgentsEnvironment:
 
             avg_loss = epoch_loss / self.total_test_pairs
             accuracy = correct_predictions / self.total_test_pairs
+            self.logger.info(f"{avg_loss=}, {accuracy=}")
             return (avg_loss, accuracy)
 
     def save(self):
@@ -339,8 +340,8 @@ config = {
     "num_members": 2,
     # > We explore two vocabulary sizes: 10 and 100 symbols.
     "vocab_size": 10,
-    "num_epochs": 10,
-    "batch_size": 100,
+    "num_epochs": 50,
+    "batch_size": 50,
     "total_train_pairs": 5000,
     "total_test_pairs": 1000,
 }
@@ -362,12 +363,12 @@ def main():
     )
 
     train_loader = DataLoader(
-        get_subset(train_dataset, config["total_train_pairs"]),
+        get_subset(train_dataset, config["total_train_pairs"] * config["num_members"]),
         batch_size=config["batch_size"] * config["num_members"],
         shuffle=True,
     )
     test_loader = DataLoader(
-        get_subset(test_dataset, config["total_test_pairs"]),
+        get_subset(test_dataset, config["total_test_pairs"] * config["num_members"]),
         batch_size=config["batch_size"] * config["num_members"],
         shuffle=False,
     )
