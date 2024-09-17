@@ -3,8 +3,7 @@
 ```shell
 uv sync
 uv run wandb login
-make
-uv run src/language-learning/main.py
+uv run src/language_learning/main.py
 ```
 
 ## References

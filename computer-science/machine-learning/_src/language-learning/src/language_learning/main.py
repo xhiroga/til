@@ -25,7 +25,7 @@ root.debug(f"{device=}")
 class ImageEncoder:
     def __init__(self, use_softmax=True):
         self.logger = getLogger(self.__class__.__name__)
-        self.vgg = models.vgg16(weights=models.VGG16_Weights.DEFAULT)
+        self.vgg = models.vgg16(weights=models.VGG16_Weights.DEFAULT).to(device)
         if use_softmax:
             self.softmax = torch.nn.Softmax(dim=1)
             self.output_dim = 1000
@@ -222,7 +222,9 @@ class MultiAgentsEnvironment:
         batch_size, num_images, _ = encoded.shape
         assert num_images == self.num_members, f"{num_images=}"
 
-        indices = torch.stack([torch.randperm(num_images) for _ in range(batch_size)])
+        indices = torch.stack(
+            [torch.randperm(num_images, device=device) for _ in range(batch_size)]
+        )
         shuffled = torch.stack([encoded[i][indices[i]] for i in range(batch_size)])
         target_indices = torch.argmin(indices, dim=1)
 
@@ -337,10 +339,10 @@ config = {
     "num_members": 2,
     # > We explore two vocabulary sizes: 10 and 100 symbols.
     "vocab_size": 10,
-    "num_epochs": 2,
-    "batch_size": 5,
-    "total_train_pairs": 500,
-    "total_test_pairs": 100,
+    "num_epochs": 10,
+    "batch_size": 100,
+    "total_train_pairs": 5000,
+    "total_test_pairs": 1000,
 }
 
 
@@ -349,7 +351,7 @@ def main():
 
     # VGG16の入力サイズに合わせる
     transform = transforms.Compose(
-        [transforms.Resize((224, 224)), transforms.ToTensor()]
+        [transforms.Resize(size=(224, 224)), transforms.ToTensor()]
     )
 
     train_dataset = CIFAR100(
