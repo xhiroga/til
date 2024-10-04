@@ -5,8 +5,18 @@ version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "torch>=2.4.1",
-    "torchvision>=0.19.1",
-    "tqdm>=4.66.5",
     "wandb>=0.18.0",
+    "tqdm>=4.64.1",
+    "torch==2.4.1+cu121",
+    "torchvision==0.19.1+cu121",
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/language_learning"]
+
+[tool.uv]
+extra-index-url = ["https://download.pytorch.org/whl/cu121"]
