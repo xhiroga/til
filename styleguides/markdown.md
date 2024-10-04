@@ -33,6 +33,7 @@
 ### Heading (Formatting Rules)
 
 - (`##` と `--` のどちらを用いるか、調整中...)
+- 正しくレンダリングされない可能性があるため、Headingに対して脚注を付けない
 
 ### Code Block
 
