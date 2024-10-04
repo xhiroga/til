@@ -485,17 +485,17 @@ LSTMでは、系列の分類タスクや、系列のタイムステップと出�
 
 - [ChatGPT🔐](https://chatgpt.com/c/0c69a86c-096a-4a84-a265-c6df17de88cb)
 
-#### BLEU[^papineni_2002]
+#### BLEU
+
+BLEU (Bilingual Evaluation Understudy, 発音はBlueと同じ)[^papineni_2002]は、機械翻訳等の評価に広く利用される評価指標。
 
 [^papineni_2002]: [BLUE: a Method for Automatic Evaluation of Machine Translation](https://aclanthology.org/P02-1040.pdf)
 
-BLEU (Bilingual Evaluation Understudy, 発音はBlueと同じ)は、機械翻訳等の評価に広く利用される評価指標。
+#### ROUGE
 
-#### ROUGE[^lin_2004]
+ROUGE (Recall-Oriented Understudy for Gisting Evaluation, ルージュ)[^lin_2004]は、要約タスクで用いられる評価指標。参照する要約と生成した要約の一致度を測ることを試みる。
 
 [^lin_2004]: [ROUGE: A Package for Automatic Evaluation of Summaries](https://aclanthology.org/W04-1013.pdf)
-
-ROUGE (Recall-Oriented Understudy for Gisting Evaluation, ルージュ)は、要約タスクで用いられる評価指標。参照する要約と生成した要約の一致度を測ることを試みる。
 
 最も基本的なROUGE-Nでは、N-gramの単位で、人手の要約と機械の要約との共起を測る。N-gramがUnigramの場合、ROUGE-1と呼ばれる。[^icoxfog417_2017]
 [^icoxfog417_2017]: [ROUGEを訪ねて三千里:より良い要約の評価を求めて](https://qiita.com/icoxfog417/items/65faecbbe27d3c53d212)
@@ -540,17 +540,27 @@ ROUGE (Recall-Oriented Understudy for Gisting Evaluation, ルージュ)は、要
 
 #### BERT
 
-#### Transformer (2017)[^vaswani_2017]
+#### Transformer (2017)
 
-[^vaswani_2017]: [A. Vaswani et al., “Attention is All you Need,” in Advances in Neural Information Processing Systems, Curran Associates, Inc., 2017.](https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html)
+Transformer[^vaswani_2017]は単語間の長距離依存性を把握できるようになったニューラルネットワークである。具体的には、全単語間にAttention機構を導入したRNNである。
+[^vaswani_2017]: A. Vaswani et al., “Attention is All you Need,” in Advances in Neural Information Processing Systems, Curran Associates, Inc., 2017. Accessed: Jan. 05, 2024. [Online]. Available: https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html
+
+TransformerがEncoder-Decoderブロックから構成される一方で、GPTはDecoderブロックからのみ構成される。Transformerが翻訳タスク向けに設計されたことが関係している。
+
+Transformerでは単語の位置情報を知るため、位置埋込 (PE, Positional Encoding)を行う。単に位置インデックスを用いずに、トークンごとに計算したべクトル次元数分の波を用いることで、モデルが位置関係をより連続的に理解できる。
 
 - Self-Attention
 - Encoder/Decoder
 - Multi-head attention
-- 位置符号化
 - Cross-Attention
 - 残差結合
 - 層正規化
+
+Transformerは、様々な注意表現を学習するために異なるAttentionを何度も適用している。その結果、CNNのように同じフィルタを繰り返し適用するモデルと比較して、計算量やパラメータが多くなり、それらをメモリから読み出す頻度が上がった。
+
+CPUの演算性能だけでなく、メモリI/Oを含めた性能を評価するためのモデルとしてルーフラインモデルがある。マシンの達成可能なFLOPSを計算するに当たり、CPUのピーク演算性能とメモリ帯域によって成約される性能の小さい方を取るもので、チャートが屋根のような形になることからそう呼ぶ。
+
+![ルーフラインモデル](https://fukushimalab.github.io/hpc_exercise/docfig/roofline.png)
 
 #### CLIP (2021)[^radford_2021]
 
@@ -602,16 +612,178 @@ CLIPは正例と近い負例・遠い負例の距離に注意を払っていな�
 
 <!-- ## LLaVA -->
 
+## LLM
+
+ページの構成の際、次の情報源を参考にした。
+
+- [LLM 大規模言語モデル講座 2023](https://weblab.t.u-tokyo.ac.jp/llm_contents/)
+- [大規模言語モデル Deep Learning 応用講座 2024 Fall](https://weblab.t.u-tokyo.ac.jp/education/large-language-model/)
+
+### LLMの学習手法
+
+#### 事前学習
+
+##### 事前学習データ
+
+##### 事前学習データの前処理
+
+LLaMAの学習に用いられたデータはWebからクロールしたデータで、CommonCrawlを初めとした4TB以上のサイズを持つ。また、GPT-3の事前学習トークン数は4100億, GPT-4は13兆トークンと言われる。
+
+> [!NOTE] データの質を上げて量を絞ると、訓練にかかるコストも削減できるの？
+> 調査中...
+
+> [!NOTE] Webからクロールしたデータはゴミも多い。データの質に着目した量の指標はないの？
+> 調査中...
+
+データの前処理パイプラインは次の通り。ただしデータセットによって前処理の仕組みは異なる。
+
+- Quality Filtering
+- De-dup (重複排除)
+- Privacy Reduction
+- Tokenization
+
+##### 事前学習の訓練
+
+次のトークンの生成確率をひたすら予測する。数理的には、トークンの生成確率から交差エントロピーを算出し、そのミニバッチ内での平均をLossとする。
+
+Next Token Predictionでは、一般的に1epochのみ学習させる。
+
+<!-- TODO: [!NOTE] 誤差を測るにあたって、単語間の意味の近さも考慮するの？ -->
+
+#### 継続事前学習
+
+継続事前学習においても前処理のパイプラインがある。Swallow[^swallow_2023]コーパス![^swallow-corpus_2023]のパイプラインは次の通り。
+![^swallow_2023](https://www.anlp.jp/proceedings/annual_meeting/2024/pdf_dir/A8-5.pdf)
+![^swallow-corpus_2023](https://www.anlp.jp/proceedings/annual_meeting/2024/pdf_dir/A6-1.pdf)
+
+1. 日本語のテキスト抽出
+2. 品質フィルタリング (3兆文字 → 1兆文字)
+   1. 文字数が400文字以上である
+   2. 日本語の文字数が50%以上である, 他
+3. 重複フィルタリング (1兆文字 → 3500億文字)
+4. ホスト名フィルタリング (3500億文字 → 3100億文字)
+
+##### 語彙拡張
+
+<!-- TODO -->
+
+#### スケール則
+
+計算資源、データセットサイズ、パラメータ数を適切に引き上げることで、モデルの性能を向上させる（＝誤差を減らす）ことができる。これらの値には、次の関係が成り立つことが経験的に知られている。
+
+$$
+\begin{align}
+L(X) = (\frac{X_c}{X})^\alpha
+\end{align}
+$$
+
+ただし、$L(X)$は誤差、$X$は計算資源, データセットサイズ, パラメータ数のいずれか、$\alpha$は$L(X)$と$X$の両対数グラフの負の傾きを表す。
+
+スケール則を用いることで、与えられた条件内で到達できる最小の誤差を予測することができる。また、スケール則は深層学習のタスクの種類（翻訳, 画像分類, 音声認識, etc...）を問わずに発現することが報告されている。[^Hestness_et_al_2017]
+[^Hestness_et_al_2017]: J. Hestness et al., “Deep Learning Scaling is Predictable, Empirically,” arXiv.org. Accessed: Oct. 02, 2024. [Online]. Available: <https://arxiv.org/abs/1712.00409v1>
+
+計算量の単位としてはFLOPs (Floating Point Operations, 浮動小数点演算性能)、またはPF-daysが用いられる。PF-daysとは、1Peta FLOPS(Floating points operation per second, 末尾Sが大文字であることに注意)の処理性能を持つサーバーを何日分計算に使ったかを示す量である。
+
+また、スケール則を用いることで、計算資源に対して最適なモデルのパラメータ数とトークン数を求めることができる。Chinchilla論文では、パラメータ数:トークン数＝1:20の比通が良いとされる。
+
+#### Fine-Tuning
+
+LLMの訓練フローは、次の3ステップからなる。
+
+1. Pre-Training (事前学習)
+2. Supervised Fine-Tuning
+3. Reinforcement Learning from Human Feedback (RLHF)
+
+事前学習以降は広義のFine-Tuningなので、RLHFと区別する意味でSupervised Fine-Tuningと呼ばれる。
+
+##### Instruction Tuning
+
+Fine-Tuningの中でも、指示・回答の形式に統一したデータセットで言語モデルをFine−Tuningする手法をInstruction Tuningという。主にタスクへの適応を行っている一方で、新たに知識を獲得するのではなく事前学習で得た知識を引き出すことで改善を実現している、という説がある。
+
+##### Parameter Efficient Fine-Tuning
+
+大規模なモデルに対してFine-Tuningを行うと、莫大な計算リソースが必要になる。そこで、一部のパラメータや追加したパラメータのみを対象にしたパラメータ効率の良いFine-Tuningが考えられる。これをParameter Efficient Fine-Tuning (PEFT)という。
+
+PEFTの代表的な手法としては、次の4つが存在する。
+
+| Name                    | Description                                                      | Pros                                          | Cons                                              |
+| ----------------------- | ---------------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------- |
+| Adapters                | Transformer内にモジュールを追加                                  | 訓練パラメータ数が小さい                      | 推論にオーバーヘッド                              |
+| Soft Prompts            | モデルは変化させず、タスクのためのプロンプトをベクトル形式で学習 | モデル学習不要, 性能高い                      | 入力のContextを圧迫                               |
+| Selective               | 各モジュールのバイアス項だけを学習                               | 学習データ数が小さい領域ではFull-FTより高精度 | 大規模モデルではFull-FTに対して精度が劣る         |
+| Reparametrization-based | Full-FT後の重み - 現在の重みの差分のみを学習                     | タスク依存だがFull-FTと同等の精度             | タスクに寄ってはFull-FTと比較して著しい性能の劣化 |
+
+![Lialin et al. (2023):Figure 2:Parameter-efficient fine-tuning methods taxonomy.](https://ar5iv.labs.arxiv.org/html/2303.15647/assets/img/peft_taxonomy_v3.2.jpg)
+
+#### RLHF & Alignment
+
+<!-- TODO -->
+
+##### Human-in-the-Loop機械学習
+
+広義には機械学習の訓練・運用のプロセスに人間が参加することを言うようだ。[^itmedia_2022]狭義には、継続的に能動学習を行うことで人間の知見を取り込むことを指すようにみえる。
+[^itmedia_2022]: [ヒューマン・イン・ザ・ループ（HITL ：Human-in-the-Loop）とは？](https://atmarkit.itmedia.co.jp/ait/articles/2203/10/news019.html)
+
+### LLMの推論
+
+#### Prompting & 文脈内学習
+
+LLMの応答の正誤は、指示文の影響を大きく受ける。代表的なPromptのテクニックは次の通り。
+
+- CoT (Chain of Thought) (ステップバイステップで考える)
+- Few-shot learning (例示する)
+
+LLMを提供している企業のプロンプトは次の通り。
+
+- [Claude Prompt Library](https://docs.anthropic.com/en/prompt-library/library)
+
+#### RAG (Retrieval-Augmented Generation)
+
+外部知識を利用したテキストの生成をRAGと呼ぶ。そのうち、関連する知識（文書）を取得する機能をRetrieverと呼ぶ。関連度合いの求め方によって、次のように分類される。
+
+- Sparse Retriever
+  - キーワード検索
+  - TF-IDF
+  - 埋め込みのコサイン類似度
+- Neural Retriever (Dense Retriever)
+
+また、初めにキーワード検索を行い、次にNeural Retrieverを用いるようなRetrieverも考えられる。これをRerankと呼ぶ。
+
+検索した文書の使い方は次の通り。
+
+1. コンテキストとして追加する (REPLUG)
+2. 複数の予測のうち、得られた文書から見て尤もらしい予測を採用する (KNN-prompt)
+
+#### Tool Augmented Language model
+
+プログラミング言語実行環境や電卓などを利用する言語モデルをTool Augmented Language Modelといい、代表的なモデルに[Gorilla](https://gorilla.cs.berkeley.edu/)がある。
+
+#### 推論時のスケーリング
+
+同じモデルを使う場合でも、推論時に工夫をすることで性能を引き上げることができる。次の通り、様々なレベルの工夫が考えられる。
+
+- Decodingによる工夫
+  - Greedy Decoding
+  - Beam Search
+  - Random Sampling
+- Promptingによる工夫
+- メタ生成 (Meta-generation)アルゴリズムによる工夫
+  - Parallel Search
+  - Step level search
+  - Refinement
+
+### LLMの評価
+
+ツールが公開されているほか、リーダーボードが公開されている。
+
+- [Open LLM Leaderboard 2](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) (Open LLMのリーダーボード, 1からタスクを刷新)
+- [Nejumiリーダーボード](https://wandb.ai/wandb-japan/llm-leaderboard3/reports/Nejumi-LLM-3--Vmlldzo3OTg2NjM2) (日本語に特化)
+
 ## MLOps
 
 ### 能動学習
 
 データの量が多い、専門性が高い等の理由からラベル付けのコストが高く付きそうな場合、学ぶデータに優先順位を付けるのが有向になる。アルゴリズムで新たに学習するデータを選ぶ手法を能動学習と呼ぶ。新たに学習するデータとしては、分類に迷うデータを選んだり、出現率が高いデータを選択する。
-
-### Human-in-the-Loop機械学習
-
-広義には機械学習の訓練・運用のプロセスに人間が参加することを言うようだ。[^itmedia_2022]狭義には、継続的に能動学習を行うことで人間の知見を取り込むことを指すようにみえる。
-[^itmedia_2022]: [ヒューマン・イン・ザ・ループ（HITL ：Human-in-the-Loop）とは？](https://atmarkit.itmedia.co.jp/ait/articles/2203/10/news019.html)
 
 ### 連合学習 (Federated Learning)
 
