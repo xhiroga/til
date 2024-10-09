@@ -204,24 +204,24 @@ PCAのような線形な手法では、複雑な非線形構造を持つデー�
 
 予測の精度を測る指標は次の通り。
 
-- Accuracy（正解率）
+- 正解率 (Accuracy)
   - 全ての予測に対する、正しい予測の割合
-- Precision（適合率）
+- 適合率 (Precision)
   - $TP/(TP+FP)$
   - 件数を減らしてでも偽陽性を防ぎたい場合に良い指標になる。ホワイトリスト向き
-- Recall（再現率）
+- 再現率 (Recall)
   - $TP/(TP+FN)$
   - 件数を増やしてでも偽陰性を防ぎたい場合に良い指標となる。ブラックリスト向き
   - 例: セキュリティのアラート
-- F-measure（F値）
+- F値 (F-measure)
   - 適合率と再現率の調和平均
 
 前述の指標を踏まえて、機械学習の評価に用いられる指標は次の通り。
 
-- Receiver Operating Characteristic曲線（ROC曲線）
+- ROC曲線 (Receiver Operating Characteristic曲線)
   - 縦軸に真陽性率（=再現率）、横軸に偽陽性率を置いたグラフ
   - 再現率を上げようと何でも陽性で判定すると、同時に偽陰性も増える、というトレードオフを表している
-- Recision-Recall Curve（PR曲線）
+- PR曲線 (Precision-Recall Curve)
   - 縦軸に適合率、横軸に再現率を置いたグラフ
 
 ## ニューラルネットワーク (neural network), 深層学習 (deep learning)
@@ -242,7 +242,7 @@ PCAのような線形な手法では、複雑な非線形構造を持つデー�
 
 ### 活性化関数
 
-活性化関数。非線形性（non-linearity）の1つ。
+活性化関数。非線形性 (non-linearity)の1つ。
 
 #### Sigmoid function
 
@@ -284,7 +284,7 @@ print(y)  # [0.66524096 0.09003057 0.24472847]
 
 #### ReLU
 
-レルー（ランプ関数、正規化線形ユニット（Rectified Linear Unit））は、主にディープニューラルネットワークの中間層で用いられる活性化関数。
+ReLU (正規化線形ユニット, Rectified Linear Unit)またはランプ関数は、主にディープニューラルネットワークの中間層で用いられる活性化関数。
 
 ```python
 import matplotlib.pyplot as plt
@@ -302,7 +302,7 @@ plt.show()
 
 #### GELU
 
-ガウス誤差線形ユニット（Gaussian Error Linear Unit）は、Transformer系のモデルでも採用される活性化関数。
+ガウス誤差線形ユニット (Gaussian Error Linear Unit)は、Transformer系のモデルでも採用される活性化関数。
 
 ### 確率的勾配降下法 (SGD)
 
