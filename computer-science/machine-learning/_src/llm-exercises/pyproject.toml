@@ -1,0 +1,21 @@
+[project]
+name = "llm-exercises"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.4.1",
+    "torchvision>=0.2.0",
+    "unsloth>=2024.8",
+    "wandb>=0.18.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+extra-index-url = ["https://download.pytorch.org/whl/cu124"]
+dev-dependencies = [
+    "ipykernel>=6.29.5",
+]
