@@ -37,7 +37,7 @@ makeをタスクランナーとして使用するための、個人的なMakefil
 
 #### TIPS: `$$(command)` vs `$(shell command)`
 
-`$(shell command)` はMakefileの読み込み時評価されます。一方、`$$(command)` は実行時に評価されます。詳細は[3.8 How Makefiles Are Parsed](https://www.gnu.org/software/make/manual/make.html#Parsing-Makefiles)と[3.9 Secondary Expansion](https://www.gnu.org/software/make/manual/make.html#Secondary-Expansion)を参照してください。
+`$(shell command)` はMakefileの読み込み時に評価されます。一方、`$$(command)` は実行時に評価されます。詳細は[3.8 How Makefiles Are Parsed](https://www.gnu.org/software/make/manual/make.html#Parsing-Makefiles)と[3.9 Secondary Expansion](https://www.gnu.org/software/make/manual/make.html#Secondary-Expansion)を参照してください。
 
 ### Semicolon vs new line and TAB （セミコロン vs 改行とタブ）
 
