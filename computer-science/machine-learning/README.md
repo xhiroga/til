@@ -700,6 +700,10 @@ LLMの訓練フローは、次の3ステップからなる。
 
 Fine-Tuningの中でも、指示・回答の形式に統一したデータセットで言語モデルをFine−Tuningする手法をInstruction Tuningという。主にタスクへの適応を行っている一方で、新たに知識を獲得するのではなく事前学習で得た知識を引き出すことで改善を実現している、という説がある。
 
+Instruction TuningされたモデルはZero-shot性能が向上する。つまり、特定の応答を超えた汎用的な指示の理解能力を得ると考えられる。
+
+派生手法として**In-Context Tuning**や**Symbol Tuning**が存在する。In-Context Tuningでは、単なる応答を超えて例を含む応答で訓練することで、Few-shot性能を向上させる。Symbol Tuningでは、正しい答えが質問に含まれる場合に、それらを無関係なシンボル（`bar`など）に置き換えて訓練する。
+
 ##### Parameter Efficient Fine-Tuning
 
 大規模なモデルに対してFine-Tuningを行うと、莫大な計算リソースが必要になる。そこで、一部のパラメータや追加したパラメータのみを対象にしたパラメータ効率の良いFine-Tuningが考えられる。これをParameter Efficient Fine-Tuning (PEFT)という。
@@ -719,6 +723,13 @@ PEFTの代表的な手法としては、次の4つが存在する。
 
 LLMの訓練にあたって、教師あり学習では文法や知識、応答の形式を学習させることが可能である。しかし、教師あり学習では善悪など人間の意図に沿った回答を学習させるのは難しいとされている。そこで、人間をフィードバックサイクルに含む強化学習で意図を学習することが効果的である。そのような意図を学ばせる調整をAlignmentといい、学習をRLHF (Reinforcement Learning from Human Feedback)と言う。
 
+Alignmentの基準としてはHelpful, Honest, Harmlessなどがあり、これらをまとめてHHHと呼ぶ論文もある。関連して、次のようなデータセットがある。
+
+- [ThoughtfulQA](https://github.com/sylinrl/TruthfulQA): LLMの真実性や難しい知識に対する能力を測るデータセット
+- [HalEval](https://github.com/RUCAIBox/HaluEval): ハルシネーションの少なさを測るデータセット
+- [SHP(Stanford Human Preferences Dataset)](https://huggingface.co/datasets/stanfordnlp/SHP): Redditを元に作成した、よりHelpfulな回答が高いスコアを持つと想定したデータセット
+- [HH-RLHF](https://huggingface.co/datasets/Anthropic/hh-rlhf): HelpfulとHarmlessの2軸で評価したデータセット
+
 RLHFについて、特にChatGPTの前進であるInstructGPTでは、次の手順で学習が行われた。
 
 1. 強化学習の報酬を与えるモデルの最初の訓練データを生成するモデルを、プロンプト-人間の回答から教師あり学習によって訓練する
@@ -727,6 +738,8 @@ RLHFについて、特にChatGPTの前進であるInstructGPTでは、次の手�
 
 また、Step2をルールに従ってAIが行う方法をRLAIFと呼び、Claudeなどで採用されている。[^anthoropic_2023]
 [^anthoropic_2023]: [Claude’s Constitution](https://www.anthropic.com/news/claudes-constitution)
+
+一方で、強化学習には問題点もある。報酬を最大化することを目的にしたモデルが望ましくない方策を学習する現象をReward Hackingという。また、汎化性能が劣化してしまう現象をAlignment Taxという。
 
 ##### DPO
 
