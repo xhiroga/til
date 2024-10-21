@@ -229,7 +229,7 @@ class MultiAgentsEnvironment:
 
         return shuffled, indices, target_indices
 
-    def calc_loss(
+    def calc_reward(
         self, prob: torch.Tensor, target_indices: torch.Tensor
     ) -> torch.Tensor:
         label = torch.zeros_like(prob)
@@ -263,7 +263,7 @@ class MultiAgentsEnvironment:
 
                 prob = self.receiver(shuffled, message)
 
-                loss = self.calc_loss(prob, target_indices)
+                loss = self.calc_reward(prob, target_indices)
 
                 loss.backward()
                 self.optimizer.step()
@@ -308,7 +308,7 @@ class MultiAgentsEnvironment:
                 prob = self.receiver(shuffled, message)
                 self.logger.debug(f"{prob.shape=}, {prob=}")
 
-                loss = self.calc_loss(prob, target_indices)
+                loss = self.calc_reward(prob, target_indices)
                 self.logger.debug(f"{loss.shape=}, {loss=}")
 
                 batch_correct_predictions = (
