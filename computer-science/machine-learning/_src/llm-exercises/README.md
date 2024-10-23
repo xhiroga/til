@@ -6,10 +6,6 @@
 
 ```shell
 wsl
-# uv init --python 3.12
-# echo -e '[tool.uv]\nextra-index-url = ["https://download.pytorch.org/whl/cu124"]' >> pyproject.toml
-# uv add torch==2.4.1+cu121 torchvision==0.19.1+cu121
-# ...
 uv sync
 ```
 
