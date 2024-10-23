@@ -4,7 +4,7 @@
 2. [ニューラルネットワーク (neural network), 深層学習 (deep learning)](./02-neurarl-network.md)
 3. [強化学習](./03-reinforcement-learning.md)
 4. [生成モデル](./04-generative-model.md)
-5. [大規模事前学習](./05-large-scale-pretraining.md)
+5. [大規模事前学習](./05-large-scale-pretrained-model.md)
 
 <!-- ページの設計思想
 - 主に基盤になっている技術によって章を分けた（機械学習 → ニューラルネットワーク → 大規模事前学習）

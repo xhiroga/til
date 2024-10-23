@@ -1,11 +1,11 @@
-# 大規模事前学習
+# 大規模事前学習モデル
 
 ページの構成の際、次の情報源を参考にした。
 
 - [LLM 大規模言語モデル講座 2023](https://weblab.t.u-tokyo.ac.jp/llm_contents/)
 - [大規模言語モデル Deep Learning 応用講座 2024 Fall](https://weblab.t.u-tokyo.ac.jp/education/large-language-model/)
 
-## 大規模事前学習の学習手法
+## 大規模事前学習モデルの学習手法
 
 ### 転移学習
 
@@ -31,92 +31,7 @@
 
 評価の方法としては、ラベル付き分類データを用いて埋め込みを取得し（全結合層で変換する手前の値）、k近傍法を用いるもの、シンプルに下流タスク用のヘッドを取り付けて性能を測るもの、下流タスクのための層を加えてフルパラメータのファインチューニングを行うものなどがある。
 
-## 大規模事前学習のアーキテクチャ
-
-### BERT
-
-### Transformer (2017)
-
-Transformer[^vaswani_2017]は単語間の長距離依存性を把握できるようになったニューラルネットワークである。具体的には、全単語間にAttention機構を導入したRNNである。
-[^vaswani_2017]: A. Vaswani et al., “Attention is All you Need,” in Advances in Neural Information Processing Systems, Curran Associates, Inc., 2017. Accessed: Jan. 05, 2024. [Online]. Available: https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html
-
-TransformerがEncoder-Decoderブロックから構成される一方で、GPTはDecoderブロックからのみ構成される。Transformerが翻訳タスク向けに設計されたことが関係している。
-
-Transformerでは単語の位置情報を知るため、位置埋込 (PE, Positional Encoding)を行う。単に位置インデックスを用いずに、トークンごとに計算したべクトル次元数分の波を用いることで、モデルが位置関係をより連続的に理解できる。
-
-- Self-Attention
-- Encoder/Decoder
-- Multi-head attention
-- Cross-Attention
-- 残差結合
-- 層正規化
-
-Transformerは、様々な注意表現を学習するために異なるAttentionを何度も適用している。その結果、CNNのように同じフィルタを繰り返し適用するモデルと比較して、計算量やパラメータが多くなり、それらをメモリから読み出す頻度が上がった。
-
-CPUの演算性能だけでなく、メモリI/Oを含めた性能を評価するためのモデルとしてルーフラインモデルがある。マシンの達成可能なFLOPSを計算するに当たり、CPUのピーク演算性能とメモリ帯域によって成約される性能の小さい方を取るもので、チャートが屋根のような形になることからそう呼ぶ。
-
-![ルーフラインモデル](https://fukushimalab.github.io/hpc_exercise/docfig/roofline.png)
-
-### CLIP (2021)[^radford_2021]
-
-[^radford_2021]: [A. Radford et al., “Learning Transferable Visual Models From Natural Language Supervision.” arXiv, Feb. 26, 2021. doi: 10.48550/arXiv.2103.00020.](https://doi.org/10.48550/arXiv.2103.00020)
-
-大規模事前学習による画像言語モデル。画像・キャプションのペアを用いた対比学習による自己教師あり学習を行う。損失関数は次の通り（式の出典はCyCLIP[^goel_2022]）
-
-$$
-\mathcal{L}_{\text{CLIP}} =
--\frac{1}{2N} \sum_{j=1}^N \log \left[
-\frac{\exp \left( \left\langle I^e_j, T^e_j \right\rangle / \tau \right)}{\sum_{k=1}^N \exp \left( \left\langle I^e_j, T^e_k \right\rangle / \tau \right)}
-\right]
--\frac{1}{2N} \sum_{k=1}^N \log \left[
-\frac{\exp \left( \left\langle I^e_k, T^e_k \right\rangle / \tau \right)}{\sum_{j=1}^N \exp \left( \left\langle I^e_j, T^e_k \right\rangle / \tau \right)}
-\right]
-$$
-
-[^goel_2022]: [S. Goel, H. Bansal, S. Bhatia, R. A. Rossi, V. Vinay, and A. Grover, “CyCLIP: Cyclic Contrastive Language-Image Pretraining.” arXiv, Oct. 26, 2022. doi: 10.48550/arXiv.2205.14459.](https://arxiv.org/abs/2205.14459)
-
-#### CyCLIP (2022)[^goel_2022]
-
-CLIPは正例と近い負例・遠い負例の距離に注意を払っていないため、画像をプロンプトで分類した場合と正解ラベル付き画像を用いてk-近傍法で分類した場合で結果に差が出ることがある。
-
-次の考え方に基づいて損失を調整することで、精度を改善することができる。具体的にはそれぞれの距離の差の二乗を損失に加えている。
-
-1. 画像jとキャプションkの距離感は、画像kとキャプションjの距離感と同じであるべき
-2. 画像jと画像kの距離感は、キャプションjとキャプションkの距離感と同じであるべき
-
-#### PAINT (2022)[^ilharco_2022]
-
-[^ilharco_2022]: [Patching open-vocabulary models by interpolating weights](https://arxiv.org/abs/2208.05592)
-
-ファインチューニングによって汎化性能を失う問題に対して、ファインチューン前後の重みを線形補間した重みを用いることを提案している。これによって汎化性能と固有タスクを解く能力をある程度良いところ取りできるらしい。感想だが、ファインチューニングだけでは過学習が起きてしまう、ということを示唆しているように思える。
-
-### 対比学習（対照学習）
-
-事前学習としての表現学習に用いられる手段の一つ。エンコーダとしての多層ニューラルネットワークと射影ヘッドからなるモデルに対して、ミニバッチで複数のデータ拡張された画像を与える。
-
-対比学習の手法の1つ、SimCLRではInfoNCE損失関数([Desmos](https://www.desmos.com/calculator/nh1ntozu9o)[[🔐](https://www.desmos.com/calculator/mbn55ivvh6)])を用いる。
-ミニバッチ内の同じ画像のデータ拡張から得たベクトルのコサイン類似度は近くなるように、そうでないベクトルのコサイン類似度は遠くなるように学習を進める。(正例のコサイン類似度/負例のコサイン類似度合計)にマイナスを付けて損失にするが、exponentialを取ってから自然対数を取り直す一工夫が入っている（正例・負例の部分を逆数にした方が、マイナスが取れて式がシンプルでは？）
-
-### VL-Checklist (2023)[^zhao_2023]
-
-[^zhao_2023]: [T. Zhao et al., “VL-CheckList: Evaluating Pre-trained Vision-Language Models with Objects, Attributes and Relations.” arXiv, Jun. 22, 2023. doi: 10.48550/arXiv.2207.00221.](https://arxiv.org/abs/2207.00221)
-
-画像言語モデルの特性を調べるためのベンチマーク。画像のキャプションに登場する名詞や形容詞を適当に入替えても、正しく理解できているなら入れ替え後のほうがスコアが少ないべき、という考え方に基づいたテストを行う。
-
-<!-- # BLIP-2 -->
-
-<!-- # LLaVA -->
-
-# LLM
-
-
-## LLMの学習手法
-
-### 事前学習
-
-#### 事前学習データ
-
-#### 事前学習データの前処理
+#### 自己教師あり学習のデータ
 
 LLaMAの学習に用いられたデータはWebからクロールしたデータで、CommonCrawlを初めとした4TB以上のサイズを持つ。また、GPT-3の事前学習トークン数は4100億, GPT-4は13兆トークンと言われる。
 
@@ -133,13 +48,20 @@ LLaMAの学習に用いられたデータはWebからクロールしたデータ
 - Privacy Reduction
 - Tokenization
 
-#### 事前学習の訓練
+#### 自己教師あり学習の訓練
 
 次のトークンの生成確率をひたすら予測する。数理的には、トークンの生成確率から交差エントロピーを算出し、そのミニバッチ内での平均をLossとする。
 
 Next Token Predictionでは、一般的に1epochのみ学習させる。
 
 <!-- TODO: [!NOTE] 誤差を測るにあたって、単語間の意味の近さも考慮するの？ -->
+
+#### 対比学習（対照学習）
+
+事前学習としての表現学習に用いられる手段の一つ。エンコーダとしての多層ニューラルネットワークと射影ヘッドからなるモデルに対して、ミニバッチで複数のデータ拡張された画像を与える。
+
+対比学習の手法の1つ、SimCLRではInfoNCE損失関数([Desmos](https://www.desmos.com/calculator/nh1ntozu9o)[[🔐](https://www.desmos.com/calculator/mbn55ivvh6)])を用いる。
+ミニバッチ内の同じ画像のデータ拡張から得たベクトルのコサイン類似度は近くなるように、そうでないベクトルのコサイン類似度は遠くなるように学習を進める。(正例のコサイン類似度/負例のコサイン類似度合計)にマイナスを付けて損失にするが、exponentialを取ってから自然対数を取り直す一工夫が入っている（正例・負例の部分を逆数にした方が、マイナスが取れて式がシンプルでは？）
 
 ### 継続事前学習
 
@@ -227,6 +149,9 @@ RLHFについて、特にChatGPTの前進であるInstructGPTでは、次の手�
 2. 強化学習の報酬を与えるモデルを訓練する。プロンプトに対して複数の出力を行い、それらを人間がランク付けし、それによって訓練する
 3. 報酬モデルからPPOによって強化学習を行う
 
+RLHFのように、学習サイクルに人間が加わることをHuman-in-the-Loop機械学習という。広義には機械学習の訓練・運用のプロセスに人間が参加することを言うようだ。[^itmedia_2022]狭義には、継続的に能動学習を行うことで人間の知見を取り込むことを指すようにみえる。
+[^itmedia_2022]: [ヒューマン・イン・ザ・ループ（HITL ：Human-in-the-Loop）とは？](https://atmarkit.itmedia.co.jp/ait/articles/2203/10/news019.html)
+
 また、Step2をルールに従ってAIが行う方法をRLAIFと呼び、Claudeなどで採用されている。[^anthoropic_2023]
 [^anthoropic_2023]: [Claude’s Constitution](https://www.anthropic.com/news/claudes-constitution)
 
@@ -236,7 +161,70 @@ RLHFについて、特にChatGPTの前進であるInstructGPTでは、次の手�
 
 <!-- TODO -->
 
-## LLMの推論
+### 能動学習
+
+データの量が多い、専門性が高い等の理由からラベル付けのコストが高く付きそうな場合、学ぶデータに優先順位を付けるのが有向になる。アルゴリズムで新たに学習するデータを選ぶ手法を能動学習と呼ぶ。新たに学習するデータとしては、分類に迷うデータを選んだり、出現率が高いデータを選択する。
+
+## 大規模事前学習モデルのアーキテクチャ
+
+### BERT
+
+### Transformer (2017)
+
+Transformer[^vaswani_2017]は単語間の長距離依存性を把握できるようになったニューラルネットワークである。具体的には、全単語間にAttention機構を導入したRNNである。
+[^vaswani_2017]: A. Vaswani et al., “Attention is All you Need,” in Advances in Neural Information Processing Systems, Curran Associates, Inc., 2017. Accessed: Jan. 05, 2024. [Online]. Available: https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html
+
+TransformerがEncoder-Decoderブロックから構成される一方で、GPTはDecoderブロックからのみ構成される。Transformerが翻訳タスク向けに設計されたことが関係している。
+
+Transformerでは単語の位置情報を知るため、位置埋込 (PE, Positional Encoding)を行う。単に位置インデックスを用いずに、トークンごとに計算したべクトル次元数分の波を用いることで、モデルが位置関係をより連続的に理解できる。
+
+- Self-Attention
+- Encoder/Decoder
+- Multi-head attention
+- Cross-Attention
+- 残差結合
+- 層正規化
+
+Transformerは、様々な注意表現を学習するために異なるAttentionを何度も適用している。その結果、CNNのように同じフィルタを繰り返し適用するモデルと比較して、計算量やパラメータが多くなり、それらをメモリから読み出す頻度が上がった。
+
+CPUの演算性能だけでなく、メモリI/Oを含めた性能を評価するためのモデルとしてルーフラインモデルがある。マシンの達成可能なFLOPSを計算するに当たり、CPUのピーク演算性能とメモリ帯域によって成約される性能の小さい方を取るもので、チャートが屋根のような形になることからそう呼ぶ。
+
+![ルーフラインモデル](https://fukushimalab.github.io/hpc_exercise/docfig/roofline.png)
+
+### CLIP (2021)[^radford_2021]
+
+[^radford_2021]: [A. Radford et al., “Learning Transferable Visual Models From Natural Language Supervision.” arXiv, Feb. 26, 2021. doi: 10.48550/arXiv.2103.00020.](https://doi.org/10.48550/arXiv.2103.00020)
+
+大規模事前学習による画像言語モデル。画像・キャプションのペアを用いた対比学習による自己教師あり学習を行う。損失関数は次の通り（式の出典はCyCLIP[^goel_2022]）
+
+$$
+\mathcal{L}_{\text{CLIP}} =
+-\frac{1}{2N} \sum_{j=1}^N \log \left[
+\frac{\exp \left( \left\langle I^e_j, T^e_j \right\rangle / \tau \right)}{\sum_{k=1}^N \exp \left( \left\langle I^e_j, T^e_k \right\rangle / \tau \right)}
+\right]
+-\frac{1}{2N} \sum_{k=1}^N \log \left[
+\frac{\exp \left( \left\langle I^e_k, T^e_k \right\rangle / \tau \right)}{\sum_{j=1}^N \exp \left( \left\langle I^e_j, T^e_k \right\rangle / \tau \right)}
+\right]
+$$
+
+[^goel_2022]: [S. Goel, H. Bansal, S. Bhatia, R. A. Rossi, V. Vinay, and A. Grover, “CyCLIP: Cyclic Contrastive Language-Image Pretraining.” arXiv, Oct. 26, 2022. doi: 10.48550/arXiv.2205.14459.](https://arxiv.org/abs/2205.14459)
+
+#### CyCLIP (2022)[^goel_2022]
+
+CLIPは正例と近い負例・遠い負例の距離に注意を払っていないため、画像をプロンプトで分類した場合と正解ラベル付き画像を用いてk-近傍法で分類した場合で結果に差が出ることがある。
+
+次の考え方に基づいて損失を調整することで、精度を改善することができる。具体的にはそれぞれの距離の差の二乗を損失に加えている。
+
+1. 画像jとキャプションkの距離感は、画像kとキャプションjの距離感と同じであるべき
+2. 画像jと画像kの距離感は、キャプションjとキャプションkの距離感と同じであるべき
+
+#### PAINT (2022)[^ilharco_2022]
+
+[^ilharco_2022]: [Patching open-vocabulary models by interpolating weights](https://arxiv.org/abs/2208.05592)
+
+ファインチューニングによって汎化性能を失う問題に対して、ファインチューン前後の重みを線形補間した重みを用いることを提案している。これによって汎化性能と固有タスクを解く能力をある程度良いところ取りできるらしい。感想だが、ファインチューニングだけでは過学習が起きてしまう、ということを示唆しているように思える。
+
+## 大規模事前学習モデルの推論
 
 ### Prompting & 文脈内学習
 
@@ -284,24 +272,15 @@ LLMを提供している企業のプロンプトは次の通り。
   - Step level search
   - Refinement
 
-## LLMの評価
+## 大規模事前学習モデルの評価
 
 ツールが公開されているほか、リーダーボードが公開されている。
 
 - [Open LLM Leaderboard 2](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) (Open LLMのリーダーボード, 1からタスクを刷新)
 - [Nejumiリーダーボード](https://wandb.ai/wandb-japan/llm-leaderboard3/reports/Nejumi-LLM-3--Vmlldzo3OTg2NjM2) (日本語に特化)
 
-# MLOps
+### VL-Checklist (2023)[^zhao_2023]
 
-## 能動学習
+[^zhao_2023]: [T. Zhao et al., “VL-CheckList: Evaluating Pre-trained Vision-Language Models with Objects, Attributes and Relations.” arXiv, Jun. 22, 2023. doi: 10.48550/arXiv.2207.00221.](https://arxiv.org/abs/2207.00221)
 
-データの量が多い、専門性が高い等の理由からラベル付けのコストが高く付きそうな場合、学ぶデータに優先順位を付けるのが有向になる。アルゴリズムで新たに学習するデータを選ぶ手法を能動学習と呼ぶ。新たに学習するデータとしては、分類に迷うデータを選んだり、出現率が高いデータを選択する。
-
-### Human-in-the-Loop機械学習
-
-広義には機械学習の訓練・運用のプロセスに人間が参加することを言うようだ。[^itmedia_2022]狭義には、継続的に能動学習を行うことで人間の知見を取り込むことを指すようにみえる。
-[^itmedia_2022]: [ヒューマン・イン・ザ・ループ（HITL ：Human-in-the-Loop）とは？](https://atmarkit.itmedia.co.jp/ait/articles/2203/10/news019.html)
-
-## 連合学習 (Federated Learning)
-
-WIP
+画像言語モデルの特性を調べるためのベンチマーク。画像のキャプションに登場する名詞や形容詞を適当に入替えても、正しく理解できているなら入れ替え後のほうがスコアが少ないべき、という考え方に基づいたテストを行う。
