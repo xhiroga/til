@@ -23,6 +23,12 @@ Fine Tuningの各ステージ[^Parthasarathy_et_al_2024]において気をつけ
 
 ### データ準備
 
+#### 公開データ
+
+- <https://tyc.rei-yumesaki.net/material/kaiwa-ai/>
+
+#### データ生成
+
 - [KanHatakeyama/synthetic-texts-by-llm](https://github.com/KanHatakeyama/synthetic-texts-by-llm)
 
 ### モデル準備
