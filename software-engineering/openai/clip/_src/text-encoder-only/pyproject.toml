@@ -1,0 +1,25 @@
+[project]
+name = "text-encoder-only"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "clip",
+    "ftfy>=6.3.0",
+    "regex>=2024.9.11",
+    "torch==2.5.0+cu124",
+    "torchvision==0.20.0+cu124",
+    "tqdm>=4.66.5",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ipykernel>=6.29.5",
+]
+
+[[tool.uv.index]]
+url = "https://download.pytorch.org/whl/cu124"
+
+[tool.uv.sources]
+clip = { git = "https://github.com/openai/CLIP" }
