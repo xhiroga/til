@@ -4,12 +4,13 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
+# torch==2.5.0 causes "Error: No execution plans support the graph."
 dependencies = [
     "clip",
     "ftfy>=6.3.0",
     "regex>=2024.9.11",
-    "torch==2.5.0+cu124",
-    "torchvision==0.20.0+cu124",
+    "torch==2.4.1+cu124",
+    "torchvision==0.19.1+cu124",
     "tqdm>=4.66.5",
 ]
 
