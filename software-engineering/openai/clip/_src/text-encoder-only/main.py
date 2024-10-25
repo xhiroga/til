@@ -3,6 +3,7 @@ import clip
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, _ = clip.load("ViT-B/32", device=device)
+model.vision = None
 
 # Original code refers self.visual.conv1.weight.dtype
 model.__class__.dtype = property(lambda obj: obj.transformer.resblocks[0].attn.in_proj_weight.dtype)
