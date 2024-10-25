@@ -8,16 +8,16 @@ requires-python = ">=3.12"
 dependencies = [
     "clip",
     "ftfy>=6.3.0",
+    "python-dotenv>=1.0.1",
     "regex>=2024.9.11",
+    "safetensors>=0.4.5",
     "torch==2.4.1+cu124",
     "torchvision==0.19.1+cu124",
     "tqdm>=4.66.5",
 ]
 
 [tool.uv]
-dev-dependencies = [
-    "ipykernel>=6.29.5",
-]
+dev-dependencies = []
 
 [[tool.uv.index]]
 url = "https://download.pytorch.org/whl/cu124"

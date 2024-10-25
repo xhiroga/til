@@ -2,6 +2,7 @@
 
 ```shell
 uv sync
+uv run python inspect_models.py > logs/inspect.log
 uv run python main.py
 ```
 
