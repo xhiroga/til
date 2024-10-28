@@ -1,10 +1,10 @@
 import os
-import torch
+
 import clip
+import torch
 from clip.model import CLIP
 from dotenv import load_dotenv
 from safetensors import safe_open
-
 
 load_dotenv()
 
@@ -64,7 +64,7 @@ def export_clip(sd_model_path: str, exported_clip_path: str) -> str:
         torch.save(resblocks, exported_clip_path)
 
 
-def encode_text(exported_clip_path: str):
+def encode_text(texts: list[str], exported_clip_path: str):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     loaded = torch.load(exported_clip_path, map_location=device)
 
@@ -90,14 +90,16 @@ def encode_text(exported_clip_path: str):
     model.visual = None
     model.__class__.dtype = property(lambda obj: obj.transformer.resblocks[0].attn.in_proj_weight.dtype)
 
-    text = clip.tokenize(["a diagram", "a dog", "a cat"]).to(device)
+    text = clip.tokenize(texts).to(device)
 
     with torch.no_grad():
         text_features = model.encode_text(text)
         print(f"{text_features.shape=}")
+    
+    return text_features
 
 
 if __name__ == "__main__":
     exported_model_path = "model/clip.pt"
     export_clip(os.environ.get("SD_MODEL_PATH"), exported_model_path)
-    encode_text(exported_model_path)
+    encode_text(["a diagram", "a dog", "a cat"], exported_model_path)
