@@ -11,6 +11,7 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "regex>=2024.9.11",
     "safetensors>=0.4.5",
+    "scipy>=1.14.1",
     "torch==2.4.1+cu124",
     "torchvision==0.19.1+cu124",
     "tqdm>=4.66.5",
