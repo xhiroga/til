@@ -4,7 +4,9 @@
 
 ### Footnote
 
-脚注の識別子には、番号ではなく出典や著者情報を用いる。詳細は検討中。
+脚注の識別子には、番号ではなく出典や著者情報を用いる。
+
+[講義資料作成時のルール | 松尾・岩澤研究室](https://curved-rambutan-a71.notion.site/0c10bfc3cf564a2cbf90cc64e90e48b2)に倣う方向で検討中。
 
 ### Heading (Style Rules)
 

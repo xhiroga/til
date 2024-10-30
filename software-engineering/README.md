@@ -58,3 +58,7 @@ URLにおいて`#`から始まる文字列。IDを加えたURLにリンクする
 ### XSS
 
 ### CSRF
+
+### iOSアプリ解析
+
+iOSアプリ解析には静的解析と動的解析がある。静的解析には[Ghidra](https://ghidra-sre.org/)などのツールがある。動的解析にはアプリの動作をインターセプトするFridaや通信をプロキシするCharlesなどがある。通信のプロキシにはTLS証明書の差し替えが必要になっているが、Certificate Transparencyの導入によって難しくなっている。
