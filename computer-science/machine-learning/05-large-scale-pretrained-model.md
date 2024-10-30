@@ -179,6 +179,8 @@ Attentionを近似するアプローチとしては、SparseなAttentionや低�
 
 モデルパラメータのデータタイプを浮動小数点から整数に変換して演算処理を行うこと。
 
+### Knowledge Distillation
+
 ## 大規模事前学習モデルのアーキテクチャ
 
 ### BERT
@@ -315,8 +317,61 @@ LLMを提供している企業のプロンプトは次の通り。
 - [Open LLM Leaderboard 2](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) (Open LLMのリーダーボード, 1からタスクを刷新)
 - [Nejumiリーダーボード](https://wandb.ai/wandb-japan/llm-leaderboard3/reports/Nejumi-LLM-3--Vmlldzo3OTg2NjM2) (日本語に特化)
 
-### VL-Checklist (2023)[^zhao_2023]
+### LLM
 
+LLMにおけるハルシネーションについて、検出と評価のためのベンチマークが提案されている。次の通り。
+
+- [HaluEval](https://github.com/RUCAIBox/HaluEval)
+  - 会話のデータをLLMに見せたあと、その会話がハルシネーションを含むか否かをYes/Noで回答させるデータセット
+- [Truthful QA](https://github.com/sylinrl/TruthfulQA)
+- Jtruthful QA
+- REALTIME QA
+
+### 画像認識モデル
+
+画像認識モデルの表現学習の手法としては自己教師あり学習がよく用いられる。それに対して、評価手法としては下流タスクの性能を測ることが一般的である。下流タスクの例は次の通り。
+
+- 画像分類
+- 物体検出
+- 意味的領域分割
+- インスタンス領域分割
+
+### VLM
+
+画像言語モデルの性能を測るには、様々な下流タスクの精度を用いることが一般的である。それに加えて、下流タスクの精度の改善のためにモデルの特性を測るためのベンチマークがいくつか提案されている。例えば、VL-Checklist (2023)[^zhao_2023]が上げられる。
 [^zhao_2023]: [T. Zhao et al., “VL-CheckList: Evaluating Pre-trained Vision-Language Models with Objects, Attributes and Relations.” arXiv, Jun. 22, 2023. doi: 10.48550/arXiv.2207.00221.](https://arxiv.org/abs/2207.00221)
 
-画像言語モデルの特性を調べるためのベンチマーク。画像のキャプションに登場する名詞や形容詞を適当に入替えても、正しく理解できているなら入れ替え後のほうがスコアが少ないべき、という考え方に基づいたテストを行う。
+VL-CheckListでは、画像のキャプションに登場する名詞や形容詞を適当に入替えても、正しく理解できているなら入れ替え後のほうがスコアが少ないべき、という考え方に基づいたテストを行う。
+
+## 安全性
+
+AIの安全性を包括的にまとめた論文として、AI Risk Repository[^Slattery_et_al_2024]がある。AI Risk Repositoryでは、AIによるリスクを因果関係とドメインの2つの観点から分類している。
+[^Slattery_et_al_2024]: [AI Risk Repository](https://cdn.prod.website-files.com/669550d38372f33552d2516e/66bc918b580467717e194940_The%20AI%20Risk%20Repository_13_8_2024.pdf)
+
+因果関係は次の3つに分類される。
+
+1. 人間由来か、AI由来か
+2. 意図的か、意図せず起きるか
+3. AI開発時の問題か、使用時の問題か
+
+ドメインは次の7つに分類される。
+
+1. 差別
+2. プライバシー
+3. 誤った情報
+4. 悪意のある有用性
+5. AIへの不適切な依存
+6. 経済・環境
+7. AIシステムの限界
+
+### ハルシネーション
+
+#### ハルシネーションの評価
+
+[大規模事前学習モデルの評価](#大規模事前学習モデルの評価)を参照
+
+#### ハルシネーションの低減
+
+ハルシネーションの低減手法は、主にPrompt EngineeringとDeveloping Modelに分かれる。
+
+Prompt Engineeringは、モデルの開発を伴わない手法全般を指す。プロンプト中に”Do not hallucinate”などの指示をするほか、Chain of Thought等が挙げられる。また、何度か出力を行ってから多数決を取るSelf-Check GPTや、複数のモデルで話し合わせるReConcileなどの手法がある。Developing Modelとしては、Fine Tuning時にRAGした知識を優先して答えるように訓練したり、知らないことを知らないと答えさせる手法がある。
