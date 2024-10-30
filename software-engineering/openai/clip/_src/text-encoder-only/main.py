@@ -14,7 +14,6 @@ def encode_text(texts: list[str], model_name: str) -> torch.Tensor:
 
     with torch.no_grad():
         text_features = model.encode_text(text)
-        print(f"{text_features.shape=}")
 
     return text_features
 

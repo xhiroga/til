@@ -11,6 +11,7 @@ uv run python main.py
 ```shell
 uv run python inspect_models.py > logs/inspect.log
 uv run python sd.py
+uv run python cos_sim.py
 ```
 
 ## References
