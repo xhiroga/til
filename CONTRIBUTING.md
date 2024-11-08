@@ -46,6 +46,7 @@ GitHub Pagesでのホスティングのためにマークダウンファイル(`
 
 - [国立国会図書館オンライン](https://ndlonline.ndl.go.jp/#!/)
 - [日本十進分類法](https://www.libnet.pref.okayama.jp/shiryou/ndc/index.htm)
+  - [蔵書検索 | 東京都立図書館](https://catalog.library.metro.tokyo.lg.jp/winj/opac/search-detail.do)
 - [国立国会図書館分類表](https://www.ndl.go.jp/jp/data/catstandards/classification_subject/ndlc.html)
 - [Library of Congress >> Books/Printed Material](https://www.loc.gov/books/?all=true)
 - [Library of Congress Classification Outline](https://www.loc.gov/catdir/cpso/lcco/)

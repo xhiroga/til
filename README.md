@@ -83,6 +83,18 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 - [VNC](./software-engineering/vnc/README.md)
 - [Web API](./software-engineering/web-api/README.md)
 
+### 工学 (engineering)
+
+#### 機械工学 (mechanical engineering)
+
+- [ロボット工学](./engineering/mechanical-engineering/robotics/README.md)
+
+### 社会科学 (social science)
+
+#### 経済学 (economics)
+
+#### 財政 (tax)
+
 ### 自然科学 (natural science)
 
 #### [数学 (mathematics)](./natural-science/mathematics/README.md)
@@ -92,12 +104,6 @@ What [@xhiroga](https://twitter.com/xhiroga) learned with executable code. See <
 - [離散数学 (discrete mathematics)](./natural-science/mathematics/discrete/README.md)
 - [幾何学 (geometry)](./natural-science/mathematics/geometory/README.md)
 - [確率論 (probability theory)](./natural-science/mathematics/probability-theory/README.md)
-
-### 工学 (engineering)
-
-#### 機械工学 (mechanical engineering)
-
-- [ロボット工学](./engineering/mechanical-engineering/robotics/README.md)
 
 ## Contributing
 
