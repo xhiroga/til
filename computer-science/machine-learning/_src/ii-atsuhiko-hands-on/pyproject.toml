@@ -18,4 +18,5 @@ dependencies = [
 dev-dependencies = [
     "ipykernel>=6.29.5",
     "ipywidgets>=8.1.5",
+    "wandb>=0.18.6",
 ]
