@@ -264,9 +264,11 @@ RNNの進化系。
 
 ## 大規模事前学習モデルの推論
 
-### Prompting & 文脈内学習
+### Prompting
 
-LLMの応答の正誤は、指示文の影響を大きく受ける。代表的なPromptのテクニックは次の通り。
+LLMに少数の例を与えると性能が上がる。これをIn Context Learning (ICL)という。ICLはPromptingの一種と考えられる。
+
+代表的なPromptのテクニックは次の通り。
 
 - CoT (Chain of Thought) (ステップバイステップで考える)
 - Few-shot learning (例示する)
@@ -274,6 +276,10 @@ LLMの応答の正誤は、指示文の影響を大きく受ける。代表的�
 LLMを提供している企業のプロンプトは次の通り。
 
 - [Claude Prompt Library](https://docs.anthropic.com/en/prompt-library/library)
+
+#### ICL (In Context Learning, 文脈内学習)
+
+事前学習・追加学習・推論の各段階で、文脈内学習の能力を上げるための工夫が考えられる。
 
 ### RAG (Retrieval-Augmented Generation)
 
@@ -375,3 +381,11 @@ AIの安全性を包括的にまとめた論文として、AI Risk Repository[^S
 ハルシネーションの低減手法は、主にPrompt EngineeringとDeveloping Modelに分かれる。
 
 Prompt Engineeringは、モデルの開発を伴わない手法全般を指す。プロンプト中に”Do not hallucinate”などの指示をするほか、Chain of Thought等が挙げられる。また、何度か出力を行ってから多数決を取るSelf-Check GPTや、複数のモデルで話し合わせるReConcileなどの手法がある。Developing Modelとしては、Fine Tuning時にRAGした知識を優先して答えるように訓練したり、知らないことを知らないと答えさせる手法がある。
+
+## 分析
+
+### LLMの分析
+
+Transformer言語モデルの分析には、主にProbingと注意パターンの分析の2つの種類がある。
+
+#### Probing
