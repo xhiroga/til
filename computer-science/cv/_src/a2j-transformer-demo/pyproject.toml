@@ -1,0 +1,20 @@
+[project]
+name = "a2j-transformer-demo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "matplotlib>=3.5.3",
+    "numpy>=1.21.6",
+    "opencv-python>=4.6.0.66",
+    "pillow>=9.5.0",
+    "pycocotools>=2.0.7",
+    "scipy>=1.7.3",
+    "torch==1.13.1+cu117",
+    "torchvision==0.14.1+cu117",
+    "tqdm>=4.67.1",
+]
+
+[[tool.uv.index]]
+url = "https://download.pytorch.org/whl"
