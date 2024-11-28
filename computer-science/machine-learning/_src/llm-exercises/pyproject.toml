@@ -1,17 +1,22 @@
 [project]
 name = "llm-exercises"
 version = "0.1.0"
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12.7"
+requires-python = ">=3.10.12"
 dependencies = [
-    "torch==2.5.0+cu124",
-    "torchvision==0.20.0+cu124",
-    "unsloth>=2024.10.4",
-    "wandb>=0.18.5",
+    "accelerate>=1.1.1",
+    "bitsandbytes>=0.44.1",
+    "datasets>=3.1.0",
+    "peft>=0.13.2",
+    "pip>=24.3.1",
+    "transformers>=4.46.3",
+    "trl>=0.12.1",
+    "wandb>=0.18.7",
 ]
 
-[tool.uv]
-extra-index-url = ["https://download.pytorch.org/whl/cu124"]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "ipykernel>=6.29.5",
+    "ipywidgets>=8.1.5",
 ]
