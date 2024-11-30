@@ -4,12 +4,14 @@ import os
 
 import google.generativeai as genai
 import torch
-from datasets import dataset_dict, load_dataset
+from datasets import dataset_dict
 from dotenv import load_dotenv
 from peft import PeftMixedModel, PeftModel
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, logging
 from typing_extensions import TypedDict
+
+from instruction_datasets import load_elyza_tasks_100_TV
 
 
 class Result(TypedDict):
@@ -134,7 +136,7 @@ def evaluate(results: list[Result], batch_size: int = 10) -> list[Evaluation]:
         batch_results = results[i : i + batch_size]
 
         prompts = [
-            evaluation_prompt(result["input"], result["output"], result["eval_aspect"], result.get("sample_output"))
+            evaluation_prompt(result["input"], result["output"], result.get("eval_aspect"), result.get("target"))
             for result in batch_results
         ]
 
@@ -171,11 +173,11 @@ if __name__ == "__main__":
     logging.set_verbosity_info()
     model = AutoModelForCausalLM.from_pretrained("models/llm-jp-3-1-8b-finetune", device_map="auto")
     tokenizer = AutoTokenizer.from_pretrained("models/llm-jp-3-1-8b-finetune", trust_remote_code=True)
-    ds = load_dataset("elyza/ELYZA-tasks-100")
-    results = test(model, tokenizer, ds["test"], limit=5, model_half=True)
+    ds = load_elyza_tasks_100_TV()
+    results = test(model, tokenizer, ds, limit=5, model_half=True)
     evaluations = evaluate(results, 10)
-    averagt_score = sum(evaluation["score"] for evaluation in evaluations) / len(
+    average_score = sum(evaluation["score"] for evaluation in evaluations) / len(
         evaluations
     )
-    print(f"{evaluations=}, {averagt_score=}")
-    assert 2 < averagt_score < 5
+    print(f"{evaluations=}, {average_score=}")
+    assert 2 < average_score < 5

@@ -21,6 +21,8 @@ from utils import evaluate, save_results, test
 
 load_dotenv()
 
+logging.set_verbosity_info()
+
 HF_TOKEN = os.environ.get("HF_TOKEN")
 assert os.environ.get("WANDB_ENTITY")
 assert os.environ.get("WANDB_PROJECT")
