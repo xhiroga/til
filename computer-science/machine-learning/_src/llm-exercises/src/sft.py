@@ -1,9 +1,9 @@
 import os
+import re
 from pathlib import Path
 
 import bitsandbytes as bnb
 import torch
-from datasets import load_dataset
 from dotenv import load_dotenv
 from peft import LoraConfig, get_peft_model
 from transformers import (
@@ -16,18 +16,26 @@ from transformers import (
 from trl import SFTTrainer
 
 import wandb
-from utils import evaluate, validate
+from instruction_datasets import INSTRUCTION_DATASETS
+from utils import evaluate, save_results, test
 
 load_dotenv()
 
 HF_TOKEN = os.environ.get("HF_TOKEN")
 assert os.environ.get("WANDB_ENTITY")
 assert os.environ.get("WANDB_PROJECT")
-wandb.init()
+
+config = {
+    "base_model_id": "llm-jp/llm-jp-3-1.8b",
+    "train_datasets": ["ichikara-instruction-all"],
+    "test_datasets": ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
+}
+
+wandb.init(config=config)
 run_name = wandb.run.name
 
 
-base_model_id = Path("models/llm-jp/llm-jp-3-1.8b")
+base_model_id = Path(f"models/{config['base_model_id']}")
 new_model_id = f"{base_model_id.name.replace('.', '-')}-finetune-{run_name}"
 
 """
@@ -118,19 +126,13 @@ peft_config = LoraConfig(
 model = get_peft_model(model, peft_config)
 
 
-dataset = load_dataset(
-    "json",
-    data_files="data/Distribution20241221_all/ichikara-instruction-003-001-1.json",
-)
-prompt = """### 指示
+prompt = """\
+### 指示
 {}
 ### 回答
 {}"""
 
 
-"""
-formatting_prompts_func: 各データをプロンプトに合わせた形式に合わせる
-"""
 EOS_TOKEN = tokenizer.eos_token  # トークナイザーのEOSトークン（文末トークン）
 
 
@@ -144,6 +146,7 @@ def formatting_prompts_func(examples):
 
 
 # 各データにフォーマットを適用
+dataset = INSTRUCTION_DATASETS[config["train_datasets"][0]]()
 dataset = dataset.map(
     formatting_prompts_func,
     num_proc=8,  # 並列処理数を指定
@@ -176,7 +179,7 @@ training_arguments = TrainingArguments(
 
 trainer = SFTTrainer(
     model=model,
-    train_dataset=dataset["train"],
+    train_dataset=dataset,
     # TODO: eval_dataset
     peft_config=peft_config,
     max_seq_length=512,  # TODO: 長くすることを検討
@@ -190,29 +193,24 @@ model.config.use_cache = False  # キャッシュ機能を無効化
 tokenizer.pad_token = tokenizer.eos_token
 trainer.train()  # トレーニングを実行
 
-# Validate
-validate_dataset = "elyza/ELYZA-tasks-100"
-ds = load_dataset(validate_dataset)
+# test
+for test_dataset_name in config["test_datasets"]:
+    ds = INSTRUCTION_DATASETS[test_dataset_name]()
+    results = test(model, tokenizer, ds, limit=None, model_half=True)
+    evaluations = evaluate(results)
+    scores = [e["score"] for e in evaluations]
+    average_score = sum(scores) / len(evaluations)
+    wandb.log(
+        {
+            "test_dataset": test_dataset_name,
+            "scores": scores,
+            "average_score": average_score,
+        }
+    )
+    jsonl_prefix = f"{new_model_id}-{test_dataset_name}-{run_name}".replace("/", "-")
+    save_results(results, jsonl_prefix)
 
-results = validate(model, tokenizer, ds["test"], limit=10)
-evaluations = evaluate(results)
-average_score = sum(e["score"] for e in evaluations) / len(evaluations)
-wandb.log({"validate_dataset": validate_dataset, "evaluations": evaluations, "average_score": average_score})
 wandb.finish()
-
-# こちらで生成されたjsolを提出してください。
-# 本コードではinputとeval_aspectも含んでいますが、なくても問題ありません。
-# 必須なのはtask_idとoutputとなります。
-import json
-import re
-
-jsonl_id = re.sub(".*/", "", new_model_id)
-with open(f"output/{jsonl_id}-outputs.jsonl", "w", encoding="utf-8") as f:
-    for result in results:
-        json.dump(
-            result, f, ensure_ascii=False
-        )  # ensure_ascii=False for handling non-ASCII characters
-        f.write("\n")
 
 # モデルとトークナイザーをHugging Faceにアップロード
 model.push_to_hub(
