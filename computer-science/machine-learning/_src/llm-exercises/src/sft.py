@@ -1,5 +1,4 @@
 import os
-import re
 from pathlib import Path
 
 import bitsandbytes as bnb
@@ -17,7 +16,7 @@ from trl import SFTTrainer
 
 import wandb
 from instruction_datasets import INSTRUCTION_DATASETS
-from utils import evaluate, save_results, test
+from utils import infer
 
 load_dotenv()
 
@@ -29,13 +28,24 @@ assert os.environ.get("WANDB_PROJECT")
 
 config = {
     "base_model_id": "llm-jp/llm-jp-3-1.8b",
-    "train_datasets": ["ichikara-instruction-all"],
-    "test_datasets": ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
+    "train":
+        {"datasets": ["ichikara-instruction-all"]},
+    "test": {
+            "datasets": ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
+            "prompt": """\
+# 指示
+200字程度で簡潔に回答してください。
+{}
+# 回答
+""",
+            "limit": None,
+            "model_half": True,
+            "max_new_tokens": 200,
+        },
 }
 
 wandb.init(config=config)
 run_name = wandb.run.name
-
 
 base_model_id = Path(f"models/{config['base_model_id']}")
 new_model_id = f"{base_model_id.name.replace('.', '-')}-finetune-{run_name}"
@@ -148,7 +158,7 @@ def formatting_prompts_func(examples):
 
 
 # 各データにフォーマットを適用
-dataset = INSTRUCTION_DATASETS[config["train_datasets"][0]]()
+dataset = INSTRUCTION_DATASETS[config["train"]["datasets"][0]]()
 dataset = dataset.map(
     formatting_prompts_func,
     num_proc=8,  # 並列処理数を指定
@@ -161,8 +171,8 @@ dataset = dataset.map(
 # TODO: tf32 の検討
 training_arguments = TrainingArguments(
     output_dir=f"models/{new_model_id}",
-    per_device_train_batch_size=8,  # RTX4090でGPUメモリ使用率最大96%
-    gradient_accumulation_steps=1,  # 高速化のため2から1に変更
+    per_device_train_batch_size=4,
+    gradient_accumulation_steps=2,
     optim="paged_adamw_32bit",
     num_train_epochs=1,
     logging_strategy="steps",
@@ -184,7 +194,7 @@ trainer = SFTTrainer(
     train_dataset=dataset,
     # TODO: eval_dataset
     peft_config=peft_config,
-    max_seq_length=512,  # TODO: 長くすることを検討
+    max_seq_length=1024,  # TODO: 長くすることを検討
     dataset_text_field="formatted_text",
     tokenizer=tokenizer,
     args=training_arguments,
@@ -196,21 +206,18 @@ tokenizer.pad_token = tokenizer.eos_token
 trainer.train()  # トレーニングを実行
 
 # test
-for test_dataset_name in config["test_datasets"]:
-    ds = INSTRUCTION_DATASETS[test_dataset_name]()
-    results = test(model, tokenizer, ds, limit=None, model_half=True)
-    evaluations = evaluate(results)
-    scores = [e["score"] for e in evaluations]
-    average_score = sum(scores) / len(evaluations)
-    wandb.log(
-        {
-            "test_dataset": test_dataset_name,
-            "scores": scores,
-            "average_score": average_score,
-        }
+inference = infer(
+        model,
+        tokenizer,
+        ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
+        new_model_id,
+        run_name=run_name,
+        test_prompt=config["test"]["prompt"],
+        test_limit=config["test"]["limit"],
+        model_half=config["test"]["model_half"],
+        max_new_tokens=config["test"]["max_new_tokens"],
     )
-    jsonl_prefix = f"{new_model_id}-{test_dataset_name}-{run_name}".replace("/", "-")
-    save_results(results, jsonl_prefix)
+wandb.log(inference)
 
 wandb.finish()
 
