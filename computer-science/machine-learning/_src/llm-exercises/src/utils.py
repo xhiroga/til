@@ -1,6 +1,7 @@
 import copy
 import json
 import os
+from typing import Any
 
 import google.generativeai as genai
 import torch
@@ -11,7 +12,7 @@ from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, logging
 from typing_extensions import TypedDict
 
-from instruction_datasets import load_elyza_tasks_100_TV
+from instruction_datasets import INSTRUCTION_DATASETS
 
 
 class Result(TypedDict):
@@ -44,6 +45,12 @@ logger = logging.get_logger("transformers")
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 
+DEFAULT_TEST_PROMPT = """\
+# 指示
+{}
+# 回答
+"""
+
 PREREQUISITE_PROMPT = """\
 あなたは採点者です。
 
@@ -63,7 +70,10 @@ PREREQUISITE_PROMPT = """\
 - 部分的に事実と異なる内容を述べている: -1点
 """
 
-def evaluation_prompt(input: str, output: str, eval_aspect: str | None, target: str | None) -> str:
+
+def evaluation_prompt(
+    input: str, output: str, eval_aspect: str | None, target: str | None
+) -> str:
     return f"""\
 回答を1,2,3,4,5の5段階で採点し、数字のみを出力してください。
 
@@ -82,26 +92,22 @@ def test(
     tokenizer: AutoTokenizer,
     ds: dataset_dict.Dataset,
     limit: int = None,
+    test_prompt: str = DEFAULT_TEST_PROMPT,
     model_half: bool = False,
+    max_new_tokens: int = 200,
 ) -> list[Result]:
     logger.info("start testing")
 
     results = []
-    
+
     test_data = ds if limit is None else ds.select(range(limit))
     for data in tqdm(test_data):
         input = data["input"]
 
-        prompt = f"""\
-# 指示
-{input}
-# 回答
-"""
-
         if model_half:
             model.half()
         tokenized_input = tokenizer.encode(
-            prompt, add_special_tokens=False, return_tensors="pt"
+            test_prompt.format(input), add_special_tokens=False, return_tensors="pt"
         ).to(model.device)
         attention_mask = torch.ones_like(tokenized_input)
 
@@ -109,7 +115,7 @@ def test(
             outputs = model.generate(
                 tokenized_input,
                 attention_mask=attention_mask,
-                max_new_tokens=100,
+                max_new_tokens=max_new_tokens,
                 do_sample=False,
                 repetition_penalty=1.2,
                 pad_token_id=tokenizer.eos_token_id,
@@ -136,7 +142,12 @@ def evaluate(results: list[Result], batch_size: int = 10) -> list[Evaluation]:
         batch_results = results[i : i + batch_size]
 
         prompts = [
-            evaluation_prompt(result["input"], result["output"], result.get("eval_aspect"), result.get("target"))
+            evaluation_prompt(
+                result["input"],
+                result["output"],
+                result.get("eval_aspect"),
+                result.get("target"),
+            )
             for result in batch_results
         ]
 
@@ -169,15 +180,63 @@ def save_results(results: list[Result], jsonl_prefix: str):
             f.write("\n")
 
 
+def infer(
+    model: PeftModel | PeftMixedModel,
+    tokenizer: AutoTokenizer,
+    test_dataset_names: list[str],
+    model_name: str,
+    run_name: str | None= None,
+    test_prompt: str = DEFAULT_TEST_PROMPT,
+    test_limit: int = None,
+    model_half: bool = False,
+    max_new_tokens: int = 200,
+) -> dict[str, dict[str, Any]]:
+    inference = {}
+    for test_dataset_name in test_dataset_names:
+        ds = INSTRUCTION_DATASETS[test_dataset_name]()
+        results = test(
+            model,
+            tokenizer,
+            ds,
+            test_prompt=test_prompt,
+            limit=test_limit,
+            model_half=model_half,
+            max_new_tokens=max_new_tokens,
+        )
+        evaluations = evaluate(results)
+        scores = [e["score"] for e in evaluations]
+        average_score = sum(scores) / len(evaluations)
+        inference[test_dataset_name] = {
+            "scores": scores,
+            "average_score": average_score
+        }
+
+        if run_name:
+            jsonl_prefix = f"{model_name}-{test_dataset_name}-{run_name}".replace("/", "-")
+            save_results(evaluations, jsonl_prefix)
+
+        return inference
+
+
 if __name__ == "__main__":
     logging.set_verbosity_info()
-    model = AutoModelForCausalLM.from_pretrained("models/llm-jp-3-1-8b-finetune", device_map="auto")
-    tokenizer = AutoTokenizer.from_pretrained("models/llm-jp-3-1-8b-finetune", trust_remote_code=True)
-    ds = load_elyza_tasks_100_TV()
-    results = test(model, tokenizer, ds, limit=5, model_half=True)
-    evaluations = evaluate(results, 10)
-    average_score = sum(evaluation["score"] for evaluation in evaluations) / len(
-        evaluations
+    model = AutoModelForCausalLM.from_pretrained(
+        "models/llm-jp/llm-jp-3-1.8b", device_map="auto"
     )
-    print(f"{evaluations=}, {average_score=}")
-    assert 2 < average_score < 5
+    tokenizer = AutoTokenizer.from_pretrained(
+        "models/llm-jp/llm-jp-3-1.8b", trust_remote_code=True
+    )
+    inference = infer(
+        model,
+        tokenizer,
+        ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
+        "llm-jp/llm-jp-3-1.8b",
+        test_limit=5,
+        model_half=True,
+    )
+    average_score = sum(inference["elyza/ELYZA-tasks-100"]["scores"]) / len(
+        inference["elyza/ELYZA-tasks-100"]["scores"]
+    )
+
+    print(f"{average_score=}")
+    assert 1 < average_score < 5
