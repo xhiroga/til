@@ -64,11 +64,10 @@ next(loader)
 def respond(
     message,
     _history: list[tuple[str, str]],
-    context,
-    model_half: bool = False,
-    max_new_tokens,
-    temperature,
     model_name,
+    context,
+    model_half: bool,
+    max_new_tokens: int,
 ):
     global loader
     logger.debug(f"Respond function called with {model_name=}")
@@ -94,10 +93,10 @@ def respond(
             max_new_tokens=max_new_tokens,
             repetition_penalty=1.2,
             pad_token_id=tokenizer.eos_token_id,
-            temperature=temperature,
         )
+        logger.debug(f"{outputs=}")
         response = tokenizer.decode(
-            outputs[tokenized_input.size(1) :], skip_special_tokens=True
+            outputs[0][tokenized_input.size(1) :], skip_special_tokens=True
         )
         logger.debug(f"{response=}")
 
@@ -107,11 +106,10 @@ def respond(
 demo = gr.ChatInterface(
     respond,
     additional_inputs=[
+        gr.Dropdown(choices=models, value=models[0], label="Model name"),
         gr.Textbox(value="", label="Context"),
         gr.Checkbox(value=False, label="Half precision"),
         gr.Slider(minimum=1, maximum=2048, value=512, step=1, label="Max new tokens"),
-        gr.Slider(minimum=0.1, maximum=4.0, value=0.7, step=0.1, label="Temperature"),
-        gr.Dropdown(choices=models, value=models[0], label="Model name"),
     ],
 )
 
