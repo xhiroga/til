@@ -9,6 +9,7 @@ dependencies = [
     "bitsandbytes>=0.44.1",
     "datasets>=3.1.0",
     "google-generativeai>=0.8.3",
+    "gradio>=5.7.1",
     "peft>=0.13.2",
     "pip>=24.3.1",
     "transformers>=4.46.3",

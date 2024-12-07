@@ -18,7 +18,10 @@ LLMの日本語による複雑な指示・タスクを行う能力を引き上�
 ```shell
 wsl
 uv sync
-uv run python src/sft.py
+# 訓練
+uv run src/sft.py
+# 訓練モデルとの対話
+uv run src/chat.py
 ```
 
 ## 戦略
