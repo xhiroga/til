@@ -7,6 +7,7 @@ def load_ichikara_instruction_003_001_1() -> dataset_dict.Dataset:
         data_files="data/Distribution20241221_all_preprocessed/ichikara-instruction-003-001-1.json",
     )
 
+    dataset["train"] = dataset["train"].rename_column("text", "input")
     return dataset["train"]
 
 
@@ -15,6 +16,7 @@ def load_ichikara_instruction_all() -> dataset_dict.Dataset:
         "json",
         data_files="data/Distribution20241221_all_preprocessed/*.json",  # avoid README.md
     )
+    dataset["train"] = dataset["train"].rename_column("text", "input")
     return dataset["train"]
 
 

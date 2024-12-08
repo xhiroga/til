@@ -28,6 +28,7 @@ assert os.environ.get("WANDB_PROJECT")
 
 config = {
     "base_model_id": "llm-jp/llm-jp-3-1.8b",
+    "mode": "sft",
     "train":
         {"datasets": ["ichikara-instruction-all"]},
     "test": {

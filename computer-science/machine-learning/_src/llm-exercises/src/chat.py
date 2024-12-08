@@ -105,7 +105,7 @@ def respond(
 
 demo = gr.ChatInterface(
     respond,
-    additional_inputs=[
+    parameters=[
         gr.Dropdown(choices=models, value=models[0], label="Model name"),
         gr.Textbox(value="", label="Context"),
         gr.Checkbox(value=False, label="Half precision"),

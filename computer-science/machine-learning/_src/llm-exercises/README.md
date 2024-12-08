@@ -22,6 +22,10 @@ uv sync
 uv run src/sft.py
 # 訓練モデルとの対話
 uv run src/chat.py
+
+# 推論
+uv run src/inference.py --model_name llm-jp/llm-jp-3-1.8b
+uv run src/inference.py --model_name llm-jp-3-1-8b-finetune-different-grass-16/checkpoint-838 --test_dataset_names elyza-tasks-100-TV_0 --few_shot_prompting_dataset_name ichikara-instruction-003-001-1 --few_shot_prompting_limit 3
 ```
 
 ## 戦略
