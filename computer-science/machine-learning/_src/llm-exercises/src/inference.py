@@ -17,6 +17,7 @@ load_dotenv()
 def main(
     model_name: str,
     test_dataset_names: list[str] = ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
+    test_limit: int = 5,
     few_shot_prompting: bool = False,
 ):
     test_prompt = """\
@@ -35,7 +36,7 @@ def main(
         "test": {
             "datasets": test_dataset_names,
             "prompt": test_prompt,
-            "limit": 5,
+            "limit": test_limit,
             "model_half": True,
             "max_new_tokens": 200,
         },
@@ -68,12 +69,13 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", type=str)
-    parser.add_argument("--run_name", type=str)
     parser.add_argument("--test_dataset_names", type=str, nargs="+")
+    parser.add_argument("--test_limit", type=int)
     parser.add_argument("--few_shot_prompting", action="store_true")
     args = parser.parse_args()
     main(
         args.model_name,
         args.test_dataset_names,
+        args.test_limit,
         args.few_shot_prompting,
     )
