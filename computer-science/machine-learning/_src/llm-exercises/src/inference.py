@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 import wandb
-from instruction_datasets import INSTRUCTION_DATASETS
 from utils import infer
 
 assert os.environ.get("WANDB_ENTITY")
@@ -18,37 +17,17 @@ load_dotenv()
 def main(
     model_name: str,
     test_dataset_names: list[str] = ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
-    few_shot_prompting_dataset_name: str | None = None,
-    few_shot_prompting_limit: int | None = None,
+    few_shot_prompting: bool = False,
 ):
-    if few_shot_prompting_dataset_name and few_shot_prompting_limit:
-        ds = INSTRUCTION_DATASETS[few_shot_prompting_dataset_name]().select(
-            range(few_shot_prompting_limit)
-        )
-        test_prompt = (
-            """\
-200字程度で簡潔に回答してください。\
-"""
-            + "\n".join(
-                [
-                    f"# 指示（例）\n{task['input']}\n# 回答（例）\n{task['output']}\n"
-                    for task in ds
-                ]
-            )
-            + """
-# 指示
-{}
-# 回答
-"""
-        )
-    else:
-        test_prompt = """\
+    test_prompt = """\
 200字程度で簡潔に回答してください。
 
 # 指示
 {}
 # 回答
 """
+    if few_shot_prompting and (few_shot_prompt := os.environ.get("FEW_SHOT_PROMPT")):
+        test_prompt = few_shot_prompt + test_prompt
 
     config = {
         "base_model_id": model_name,
@@ -89,13 +68,12 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", type=str)
-    parser.add_argument("--test_dataset_names", type=list, nargs="+")
-    parser.add_argument("--few_shot_prompting_dataset_name", type=str)
-    parser.add_argument("--few_shot_prompting_limit", type=int)
+    parser.add_argument("--run_name", type=str)
+    parser.add_argument("--test_dataset_names", type=str, nargs="+")
+    parser.add_argument("--few_shot_prompting", action="store_true")
     args = parser.parse_args()
     main(
         args.model_name,
         args.test_dataset_names,
-        args.few_shot_prompting_dataset_name,
-        args.few_shot_prompting_limit,
+        args.few_shot_prompting,
     )
