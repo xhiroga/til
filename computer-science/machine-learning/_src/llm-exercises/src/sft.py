@@ -34,13 +34,13 @@ config = {
     "test": {
             "datasets": ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
             "prompt": """\
-# 指示
+### 指示
 200字程度で簡潔に回答してください。
 {}
-# 回答
+### 回答
 """,
             "limit": None,
-            "model_half": True,
+            "model_half": False,
             "max_new_tokens": 200,
         },
 }
@@ -48,8 +48,7 @@ config = {
 wandb.init(config=config)
 run_name = wandb.run.name
 
-base_model_id = Path(f"models/{config['base_model_id']}")
-new_model_id = f"{base_model_id.name.replace('.', '-')}-finetune-{run_name}"
+new_model_id = f"{config['base_model_id'].replace('.', '-')}-finetune-{run_name}"
 
 """
 bnb_config: 量子化の設定
@@ -72,9 +71,9 @@ bnb_config = BitsAndBytesConfig(
 )
 
 model = AutoModelForCausalLM.from_pretrained(
-    base_model_id, quantization_config=bnb_config, device_map="auto"
+    config['base_model_id'], quantization_config=bnb_config, device_map="auto"
 )
-tokenizer = AutoTokenizer.from_pretrained(base_model_id, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained(config['base_model_id'], trust_remote_code=True)
 
 """
 find_all_linear_names: モデル内の4bit量子化線形層を探します。
@@ -138,21 +137,13 @@ peft_config = LoraConfig(
 
 model = get_peft_model(model, peft_config)
 
-
-prompt = """\
-### 指示
-{}
-### 回答
-{}"""
-
-
 EOS_TOKEN = tokenizer.eos_token  # トークナイザーのEOSトークン（文末トークン）
 
 
 def formatting_prompts_func(examples):
-    input = examples["text"]  # 入力データ
+    input = examples["input"]  # 入力データ
     output = examples["output"]  # 出力データ
-    text = prompt.format(input, output) + EOS_TOKEN  # プロンプトの作成
+    text = config["test"]["prompt"].format(input, output) + EOS_TOKEN  # プロンプトの作成
     return {
         "formatted_text": text,
     }  # 新しいフィールド "formatted_text" を返す
