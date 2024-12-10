@@ -81,6 +81,15 @@ LLMのリストアップにあたり、次のリソースを参照した。
 - [Nejumi LLMリーダーボード3](https://wandb.ai/wandb-japan/llm-leaderboard3/reports/Nejumi-LLM-3--Vmlldzo3OTg2NjM2)
 - [オープン日本語LLMリーダーボード](https://huggingface.co/spaces/llm-jp/open-japanese-llm-leaderboard)
 
+### 埋め込み用モデル
+
+- [cl-nagoya/ruri-large](https://huggingface.co/cl-nagoya/ruri-large)
+- [intfloat/multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large)
+
+埋め込み用モデルのリストアップにあたり、次のリソースを参照した。
+
+- [JMTEB Leaderboard](https://github.com/sbintuitions/JMTEB/blob/main/leaderboard.md)
+
 ### データセット
 
 - [kajuma/CC-news-2024-July-October-cleaned](https://huggingface.co/datasets/kajuma/CC-news-2024-July-October-cleaned)
