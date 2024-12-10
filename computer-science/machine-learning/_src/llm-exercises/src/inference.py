@@ -16,9 +16,10 @@ load_dotenv()
 
 def main(
     model_name: str,
-    test_dataset_names: list[str] = ["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"],
-    test_limit: int = 5,
-    few_shot_prompting: bool = False,
+    test_dataset_names: list[str],
+    test_limit: int,
+    model_half: bool,
+    few_shot_prompting: bool,
 ):
     test_prompt = """\
 200字程度で簡潔に回答してください。
@@ -37,7 +38,7 @@ def main(
             "datasets": test_dataset_names,
             "prompt": test_prompt,
             "limit": test_limit,
-            "model_half": True,
+            "model_half": model_half,
             "max_new_tokens": 200,
         },
     }
@@ -54,7 +55,7 @@ def main(
     inference = infer(
         model,
         tokenizer,
-        test_dataset_names,
+        config["test"]["datasets"],
         model_name,
         run_name=run_name,
         test_prompt=config["test"]["prompt"],
@@ -68,14 +69,16 @@ def main(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_name", type=str)
-    parser.add_argument("--test_dataset_names", type=str, nargs="+")
-    parser.add_argument("--test_limit", type=int)
+    parser.add_argument("--model_name", type=str, default="llm-jp/llm-jp-3-1.8b")
+    parser.add_argument("--test_dataset_names", type=str, nargs="+", default=["elyza/ELYZA-tasks-100", "elyza-tasks-100-TV_0"])
+    parser.add_argument("--test_limit", type=int, default=100)
+    parser.add_argument("--model_half", action="store_true")
     parser.add_argument("--few_shot_prompting", action="store_true")
     args = parser.parse_args()
     main(
         args.model_name,
         args.test_dataset_names,
         args.test_limit,
+        args.model_half,
         args.few_shot_prompting,
     )
