@@ -192,6 +192,7 @@ def infer(
     max_new_tokens: int = 200,
 ) -> dict[str, dict[str, Any]]:
     inference = {}
+    
     for test_dataset_name in test_dataset_names:
         ds = INSTRUCTION_DATASETS[test_dataset_name]()
         results = test(
@@ -215,7 +216,7 @@ def infer(
             jsonl_prefix = f"{model_name}-{test_dataset_name}-{run_name}".replace("/", "-")
             save_results(evaluations, jsonl_prefix)
 
-        return inference
+    return inference
 
 
 if __name__ == "__main__":

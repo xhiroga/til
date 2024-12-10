@@ -3,7 +3,7 @@ from datasets import dataset_dict, load_dataset
 
 def load_ichikara_instruction_all() -> dataset_dict.Dataset:
     dataset = load_dataset("xhiroga/ichikara-instruction-003", "all")
-    dataset["train"]["input"] = dataset["train"]["text"]
+    dataset["train"] = dataset["train"].rename_column("text", "input")
     return dataset["train"]
 
 
