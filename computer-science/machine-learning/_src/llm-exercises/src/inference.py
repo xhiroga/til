@@ -22,11 +22,10 @@ def main(
     few_shot_prompting: bool,
 ):
     test_prompt = """\
+### 指示
 200字程度で簡潔に回答してください。
-
-# 指示
 {}
-# 回答
+### 回答
 """
     if few_shot_prompting and (few_shot_prompt := os.environ.get("FEW_SHOT_PROMPT")):
         test_prompt = few_shot_prompt + test_prompt

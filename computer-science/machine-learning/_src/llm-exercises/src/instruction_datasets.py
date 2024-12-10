@@ -13,8 +13,8 @@ def load_elyza_tasks_100() -> dataset_dict.Dataset:
 
 
 def load_elyza_tasks_100_TV() -> dataset_dict.Dataset:
-    dataset = load_dataset("xhiroga/ELYZA-tasks-100")
-    return dataset["train"]
+    dataset = load_dataset("xhiroga/ELYZA-tasks-100-TV")
+    return dataset["test"]
 
 
 INSTRUCTION_DATASETS = {
