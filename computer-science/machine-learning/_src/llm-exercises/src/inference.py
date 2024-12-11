@@ -32,7 +32,6 @@ def main(
 
     config = {
         "base_model_id": model_name,
-        "mode": "inference",
         "test": {
             "datasets": test_dataset_names,
             "prompt": test_prompt,
@@ -42,28 +41,27 @@ def main(
         },
     }
 
-    wandb.init(config=config)
-    run_name = wandb.run.name
+    with wandb.init(config=config, job_type="inference"):
+        run_name = wandb.run.name
 
-    model = AutoModelForCausalLM.from_pretrained(
-        f"{model_dir}/{model_name}", device_map="auto"
-    )
-    tokenizer = AutoTokenizer.from_pretrained(
-        f"{model_dir}/{model_name}", trust_remote_code=True
-    )
-    inference = infer(
-        model,
-        tokenizer,
-        config["test"]["datasets"],
-        model_name,
-        run_name=run_name,
-        test_prompt=config["test"]["prompt"],
-        test_limit=config["test"]["limit"],
-        model_half=config["test"]["model_half"],
-        max_new_tokens=config["test"]["max_new_tokens"],
-    )
-    wandb.log(inference)
-    wandb.finish()
+        model = AutoModelForCausalLM.from_pretrained(
+            f"{model_dir}/{model_name}", device_map="auto"
+        )
+        tokenizer = AutoTokenizer.from_pretrained(
+            f"{model_dir}/{model_name}", trust_remote_code=True
+        )
+        inference = infer(
+            model,
+            tokenizer,
+            config["test"]["datasets"],
+            model_name,
+            run_name=run_name,
+            test_prompt=config["test"]["prompt"],
+            test_limit=config["test"]["limit"],
+            model_half=config["test"]["model_half"],
+            max_new_tokens=config["test"]["max_new_tokens"],
+        )
+        wandb.log(inference)
 
 
 if __name__ == "__main__":

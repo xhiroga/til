@@ -16,7 +16,9 @@ LLMの日本語による複雑な指示・タスクを行う能力を引き上�
 ## Getting Started
 
 ```shell
-wsl
+# wsl
+# curl -LsSf https://astral.sh/uv/install.sh | sh
+
 uv sync
 # 訓練
 uv run src/sft.py
