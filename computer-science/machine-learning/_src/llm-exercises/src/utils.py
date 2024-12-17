@@ -172,6 +172,7 @@ def evaluate(results: list[Result], batch_size: int = 10) -> list[Evaluation]:
 
 # LLM講座として必要なのは、task_id と output のみ
 def save_results(results: list[Result], jsonl_prefix: str):
+    os.makedirs("output", exist_ok=True)
     with open(f"output/{jsonl_prefix}-outputs.jsonl", "w", encoding="utf-8") as f:
         for result in results:
             json.dump(

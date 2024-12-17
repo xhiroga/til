@@ -21,13 +21,13 @@ LLMの日本語による複雑な指示・タスクを行う能力を引き上�
 
 uv sync
 # 訓練
-uv run src/sft.py
+uv run src/sft.py --model_name llm-jp/llm-jp-3-13b --test_dataset_names elyza-tasks-100-TV_0
 # 訓練モデルとの対話
 uv run src/chat.py
 
 # 推論
 uv run src/inference.py --model_name llm-jp/llm-jp-3-1.8b
-uv run src/inference.py --model_name llm-jp-3-1-8b-finetune-different-grass-16/checkpoint-838 --test_dataset_names elyza-tasks-100-TV_0 --few_shot_prompting
+uv run src/inference.py --model_name llm-jp/llm-jp-3-1-8b-finetune-drawn-durian-40/checkpoint-600 --test_dataset_names elyza-tasks-100-TV_0
 ```
 
 ## 戦略
