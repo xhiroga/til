@@ -171,7 +171,7 @@ def evaluate(results: list[Result], batch_size: int = 10) -> list[Evaluation]:
 
 
 # LLM講座として必要なのは、task_id と output のみ
-def save_results(results: list[Result], jsonl_prefix: str):
+def save_results(results: list[Result | Evaluation], jsonl_prefix: str):
     with open(f"output/{jsonl_prefix}-outputs.jsonl", "w", encoding="utf-8") as f:
         for result in results:
             json.dump(
@@ -192,7 +192,7 @@ def infer(
     max_new_tokens: int = 200,
 ) -> dict[str, dict[str, Any]]:
     inference = {}
-    
+
     for test_dataset_name in test_dataset_names:
         ds = INSTRUCTION_DATASETS[test_dataset_name]()
         results = test(
