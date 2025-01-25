@@ -103,6 +103,7 @@ LLMのリストアップにあたり、次のリソースを参照した。
   - ライセンス: オリジナルのデータセットに準拠
 - [DeL-TaiseiOzaki/news_summary_2024secondhalf](https://huggingface.co/datasets/DeL-TaiseiOzaki/news_summary_2024secondhalf)
 - <https://tyc.rei-yumesaki.net/material/kaiwa-ai/>
+- <https://huggingface.co/datasets/weblab-GENIAC/Open-Platypus-Japanese-masked>
 
 [^Sekine_et_al_2024]: 関根聡, 安藤まや, 後藤美知子, 鈴木久美, 河原大輔, 井之上直也, 乾健太郎. ichikara-instruction: LLMのための日本語インストラクションデータの構築. 言語処理学会第30回年次大会(2024)
 
@@ -121,6 +122,7 @@ Fine Tuningの各ステージ[^Parthasarathy_et_al_2024]において気をつけ
 - [WorksApplications/uzushio](https://github.com/WorksApplications/uzushio)
   - CommonCrawlのデータから日本語コーパスを抽出するためのライブラリ
 - [KanHatakeyama/synthetic-texts-by-llm](https://github.com/KanHatakeyama/synthetic-texts-by-llm)
+- Magpie
 
 ## 継続事前学習
 
@@ -131,10 +133,16 @@ Fine Tuningの各ステージ[^Parthasarathy_et_al_2024]において気をつけ
 
 ### 推論
 
+- entropix
+
 ### 評価・検証
 
 - eval (OpenAI)
 
 ### デプロイ
+
+- 量子化形式
+  - GGUF
+  - EXL2
 
 ### 監視
