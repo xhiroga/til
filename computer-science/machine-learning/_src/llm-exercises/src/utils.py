@@ -193,7 +193,7 @@ def infer(
     max_new_tokens: int = 200,
 ) -> dict[str, dict[str, Any]]:
     inference = {}
-    
+
     for test_dataset_name in test_dataset_names:
         ds = INSTRUCTION_DATASETS[test_dataset_name]()
         results = test(
