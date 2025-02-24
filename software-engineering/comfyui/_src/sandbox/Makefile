@@ -16,11 +16,12 @@ install: .env extra_model_paths.yaml ComfyUI ComfyUI/venv ComfyUI/custom_nodes/c
 	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && . ComfyUI/venv/bin/activate && cd ComfyUI/custom_nodes/ComfyUI-3D-Pack && python install.py
 
 run:
-	PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" ComfyUI/venv/bin/python ComfyUI/main.py --enable-cors-header --listen 0.0.0.0 --port 11188 --xformers --extra-model-paths-config extra_model_paths.yaml
+	PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" ComfyUI/venv/bin/python ComfyUI/main.py --enable-cors-header --listen 0.0.0.0 --port 11188 --extra-model-paths-config extra_model_paths.yaml
 
 push-env:
 	aws ssm put-parameter \
 		--name $(REMOTE_ENV) \
+		--tier "Advanced" \
 		--type SecureString \
 		--value file://.env \
 		--overwrite \
@@ -37,6 +38,7 @@ push-env:
 push-extra_model_paths.yaml:
 	aws ssm put-parameter \
 		--name $(REMOTE_EXTRA_MODEL_PATHS) \
+		--tier "Advanced" \
 		--type SecureString \
 		--value file://extra_model_paths.yaml \
 		--overwrite \
