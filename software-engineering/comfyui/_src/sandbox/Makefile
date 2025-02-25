@@ -1,7 +1,4 @@
--include .env
-
 CUDA_PATH_V12_4 := /usr/local/cuda-12.4
-REMOTE_ENV := /til/software-engineering/comfyui/_src/sandbox/.env
 REMOTE_EXTRA_MODEL_PATHS := /til/software-engineering/comfyui/_src/sandbox/extra_model_paths.yaml
 
 .PNOHY: push-env push-extra_model_paths.yaml install run
@@ -17,23 +14,6 @@ install: .env extra_model_paths.yaml ComfyUI ComfyUI/venv ComfyUI/custom_nodes/c
 
 run:
 	PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" LIBGL_ALWAYS_SOFTWARE=1 ComfyUI/venv/bin/python ComfyUI/main.py --enable-cors-header --listen 0.0.0.0 --port 11188 --extra-model-paths-config extra_model_paths.yaml
-
-push-env:
-	aws ssm put-parameter \
-		--name $(REMOTE_ENV) \
-		--tier "Advanced" \
-		--type SecureString \
-		--value file://.env \
-		--overwrite \
-		--region ap-northeast-1
-
-.env:
-	aws ssm get-parameter \
-		--name $(REMOTE_ENV) \
-		--output text \
-		--with-decryption \
-		--region ap-northeast-1 \
-		--query 'Parameter.Value' > .env
 
 push-extra_model_paths.yaml:
 	aws ssm put-parameter \
@@ -58,15 +38,15 @@ ComfyUI:
 ComfyUI/venv:
 	cd ComfyUI && python3.12 -m venv venv
 
-ComfyUI/custom_nodes/comfyui-manager: .env
+ComfyUI/custom_nodes/comfyui-manager: ComfyUI
 	git -C $@ pull || git clone https://github.com/ltdrdata/ComfyUI-Manager $@
 
 # v0.1.4 fails to install from ComfyUI-Manager
 # Reqruires OpenGL 4.4 or higher
 # Requires modification written in https://github.com/MrForExample/ComfyUI-3D-Pack/issues/425#issuecomment-2679837846
-ComfyUI/custom_nodes/ComfyUI-3D-Pack: .env
+ComfyUI/custom_nodes/ComfyUI-3D-Pack: ComfyUI
 	git -C $@ pull || git clone https://github.com/MrForExample/ComfyUI-3D-Pack.git $@
 
-ComfyUI/user/default/workflows/ComfyUI-3D-Pack: .env
+ComfyUI/user/default/workflows/ComfyUI-3D-Pack: ComfyUI
 	git -C $@ pull || git clone --filter=blob:none --sparse https://github.com/MrForExample/ComfyUI-3D-Pack.git $@
 	git -C $@ sparse-checkout set _Example_Workflows
