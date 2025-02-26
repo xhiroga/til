@@ -1,3 +1,4 @@
+CURRENT_DIR := $(realpath .)
 CUDA_PATH_V12_4 := /usr/local/cuda-12.4
 REMOTE_EXTRA_MODEL_PATHS := /til/software-engineering/comfyui/_src/sandbox/extra_model_paths.yaml
 
@@ -22,7 +23,7 @@ push-extra_model_paths.yaml:
 		--tier "Advanced" \
 		--type SecureString \
 		--value file://extra_model_paths.yaml \
-		--overwrite \
+		--overwreite \
 		--region ap-northeast-1
 
 extra_model_paths.yaml:
@@ -52,7 +53,7 @@ ComfyUI/custom_nodes/ComfyUI-layerdiffuse: ComfyUI
 	git -C $@ pull || git clone https://github.com/huchenlei/ComfyUI-layerdiffuse.git $@
 
 ComfyUI/user/default/workflows/ComfyUI-3D-Pack: ComfyUI
-	rsync -av ComfyUI/custom_nodes/ComfyUI-3D-Pack/_Example_Workflows/ $@/
+	ln -sf $(CURRENT_DIR)/ComfyUI/custom_nodes/ComfyUI-3D-Pack/_Example_Workflows $@
 
 ComfyUI/user/default/workflows/ComfyUI-layerdiffuse: ComfyUI ComfyUI/custom_nodes/ComfyUI-layerdiffuse
-	rsync -av ComfyUI/custom_nodes/ComfyUI-layerdiffuse/example_workflows/ $@/
+	ln -sf $(CURRENT_DIR)/ComfyUI/custom_nodes/ComfyUI-layerdiffuse/example_workflows $@
