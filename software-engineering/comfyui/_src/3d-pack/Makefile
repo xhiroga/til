@@ -4,14 +4,14 @@ REMOTE_EXTRA_MODEL_PATHS := /til/software-engineering/comfyui/_src/sandbox/extra
 
 .PNOHY: push-env push-extra_model_paths.yaml install run
 
-# ComfyUI-3D-Pack requires CUDA v12.4
-install: .env extra_model_paths.yaml ComfyUI ComfyUI/venv ComfyUI/custom_nodes/comfyui-manager ComfyUI/custom_nodes/ComfyUI-3D-Pack ComfyUI/custom_nodes/ComfyUI-layerdiffuse ComfyUI/user/default/workflows/ComfyUI-3D-Pack
+install: .env extra_model_paths.yaml ComfyUI ComfyUI/venv ComfyUI/custom_nodes/comfyui-manager ComfyUI/custom_nodes/ComfyUI-3D-Pack ComfyUI/custom_nodes/comfyui_controlnet_aux ComfyUI/custom_nodes/ComfyUI-layerdiffuse ComfyUI/user/default/workflows/ComfyUI-3D-Pack
 	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && export LIBGL_ALWAYS_SOFTWARE=1 && . ComfyUI/venv/bin/activate && cd ComfyUI && pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
 	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && export LIBGL_ALWAYS_SOFTWARE=1 && . ComfyUI/venv/bin/activate && cd ComfyUI && pip install -r requirements.txt
 	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && export LIBGL_ALWAYS_SOFTWARE=1 && . ComfyUI/venv/bin/activate && cd ComfyUI && pip install "huggingface_hub[cli]"	
 	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && export LIBGL_ALWAYS_SOFTWARE=1 && . ComfyUI/venv/bin/activate && cd ComfyUI/custom_nodes/ComfyUI-3D-Pack && pip install -r requirements.txt
-	# Takes 10 ~ 20 minutes
+	# ComfyUI-3D-Pack requires CUDA v12.4 and installation takes 10 ~ 20 minutes
 	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && export LIBGL_ALWAYS_SOFTWARE=1 && . ComfyUI/venv/bin/activate && cd ComfyUI/custom_nodes/ComfyUI-3D-Pack && python install.py
+	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && export LIBGL_ALWAYS_SOFTWARE=1 && . ComfyUI/venv/bin/activate && cd ComfyUI/custom_nodes/comfyui_controlnet_aux && pip install -r requirements.txt
 	export PATH="$(CUDA_PATH_V12_4)/bin:$(PATH)" && export LIBGL_ALWAYS_SOFTWARE=1 && . ComfyUI/venv/bin/activate && cd ComfyUI/custom_nodes/ComfyUI-layerdiffuse && pip install -r requirements.txt
 
 run:
@@ -48,6 +48,9 @@ ComfyUI/custom_nodes/comfyui-manager: ComfyUI
 # Requires modification written in https://github.com/MrForExample/ComfyUI-3D-Pack/issues/425#issuecomment-2679837846
 ComfyUI/custom_nodes/ComfyUI-3D-Pack: ComfyUI
 	git -C $@ pull || git clone https://github.com/MrForExample/ComfyUI-3D-Pack.git $@
+
+ComfyUI/custom_nodes/comfyui_controlnet_aux: ComfyUI
+	git -C $@ pull || git clone https://github.com/Fannovel16/comfyui_controlnet_aux $@
 
 ComfyUI/custom_nodes/ComfyUI-layerdiffuse: ComfyUI
 	git -C $@ pull || git clone https://github.com/huchenlei/ComfyUI-layerdiffuse.git $@
