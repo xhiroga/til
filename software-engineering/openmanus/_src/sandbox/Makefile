@@ -1,4 +1,4 @@
-.PHONY: run upload
+.PHONY: run
 
 run:
 	uv run OpenManus/main.py
