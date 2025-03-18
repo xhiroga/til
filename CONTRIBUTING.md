@@ -1,6 +1,40 @@
 # About this guide
 
-主に将来の自分（[@xhiroga](https://github.con/xhiroga)）に向けた、このリポジトリのメンテナンスのためのルールです。
+このリポジトリに貢献するためのルールです。
+
+## 文章の内容
+
+- 文書がREADME.mdであるとき、その内容はフォルダ名に従います。
+- 文書構造はMECEを心がけてください。
+　- Bad
+
+    ```aws/README.md
+    # EC2のコスト削減
+    ```
+
+  - Good
+
+    ```aws/README.md
+    # AWS
+    ## Amazon EC2
+    ```
+
+- 常識的な内容は積極的に省いてください。
+　- Bad
+
+    ```cURL/README.md
+    # cURL
+    cURLは、CLIからHTTPリクエストを送信するためのツールです。
+    ## 使い方
+    ```
+
+  - Good
+
+    ```cURL/README.md
+    # cURL
+    ## TIPS
+    - JSONの送信方法
+    ```
 
 ## アクセシビリティ
 
@@ -16,6 +50,11 @@
 CSの分野の学会などでメジャーなAPA形式を採用します。[Google Scholar Button](https://chrome.google.com/webstore/detail/google-scholar-button/ldipcbpaocekfooobnbcddclnhejkcpn)を用います。
 
 ## フォルダ構成
+
+- 文書（レポートとソースコード）は、その分類（類目・綱目）に応じて2階層のフォルダを作成し、そのフォルダ内に記載します。
+- 文書の追加時は、次のとおりフォルダを判断してください。
+  - キーワードで検索を行い、書籍の分類を参照してください。
+    - 国立国会図書館サーチ(<https://ndlsearch.ndl.go.jp/search?cs=bib&keyword={検索ワード}>)
 
 ### 分類
 
@@ -46,12 +85,15 @@ GitHub Pagesでのホスティングのためにマークダウンファイル(`
 
 - [国立国会図書館オンライン](https://ndlonline.ndl.go.jp/#!/)
 - [日本十進分類法](https://www.libnet.pref.okayama.jp/shiryou/ndc/index.htm)
-  - [蔵書検索 | 東京都立図書館](https://catalog.library.metro.tokyo.lg.jp/winj/opac/search-detail.do)
 - [国立国会図書館分類表](https://www.ndl.go.jp/jp/data/catstandards/classification_subject/ndlc.html)
 - [Library of Congress >> Books/Printed Material](https://www.loc.gov/books/?all=true)
 - [Library of Congress Classification Outline](https://www.loc.gov/catdir/cpso/lcco/)
 - [アメリカ議会図書館分類表(英) - Wikipedia](https://en.wikipedia.org/wiki/Library_of_Congress_Classification)
 - [CIP](https://nces.ed.gov/ipeds/cipcode/browse.aspx?y=55) - アメリカ教育統計センターによる、教育プログラム分類体系
+
+:::note info
+日本十進分類法を採用している図書館の例を検討中です。東京都立中央図書館, 大阪市立/府立中央図書館, 滋賀県立図書館などのサイトを確認しましたが、URL直アクセスによる検索ができないか遅かったため、掲示していません。
+:::
 
 #### 綱目(Division)
 
