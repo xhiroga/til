@@ -1,0 +1,36 @@
+[project]
+name = "wan2-1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.11.14",
+    "comfyui-frontend-package>=1.15.0",
+    "einops>=0.8.1",
+    "numpy>=2.2.4",
+    "pillow>=11.1.0",
+    "psutil>=7.0.0",
+    "pytorch-triton>=3.3.0",
+    "pyyaml>=6.0.2",
+    "safetensors>=0.5.3",
+    "scipy>=1.15.2",
+    "sentencepiece>=0.2.0",
+    "tokenizers>=0.21.1",
+    "torch>=2.8.0.dev20250324",
+    "torchsde>=0.2.6",
+    "torchvision>=0.22.0.dev20250324",
+    "tqdm>=4.67.1",
+    "transformers>=4.50.0",
+    "yarl>=1.18.3",
+]
+
+[tool.uv.sources]
+pytorch-triton = { url = "https://download.pytorch.org/whl/nightly/pytorch_triton-3.3.0%2Bgit96316ce5-cp312-cp312-linux_aarch64.whl" }
+torch = { url = "https://download.pytorch.org/whl/nightly/cu128/torch-2.8.0.dev20250324%2Bcu128-cp312-cp312-linux_aarch64.whl" }
+torchvision = { url = "https://download.pytorch.org/whl/nightly/cpu/torchvision-0.22.0.dev20250324-cp312-cp312-linux_aarch64.whl" }
+
+[dependency-groups]
+dev = [
+    "huggingface-hub[cli]>=0.29.3",
+]
