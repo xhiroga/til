@@ -39,11 +39,26 @@ dev = [
 link-mode = "symlink"
 
 [[tool.uv.index]]
+# 2025-03-25現在、RunPod の L40S の CUDA Version は 12.4
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[[tool.uv.index]]
 name = "pytorch-cu126"
 url = "https://download.pytorch.org/whl/cu126"
 explicit = true
 
 [tool.uv.sources]
-torch = { index = "pytorch-cu126" }
-torchvision = { index = "pytorch-cu126" }
-torchaudio = { index = "pytorch-cu126"}
+torch = [
+    { index = "pytorch-cu124", marker = "platform_machine == 'x86_64'" },
+    { index = "pytorch-cu126", marker = "platform_machine == 'aarch64'" }
+]
+torchvision =  [
+    { index = "pytorch-cu124", marker = "platform_machine == 'x86_64'" },
+    { index = "pytorch-cu126", marker = "platform_machine == 'aarch64'" }
+]
+torchaudio =  [
+    { index = "pytorch-cu124", marker = "platform_machine == 'x86_64'" },
+    { index = "pytorch-cu126", marker = "platform_machine == 'aarch64'" }
+]
