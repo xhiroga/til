@@ -3,7 +3,6 @@ include .env	# COMFY_BASE_PATH, TEMP_PARENT_DIR
 # Set default TEMP_PARENT_DIR to /tmp if it's empty
 TEMP_PARENT_DIR ?= /tmp
 
-
 .PHONY: run init
 
 run:
