@@ -9,7 +9,9 @@ yarn install -D
 yarn zxp
 ```
 
-ZXPファイルを
+- ZXPファイルをZXP/UXP InstallerにDrag
+  - ファイルをウィンドウ上に移動してもDrag&Dropが有効にならない場合、Installer の再起動で直った
+- インストール後、After Effects の Window > Extensions がグレーアウトしたままの場合、After Effect の再起動で直った
 
 ## References
 
