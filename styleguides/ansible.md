@@ -34,7 +34,9 @@ Makefile                # `ansible-playbook` の実行や、必要なroles/colle
 requirement.yml
 ```
 
-ini形式よりもYAML形式を使う理由として、インベントリファイルで host_vars を記載する際に host の後ろにスペースを開けて記述する必要がある（つまり文法が分かりづらい）という点もある。
+### インベントリーの運用
+
+ini形式よりもYAML形式を使う。ini形式ではインベントリファイルで host_vars を記載する際に host の後ろにスペースを開けて記述する必要がある（つまり文法が分かりづらい）など、分かりづらいため。
 
 ```ini
 # inventory/hosts
@@ -42,7 +44,9 @@ ini形式よりもYAML形式を使う理由として、インベントリファ�
 localhost var_debug="debug var"
 ```
 
-また、playbooks以下にplaybookファイル以外を置かないことで、playbook内にtaskを書かず、role化を推奨することができる。
+### ホストの動的な指定
+
+クラウド上にサーバーを構築する場合、sshのconfigとAnsibleのインベントリの両方を指定する必要がある。DRY原則を適用するため、インベントリにはconfigファイルを読み込むPythonスクリプトを指定するのが望ましい。
 
 ## Style Rule
 
@@ -91,9 +95,11 @@ YAMLファイルの拡張子は `.yml` を用いる。
 - moleculeで生成されるYAMLファイルの拡張子も`.yml`である。
 - copyコマンドなのでコピーするファイルは、`.yml`ではなく`.yaml`でも構わない。
 
+Playbookのシェバンは不要。公式ドキュメントにないため。
+
 ### 運用
 
-Makefileで運用する
+Makefileで運用する。
 
 ## 参考
 
