@@ -1,0 +1,4 @@
+.env
+.venv
+ComfyUI
+extra_model_paths.yaml
