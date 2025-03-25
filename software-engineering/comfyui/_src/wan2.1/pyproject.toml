@@ -6,10 +6,8 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "aiohttp>=3.11.14",
-    "av>=14.2.0",
-    "comfyui-frontend-package>=1.15.0",
+    "comfyui-frontend-package==1.14.5",
     "einops>=0.8.1",
-    "kornia>=0.8.0",
     "numpy>=2.2.4",
     "pillow>=11.1.0",
     "psutil>=7.0.0",
@@ -17,7 +15,6 @@ dependencies = [
     "safetensors>=0.5.3",
     "scipy>=1.15.2",
     "sentencepiece>=0.2.0",
-    "spandrel>=0.4.1",
     "tokenizers>=0.21.1",
     "torch>=2.6.0",
     "torchaudio>=2.6.0",
@@ -35,8 +32,8 @@ dev = [
 ]
 
 [tool.uv]
-# WSL や LambdaLabs は hardlink に対応していない。
-link-mode = "symlink"
+# WSL や LambdaLabs, RunPod は hardlink に対応していない。
+link-mode = "copy"
 
 [[tool.uv.index]]
 # 2025-03-25現在、RunPod の L40S の CUDA Version は 12.4
