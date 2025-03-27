@@ -1,29 +1,28 @@
 [project]
-name = "wan2-1"
+name = "layerdiffuse"
 version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "aiohttp>=3.11.14",
-    "av>=14.2.0",
     "comfyui-frontend-package==1.14.5",
+    "diffusers>=0.32.2",
     "einops>=0.8.1",
-    "kornia>=0.8.0",
     "numpy>=2.2.4",
+    "opencv-python>=4.11.0.86",
     "pillow>=11.1.0",
     "psutil>=7.0.0",
     "pyyaml>=6.0.2",
     "safetensors>=0.5.3",
     "scipy>=1.15.2",
     "sentencepiece>=0.2.0",
-    "spandrel>=0.4.1",
     "tokenizers>=0.21.1",
     "torch>=2.6.0",
     "torchaudio>=2.6.0",
     "torchsde>=0.2.6",
     "torchvision>=0.21.0",
     "tqdm>=4.67.1",
-    "transformers>=4.50.0",
+    "transformers>=4.50.1",
     "yarl>=1.18.3",
 ]
 
