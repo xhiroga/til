@@ -40,7 +40,7 @@ const notes: { [id: string]: Note } = {
  */
 const server = new Server(
   {
-    name: "playable-ad-mcp",
+    name: "utils",
     version: "0.1.0",
   },
   {

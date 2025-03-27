@@ -1,11 +1,11 @@
 {
-  "name": "playable-mcp",
+  "name": "utils",
   "version": "0.1.0",
   "description": "A Model Context Protocol server",
   "private": true,
   "type": "module",
   "bin": {
-    "playable-mcp": "./build/index.js"
+    "utils": "./build/index.js"
   },
   "files": [
     "build"

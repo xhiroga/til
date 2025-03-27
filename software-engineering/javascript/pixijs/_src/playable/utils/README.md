@@ -1,4 +1,4 @@
-# playable-ad-mcp MCP Server
+# utils MCP Server
 
 A Model Context Protocol server
 
@@ -52,8 +52,8 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 ```json
 {
   "mcpServers": {
-    "playable-ad-mcp": {
-      "command": "/path/to/playable-ad-mcp/build/index.js"
+    "utils": {
+      "command": "/path/to/utils/build/index.js"
     }
   }
 }

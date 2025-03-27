@@ -2,7 +2,7 @@
 
 ```tree
 - ad: PixiJS Application
-- mcp: tools for LLM
+- utils: mcp server
 ```
 
 ## How to build
@@ -13,8 +13,6 @@ pnpm build:ad
 ```
 
 ## What's playable?
-
-
 
 ## References
 
