@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import fs from 'fs';
 
-// Configuration specifically for playable ad builds
+// Configuration specifically for Playable Ad ad builds
 export default defineConfig({
   build: {
     outDir: 'dist-ad',
@@ -52,9 +52,9 @@ export default defineConfig({
         );
         
         // Write the combined HTML file
-        fs.writeFileSync(resolve(__dirname, 'dist-ad/playable-ad.html'), htmlContent);
+        fs.writeFileSync(resolve(__dirname, 'dist-ad/Playable Ad-ad.html'), htmlContent);
         
-        console.log('Single HTML file generated at dist-ad/playable-ad.html');
+        console.log('Single HTML file generated at dist-ad/Playable Ad-ad.html');
       }
     }
   ]
