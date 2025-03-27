@@ -16,8 +16,8 @@ export default defineConfig({
       },
     }
   },
-  // Additional build configuration for Playable Ad ad
-  Playable AdAd: {
+  // Additional build configuration for Playable Ad
+  Playable: {
     build: {
       outDir: 'dist-ad',
       sourcemap: false,

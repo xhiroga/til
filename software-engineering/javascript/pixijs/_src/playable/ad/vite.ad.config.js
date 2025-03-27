@@ -52,9 +52,9 @@ export default defineConfig({
         );
         
         // Write the combined HTML file
-        fs.writeFileSync(resolve(__dirname, 'dist-ad/Playable Ad-ad.html'), htmlContent);
+        fs.writeFileSync(resolve(__dirname, 'dist-ad/playable-ad.html'), htmlContent);
         
-        console.log('Single HTML file generated at dist-ad/Playable Ad-ad.html');
+        console.log('Single HTML file generated at dist-ad/playable-ad.html');
       }
     }
   ]
