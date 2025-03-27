@@ -4,7 +4,7 @@ TMP ?= /tmp
 
 .PNOHY: init
 
-init: .venv ComfyUI ComfyUI/custom_nodes/ComfyUI-layerdiffuse extra_model_paths.yaml $(COMFY_BASE_PATH)/checkpoints/animagine-xl-4.0.safetensors $(COMFY_BASE_PATH)/checkpoints/animagine-xl-4.0-opt.safetensors
+init: .venv ComfyUI ComfyUI/custom_nodes/ComfyUI-layerdiffuse extra_model_paths.yaml
 
 .venv:
 	uv sync
