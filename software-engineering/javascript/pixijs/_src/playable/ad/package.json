@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build:ad": "vite build --config vite.ad.config.js",
+    "build:ad": "vite build --config vite.ad.config.js --minify && zip -j dist-ad/playable-ad.zip dist-ad/playable-ad.html",
     "preview:ad": "vite preview --config vite.ad.config.js"
   },
   "keywords": [],

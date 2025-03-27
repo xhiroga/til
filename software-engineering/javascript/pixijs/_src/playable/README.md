@@ -9,8 +9,12 @@
 
 ```shell
 cd add
-pnpm build
+pnpm build:ad
 ```
+
+## What's playable?
+
+
 
 ## References
 
