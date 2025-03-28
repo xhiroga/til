@@ -27,6 +27,9 @@ importers:
       vite:
         specifier: ^6.2.0
         version: 6.2.3
+      vite-plugin-singlefile:
+        specifier: ^2.2.0
+        version: 2.2.0(rollup@4.37.0)(vite@6.2.3)
 
 packages:
 
@@ -816,6 +819,13 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
+  vite-plugin-singlefile@2.2.0:
+    resolution: {integrity: sha512-Ik1wXmJaGzeQtUeIV7JprDUqqy6DlLzXAY27Blei5peE4c9VJF+Kp9xWDJeuX0RJUZmFbIAuw1/RAh06A+Ql7w==}
+    engines: {node: '>18.0.0'}
+    peerDependencies:
+      rollup: ^4.35.0
+      vite: ^5.4.11 || ^6.0.0
+
   vite@6.2.3:
     resolution: {integrity: sha512-IzwM54g4y9JA/xAeBPNaDXiBF8Jsgl3VBQ2YQ/wOY6fyW3xMdSoltIV3Bo59DErdqdE6RxUfv8W69DvUorE4Eg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
@@ -1591,6 +1601,12 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  vite-plugin-singlefile@2.2.0(rollup@4.37.0)(vite@6.2.3):
+    dependencies:
+      micromatch: 4.0.8
+      rollup: 4.37.0
+      vite: 6.2.3
 
   vite@6.2.3:
     dependencies:

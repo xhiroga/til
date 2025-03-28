@@ -1,4 +1,8 @@
 import { Application, Assets, Sprite } from "pixi.js";
+import pinUrl from "./assets/pin.svg";
+import treasureUrl from "./assets/treasure.svg";
+import lavaUrl from "./assets/lava.svg";
+import heroUrl from "./assets/hero.svg";
 
 (async () => {
   // Create a new application
@@ -10,11 +14,11 @@ import { Application, Assets, Sprite } from "pixi.js";
   // Append the application canvas to the document body
   document.getElementById("pixi-container")!.appendChild(app.canvas);
 
-  // Load assets
-  Assets.add({ alias: "pin", src: "/assets/pin.svg" });
-  Assets.add({ alias: "treasure", src: "/assets/treasure.svg" });
-  Assets.add({ alias: "lava", src: "/assets/lava.svg" });
-  Assets.add({ alias: "hero", src: "/assets/hero.svg" });
+  // Load assets using imported URLs
+  Assets.add({ alias: "pin", src: pinUrl });
+  Assets.add({ alias: "treasure", src: treasureUrl });
+  Assets.add({ alias: "lava", src: lavaUrl });
+  Assets.add({ alias: "hero", src: heroUrl });
   const textures = await Assets.load(["pin", "treasure", "lava", "hero"]);
 
   // --- Pin Object ---
