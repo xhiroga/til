@@ -1,3 +1,109 @@
-<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
-  <rect width="50" height="50" style="fill:red;stroke-width:3;stroke:rgb(0,0,0)" />
+<svg width="100" height="80" xmlns="http://www.w3.org/2000/svg">
+  <!-- 炎/溶岩のグラデーション定義 -->
+  <defs>
+    <radialGradient id="lavaGlow" cx="50%" cy="50%" r="65%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:#FFFF00;stop-opacity:0.8" />
+      <stop offset="40%" style="stop-color:#FFA500;stop-opacity:0.8" />
+      <stop offset="70%" style="stop-color:#FF4500;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#FF0000;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- 炎の動きのためのアニメーション定義 -->
+    <filter id="flameBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+    </filter>
+  </defs>
+  
+  <!-- 溶岩のベース -->
+  <ellipse cx="50" cy="50" rx="35" ry="25" fill="#FF4500" />
+  
+  <!-- 炎のエフェクト (複数の炎要素を重ねる) -->
+  <g filter="url(#flameBlur)">
+    <!-- 中央の炎 -->
+    <path d="M 50,20 
+             Q 60,30 55,40 
+             Q 65,50 50,65 
+             Q 35,50 45,40 
+             Q 40,30 50,20" 
+          fill="#FF0000">
+      <animate attributeName="d" 
+               values="M 50,20 Q 60,30 55,40 Q 65,50 50,65 Q 35,50 45,40 Q 40,30 50,20;
+                      M 50,20 Q 65,35 55,40 Q 70,55 50,65 Q 30,55 45,40 Q 35,35 50,20;
+                      M 50,20 Q 60,30 55,40 Q 65,50 50,65 Q 35,50 45,40 Q 40,30 50,20" 
+               dur="1.5s" 
+               repeatCount="indefinite" />
+    </path>
+    
+    <!-- 左の炎 -->
+    <path d="M 35,30 
+             Q 40,35 38,45 
+             Q 45,55 35,60 
+             Q 25,55 32,45 
+             Q 30,35 35,30" 
+          fill="#FFA500" opacity="0.9">
+      <animate attributeName="d" 
+               values="M 35,30 Q 40,35 38,45 Q 45,55 35,60 Q 25,55 32,45 Q 30,35 35,30;
+                      M 35,30 Q 45,40 38,45 Q 50,60 35,60 Q 20,60 32,45 Q 25,40 35,30;
+                      M 35,30 Q 40,35 38,45 Q 45,55 35,60 Q 25,55 32,45 Q 30,35 35,30" 
+               dur="2s" 
+               repeatCount="indefinite" />
+    </path>
+    
+    <!-- 右の炎 -->
+    <path d="M 65,30 
+             Q 70,35 68,45 
+             Q 75,55 65,60 
+             Q 55,55 62,45 
+             Q 60,35 65,30" 
+          fill="#FFA500" opacity="0.9">
+      <animate attributeName="d" 
+               values="M 65,30 Q 70,35 68,45 Q 75,55 65,60 Q 55,55 62,45 Q 60,35 65,30;
+                      M 65,30 Q 75,40 68,45 Q 80,60 65,60 Q 50,60 62,45 Q 55,40 65,30;
+                      M 65,30 Q 70,35 68,45 Q 75,55 65,60 Q 55,55 62,45 Q 60,35 65,30" 
+               dur="1.8s" 
+               repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- 溶岩の輝きエフェクト -->
+  <ellipse cx="50" cy="50" rx="40" ry="30" fill="url(#lavaGlow)" opacity="0.6">
+    <animate attributeName="opacity" 
+             values="0.6;0.8;0.6" 
+             dur="2s" 
+             repeatCount="indefinite" />
+  </ellipse>
+  
+  <!-- 飛び散る火花 -->
+  <circle cx="40" cy="25" r="2" fill="#FFFF00">
+    <animate attributeName="cy" 
+             values="25;20;25" 
+             dur="1s" 
+             repeatCount="indefinite" />
+    <animate attributeName="opacity" 
+             values="1;0;1" 
+             dur="1.5s" 
+             repeatCount="indefinite" />
+  </circle>
+  
+  <circle cx="60" cy="20" r="1.5" fill="#FFFF00">
+    <animate attributeName="cy" 
+             values="20;15;20" 
+             dur="1.2s" 
+             repeatCount="indefinite" />
+    <animate attributeName="opacity" 
+             values="1;0;1" 
+             dur="1.8s" 
+             repeatCount="indefinite" />
+  </circle>
+  
+  <circle cx="50" cy="15" r="1" fill="#FFFF00">
+    <animate attributeName="cy" 
+             values="15;10;15" 
+             dur="0.8s" 
+             repeatCount="indefinite" />
+    <animate attributeName="opacity" 
+             values="1;0;1" 
+             dur="1.2s" 
+             repeatCount="indefinite" />
+  </circle>
 </svg>

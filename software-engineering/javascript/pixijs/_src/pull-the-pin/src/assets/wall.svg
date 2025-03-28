@@ -1,0 +1,79 @@
+<svg width="400" height="800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 石壁のテクスチャを定義 -->
+  <defs>
+    <linearGradient id="brickGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c2c2c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="mortarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#222222;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111111;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景モルタル -->
+  <rect width="400" height="800" fill="url(#mortarGradient)" />
+
+  <!-- 石壁のブロックをグリッドで配置 -->
+  <!-- 1段目 -->
+  <rect x="20" y="0" width="80" height="40" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="105" y="0" width="60" height="40" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="170" y="0" width="70" height="40" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="245" y="0" width="75" height="40" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="325" y="0" width="55" height="40" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  
+  <!-- 2段目 -->
+  <rect x="20" y="45" width="70" height="50" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="95" y="45" width="90" height="50" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="190" y="45" width="60" height="50" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="255" y="45" width="80" height="50" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="340" y="45" width="40" height="50" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  
+  <!-- 3段目 -->
+  <rect x="20" y="100" width="65" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="90" y="100" width="75" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="170" y="100" width="100" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="275" y="100" width="85" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  
+  <!-- 4段目 -->
+  <rect x="20" y="150" width="80" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="105" y="150" width="65" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="175" y="150" width="95" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="275" y="150" width="55" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="335" y="150" width="45" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  
+  <!-- 5段目 -->
+  <rect x="20" y="210" width="60" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="85" y="210" width="90" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="180" y="210" width="70" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="255" y="210" width="75" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="335" y="210" width="45" height="55" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  
+  <!-- 6段目 -->
+  <rect x="20" y="270" width="70" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="95" y="270" width="80" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="180" y="270" width="70" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="255" y="270" width="75" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  <rect x="335" y="270" width="45" height="45" fill="url(#brickGradient)" stroke="#111" stroke-width="1" />
+  
+  <!-- 特徴的な石ブロック（装飾パネル） -->
+  <rect x="80" y="320" width="50" height="50" fill="#333" stroke="#222" stroke-width="2" />
+  <text x="105" y="350" font-family="Arial" font-size="20" fill="#555" text-anchor="middle">?</text>
+  
+  <rect x="270" y="320" width="50" height="50" fill="#333" stroke="#222" stroke-width="2" />
+  <text x="295" y="350" font-family="Arial" font-size="20" fill="#555" text-anchor="middle">?</text>
+  
+  <rect x="80" y="620" width="50" height="50" fill="#333" stroke="#222" stroke-width="2" />
+  <text x="105" y="650" font-family="Arial" font-size="20" fill="#555" text-anchor="middle">?</text>
+  
+  <rect x="270" y="620" width="50" height="50" fill="#333" stroke="#222" stroke-width="2" />
+  <text x="295" y="650" font-family="Arial" font-size="20" fill="#555" text-anchor="middle">?</text>
+  
+  <!-- 壁の側面（左） -->
+  <rect x="0" y="0" width="15" height="800" fill="#777" />
+  <rect x="15" y="0" width="5" height="800" fill="#555" />
+  
+  <!-- 壁の側面（右） -->
+  <rect x="380" y="0" width="5" height="800" fill="#555" />
+  <rect x="385" y="0" width="15" height="800" fill="#777" />
+</svg>
