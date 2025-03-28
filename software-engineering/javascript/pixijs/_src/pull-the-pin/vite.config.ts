@@ -1,11 +1,11 @@
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
+import svgo from "vite-plugin-svgo";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [viteSingleFile()],
+  plugins: [viteSingleFile(), svgo()],
   build: {
-    // outDir: "singlefile", // Output to default 'dist'
     assetsInlineLimit: 0, // Inline all assets
   },
   server: {
