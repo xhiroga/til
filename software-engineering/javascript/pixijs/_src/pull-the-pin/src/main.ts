@@ -1,5 +1,7 @@
 import { Application, Assets, Sprite, Container } from "pixi.js";
-// Import SVGs as URLs (Vite will likely inline them as data URLs)
+import * as Matter from "matter-js"; // Import Matter.js
+
+// Import SVGs as URLs
 import pinUrl from "./assets/pin.svg";
 import treasureUrl from "./assets/treasure.svg";
 import lavaUrl from "./assets/lava.svg";
@@ -17,6 +19,12 @@ import slopeUrl from "./assets/slope.svg";
 
   // Append the application canvas to the document body
   document.getElementById("pixi-container")!.appendChild(app.canvas);
+
+  // --- Matter.js Setup ---
+  const engine = Matter.Engine.create();
+  const world = engine.world;
+  // Disable gravity initially or set as needed
+  // engine.world.gravity.y = 0; // Example: No gravity initially
 
   // Add assets using imported URLs
   Assets.add({ alias: "pin", src: pinUrl });
@@ -40,161 +48,244 @@ import slopeUrl from "./assets/slope.svg";
   background.height = app.screen.height;
   gameContainer.addChild(background);
 
-  // --- Wall Layer ---
-  const wall = new Sprite(textures.wall);
-  wall.anchor.set(0.5, 0);
-  wall.position.set(app.screen.width * 0.5, 0);
-  wall.width = app.screen.width * 0.7;
-  wall.height = app.screen.height;
-  gameContainer.addChild(wall);
+  // --- Wall Layer (Visual) ---
+  // Keep the visual wall sprite
+  const wallSprite = new Sprite(textures.wall);
+  wallSprite.anchor.set(0.5, 0);
+  wallSprite.position.set(app.screen.width * 0.5, 0);
+  wallSprite.width = app.screen.width * 0.7;
+  wallSprite.height = app.screen.height;
+  gameContainer.addChild(wallSprite);
 
-  // --- Slope Object (for treasure to rest on) ---
-  const slope = new Sprite(textures.slope);
-  slope.anchor.set(0, 0); // Set anchor to top-left
-  slope.position.set(app.screen.width * 0.35, app.screen.height * 0.28);
-  slope.scale.set(1.6, 1.2);
-  gameContainer.addChild(slope);
+  // --- Matter.js Walls and Ground ---
+  const wallThickness = 50; // Thickness for physics boundaries
+  const wallOptions = { isStatic: true, render: { visible: false } }; // Invisible static bodies
 
-  // --- Pin Objects ---
-  // Pin 1 (Top, supports treasure)
-  const pin1 = new Sprite(textures.pin);
-  pin1.anchor.set(0.1, 0.5); // Adjust anchor for the new SVG's handle position
-  pin1.rotation = Math.PI / 5.5; // Approx 32 degrees clockwise
-  pin1.position.set(app.screen.width * 0.42, app.screen.height * 0.32);
-  pin1.scale.set(3.0, 1.0); // Make pin longer by scaling x more than y
-  gameContainer.addChild(pin1);
+  // Ground
+  const ground = Matter.Bodies.rectangle(
+    app.screen.width / 2,
+    app.screen.height + wallThickness / 2, // Position below screen
+    app.screen.width,
+    wallThickness,
+    wallOptions
+  );
 
-  // Pin 2 (Middle Left, supports lava)
-  const pin2 = new Sprite(textures.pin);
-  pin2.anchor.set(0.1, 0.5);
-  pin2.rotation = Math.PI / 3.2; // About 56 degrees clockwise
-  pin2.position.set(app.screen.width * 0.32, app.screen.height * 0.58);
-  pin2.scale.set(3.2, 1.0);
-  gameContainer.addChild(pin2);
+  // Left Wall (aligned with the visual wall edge)
+  const leftWall = Matter.Bodies.rectangle(
+    app.screen.width * 0.15 - wallThickness / 2, // Position at the left edge of the visual wall
+    app.screen.height / 2,
+    wallThickness,
+    app.screen.height,
+    wallOptions
+  );
 
-  // Pin 3 (Middle Right, supports lava)
-  const pin3 = new Sprite(textures.pin);
-  pin3.anchor.set(0.1, 0.5);
-  pin3.rotation = -Math.PI / 3.2; // About 56 degrees counter-clockwise
-  pin3.position.set(app.screen.width * 0.68, app.screen.height * 0.58);
-  pin3.scale.set(3.2, 1.0);
-  gameContainer.addChild(pin3);
+  // Right Wall (aligned with the visual wall edge)
+  const rightWall = Matter.Bodies.rectangle(
+    app.screen.width * 0.85 + wallThickness / 2, // Position at the right edge of the visual wall
+    app.screen.height / 2,
+    wallThickness,
+    app.screen.height,
+    wallOptions
+  );
 
-  // --- Treasure Objects ---
-  // コインをグループ化して配置
-  const treasureGroup = new Container();
-  treasureGroup.position.set(app.screen.width * 0.53, app.screen.height * 0.35);
-  gameContainer.addChild(treasureGroup);
-  
-  // メインのコイン
-  const treasure = new Sprite(textures.treasure);
-  treasure.anchor.set(0.5);
-  treasure.scale.set(0.45);
-  treasureGroup.addChild(treasure);
-  
-  // 追加のコイン（少しずらして重ねる）
-  const treasure2 = new Sprite(textures.treasure);
-  treasure2.anchor.set(0.5);
-  treasure2.position.set(-15, 3);
-  treasure2.scale.set(0.4);
-  treasureGroup.addChild(treasure2);
-  
-  const treasure3 = new Sprite(textures.treasure);
-  treasure3.anchor.set(0.5);
-  treasure3.position.set(15, 3);
-  treasure3.scale.set(0.4);
-  treasureGroup.addChild(treasure3);
-  
-  // さらに追加のコイン
-  const treasure4 = new Sprite(textures.treasure);
-  treasure4.anchor.set(0.5);
-  treasure4.position.set(0, -10);
-  treasure4.scale.set(0.35);
-  treasureGroup.addChild(treasure4);
-  
-  const treasure5 = new Sprite(textures.treasure);
-  treasure5.anchor.set(0.5);
-  treasure5.position.set(-10, -5);
-  treasure5.scale.set(0.38);
-  treasureGroup.addChild(treasure5);
+  Matter.Composite.add(world, [ground, leftWall, rightWall]);
 
-  // --- Lava Object ---
-  // TODO: This is a placeholder visual. Physics/interaction logic will likely
-  // change significantly when a physics engine is integrated.
-  const lava = new Sprite(textures.lava);
-  lava.anchor.set(0.5);
-  // Position lava above the crossed pins (pin2, pin3)
-  lava.position.set(app.screen.width / 2, app.screen.height * 0.54);
-  lava.scale.set(1.8);
-  gameContainer.addChild(lava);
 
-  // 火の粒子効果（小さな溶岩の粒）
-  const lavaParticle1 = new Sprite(textures.lava);
-  lavaParticle1.anchor.set(0.5);
-  lavaParticle1.position.set(app.screen.width * 0.48, app.screen.height * 0.5);
-  lavaParticle1.scale.set(0.2);
-  lavaParticle1.alpha = 0.6;
-  gameContainer.addChild(lavaParticle1);
-  
-  const lavaParticle2 = new Sprite(textures.lava);
-  lavaParticle2.anchor.set(0.5);
-  lavaParticle2.position.set(app.screen.width * 0.52, app.screen.height * 0.49);
-  lavaParticle2.scale.set(0.15);
-  lavaParticle2.alpha = 0.5;
-  gameContainer.addChild(lavaParticle2);
+  // --- Slope Object (Visual and Physics) ---
+  const slopeSprite = new Sprite(textures.slope);
+  slopeSprite.anchor.set(0, 0); // Set anchor to top-left
+  const slopePosX = app.screen.width * 0.35;
+  const slopePosY = app.screen.height * 0.28;
+  const slopeScaleX = 1.6;
+  const slopeScaleY = 1.2;
+  slopeSprite.position.set(slopePosX, slopePosY);
+  slopeSprite.scale.set(slopeScaleX, slopeScaleY);
+  gameContainer.addChild(slopeSprite);
 
-  // --- Hero Object ---
+  // Create Matter.js body for the slope (approximated as a rectangle for now)
+  // Adjust position and size based on the sprite's placement and scale
+  const slopeWidth = slopeSprite.width;
+  const slopeHeight = slopeSprite.height;
+  const slopeBody = Matter.Bodies.rectangle(
+      slopePosX + slopeWidth / 2, // Center X
+      slopePosY + slopeHeight / 2, // Center Y
+      slopeWidth,
+      slopeHeight,
+      { isStatic: true, angle: 0, label: "slope" } // Static body
+  );
+  // TODO: Improve slope shape using vertices if needed
+  Matter.Composite.add(world, slopeBody);
+
+
+  // --- Pin Objects (Visual and Physics) ---
+  const pins: { sprite: Sprite, body: Matter.Body }[] = [];
+  const pinOptions = { isStatic: true, render: { visible: false } }; // Pins are static initially
+
+  // Function to create a pin (Sprite + Body)
+  const createPin = (x: number, y: number, rotation: number, scaleX: number, scaleY: number) => {
+    const sprite = new Sprite(textures.pin);
+    sprite.anchor.set(0.1, 0.5); // Adjust anchor
+    sprite.rotation = rotation;
+    sprite.position.set(x, y);
+    sprite.scale.set(scaleX, scaleY);
+    gameContainer.addChild(sprite);
+
+    // Create Matter.js body for the pin (rectangle approximation)
+    // Adjust dimensions and position based on sprite scale and rotation
+    const pinWidth = sprite.width * 0.8; // Effective width (adjust as needed)
+    const pinHeight = sprite.height * 0.5; // Effective height (adjust as needed)
+    const body = Matter.Bodies.rectangle(
+        x, // Use sprite's x/y as center for the body
+        y,
+        pinWidth,
+        pinHeight,
+        { ...pinOptions, angle: rotation, label: `pin-${pins.length + 1}` }
+    );
+    Matter.Composite.add(world, body);
+    pins.push({ sprite, body });
+
+    // Add interactivity (example: click to remove)
+    sprite.eventMode = 'static';
+    sprite.cursor = 'pointer';
+    sprite.on('pointerdown', () => {
+        console.log(`Pin clicked: ${body.label}`);
+        // Remove from Matter world
+        Matter.Composite.remove(world, body);
+        // Remove Pixi sprite
+        gameContainer.removeChild(sprite);
+        // Remove from our pins array (optional, depends on further logic)
+        const index = pins.findIndex(p => p.body === body);
+        if (index > -1) {
+            pins.splice(index, 1);
+        }
+    });
+  };
+
+  // Create the pins using the function
+  createPin(app.screen.width * 0.42, app.screen.height * 0.32, Math.PI / 5.5, 3.0, 1.0); // Pin 1
+  createPin(app.screen.width * 0.32, app.screen.height * 0.58, Math.PI / 3.2, 3.2, 1.0); // Pin 2
+  createPin(app.screen.width * 0.68, app.screen.height * 0.58, -Math.PI / 3.2, 3.2, 1.0); // Pin 3
+
+
+  // --- Treasure Objects (Visual and Physics) ---
+  const treasureSprites: Sprite[] = [];
+  const treasureBodies: Matter.Body[] = [];
+  const treasureGroupContainer = new Container(); // Use a container for visual grouping if needed
+  // treasureGroupContainer.position.set(app.screen.width * 0.53, app.screen.height * 0.35); // Initial group position - Let bodies dictate position
+  gameContainer.addChild(treasureGroupContainer); // Add container, but sprites will be positioned absolutely in the world
+
+  const createTreasure = (initialX: number, initialY: number, scale: number) => {
+      const sprite = new Sprite(textures.treasure);
+      sprite.anchor.set(0.5);
+      sprite.scale.set(scale);
+      // Initial sprite position matches body position
+      sprite.position.set(initialX, initialY);
+      // Add sprite directly to the main game container, not the group container
+      gameContainer.addChild(sprite);
+      treasureSprites.push(sprite);
+
+      const body = Matter.Bodies.circle(
+          initialX,
+          initialY,
+          sprite.width / 2, // Radius based on scaled sprite width
+          { restitution: 0.3, friction: 0.5, label: "treasure" } // Add some bounce and friction
+      );
+      treasureBodies.push(body);
+      Matter.Composite.add(world, body);
+  };
+
+  // Calculate initial absolute positions for treasure based on original group logic
+  const groupBaseX = app.screen.width * 0.53;
+  const groupBaseY = app.screen.height * 0.35;
+
+  createTreasure(groupBaseX + 0, groupBaseY + 0, 0.45);    // Main treasure
+  createTreasure(groupBaseX - 15, groupBaseY + 3, 0.4);   // Treasure 2
+  createTreasure(groupBaseX + 15, groupBaseY + 3, 0.4);    // Treasure 3
+  createTreasure(groupBaseX + 0, groupBaseY - 10, 0.35);  // Treasure 4
+  createTreasure(groupBaseX - 10, groupBaseY - 5, 0.38); // Treasure 5
+
+
+  // --- Lava Object (Visual and Physics) ---
+  // Visual representation (main blob)
+  const lavaSprite = new Sprite(textures.lava);
+  lavaSprite.anchor.set(0.5);
+  const lavaInitialX = app.screen.width / 2;
+  const lavaInitialY = app.screen.height * 0.54;
+  lavaSprite.position.set(lavaInitialX, lavaInitialY);
+  lavaSprite.scale.set(1.8);
+  gameContainer.addChild(lavaSprite);
+
+  // Physics Body for Lava (approximated as a circle)
+  const lavaBody = Matter.Bodies.circle(
+      lavaInitialX,
+      lavaInitialY,
+      lavaSprite.width / 2 * 0.8, // Approximate radius, adjust as needed
+      { restitution: 0.1, friction: 0.8, density: 0.005, label: "lava" } // Lava properties
+  );
+  Matter.Composite.add(world, lavaBody);
+
+  // Remove old lava particles and effects if they are purely visual
+  // gameContainer.removeChild(lavaParticle1, lavaParticle2); // Assuming these were purely visual
+
+
+  // --- Hero Object (Visual Only for now) ---
   const hero = new Sprite(textures.hero);
   hero.anchor.set(0.5);
-  // Position hero at the bottom left of center
   hero.position.set(app.screen.width * 0.35, app.screen.height * 0.89);
   hero.scale.set(1.15);
   gameContainer.addChild(hero);
-  
-  // ヒーローの近くに小道具（キャンドルなど）を追加
-  const candle1 = new Sprite(textures.lava);
-  candle1.anchor.set(0.5);
-  candle1.position.set(app.screen.width * 0.32, app.screen.height * 0.88);
-  candle1.scale.set(0.2);
-  candle1.alpha = 0.8;
-  gameContainer.addChild(candle1);
-  
-  const candle2 = new Sprite(textures.lava);
-  candle2.anchor.set(0.5);
-  candle2.position.set(app.screen.width * 0.28, app.screen.height * 0.88);
-  candle2.scale.set(0.15);
-  candle2.alpha = 0.7;
-  gameContainer.addChild(candle2);
-  
-  // 骸骨のような装飾（簡易的な表現）
-  const skull = new Sprite(textures.hero);
-  skull.anchor.set(0.5);
-  skull.position.set(app.screen.width * 0.68, app.screen.height * 0.88);
-  skull.scale.set(0.5);
-  skull.tint = 0xFFFFFF; // 白色に
-  gameContainer.addChild(skull);
 
-  // Simple animation effect
-  app.ticker.add(() => {
-    // Subtle pulsing effect for lava
-    lava.scale.x = 1.8 + Math.sin(app.ticker.lastTime / 300) * 0.1;
-    lava.scale.y = 1.8 + Math.sin(app.ticker.lastTime / 300) * 0.1;
-    
-    // 溶岩粒子のアニメーション
-    lavaParticle1.y = app.screen.height * 0.5 + Math.sin(app.ticker.lastTime / 200) * 5;
-    lavaParticle1.alpha = 0.6 + Math.sin(app.ticker.lastTime / 250) * 0.2;
-    
-    lavaParticle2.y = app.screen.height * 0.49 + Math.cos(app.ticker.lastTime / 150) * 3;
-    lavaParticle2.alpha = 0.5 + Math.cos(app.ticker.lastTime / 200) * 0.3;
-    
-    // キャンドルのゆらぎ効果
-    candle1.alpha = 0.7 + Math.sin(app.ticker.lastTime / 200) * 0.2;
-    candle2.alpha = 0.6 + Math.cos(app.ticker.lastTime / 150) * 0.2;
-    
-    // コインの輝き効果
-    treasureGroup.rotation = Math.sin(app.ticker.lastTime / 2000) * 0.02;
-    
-    // 勇者のわずかな動き
-    hero.y = app.screen.height * 0.89 + Math.sin(app.ticker.lastTime / 500) * 2;
+  // Remove other decorative elements if they don't interact physically
+  // gameContainer.removeChild(candle1, candle2, skull);
+
+
+  // --- Game Loop Integration ---
+  app.ticker.add((ticker) => {
+    // Matter.js recommends using a fixed delta time for stability,
+    // but using ticker.deltaMS is also common. Let's try ticker's delta.
+    // Use deltaMS as Matter.Engine.update expects milliseconds
+    const delta = ticker.deltaMS;
+
+    // Update Matter.js engine
+    Matter.Engine.update(engine, delta); // Update engine
+
+    // Update Lava Sprite position and rotation from Matter.js body
+    lavaSprite.position.set(lavaBody.position.x, lavaBody.position.y);
+    lavaSprite.rotation = lavaBody.angle;
+    // Keep the visual pulsing effect if desired
+    lavaSprite.scale.x = 1.8 + Math.sin(app.ticker.lastTime / 300) * 0.1;
+    lavaSprite.scale.y = 1.8 + Math.sin(app.ticker.lastTime / 300) * 0.1;
+
+
+    // Update Treasure Sprites positions and rotations from Matter.js bodies
+    for (let i = 0; i < treasureSprites.length; i++) {
+        treasureSprites[i].position.set(treasureBodies[i].position.x, treasureBodies[i].position.y);
+        treasureSprites[i].rotation = treasureBodies[i].angle;
+    }
+
+
+    // Update remaining Pin Sprites (if any left) - they are static unless removed
+    // No update needed for static pins' sprites unless they become dynamic
+
+
+    // Keep other visual animations if needed
+    // hero.y = app.screen.height * 0.89 + Math.sin(app.ticker.lastTime / 500) * 2;
+
   });
+
+  // Optional: Add Matter.js Renderer for debugging
+  /*
+  const render = Matter.Render.create({
+      element: document.body, // Render to the body or a specific element
+      engine: engine,
+      options: {
+          width: app.screen.width,
+          height: app.screen.height,
+          wireframes: true, // Show wireframes
+          showAngleIndicator: true
+      }
+  });
+  Matter.Render.run(render);
+  */
+
 })();

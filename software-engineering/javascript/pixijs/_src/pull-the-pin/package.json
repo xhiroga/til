@@ -12,6 +12,8 @@
     "build:zip": "pnpm run clean && pnpm run build && zip -j index.zip dist/index.html && ls -lh index.zip"
   },
   "dependencies": {
+    "@types/matter-js": "^0.19.8",
+    "matter-js": "^0.20.0",
     "pixi.js": "^8.8.1"
   },
   "devDependencies": {
