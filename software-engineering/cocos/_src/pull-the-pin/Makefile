@@ -1,8 +1,11 @@
 ZIP_URL := https://github.com/ppgee/cocos-pnp/releases/download/playable-ads-adapter-1.3.10/playable-3x.zip
 MARKER := extensions/playable-ads-adapter/.installed
 
-.PHONY: extensions/playable-ads-adapter
+.PHONY: cocos-pnp-build
 extensions/playable-ads-adapter: $(MARKER)
+
+cocos-pnp-build:
+	node cocos-pnp-build.js --version 3 --buildPath build
 
 $(MARKER):
 	@mkdir -p temp
