@@ -8,7 +8,7 @@ TEMP_PARENT_DIR ?= /tmp
 run:
 	uv run ComfyUI/main.py --enable-cors-header --listen --port 11188 --extra-model-paths-config extra_model_paths.yaml --fast --highvram
 
-init: .venv ComfyUI ComfyUI/custom_nodes/ComfyUI-layerdiffuse
+init: .venv ComfyUI ComfyUI/custom_nodes/ComfyUI-layerdiffuse ComfyUI/custom_nodes/ComfyUI-WD14-Tagger
 
 .venv:
 	uv sync
