@@ -9,6 +9,9 @@
  * - Summarizing all notes via a prompt
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url'; // Import necessary function
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
@@ -25,14 +28,13 @@ import {
  */
 type Note = { title: string, content: string };
 
-/**
- * Simple in-memory storage for notes.
- * In a real implementation, this would likely be backed by a database.
- */
-const notes: { [id: string]: Note } = {
-  "1": { title: "First Note", content: "This is note 1" },
-  "2": { title: "Second Note", content: "This is note 2" }
-};
+// Get the directory name in ES module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// Define the path to the scenes directory relative to the server's execution directory
+const scenesDir = path.resolve(__dirname, '../../assets/scenes');
+
+// Note type alias removed as it's duplicated from line 26 and not currently used for scenes.
 
 /**
  * Create an MCP server with capabilities for resources (to list/read notes),
@@ -53,68 +55,112 @@ const server = new Server(
 );
 
 /**
- * Handler for listing available notes as resources.
- * Each note is exposed as a resource with:
- * - A note:// URI scheme
- * - Plain text MIME type
- * - Human readable name and description (now including the note title)
+ * Handler for listing available scene files as resources.
+ * Each .scene file is exposed as a resource with:
+ * - A scene:// URI scheme
+ * - JSON MIME type (assuming .scene files are JSON-like)
+ * - Human readable name and description
  */
 server.setRequestHandler(ListResourcesRequestSchema, async () => {
-  return {
-    resources: Object.entries(notes).map(([id, note]) => ({
-      uri: `note:///${id}`,
-      mimeType: "text/plain",
-      name: note.title,
-      description: `A text note: ${note.title}`
-    }))
-  };
+  try {
+    const files = await fs.promises.readdir(scenesDir);
+    const sceneFiles = files.filter(file => file.endsWith('.scene') && !file.endsWith('.meta'));
+
+    return {
+      resources: sceneFiles.map(fileName => ({
+        uri: `scene:///${fileName}`,
+        // Using application/json as scene files are JSON-based
+        mimeType: "application/json",
+        name: fileName,
+        description: `Cocos Creator scene file: ${fileName}`
+      }))
+    };
+  } catch (error) {
+    console.error("Error listing scene resources:", error);
+    // Return empty list or throw an error appropriate for MCP
+    return { resources: [] };
+  }
 });
 
 /**
- * Handler for reading the contents of a specific note.
- * Takes a note:// URI and returns the note content as plain text.
+ * Handler for reading the contents of a specific scene file.
+ * Takes a scene:// URI and returns the scene content.
  */
 server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
   const url = new URL(request.params.uri);
-  const id = url.pathname.replace(/^\//, '');
-  const note = notes[id];
-
-  if (!note) {
-    throw new Error(`Note ${id} not found`);
+  if (url.protocol !== 'scene:') {
+    throw new Error(`Unsupported URI scheme: ${url.protocol}`);
   }
+  const fileName = url.pathname.replace(/^\//, '');
+  const filePath = path.join(scenesDir, fileName);
 
-  return {
-    contents: [{
-      uri: request.params.uri,
-      mimeType: "text/plain",
-      text: note.content
-    }]
-  };
+  try {
+    // Ensure the file is within the intended directory
+    if (!filePath.startsWith(scenesDir)) {
+        throw new Error(`Access denied to path: ${filePath}`);
+    }
+    // Check if file exists before reading
+    await fs.promises.access(filePath, fs.constants.R_OK);
+
+    const content = await fs.promises.readFile(filePath, 'utf-8');
+
+    return {
+      contents: [{
+        uri: request.params.uri,
+        // Using application/json as scene files are JSON-based
+        mimeType: "application/json",
+        text: content
+      }]
+    };
+  } catch (error: any) {
+    if (error.code === 'ENOENT') {
+      throw new Error(`Scene file not found: ${fileName}`);
+    } else if (error.code === 'EACCES') {
+       throw new Error(`Permission denied reading file: ${fileName}`);
+    }
+    console.error(`Error reading scene resource ${fileName}:`, error);
+    throw new Error(`Failed to read scene file: ${fileName}`);
+  }
 });
 
 /**
  * Handler that lists available tools.
- * Exposes a single "create_note" tool that lets clients create new notes.
+ * Exposes:
+ * - "create_note" tool (kept for reference, could be removed if only scenes are needed)
+ * - "update_scene" tool for modifying scene files.
  */
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
+      // { // Keep or remove the note tool as needed
+      //   name: "create_note",
+      //   description: "Create a new note",
+      //   inputSchema: {
+      //     type: "object",
+      //     properties: {
+      //       title: { type: "string", description: "Title of the note" },
+      //       content: { type: "string", description: "Text content of the note" }
+      //     },
+      //     required: ["title", "content"]
+      //   }
+      // },
       {
-        name: "create_note",
-        description: "Create a new note",
+        name: "update_scene",
+        description: "Update the content of a scene file",
         inputSchema: {
           type: "object",
           properties: {
-            title: {
+            uri: {
               type: "string",
-              description: "Title of the note"
+              description: "The scene:// URI of the file to update",
+              pattern: "^scene:///.+\\.scene$" // Basic validation for scene URI
             },
             content: {
               type: "string",
-              description: "Text content of the note"
+              description: "The new JSON content for the scene file"
             }
           },
-          required: ["title", "content"]
+          required: ["uri", "content"]
         }
       }
     ]
@@ -122,31 +168,84 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 });
 
 /**
- * Handler for the create_note tool.
- * Creates a new note with the provided title and content, and returns success message.
+ * Handler for tool calls. Handles 'create_note' and 'update_scene'.
  */
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   switch (request.params.name) {
-    case "create_note": {
-      const title = String(request.params.arguments?.title);
+    // case "create_note": { // Keep or remove matching the ListTools handler
+    //   const title = String(request.params.arguments?.title);
+    //   const content = String(request.params.arguments?.content);
+    //   if (!title || !content) {
+    //     throw new Error("Title and content are required");
+    //   }
+    //   // Note: 'notes' variable was removed, this part needs adjustment
+    //   // if note creation is kept. For now, assume it's removed or handled differently.
+    //   // const id = String(Object.keys(notes).length + 1);
+    //   // notes[id] = { title, content };
+    //   console.warn("Note creation logic needs update as 'notes' is removed.");
+    //   return { content: [{ type: "text", text: `Note creation needs update.` }] };
+    // }
+
+    case "update_scene": {
+      const uri = String(request.params.arguments?.uri);
       const content = String(request.params.arguments?.content);
-      if (!title || !content) {
-        throw new Error("Title and content are required");
+
+      if (!uri || content === undefined) { // Check content for undefined specifically
+        throw new Error("URI and content are required for update_scene");
       }
 
-      const id = String(Object.keys(notes).length + 1);
-      notes[id] = { title, content };
+      let url: URL;
+      try {
+        url = new URL(uri);
+      } catch (e) {
+        throw new Error(`Invalid URI format: ${uri}`);
+      }
 
-      return {
-        content: [{
-          type: "text",
-          text: `Created note ${id}: ${title}`
-        }]
-      };
+
+      if (url.protocol !== 'scene:') {
+        throw new Error(`Unsupported URI scheme for update: ${url.protocol}`);
+      }
+      const fileName = url.pathname.replace(/^\//, '');
+      if (!fileName.endsWith('.scene')) {
+         throw new Error(`Invalid file extension in URI: ${fileName}`);
+      }
+      const filePath = path.join(scenesDir, fileName);
+
+      try {
+        // Security check: Ensure the resolved path is still within the scenes directory
+        if (!filePath.startsWith(scenesDir)) {
+          throw new Error(`Access denied: Attempt to write outside designated directory.`);
+        }
+
+        // Validate JSON content before writing (optional but recommended)
+        try {
+          JSON.parse(content);
+        } catch (jsonError) {
+          throw new Error(`Invalid JSON content provided for ${fileName}`);
+        }
+
+
+        await fs.promises.writeFile(filePath, content, 'utf-8');
+
+        return {
+          content: [{
+            type: "text",
+            text: `Successfully updated scene file: ${fileName}`
+          }]
+        };
+      } catch (error: any) {
+         if (error.code === 'ENOENT') {
+           throw new Error(`Scene file not found for update: ${fileName}`);
+         } else if (error.code === 'EACCES') {
+            throw new Error(`Permission denied writing file: ${fileName}`);
+         }
+        console.error(`Error updating scene file ${fileName}:`, error);
+        throw new Error(`Failed to update scene file: ${fileName}`);
+      }
     }
 
     default:
-      throw new Error("Unknown tool");
+      throw new Error(`Unknown tool: ${request.params.name}`);
   }
 });
 
@@ -165,46 +264,45 @@ server.setRequestHandler(ListPromptsRequestSchema, async () => {
   };
 });
 
-/**
- * Handler for the summarize_notes prompt.
- * Returns a prompt that requests summarization of all notes, with the notes' contents embedded as resources.
- */
+// Remove or adapt the summarize_notes prompt handler as it relies on the 'notes' object
 server.setRequestHandler(GetPromptRequestSchema, async (request) => {
-  if (request.params.name !== "summarize_notes") {
-    throw new Error("Unknown prompt");
+  // Example: Keep the handler but return an error or adapt for scenes if needed
+  if (request.params.name === "summarize_notes") {
+     console.warn("Summarize notes prompt is not functional with scene files.");
+     throw new Error("Summarize notes prompt is not available for scene files.");
   }
+  throw new Error(`Unknown prompt: ${request.params.name}`);
 
-  const embeddedNotes = Object.entries(notes).map(([id, note]) => ({
-    type: "resource" as const,
-    resource: {
-      uri: `note:///${id}`,
-      mimeType: "text/plain",
-      text: note.content
-    }
-  }));
-
-  return {
-    messages: [
-      {
-        role: "user",
-        content: {
-          type: "text",
-          text: "Please summarize the following notes:"
-        }
-      },
-      ...embeddedNotes.map(note => ({
-        role: "user" as const,
-        content: note
-      })),
-      {
-        role: "user",
-        content: {
-          type: "text",
-          text: "Provide a concise summary of all the notes above."
-        }
-      }
-    ]
-  };
+  // // If adapting for scenes (example - might not be practical):
+  // if (request.params.name === "summarize_scenes") { // Hypothetical new prompt
+  //   try {
+  //     const files = await fs.promises.readdir(scenesDir);
+  //     const sceneFiles = files.filter(file => file.endsWith('.scene') && !file.endsWith('.meta'));
+  //     const embeddedScenes = await Promise.all(sceneFiles.map(async fileName => {
+  //        const filePath = path.join(scenesDir, fileName);
+  //        const content = await fs.promises.readFile(filePath, 'utf-8');
+  //        return {
+  //          type: "resource" as const,
+  //          resource: {
+  //            uri: `scene:///${fileName}`,
+  //            mimeType: "application/json",
+  //            text: content // Be mindful of token limits!
+  //          }
+  //        };
+  //     }));
+  //     return {
+  //       messages: [
+  //         { role: "user", content: { type: "text", text: "Analyze the following scene files:" } },
+  //         ...embeddedScenes.map(scene => ({ role: "user" as const, content: scene })),
+  //         { role: "user", content: { type: "text", text: "Provide insights based on the scene data." } }
+  //       ]
+  //     };
+  //   } catch (error) {
+  //      console.error("Error generating summarize_scenes prompt:", error);
+  //      throw new Error("Failed to generate scene summary prompt.");
+  //   }
+  // }
+  // throw new Error(`Unknown prompt: ${request.params.name}`);
 });
 
 /**
