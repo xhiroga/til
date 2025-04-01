@@ -19,5 +19,8 @@ ComfyUI:
 ComfyUI/custom_nodes/ComfyUI-layerdiffuse: ComfyUI
 	git -C $@ pull || git clone https://github.com/huchenlei/ComfyUI-layerdiffuse.git $@
 
+ComfyUI/custom_nodes/ComfyUI-WD14-Tagger: ComfyUI
+	git -C $@ pull || git clone https://github.com/pythongosssss/ComfyUI-WD14-Tagger.git $@
+
 ComfyUI/user/default/workflows/layerdiffuse:
 	cp -r ComfyUI/custom_nodes/ComfyUI-layerdiffuse/example_workflows $@
