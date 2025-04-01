@@ -1,0 +1,8 @@
+
+## Pull the Pin
+
+- Canvasサイズを直接変更することはできない。Project > Project Settingsから変更する。
+
+## MCP Server
+
+- 開発したら、 `pnpm build` した後、自身で `cocos-mcp-server` を実行して動作確認すること
