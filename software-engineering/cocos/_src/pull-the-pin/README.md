@@ -5,7 +5,7 @@
 ```console
 cd mcp-server
 pnpm run build
-# Edit claude_desktop_config.json
+# Type "game-makerで、ハンバーガーとバイ菌でPull-the-Pinゲームを作って"
 ```
 
 ## How to debug
