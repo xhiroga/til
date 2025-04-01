@@ -4,6 +4,7 @@
 
 1. `make clone-project PROJECT_NAME={プロジェクト名}`
 2. 
+3. /mnt/c/ProgramData/cocos/editors/Creator/3.8.6/CocosCreator.exe --project ./projects/{プロジェクト名} 
 
 
 ## Pull the Pin
