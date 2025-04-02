@@ -34,8 +34,10 @@ ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite:
 ComfyUI/user/default/workflows/ComfyUI-WanVideoWrapper:
 	cp -r ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/example_workflows $@
 
-ComfyUI/user/default/workflows/sandbox:
-	mkdir -p $@ && ln -fsr workflows/* $@
+ComfyUI/user/default/workflows: ComfyUI/user/default/workflows/.installed
+ComfyUI/user/default/workflows/.installed:
+	ln -fsr workflows/* ComfyUI/user/default/workflows
+	touch $@
 
 $(TMP)/Kijai/WanVideo_comfy:
 	uv run huggingface-cli download Kijai/WanVideo_comfy --revision main --local-dir $@
@@ -99,6 +101,12 @@ $(COMFY_BASE_PATH)/models/loras/wan2.1-1.3b-control-lora-tile-v0.2_comfy.safeten
 	mv $(TMP)/spacepxl/Wan2.1-control-loras/1.3b/tile/wan2.1-1.3b-control-lora-tile-v0.2_comfy.safetensors $@
 
 # inputs
+ComfyUI/input/btly_textured_mi.png:
+	curl --output $@ https://assets.st-note.com/img/1743353598-pBkwG3TcLD2NXtRu6h5rUEf0.png
+
+ComfyUI/input/btly_textured_mi3.png:
+	curl --output $@ https://assets.st-note.com/img/1743353622-3Au9eLmt4sUCqIFoZhJyjvGN.png
+
 # ComfyUI/input/videos/... のようにサブディレクトリを作成すると、Load Video Nodeに検出されない
 ComfyUI/input/man-looking-down-to-the-left.mp4:
 	uv run yt-dlp -f best -o $@ https://www.youtube.com/watch?v=LUFuJ7f_vcc
