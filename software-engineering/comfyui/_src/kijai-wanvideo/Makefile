@@ -35,7 +35,7 @@ ComfyUI/user/default/workflows/ComfyUI-WanVideoWrapper:
 	cp -r ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/example_workflows $@
 
 ComfyUI/user/default/workflows/sandbox:
-	cp -r workflows $@
+	mkdir -p $@ && ln -fsr workflows/* $@
 
 $(TMP)/Kijai/WanVideo_comfy:
 	uv run huggingface-cli download Kijai/WanVideo_comfy --revision main --local-dir $@
