@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "cocos-mcp-server": {
+      "command": "node",
+      "args": [
+        "/mnt/c/Users/hiroga/GitHub/til/software-engineering/cocos/_src/pull-the-pin/mcp-server/build/index.js"
+      ]
+    }
+  }
+}

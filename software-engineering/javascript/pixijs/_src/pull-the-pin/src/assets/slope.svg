@@ -1,0 +1,18 @@
+<svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
+  <!-- 斜面のグラデーション定義 -->
+  <defs>
+    <linearGradient id="slopeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#444444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333333;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 斜面のメイン部分 -->
+  <path d="M 0,100 L 200,0 L 200,100 Z" fill="url(#slopeGradient)" stroke="#222" stroke-width="2" />
+  
+  <!-- 斜面の模様 (石の継ぎ目) -->
+  <line x1="40" y1="80" x2="60" y2="60" stroke="#222" stroke-width="1" />
+  <line x1="80" y1="60" x2="100" y2="40" stroke="#222" stroke-width="1" />
+  <line x1="120" y1="40" x2="140" y2="20" stroke="#222" stroke-width="1" />
+  <line x1="160" y1="20" x2="180" y2="0" stroke="#222" stroke-width="1" />
+</svg>

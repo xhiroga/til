@@ -1,0 +1,30 @@
+{
+  "name": "pull-the-pin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npm run dev",
+    "build": "npm run lint && tsc && vite build",
+    "lint": "eslint .",
+    "clean": "rimraf dist && rimraf index.zip",
+    "dev": "vite",
+    "build:zip": "pnpm run clean && pnpm run build && zip -j index.zip dist/index.html && ls -lh index.zip"
+  },
+  "dependencies": {
+    "@types/matter-js": "^0.19.8",
+    "matter-js": "^0.20.0",
+    "pixi.js": "^8.8.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "rimraf": "^6.0.1",
+    "svgo": "^3.3.2",
+    "typescript": "~5.7.3",
+    "typescript-eslint": "^8.25.0",
+    "vite": "^6.2.0",
+    "vite-plugin-singlefile": "^2.2.0",
+    "vite-plugin-svgo": "^1.6.2"
+  }
+}
