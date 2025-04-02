@@ -44,6 +44,7 @@ dependencies = [
 dev = [
     "huggingface-hub[cli]>=0.29.3",
     "nvitop>=1.4.2",
+    "yt-dlp>=2025.3.31",
 ]
 
 [tool.uv]
