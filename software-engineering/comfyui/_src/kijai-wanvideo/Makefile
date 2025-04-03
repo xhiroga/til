@@ -112,7 +112,7 @@ ComfyUI/input/btly_textured_mi.png:
 ComfyUI/input/btly_textured_mi3.png:
 	curl --output $@ https://assets.st-note.com/img/1743353622-3Au9eLmt4sUCqIFoZhJyjvGN.png
 
-ComfyUI/input/asagi-chan-*:
+ComfyUI/input/asagi-chan-*.png:
 	uv run huggingface-cli download xhiroga/data --repo-type dataset --revision main --local-dir $(TMP)/xhiroga/data
 	mv $(TMP)/xhiroga/data/asagi-chan/chatgpt-4o/*.png ComfyUI/input/
 
@@ -125,6 +125,14 @@ ComfyUI/input/iamge3.jpg: $(TMP)/xhiroga/private-data
 
 ComfyUI/input/video3.mp4: $(TMP)/xhiroga/private-data
 	mv $(TMP)/xhiroga/private-data/8co28/1905242952206889259/video3.mp4 ComfyUI/input/video3.mp4
+
+ComfyUI/input/post-apocalyptic-city-*.png:
+	uv run huggingface-cli download xhiroga/data --repo-type dataset --revision main --local-dir $(TMP)/xhiroga/data
+	mv $(TMP)/xhiroga/data/post-apocalyptic/chatgpt-4o/*.png ComfyUI/input/
+
+ComfyUI/input/railway-track-*.mp4:
+	uv run huggingface-cli download xhiroga/data --repo-type dataset --revision main --local-dir $(TMP)/xhiroga/data
+	mv $(TMP)/xhiroga/data/railway-track/works/*.mp4 ComfyUI/input/
 
 # ComfyUI/input/videos/... のようにサブディレクトリを作成すると、Load Video Nodeに検出されない
 ComfyUI/input/man-looking-down-to-the-left.mp4:

@@ -27,7 +27,7 @@ notebook_urls:
   - noteの記事ではRTX4090で動かされたとのことだが、可能なんだろうか...?
 - Sampling 81 frames at 480x832 with 20 steps, 約5分, ピーク時VRAM約37GiB (fp8, L40S)
 
-#### 77 frames, 16 fps
+#### 77frames, 16fps
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (77 frames, 16 fps)](http://img.youtube.com/vi/eoOeKCt3jvQ/0.jpg)](https://www.youtube.com/watch?v=eoOeKCt3jvQ "WanVideoWrapper I2V endframe - Asagi-chan hands up (77 frames, 16 fps)")
 
@@ -36,21 +36,21 @@ notebook_urls:
   - 具体的には、手を挙げる → 表情を変える → 手の微調整
 - ところどころ残像が見えてしまっている
 
-#### 49 frames, 24 fps
+#### 49frames, 24fps
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)](http://img.youtube.com/vi/E6Nffvoc-TI/0.jpg)](https://www.youtube.com/watch?v=E6Nffvoc-TI "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)")
 
 - `This is an image of an anime heroine raising her hands.`
 - L40Sで3分程度
 
-#### 49 frames, 24 fps
+#### 49frames, 24fps
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)](http://img.youtube.com/vi/WtgZzvdYcUg/0.jpg)](https://www.youtube.com/watch?v=WtgZzvdYcUg "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)")
 
 - `This is an image of an anime heroine quickly raising her hands. It has a clear contrast, as you would expect from an anime image.`
 - 手を挙げるのが素早すぎる。プロンプトに忠実とも言える
 
-#### 49 frames, 24 fps
+#### 49frames, 24fps
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps) x8](http://img.youtube.com/vi/eHdgl48cl0c/0.jpg)](https://www.youtube.com/watch?v=eHdgl48cl0c "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps) x8")
 
@@ -58,16 +58,16 @@ notebook_urls:
 - Seed値をランダムにして8通り生成した。
   - Seed値による品質のブレが非常に大きい。ギリ実用レベル〜意図しない暗転や残像まで広く、打率は良いところ0.2くらい。
 
-#### 25 frames, 24 fps, Negative Prompt: 中国語
+#### 25frames, 24fps, Negative Prompt: 中国語
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (25 frames, 24 fps, Negative Prompt: 中国語) x8](http://img.youtube.com/vi/TaTjvE1xDqc/0.jpg)](https://www.youtube.com/watch?v=TaTjvE1xDqc "WanVideoWrapper I2V endframe - Asagi-chan hands up (25 frames, 24 fps, Negative Prompt: 中国語) x8")
 
-- L40Sで1分半程度
+- L40Sで1分半程度。
 - 若干打率が上がった気がする
 - 25 frame "も" あると、途中の細かい動きを指示するのが難しい。
   - 1秒近い映像を作るなら、V2Vの方が細かく指示ができて良い。
 
-#### 5 frames, 24 fps, Negative Prompt: English
+#### 5frames, 24fps, Negative Prompt: English
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (5 frames, 24 fps, Negative Prompt: English) x4](http://img.youtube.com/vi/7m_6GXA3hag/0.jpg)](https://www.youtube.com/watch?v=7m_6GXA3hag "WanVideoWrapper I2V endframe - Asagi-chan hands up (5 frames, 24 fps, Negative Prompt: English) x4")
 
@@ -77,9 +77,19 @@ notebook_urls:
 
 ### [workflows/8co28/wanfuncn.json](workflows/8co28/wanfuncn.json)
 
-- ノードを修正済み。WanVideoWrapper@ce6522c 以前のどこかで、WanVideo ImageToVideo Encode に対して破壊的変更が入ったため
-- Stable DiffusionのControl Netとは違い、ネットワークの追加ではなく埋め込みの追加であるにも関わらず、よく制御できているように見える
-- Positive Prompts: `anime style,deer,` と、非常にシンプルで良いのも特徴的
+- ノードを修正済み。WanVideoWrapper@ce6522c 以前のどこかで、WanVideo ImageToVideo Encode に対して破壊的変更が入ったため。
+- Stable DiffusionのControl Netとは違い、ネットワークの追加ではなく埋め込みの追加であるにも関わらず、よく制御できているように見える。
+- Positive Prompts: `anime style,deer,` と、非常にシンプルで良いのも特徴的。
+  - 試してみたところ、Positiv Prompts無しでもほぼ同様に動作した。
+
+#### [Wan2 1 Fun Control 14B fp8 - Post-apocalyptic (57frames, 16fps) x6](workflows/works/wanfuncn.json)
+
+[![Wan2 1 Fun Control 14B fp8 - Post-apocalyptic (57frames, 16fps) x6](http://img.youtube.com/vi/WJQpodbH7xU/0.jpg)](https://www.youtube.com/watch?v=WJQpodbH7xU "Wan2 1 Fun Control 14B fp8 - Post-apocalyptic (57frames, 16fps) x6")
+
+- オリジナル画像(ChatGPT 4o)と線路の映像から生成
+- 57 frames → L40Sで3分程度
+- 結論、Control映像からの影響をかなり受ける。というかむしろ、start_imageの影響は最初のフレームと画風のみ。
+  - いっそノイズとかの方が良かったりするのかな？
 
 ## References
 
