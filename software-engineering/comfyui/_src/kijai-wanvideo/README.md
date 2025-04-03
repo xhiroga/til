@@ -31,22 +31,21 @@
   - 具体的には、手を挙げる → 表情を変える → 手の微調整
 - ところどころ残像が見えてしまっている
 
-#### 49 frames, 24 pfs
+#### 49 frames, 24 fps
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)](http://img.youtube.com/vi/E6Nffvoc-TI/0.jpg)](https://www.youtube.com/watch?v=E6Nffvoc-TI "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)")
 
 - `This is an image of an anime heroine raising her hands.`
 - L40Sで3分程度
-- 
 
-#### 49 frames, 24 pfs
+#### 49 frames, 24 fps
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)](http://img.youtube.com/vi/WtgZzvdYcUg/0.jpg)](https://www.youtube.com/watch?v=WtgZzvdYcUg "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)")
 
 - `This is an image of an anime heroine quickly raising her hands. It has a clear contrast, as you would expect from an anime image.`
 - 手を挙げるのが素早すぎる。プロンプトに忠実とも言える
 
-#### 49 frames, 24 pfs
+#### 49 frames, 24 fps
 
 [![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps) x8](http://img.youtube.com/vi/eHdgl48cl0c/0.jpg)](https://www.youtube.com/watch?v=eHdgl48cl0c "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps) x8")
 
@@ -54,6 +53,22 @@
 - Seed値をランダムにして8通り生成した。
   - Seed値による品質のブレが非常に大きい。ギリ実用レベル〜意図しない暗転や残像まで広く、打率は良いところ0.2くらい。
 
+#### 25 frames, 24 fps, Negative Prompt: 中国語
+
+[![WanVideoWrapper I2V endframe - Asagi-chan hands up (25 frames, 24 fps, Negative Prompt: 中国語) x8](http://img.youtube.com/vi/TaTjvE1xDqc/0.jpg)](https://www.youtube.com/watch?v=TaTjvE1xDqc "WanVideoWrapper I2V endframe - Asagi-chan hands up (25 frames, 24 fps, Negative Prompt: 中国語) x8")
+
+- L40Sで1分半程度
+- 若干打率が上がった気がする
+- 25 frame "も" あると、途中の細かい動きを指示するのが難しい。
+  - 1秒近い映像を作るなら、V2Vの方が細かく指示ができて良い。
+
+#### 5 frames, 24 fps, Negative Prompt: English
+
+[![WanVideoWrapper I2V endframe - Asagi-chan hands up (5 frames, 24 fps, Negative Prompt: English) x4](http://img.youtube.com/vi/7m_6GXA3hag/0.jpg)](https://www.youtube.com/watch?v=7m_6GXA3hag "WanVideoWrapper I2V endframe - Asagi-chan hands up (5 frames, 24 fps, Negative Prompt: English) x4")
+
+- フレーム数を下げれば丁寧な補完をするかと思ったが、全然上手くいかない。
+- プロンプトが「手を挙げる様子」で、すでに手が挙がっているという矛盾が良くないかもしれない。
+  - プロンプトに拘らずフレーム補間をするにはLoRAの開発が必要かもしれない。
 
 ## References
 
