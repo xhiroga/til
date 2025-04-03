@@ -25,6 +25,12 @@ ComfyUI/custom_nodes/ComfyUI-KJNodes:
 ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite:
 	git -C $@ pull || git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite $@
 
+ComfyUI/custom_nodes/comfyui_controlnet_aux:
+	git -C $@ pull || git clone https://github.com/Fannovel16/comfyui_controlnet_aux $@
+
+ComfyUI/custom_nodes/ComfyUI_essentials:
+	git -C $@ pull || git clone https://github.com/cubiq/ComfyUI_essentials $@
+
 # workflows
 ComfyUI/user/default/workflows/ComfyUI-WanVideoWrapper:
 	cp -r ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/example_workflows $@
@@ -76,8 +82,12 @@ $(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_bf16.safetensors: $(T
 $(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_fp32.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-1_3B_fp32.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors : $(TMP)/Kijai/WanVideo_comfy
-	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors  $@
+$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors $@
+
+### cn
+$(COMFY_BASE_PATH)/models/diffusion_models/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+	mv $(TMP)/Kijai/WanVideo_comfy/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors $@
 
 ## vae
 $(COMFY_BASE_PATH)/models/vae/Wan2_1_VAE_bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy
@@ -105,6 +115,16 @@ ComfyUI/input/btly_textured_mi3.png:
 ComfyUI/input/asagi-chan-*:
 	uv run huggingface-cli download xhiroga/data --repo-type dataset --revision main --local-dir $(TMP)/xhiroga/data
 	mv $(TMP)/xhiroga/data/asagi-chan/chatgpt-4o/*.png ComfyUI/input/
+
+$(TMP)/xhiroga/private-data:
+	uv run huggingface-cli login
+	uv run huggingface-cli download xhiroga/private-data --repo-type dataset --revision main --local-dir $@
+
+ComfyUI/input/iamge3.jpg: $(TMP)/xhiroga/private-data
+	mv $(TMP)/xhiroga/private-data/8co28/1905242952206889259/image3.jpg ComfyUI/input/image3.jpg
+
+ComfyUI/input/video3.mp4: $(TMP)/xhiroga/private-data
+	mv $(TMP)/xhiroga/private-data/8co28/1905242952206889259/video3.mp4 ComfyUI/input/video3.mp4
 
 # ComfyUI/input/videos/... のようにサブディレクトリを作成すると、Load Video Nodeに検出されない
 ComfyUI/input/man-looking-down-to-the-left.mp4:

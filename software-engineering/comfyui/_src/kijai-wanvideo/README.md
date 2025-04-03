@@ -1,3 +1,8 @@
+---
+notebook_urls:
+  - Precision/Recall: https://chatgpt.com/c/67ee0be0-7cf0-8010-9841-0f2045c7748f
+---
+
 # Kijai/WanVideo
 
 ## Memo
@@ -69,6 +74,12 @@
 - フレーム数を下げれば丁寧な補完をするかと思ったが、全然上手くいかない。
 - プロンプトが「手を挙げる様子」で、すでに手が挙がっているという矛盾が良くないかもしれない。
   - プロンプトに拘らずフレーム補間をするにはLoRAの開発が必要かもしれない。
+
+### [workflows/8co28/wanfuncn.json](workflows/8co28/wanfuncn.json)
+
+- ノードを修正済み。WanVideoWrapper@ce6522c 以前のどこかで、WanVideo ImageToVideo Encode に対して破壊的変更が入ったため
+- Stable DiffusionのControl Netとは違い、ネットワークの追加ではなく埋め込みの追加であるにも関わらず、よく制御できているように見える
+- Positive Prompts: `anime style,deer,` と、非常にシンプルで良いのも特徴的
 
 ## References
 
