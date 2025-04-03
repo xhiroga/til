@@ -2,6 +2,8 @@
 
 ## Memo
 
+- Frame数が49や77と中途半端に見えるのはなぜなんだろうか？
+
 ### [workflows/kijai/wanvideo_long_T2V_example_01.json](workflows/kijai/wanvideo_long_T2V_example_01.json)
 
 - 普通のT2V
@@ -11,13 +13,47 @@
 
 ### [workflows/kongo-jun/sample_wanvideo_480p_I2V_endframe_example_01.json](workflows/kongo-jun/sample_wanvideo_480p_I2V_endframe_example_01.json)
 
-- 混合順さんのワークフロー
+- 混合順さんのワークフロー（オリジナルは @kijai ）
 - Start, End 共に指定されている
+  - Start, Endは画像埋め込みとしてサンプラーに渡される
+- End Frameに従わないケースがある
+- 生成される動画の品質は @raindrop313 の WanVideoStartEndFrames と変わらないように見える
 - modelがbf16のままではOOMで落ちたので、fp8に差し替えている（環境はL40S）
   - noteの記事ではRTX4090で動かされたとのことだが、可能なんだろうか...?
 - Sampling 81 frames at 480x832 with 20 steps, 約5分, ピーク時VRAM約37GiB (fp8, L40S)
 
-[![WanVideoWrapper I2V endframe](http://img.youtube.com/vi/iGbFLVoW3_U/0.jpg)](https://www.youtube.com/watch?v=iGbFLVoW3_U "WanVideoWrapper I2V endframe")
+#### 77 frames, 16 fps
+
+[![WanVideoWrapper I2V endframe - Asagi-chan hands up (77 frames, 16 fps)](http://img.youtube.com/vi/eoOeKCt3jvQ/0.jpg)](https://www.youtube.com/watch?v=eoOeKCt3jvQ "WanVideoWrapper I2V endframe - Asagi-chan hands up (77 frames, 16 fps)")
+
+- `This is an image of an anime heroine raising her hands.`
+- 手を挙げるだけのアニメーションに5秒あると、時間をゆっくりと使う印象がある
+  - 具体的には、手を挙げる → 表情を変える → 手の微調整
+- ところどころ残像が見えてしまっている
+
+#### 49 frames, 24 pfs
+
+[![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)](http://img.youtube.com/vi/E6Nffvoc-TI/0.jpg)](https://www.youtube.com/watch?v=E6Nffvoc-TI "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)")
+
+- `This is an image of an anime heroine raising her hands.`
+- L40Sで3分程度
+- 
+
+#### 49 frames, 24 pfs
+
+[![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)](http://img.youtube.com/vi/WtgZzvdYcUg/0.jpg)](https://www.youtube.com/watch?v=WtgZzvdYcUg "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps)")
+
+- `This is an image of an anime heroine quickly raising her hands. It has a clear contrast, as you would expect from an anime image.`
+- 手を挙げるのが素早すぎる。プロンプトに忠実とも言える
+
+#### 49 frames, 24 pfs
+
+[![WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps) x8](http://img.youtube.com/vi/eHdgl48cl0c/0.jpg)](https://www.youtube.com/watch?v=eHdgl48cl0c "WanVideoWrapper I2V endframe - Asagi-chan hands up (49 frames, 24 fps) x8")
+
+- `This is an image of an anime heroine quickly raising her hands.`
+- Seed値をランダムにして8通り生成した。
+  - Seed値による品質のブレが非常に大きい。ギリ実用レベル〜意図しない暗転や残像まで広く、打率は良いところ0.2くらい。
+
 
 ## References
 

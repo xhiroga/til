@@ -107,6 +107,10 @@ ComfyUI/input/btly_textured_mi.png:
 ComfyUI/input/btly_textured_mi3.png:
 	curl --output $@ https://assets.st-note.com/img/1743353622-3Au9eLmt4sUCqIFoZhJyjvGN.png
 
+ComfyUI/input/asagi-chan-*:
+	uv run huggingface-cli download xhiroga/data --repo-type dataset --revision main --local-dir $(TMP)/xhiroga/data
+	mv $(TMP)/xhiroga/data/asagi-chan/chatgpt-4o/*.png ComfyUI/input/
+
 # ComfyUI/input/videos/... のようにサブディレクトリを作成すると、Load Video Nodeに検出されない
 ComfyUI/input/man-looking-down-to-the-left.mp4:
 	uv run yt-dlp -f best -o $@ https://www.youtube.com/watch?v=LUFuJ7f_vcc
