@@ -90,6 +90,11 @@ notebook_urls:
 - 57 frames → L40Sで3分程度
 - 結論、Control映像からの影響をかなり受ける。というかむしろ、start_imageの影響は最初のフレームと画風のみ。
   - いっそノイズとかの方が良かったりするのかな？
+- WanVideo Samplerのsmaplesが入力されていないが、他の画像/映像で試した感じでは、あってもなくてもあまり差を感じない。要追加検証。
+
+## [workflows/ai-73-30/Wan-Fun视频首尾帧-KJ版.json](https://zhuanlan.zhihu.com/p/1890424727547381581)
+
+WIP...
 
 ## References
 
