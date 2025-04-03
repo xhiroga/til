@@ -15,11 +15,6 @@ init: .venv ComfyUI ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper
 ComfyUI:
 	git -C $@ pull || git clone https://github.com/comfyanonymous/ComfyUI $@
 
-# WIP!!! I guess workflows require resizing.
-ComfyUI/custom_nodes/ComfyUI_essentials:
-	# ignore numba and rembg due to llvmlite==0.36.0 does not support Python 3.12
-	git -C $@ pull || git clone https://github.com/cubiq/ComfyUI_essentials $@
-
 # https://github.com/kijai/ComfyUI-WanVideoWrapper
 ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper:
 	git -C $@ pull || git clone https://github.com/kijai/ComfyUI-WanVideoWrapper $@
