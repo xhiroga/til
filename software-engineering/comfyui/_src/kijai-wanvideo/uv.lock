@@ -376,11 +376,11 @@ wheels = [
 
 [[package]]
 name = "comfyui-frontend-package"
-version = "1.14.5"
+version = "1.14.6"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b3/14/22b61aa8767263f9ef59dcf80339c8272d8ff4c1b121e778320356d1bd37/comfyui_frontend_package-1.14.5.tar.gz", hash = "sha256:0d38c4acd2b37a64fc954da335e11f609125c5392779095e5cb9107f5cbb2851", size = 34730060 }
+sdist = { url = "https://files.pythonhosted.org/packages/fc/55/6571d283fb9083d7c861d070583140cdae1bc4453e61b6263aff2b270cc2/comfyui_frontend_package-1.14.6.tar.gz", hash = "sha256:0f97774e60b8cdfef2ca8db1d763808d361fd868e7197dcb99d8c3a3feb0ae32", size = 34729076 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b6/03/feaccb0d611194e9f03490851889b2caf55dc91a2bbdf9a73bc0104cb243/comfyui_frontend_package-1.14.5-py3-none-any.whl", hash = "sha256:b6e1be18a6c78c476f41b5bb3fe98a0d48cc7c63f8c34d891e25464652849986", size = 34873465 },
+    { url = "https://files.pythonhosted.org/packages/00/25/26c0d75006470d32bfc9eb39ac61a22600bfa509d672405ff3fe1561e2a8/comfyui_frontend_package-1.14.6-py3-none-any.whl", hash = "sha256:1044e30ff3c025dfb63f4c68ecd808a77050c3a5cc3c1f3e6421ea39800bbf40", size = 34873501 },
 ]
 
 [[package]]
@@ -1039,7 +1039,7 @@ requires-dist = [
     { name = "chardet", specifier = ">=5.2.0" },
     { name = "color-matcher", specifier = ">=0.6.0" },
     { name = "colour-science", specifier = ">=0.4.6" },
-    { name = "comfyui-frontend-package", specifier = "==1.14.5" },
+    { name = "comfyui-frontend-package", specifier = "==1.14.6" },
     { name = "diffusers", specifier = ">=0.32.2" },
     { name = "einops", specifier = ">=0.8.1" },
     { name = "filelock", specifier = ">=3.18.0" },

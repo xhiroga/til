@@ -37,6 +37,9 @@ ComfyUI/custom_nodes/ComfyUI_essentials:
 ComfyUI/custom_nodes/ComfyUI-Manager:
 	git -C $@ pull || git clone https://github.com/Comfy-Org/ComfyUI-Manager $@
 
+ComfyUI/custom_nodes/rgthree-comfy:
+	git -C $@ pull || git clone https://github.com/rgthree/rgthree-comfy $@
+
 # workflows
 ComfyUI/user/default/workflows/ComfyUI-WanVideoWrapper:
 	cp -r ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/example_workflows $@
