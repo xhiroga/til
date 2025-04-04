@@ -22,6 +22,9 @@ ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper:
 ComfyUI/custom_nodes/ComfyUI-KJNodes:
 	git -C $@ pull || git clone https://github.com/kijai/ComfyUI-KJNodes $@
 
+ComfyUI/custom_nodes/ComfyUI-DepthAnythingV2:
+	git -C $@ pull || git clone https://github.com/kijai/ComfyUI-DepthAnythingV2 $@
+
 ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite:
 	git -C $@ pull || git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite $@
 
@@ -30,6 +33,9 @@ ComfyUI/custom_nodes/comfyui_controlnet_aux:
 
 ComfyUI/custom_nodes/ComfyUI_essentials:
 	git -C $@ pull || git clone https://github.com/cubiq/ComfyUI_essentials $@
+
+ComfyUI/custom_nodes/ComfyUI-Manager:
+	git -C $@ pull || git clone https://github.com/Comfy-Org/ComfyUI-Manager $@
 
 # workflows
 ComfyUI/user/default/workflows/ComfyUI-WanVideoWrapper:
