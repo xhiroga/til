@@ -21,6 +21,11 @@ $(TMP):
 
 # https://comfyanonymous.github.io/ComfyUI_examples/wan/
 
+ComfyUI/user/default/workflows: ComfyUI/user/default/workflows/.installed
+ComfyUI/user/default/workflows/.installed:
+	ln -fsr workflows/* ComfyUI/user/default/workflows
+	touch $@
+
 ## text_encoders
 $(COMFY_BASE_PATH)/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors:
 	uv run huggingface-cli download Comfy-Org/Wan_2.1_ComfyUI_repackaged split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors --revision main --local-dir $(TMP)/Comfy-Org/Wan_2.1_ComfyUI_repackaged
