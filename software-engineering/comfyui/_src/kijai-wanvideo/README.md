@@ -1,6 +1,7 @@
 ---
 notebook_urls:
-  - Precision/Recall: https://chatgpt.com/c/67ee0be0-7cf0-8010-9841-0f2045c7748f
+  - https://chatgpt.com/c/67ee0be0-7cf0-8010-9841-0f2045c7748f
+  - [OOM with ComfyUI Issue](https://chatgpt.com/c/67ef831e-056c-8010-9adf-4e80cb01aa29)
 ---
 
 # Kijai/WanVideo
