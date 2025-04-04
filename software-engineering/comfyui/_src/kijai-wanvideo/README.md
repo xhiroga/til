@@ -7,6 +7,9 @@ notebook_urls:
 
 ## Memo
 
+- 起動時に `--highvram` オプションが有効な場合、WanVideo Model Loader がOOMになることがある
+  - ComfyUIの仕様で、オフロード先がGPUになるため。実質無意味（参考: [OOM with use of ComfyUI --highvram parameter affecting the offload_device selection #196
+](https://github.com/kijai/ComfyUI-WanVideoWrapper/issues/196)）
 - Frame数が49や77と中途半端に見えるのはなぜなんだろうか？
 
 ### [workflows/kijai/wanvideo_long_T2V_example_01.json](workflows/kijai/wanvideo_long_T2V_example_01.json)
@@ -92,9 +95,9 @@ notebook_urls:
   - いっそノイズとかの方が良かったりするのかな？
 - WanVideo Samplerのsmaplesが入力されていないが、他の画像/映像で試した感じでは、あってもなくてもあまり差を感じない。要追加検証。
 
-## [workflows/ai-73-30/Wan-Fun视频首尾帧-KJ版.json](https://zhuanlan.zhihu.com/p/1890424727547381581)
+## [workflows/ai-73-30/Wan-Fun视频首尾帧-KJ版.json]()
 
-WIP...
+- [オリジナル](https://zhuanlan.zhihu.com/p/1890424727547381581)と比較して、カスタムノードの種類を削減。
 
 ## References
 

@@ -5,7 +5,7 @@ TMP ?= /tmp
 .PHONY: run init
 
 run:
-	uv run ComfyUI/main.py --enable-cors-header --listen --port 11188 --extra-model-paths-config extra_model_paths.yaml --fast --highvram
+	uv run ComfyUI/main.py --enable-cors-header --listen --port 11188 --extra-model-paths-config extra_model_paths.yaml --fast
 
 init: .venv ComfyUI ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper
 
@@ -88,6 +88,10 @@ $(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensor
 ### cn
 $(COMFY_BASE_PATH)/models/diffusion_models/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors $@
+
+$(COMFY_BASE_PATH)/models/diffusion_models/Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors:
+	uv run huggingface-cli download Kijai/WanVideo_comfy Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors --revision main --local-dir $(TMP)/Kijai/WanVideo_comfy
+	mv $(TMP)/Kijai/WanVideo_comfy/Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors $@
 
 ## vae
 $(COMFY_BASE_PATH)/models/vae/Wan2_1_VAE_bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy

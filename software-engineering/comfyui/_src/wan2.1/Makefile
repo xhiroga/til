@@ -6,7 +6,7 @@ TMP ?= /tmp
 .PHONY: run init
 
 run:
-	uv run ComfyUI/main.py --enable-cors-header --listen --port 11188 --fast --highvram
+	uv run ComfyUI/main.py --enable-cors-header --listen --port 11188 --fast
 
 init: .venv ComfyUI $(COMFY_BASE_PATH)/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors $(COMFY_BASE_PATH)/models/vae/wan_2.1_vae.safetensors $(COMFY_BASE_PATH)/models/diffusion_models/wan2.1_t2v_1.3B_fp16.safetensors $(COMFY_BASE_PATH)/models/diffusion_models/wan2.1_i2v_480p_14B_fp16.safetensors $(COMFY_BASE_PATH)/models/clip_vision/clip_vision_h.safetensors
 
