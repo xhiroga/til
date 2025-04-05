@@ -2,6 +2,7 @@
 notebook_urls:
   - https://chatgpt.com/c/67ee0be0-7cf0-8010-9841-0f2045c7748f
   - [OOM with ComfyUI Issue](https://chatgpt.com/c/67ef831e-056c-8010-9adf-4e80cb01aa29)
+- sageattention: https://chatgpt.com/c/67f08d12-9690-8010-84c2-4a8f306c4865
 ---
 
 # Kijai/WanVideo

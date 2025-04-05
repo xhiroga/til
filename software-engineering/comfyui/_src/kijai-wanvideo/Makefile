@@ -147,6 +147,10 @@ ComfyUI/input/railway-track-*.mp4:
 	uv run huggingface-cli download xhiroga/data --repo-type dataset --revision main --local-dir $(TMP)/xhiroga/data
 	mv $(TMP)/xhiroga/data/railway-track/works/*.mp4 ComfyUI/input/
 
+ComfyUI/input/hiroaki-*.mp4:
+	uv run huggingface-cli download xhiroga/data --repo-type dataset --revision main --local-dir $(TMP)/xhiroga/data
+	mv $(TMP)/xhiroga/data/hiroaki/works/*.mp4 ComfyUI/input/
+
 # ComfyUI/input/videos/... のようにサブディレクトリを作成すると、Load Video Nodeに検出されない
 ComfyUI/input/man-looking-down-to-the-left.mp4:
 	uv run yt-dlp -f best -o $@ https://www.youtube.com/watch?v=LUFuJ7f_vcc

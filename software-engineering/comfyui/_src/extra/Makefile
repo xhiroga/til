@@ -36,3 +36,13 @@ ComfyUI/models/checkpoints/Illustrious-XL-v1.0.safetensors:
 ComfyUI/models/checkpoints/Illustrious-XL-v1.1.safetensors:
 	uv run huggingface-cli download OnomaAIResearch/Illustrious-XL-v1.1 --revision main --local-dir $(TMP)/OnomaAIResearch/Illustrious-XL-v1.1
 	mv $(TMP)/OnomaAIResearch/Illustrious-XL-v1.1/Illustrious-XL-v1.1.safetensors $@
+
+ComfyUI/models/checkpoints/juggernautXL_juggXIByRundiffusion.safetensors:
+	uv run huggingface-cli login
+	uv run huggingface-cli download xhiroga/private-models RunDiffusion/juggernautXL_juggXIByRundiffusion.safetensors --revision main --local-dir $(TMP)/xhiroga/private-models
+	mv $(TMP)/xhiroga/private-models/RunDiffusion/juggernautXL_juggXIByRundiffusion.safetensors $@
+
+## controlnet
+ComfyUI/models/controlnet/sai_xl_depth_256lora.safetensors:
+	uv run huggingface-cli download lllyasviel/sd_control_collection sai_xl_depth_256lora.safetensors --revision main --local-dir $(TMP)/lllyasviel/sd_control_collection
+	mv $(TMP)/lllyasviel/sd_control_collection/sai_xl_depth_256lora.safetensors $@
