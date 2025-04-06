@@ -97,9 +97,11 @@ notebook_urls:
   - いっそノイズとかの方が良かったりするのかな？
 - WanVideo Samplerのsmaplesが入力されていないが、他の画像/映像で試した感じでは、あってもなくてもあまり差を感じない。要追加検証。
 
-## [workflows/ai-73-30/Wan-Fun视频首尾帧-KJ版.json]()
+### [OpenPose](workflows/works/OpenPose.json)
 
-- [オリジナル](https://zhuanlan.zhihu.com/p/1890424727547381581)と比較して、カスタムノードの種類を削減。
+[![WanVideoWrapper I2V OpenPose - Fail](http://img.youtube.com/vi/2ul3zH1U3tk/0.jpg)](https://www.youtube.com/watch?v=2ul3zH1U3tk "WanVideoWrapper I2V OpenPose - Fail")
+
+- 失敗作。OpenPoseというよりanytestみたいな挙動。
 
 ## References
 
