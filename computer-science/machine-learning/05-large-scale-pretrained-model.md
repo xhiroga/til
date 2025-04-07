@@ -192,11 +192,13 @@ Attentionを近似するアプローチとしては、SparseなAttentionや低�
 
 ### BERT
 
-### Diffusion Model (2015)
+### 拡散モデル (Diffusion Model) (2015)
+
+推論時に指示を与える方法としてCFG (Cllasifier Free Guidance)があり、拡散モデル以外でも用いられている。
 
 #### DDPM (2020)
 
-### 潜在拡散モデル (Latent Diffusion Model, LDM) (2022)
+#### 潜在拡散モデル (Latent Diffusion Model, LDM) (2022)
 
 - [arXiv](https://arxiv.org/abs/2112.10752)
 - Applications
@@ -212,13 +214,24 @@ Attentionを近似するアプローチとしては、SparseなAttentionや低�
   - Stable Diffusion 3
   - FLUX.1
   - [CogView4](https://github.com/THUDM/CogView4)
+  - HunyuanVideo
   - Wan2.1
 
 拡散モデルのネットワーク部分をCNNベースのU-NetからTransformerで実装しようという試み。
 
-#### dLLMs / Mercury (2025)
+特定のブロックをスキップしてCFGを与えるSLGという手法がある。
 
-- [Demo](https://chat.inceptionlabs.ai/)
+##### TeaCache (2024)
+
+- [Project Page](https://liewfeng.github.io/TeaCache/)
+- [GitHub](https://github.com/ali-vilab/TeaCache)
+
+DiTを用いた映像生成モデルにおいて、推論時に出力の差が小さいタイムステップの出力のキャッシュを利用することで、推論結果に与える影響が小さい状態で1.5~2倍程度の高速化を行える技術。
+
+#### dLLMs (2025)
+
+- Implementations
+  - [Mercury](https://chat.inceptionlabs.ai/)
 
 拡散言語モデル。Transformerに比べて高速に推論ができるとされる。
 
