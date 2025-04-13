@@ -343,10 +343,21 @@ Linuxでサービスを確認するためのコマンドは次の通り。
 avahi-browse -a
 ```
 
-macOSでは次の通り。
+macOSでは次の通り。なお、手順からわかる通りmDNSのサービスは階層構造になっている。
 
-```sh
-dns-sd -B _services._dns-sd._udp local.
+```console
+$ dns-sd -B _services._dns-sd._udp local.
+... Instance Name ... _echo
+
+$ dns-sd -B _echo._tcp local.
+... Instance Name ... echo-server
+
+# ホスト名とポート番号の取得。ホスト名はそのまま <Instance>.<Service>.<Domain> の場合もあるが、ポート番号の取得に必須。
+$ dns-sd -L echo-server _echo._tcp local.
+... echo-server._echo._tcp.local. can be reached at echo-server._echo._tcp.local.:44972 (interface 11)
+
+$ dns-sd -Gv4v6 echo-server._echo._tcp local.
+... Address ... 192.168.100.49
 ```
 
 ### QUIC
