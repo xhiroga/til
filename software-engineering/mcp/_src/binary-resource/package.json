@@ -1,0 +1,29 @@
+{
+  "name": "binary-resource",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "mcp-server-everything": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && shx chmod +x dist/*.js",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "express": "^5.1.0",
+    "zod": "^3.24.2",
+    "zod-to-json-schema": "^3.24.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "shx": "^0.4.0",
+    "typescript": "^5.8.3"
+  }
+}
