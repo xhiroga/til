@@ -192,6 +192,49 @@ Attentionを近似するアプローチとしては、SparseなAttentionや低�
 
 ### BERT
 
+### 拡散モデル (Diffusion Model) (2015)
+
+推論時に指示を与える方法としてCFG (Cllasifier Free Guidance)があり、拡散モデル以外でも用いられている。
+
+#### DDPM (2020)
+
+#### 潜在拡散モデル (Latent Diffusion Model, LDM) (2022)
+
+- [arXiv](https://arxiv.org/abs/2112.10752)
+- Applications
+  - Stable Diffusion
+  - Stable Diffusion XL
+
+#### Diffusion Transformers / DiTs (2023)
+
+- [arXiv](https://arxiv.org/abs/2212.09748)
+- [GitHub](https://github.com/facebookresearch/DiT)
+- Applications
+  - Sora
+  - Stable Diffusion 3
+  - FLUX.1
+  - [CogView4](https://github.com/THUDM/CogView4)
+  - HunyuanVideo
+  - Wan2.1
+
+拡散モデルのネットワーク部分をCNNベースのU-NetからTransformerで実装しようという試み。
+
+特定のブロックをスキップしてCFGを与えるSLGという手法がある。
+
+##### TeaCache (2024)
+
+- [Project Page](https://liewfeng.github.io/TeaCache/)
+- [GitHub](https://github.com/ali-vilab/TeaCache)
+
+DiTを用いた映像生成モデルにおいて、推論時に出力の差が小さいタイムステップの出力のキャッシュを利用することで、推論結果に与える影響が小さい状態で1.5~2倍程度の高速化を行える技術。
+
+#### dLLMs (2025)
+
+- Implementations
+  - [Mercury](https://chat.inceptionlabs.ai/)
+
+拡散言語モデル。Transformerに比べて高速に推論ができるとされる。
+
 ### Transformer (2017)
 
 Transformer[^vaswani_2017]は単語間の長距離依存性を把握できるようになったニューラルネットワークである。具体的には、全単語間にAttention機構を導入したRNNである。
@@ -213,6 +256,26 @@ Transformerは、様々な注意表現を学習するために異なるAttention
 CPUの演算性能だけでなく、メモリI/Oを含めた性能を評価するためのモデルとしてルーフラインモデルがある。マシンの達成可能なFLOPSを計算するに当たり、CPUのピーク演算性能とメモリ帯域によって成約される性能の小さい方を取るもので、チャートが屋根のような形になることからそう呼ぶ。
 
 ![ルーフラインモデル](https://fukushimalab.github.io/hpc_exercise/docfig/roofline.png)
+
+#### ViT
+
+#### BitNet (2024)
+
+#### Attention Free Transformer (AFT) (2021)
+
+Self-Attentionに依存しないアーキテクチャの一つ。代わりに全結合層を用いている。
+
+#### RWKV (Receptance Weighted Key Value)
+
+Self−Attentionに依存しないアーキテクチャの一つ。AFTに大きな影響を受けている。RNNのように再帰的で低コストな推論が可能であり、かつTransformerのように並列で学習可能である。
+
+#### RetNet　(Retentive Network)
+
+Retentive: 保持力のある。RWKVと同様に並列に学習し、再帰的な推論が可能なネットワーク。スケーリングカーブ (モデルサイズ向上時の性能の引き上げ度合い)でTransformerを上回る。
+
+#### S4
+
+#### Mamba
 
 ### CLIP (2021)[^radford_2021]
 
@@ -246,28 +309,6 @@ CLIPは正例と近い負例・遠い負例の距離に注意を払っていな�
 [^ilharco_2022]: [Patching open-vocabulary models by interpolating weights](https://arxiv.org/abs/2208.05592)
 
 ファインチューニングによって汎化性能を失う問題に対して、ファインチューン前後の重みを線形補間した重みを用いることを提案している。これによって汎化性能と固有タスクを解く能力をある程度良いところ取りできるらしい。感想だが、ファインチューニングだけでは過学習が起きてしまう、ということを示唆しているように思える。
-
-#### Attention Free Transformer (AFT) (2021)
-
-Self-Attentionに依存しないアーキテクチャの一つ。代わりに全結合層を用いている。
-
-#### RWKV (Receptance Weighted Key Value)
-
-Self−Attentionに依存しないアーキテクチャの一つ。AFTに大きな影響を受けている。RNNのように再帰的で低コストな推論が可能であり、かつTransformerのように並列で学習可能である。
-
-#### RetNet　(Retentive Network)
-
-Retentive: 保持力のある。RWKVと同様に並列に学習し、再帰的な推論が可能なネットワーク。スケーリングカーブ (モデルサイズ向上時の性能の引き上げ度合い)でTransformerを上回る。
-
-#### S4
-
-#### Griffin
-
-RNNの進化系。
-
-#### BitNet
-
-#### Mamba
 
 ## 大規模事前学習モデルの推論
 
