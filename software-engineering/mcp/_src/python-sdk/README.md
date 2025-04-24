@@ -21,3 +21,19 @@ WSLではなくClaudeを実行しているWindows上で実行する必要があ�
 ```sh
 uv run mcp install server.py --name "Demo by Python SDK"
 ```
+
+すると、次のように登録される。
+
+```json
+ "Demo by Python SDK": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp[cli]",
+        "mcp",
+        "run",
+        "C:\\Users\\hiroga\\GitHub\\til\\software-engineering\\mcp\\_src\\python-sdk\\server.py"
+      ]
+    }
+```
