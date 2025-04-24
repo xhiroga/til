@@ -2,6 +2,10 @@
 
 NOTE: [create-mcp-server](https://github.com/modelcontextprotocol/create-python-server) はすでに非推奨になっている。
 
+したがって、こちらを参照した。
+
+- https://zenn.dev/taku_sid/articles/20250331_mcp_python?redirected=1
+
 ## Debug
 
 ```sh
@@ -12,19 +16,26 @@ mcp dev server.py
 
 ## Claude Desktop
 
+WSLではなくClaudeを実行しているWindows上で実行する必要がある。
+
+```sh
+uv run mcp install server.py --name "Demo by Python SDK"
+```
+
+すると、次のように登録される。
+
 ```json
-{
-    "mcpServers": {
-        "python-sdk-mcp-server": {
-            "command": "uv",
-            "args": [
-                "run",
-                "mcp",
-                "C:/Users/hiroga/GitHub/til/software-engineering/mcp/_src/python-sdk/server.py",
-            ]
-        }
+ "Demo by Python SDK": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp[cli]",
+        "mcp",
+        "run",
+        "C:\\Users\\hiroga\\GitHub\\til\\software-engineering\\mcp\\_src\\python-sdk\\server.py"
+      ]
     }
-}
 ```
 
 ## 実験
