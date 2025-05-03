@@ -37,3 +37,69 @@ uv run mcp install server.py --name "Demo by Python SDK"
       ]
     }
 ```
+
+## 実験
+
+Python SDKを用いたMCPサーバーのインストールは、`mcp[cli]`を用いる方法と`uvx`で起動する方法の2つありそうだ。では、そのままClaude Desktopに設定できるのだろうか？また、`--from` オプションを指定する場合や、PEP508記法でサブディレクトリを指定する方法は有効なのか？
+
+結論から言うと、そのままClaude Desktopに指定する場合は動く。
+
+```json
+{
+    "mcpServers": {
+        "fetch": {
+            "command": "uvx",
+            "args": [
+                "mcp-server-fetch"
+            ]
+        }
+    }
+}
+```
+
+MCPサーバーが素直にプロジェクトルートにある場合は次のように指定できる。  
+（なお、`fetch`は異なる）
+
+```json
+{
+  "mcpServers": {
+    "MiniMax": {
+      "command": "uvx",
+       "args": [
+         "--refresh",
+         "--from",
+         "git+https://github.com/MiniMax-AI/MiniMax-MCP",
+         "minimax-mcp"
+      ]
+    }
+  }
+}
+```
+
+しかし、次の通り`--from`でサブディレクトリを指定するとエラーになる。
+
+```json
+{
+    "mcpServers": {
+        "fetch": {
+            "command": "uvx",
+            "args": [
+                "--refresh",
+                "--from",
+                "git+https://github.com/modelcontextprotocol/servers#subdirectory=src/fetch",
+                "mcp-server-fetch"
+            ]
+        }
+    }
+}
+```
+
+エラーの内容は次の通り。
+
+```log
+2025-04-24T04:38:51.231Z [fetch] [info] Initializing server...
+2025-04-24T04:38:51.286Z [fetch] [info] Server started and connected successfully
+2025-04-24T04:38:51.378Z [fetch] [info] Message from client: {"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"claude-ai","version":"0.1.0"}},"jsonrpc":"2.0","id":0}
+  × Invalid `--with` requirement
+  ╰─▶ Git operation failed
+```
