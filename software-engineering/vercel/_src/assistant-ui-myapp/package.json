@@ -13,6 +13,7 @@
     "@assistant-ui/react": "^0.10.2",
     "@assistant-ui/react-ai-sdk": "^0.10.3",
     "@assistant-ui/react-markdown": "^0.10.2",
+    "@modelcontextprotocol/sdk": "^1.11.1",
     "@radix-ui/react-dialog": "^1.1.13",
     "@radix-ui/react-separator": "^1.1.6",
     "@radix-ui/react-slot": "^1.2.2",
