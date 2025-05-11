@@ -1,4 +1,4 @@
-# AI SDK with FastAPI
+# AI SDK hosted by FastAPI
 
 ```sh
 pnpm build
