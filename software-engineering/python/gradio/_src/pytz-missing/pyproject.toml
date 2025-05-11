@@ -1,0 +1,14 @@
+[project]
+name = "pytz-missing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "gradio>=5.29.0",
+]
+
+[tool.uv]
+override-dependencies = [
+    "pandas; sys_platform == 'never'",
+]
