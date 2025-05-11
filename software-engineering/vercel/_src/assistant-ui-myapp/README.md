@@ -2,5 +2,13 @@
 
 ```sh
 pnpm build
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uv run main.py
+```
+
+## Debug
+
+```sh
+uv run main.py
+curl http://localhost:8000/mcp # MUST return {"jsonrpc": "2.0", ...}
+npx @modelcontextprotocol/inspector@latest
 ```
