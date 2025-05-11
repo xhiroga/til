@@ -1,4 +1,4 @@
-# AI SDK hosted by FastAPI
+# assistant-ui with MCP hosted by FastAPI
 
 ```sh
 pnpm build
