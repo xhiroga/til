@@ -1,5 +1,7 @@
 # assistant-ui with MCP hosted by FastAPI
 
+## NOT WORKS!!! /api/chat does not work because of hosting static files
+
 ```sh
 pnpm build
 uv run main.py
