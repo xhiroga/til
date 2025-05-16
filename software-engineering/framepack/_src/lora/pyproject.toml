@@ -1,0 +1,40 @@
+[project]
+name = "framepack-loraready"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "accelerate>=1.7.0",
+    "diffusers>=0.33.1",
+    "einops>=0.8.1",
+    "gradio>=5.29.1",
+    # index を指定するためには明示的に依存関係に追加する必要がある。
+    "numpy>=2.2.5",
+    "opencv-contrib-python>=4.11.0.86",
+    "pillow>=11.2.1",
+    "pytorch-triton>=3.3.0",
+    "requests>=2.32.3",
+    "safetensors>=0.5.3",
+    "scipy>=1.15.3",
+    "sentencepiece>=0.2.0",
+    "torch>=2.8.0.dev20250515",
+    "torchvision>=0.22.0.dev20250515",
+    "torchsde>=0.2.6",
+    "transformers>=4.51.3",
+    "av>=14.3.0",
+    "sageattention>=1.0.6",
+]
+
+[tool.uv]
+environments = ["platform_machine == 'x86_64' and sys_platform == 'linux'"]
+
+[[tool.uv.index]]
+name = "pytorch-nightly-cu128"
+url = "https://download.pytorch.org/whl/nightly/cu128"
+explicit = true
+
+[tool.uv.sources]
+pytorch-triton = { index = "pytorch-nightly-cu128" }
+torch = { index = "pytorch-nightly-cu128" }
+torchvision = { index = "pytorch-nightly-cu128" }
