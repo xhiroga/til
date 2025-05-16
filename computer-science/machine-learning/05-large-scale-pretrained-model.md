@@ -205,6 +205,12 @@ Attentionを近似するアプローチとしては、SparseなAttentionや低�
   - Stable Diffusion
   - Stable Diffusion XL
 
+##### IP Adapter (2023-08)
+
+- [arXiv](https://arxiv.org/abs/2308.06721)
+
+Image Promptを入力するためのアダプター。
+
 #### Diffusion Transformers / DiTs (2023)
 
 - [arXiv](https://arxiv.org/abs/2212.09748)
@@ -226,7 +232,7 @@ Attentionを近似するアプローチとしては、SparseなAttentionや低�
 - [Project Page](https://liewfeng.github.io/TeaCache/)
 - [GitHub](https://github.com/ali-vilab/TeaCache)
 
-DiTを用いた映像生成モデルにおいて、推論時に出力の差が小さいタイムステップの出力のキャッシュを利用することで、推論結果に与える影響が小さい状態で1.5~2倍程度の高速化を行える技術。
+DiTを用いた動画生成モデルにおいて、推論時に出力の差が小さいタイムステップの出力のキャッシュを利用することで、推論結果に与える影響が小さい状態で1.5~2倍程度の高速化を行える技術。
 
 #### dLLMs (2025)
 
@@ -234,6 +240,15 @@ DiTを用いた映像生成モデルにおいて、推論時に出力の差が�
   - [Mercury](https://chat.inceptionlabs.ai/)
 
 拡散言語モデル。Transformerに比べて高速に推論ができるとされる。
+
+##### FramePack (2025)
+
+- [arXiv](https://arxiv.org/abs/2504.12626) ([alphaXiv](https://www.alphaxiv.org/abs/2504.12626))
+- [GitHub](https://github.com/lllyasviel/FramePack)
+
+動画生成モデル。Wan VideoやHunyuan Videoがフレーム全体をまとめて生成するのに対して、FramePackはフレームを逐次生成するためVRAM消費量が少ない。
+
+Frameを重要度合いに応じて圧縮するため Frame Pack という命名と思われる。
 
 ### Transformer (2017)
 
