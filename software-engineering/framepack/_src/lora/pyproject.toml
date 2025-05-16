@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "accelerate>=1.7.0",
+    "av>=14.3.0",
     "diffusers>=0.33.1",
     "einops>=0.8.1",
     "gradio>=5.29.1",
@@ -22,7 +23,6 @@ dependencies = [
     "torchvision>=0.22.0.dev20250515",
     "torchsde>=0.2.6",
     "transformers>=4.51.3",
-    "av>=14.3.0",
     "sageattention>=1.0.6",
 ]
 
