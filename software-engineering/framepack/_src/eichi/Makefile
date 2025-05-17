@@ -1,7 +1,7 @@
 TMP ?= /tmp
 
 # copied from FramePack-eichi/run_oneframe_ichi.bat
-run: FramePack FramePack-eichi FramePack/eichi_utils FramePack/endframe_ichi.py FramePack/endframe_ichi_f1.py FramePack/oneframe_ichi.py FramePack/submodules FramePack/webui FramePack/lora/lineart_lora.safetensors
+run: FramePack FramePack-eichi FramePack/eichi_utils FramePack/locales FramePack/endframe_ichi.py FramePack/endframe_ichi_f1.py FramePack/oneframe_ichi.py FramePack/submodules FramePack/webui FramePack/lora/lineart_lora.safetensors
 	export PYTHONPATH=$$PYTHONPATH:$$(pwd)/FramePack && uv run --directory FramePack oneframe_ichi.py --server 127.0.0.1 --inbrowser
 
 FramePack:
@@ -12,22 +12,25 @@ FramePack-eichi:
 
 # Thanks to https://note.com/catap_art3d/n/nca05195eecc2
 FramePack/eichi_utils: FramePack FramePack-eichi
-	ln -fsr FramePack-eichi/webui/eichi_utils FramePack/eichi_utils
+	cp -fr FramePack-eichi/webui/eichi_utils FramePack/eichi_utils
+
+FramePack/locales: FramePack FramePack-eichi
+	cp -fr FramePack-eichi/webui/locales FramePack/locales
 
 FramePack/endframe_ichi.py: FramePack FramePack-eichi
-	ln -fsr FramePack-eichi/webui/endframe_ichi.py FramePack/endframe_ichi.py
+	cp -fr FramePack-eichi/webui/endframe_ichi.py FramePack/endframe_ichi.py
 
 FramePack/endframe_ichi_f1.py: FramePack FramePack-eichi
-	ln -fsr FramePack-eichi/webui/endframe_ichi_f1.py FramePack/endframe_ichi_f1.py
+	cp -fr FramePack-eichi/webui/endframe_ichi_f1.py FramePack/endframe_ichi_f1.py
 
 FramePack/oneframe_ichi.py: FramePack FramePack-eichi
-	ln -fsr FramePack-eichi/webui/oneframe_ichi.py FramePack/oneframe_ichi.py
+	cp -fr FramePack-eichi/webui/oneframe_ichi.py FramePack/oneframe_ichi.py
 
 FramePack/submodules: FramePack FramePack-eichi
-	ln -fsr FramePack-eichi/webui/submodules FramePack/submodules
+	cp -fr FramePack-eichi/webui/submodules FramePack/submodules
 
 FramePack/webui: FramePack FramePack-eichi
-	ln -fsr FramePack-eichi/webui FramePack/webui
+	cp -fr FramePack-eichi/webui FramePack/webui
 
 FramePack/lora: FramePack
 	mkdir -p $@
