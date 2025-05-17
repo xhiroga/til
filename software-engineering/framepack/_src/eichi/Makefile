@@ -1,8 +1,8 @@
 TMP ?= /tmp
 
 # copied from FramePack-eichi/run_oneframe_ichi.bat
-run: FramePack FramePack-eichi FramePack/eichi_utils FramePack/locales FramePack/endframe_ichi.py FramePack/endframe_ichi_f1.py FramePack/oneframe_ichi.py FramePack/submodules FramePack/webui FramePack/lora/lineart_lora.safetensors
-	export PYTHONPATH=$$PYTHONPATH:$$(pwd)/FramePack && uv run --directory FramePack oneframe_ichi.py --server 127.0.0.1 --inbrowser
+run: FramePack FramePack-eichi FramePack/eichi_utils FramePack/locales FramePack/lora_utils FramePack/endframe_ichi.py FramePack/endframe_ichi_f1.py FramePack/oneframe_ichi.py FramePack/submodules FramePack/webui FramePack/lora/lineart_lora.safetensors override_diffusers_helper_bucket_tools_py override_diffusers_helper_memory_py
+	export PYTHONPATH=$$PYTHONPATH:$$(pwd)/FramePack && uv run --directory FramePack endframe_ichi.py --server 127.0.0.1 --inbrowser
 
 FramePack:
 	git -C $@ pull || git clone https://github.com/lllyasviel/FramePack $@
@@ -16,6 +16,9 @@ FramePack/eichi_utils: FramePack FramePack-eichi
 
 FramePack/locales: FramePack FramePack-eichi
 	cp -fr FramePack-eichi/webui/locales FramePack/locales
+
+FramePack/lora_utils: FramePack FramePack-eichi
+	cp -fr FramePack-eichi/webui/lora_utils FramePack/lora_utils
 
 FramePack/endframe_ichi.py: FramePack FramePack-eichi
 	cp -fr FramePack-eichi/webui/endframe_ichi.py FramePack/endframe_ichi.py
@@ -31,6 +34,12 @@ FramePack/submodules: FramePack FramePack-eichi
 
 FramePack/webui: FramePack FramePack-eichi
 	cp -fr FramePack-eichi/webui FramePack/webui
+
+override_diffusers_helper_bucket_tools_py: FramePack FramePack-eichi
+	cp -fr FramePack-eichi/webui/diffusers_helper/bucket_tools.py FramePack/diffusers_helper/bucket_tools.py
+
+override_diffusers_helper_memory_py: FramePack FramePack-eichi
+	cp -fr FramePack-eichi/webui/diffusers_helper/memory.py FramePack/diffusers_helper/memory.py
 
 FramePack/lora: FramePack
 	mkdir -p $@
