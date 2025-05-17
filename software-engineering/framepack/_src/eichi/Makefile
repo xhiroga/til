@@ -2,7 +2,7 @@ TMP ?= /tmp
 
 # copied from FramePack-eichi/run_oneframe_ichi.bat
 run: FramePack FramePack-eichi FramePack/eichi_utils FramePack/locales FramePack/lora_utils FramePack/endframe_ichi.py FramePack/endframe_ichi_f1.py FramePack/oneframe_ichi.py FramePack/submodules FramePack/webui FramePack/lora/lineart_lora.safetensors override_diffusers_helper_bucket_tools_py override_diffusers_helper_memory_py
-	export PYTHONPATH=$$PYTHONPATH:$$(pwd)/FramePack && uv run --directory FramePack endframe_ichi.py --server 127.0.0.1 --inbrowser
+	export PYTHONPATH=$$PYTHONPATH:$$(pwd)/FramePack && uv run --directory FramePack endframe_ichi_f1.py --server 127.0.0.1 --inbrowser
 
 FramePack:
 	git -C $@ pull || git clone https://github.com/lllyasviel/FramePack $@
