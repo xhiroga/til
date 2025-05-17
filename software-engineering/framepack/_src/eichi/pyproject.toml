@@ -37,3 +37,8 @@ explicit = true
 pytorch-triton = { index = "pytorch-nightly-cu128" }
 torch = { index = "pytorch-nightly-cu128" }
 torchvision = { index = "pytorch-nightly-cu128" }
+
+[dependency-groups]
+dev = [
+    "huggingface-hub[cli]>=0.31.2",
+]

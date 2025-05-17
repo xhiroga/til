@@ -1,5 +1,7 @@
+TMP ?= /tmp
+
 # copied from FramePack-eichi/run_oneframe_ichi.bat
-run: FramePack FramePack-eichi FramePack/eichi_utils FramePack/endframe_ichi.py FramePack/endframe_ichi_f1.py FramePack/oneframe_ichi.py FramePack/submodules FramePack/webui
+run: FramePack FramePack-eichi FramePack/eichi_utils FramePack/endframe_ichi.py FramePack/endframe_ichi_f1.py FramePack/oneframe_ichi.py FramePack/submodules FramePack/webui FramePack/lora/lineart_lora.safetensors
 	export PYTHONPATH=$$PYTHONPATH:$$(pwd)/FramePack && uv run --directory FramePack oneframe_ichi.py --server 127.0.0.1 --inbrowser
 
 FramePack:
@@ -26,3 +28,10 @@ FramePack/submodules: FramePack FramePack-eichi
 
 FramePack/webui: FramePack FramePack-eichi
 	ln -fsr FramePack-eichi/webui FramePack/webui
+
+FramePack/lora: FramePack
+	mkdir -p $@
+
+FramePack/lora/lineart_lora.safetensors: FramePack/lora
+	uv run huggingface-cli login
+	uv run huggingface-cli download mattyamonaca/framepack_oneframe_extract_lineart_lora lineart_lora.safetensors --local-dir FramePack/lora
