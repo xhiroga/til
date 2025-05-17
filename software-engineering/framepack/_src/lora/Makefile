@@ -1,7 +1,3 @@
-include .env	# TMP
-
-TMP ?= /tmp
-
 run: FramePack FramePack-LoRAReady;
 	uv run FramePack-LoRAReady/demo_gradio.py
 

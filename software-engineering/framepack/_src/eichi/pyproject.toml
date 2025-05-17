@@ -1,5 +1,5 @@
 [project]
-name = "framepack-loraready"
+name = "eichi"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -18,8 +18,8 @@ dependencies = [
     "safetensors>=0.5.3",
     "scipy>=1.15.3",
     "sentencepiece>=0.2.0",
-    "torch>=2.8.0.dev20250515",
-    "torchvision>=0.22.0.dev20250515",
+    "torch>=2.8.0.dev20250516",
+    "torchvision>=0.22.0.dev20250516",
     "torchsde>=0.2.6",
     "transformers>=4.51.3",
     "sageattention>=1.0.6",
