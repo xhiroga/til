@@ -7,14 +7,14 @@ TMP ?= /tmp	# クラウドの場合はマウントしているボリューム配
 
 run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl
 	uv run --directory musubi-tuner --project musubi-tuner fpack_cache_latents.py \
-		--dataset_config musubi-tuner-fp.toml \
+		--dataset_config dataset.toml \
 		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
 		--image_encoder ../models/image_encoder/model.safetensors \
 		--vae_chunk_size 32 \
 		--vae_spatial_tile_sample_min_size 256
 
 	uv run --directory musubi-tuner --project musubi-tuner fpack_cache_text_encoder_outputs.py \
-		--dataset_config musubi-tuner-fp.toml \
+		--dataset_config dataset.toml \
 		--text_encoder1 ../models/text_encoder/model-00001-of-00004.safetensors \
 		--text_encoder2 ../models/text_encoder_2/model.safetensors \
 		--batch_size 16
