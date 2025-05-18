@@ -60,9 +60,9 @@ musubi-tuner:
 	git -C $@ pull || git clone https://github.com/kohya-ss/musubi-tuner $@
 
 musubi-tuner/.venv: musubi-tuner
-	uv sync --project musubi-tuner
+	uv --project musubi-tuner sync
 	# musubi-tuner 自身の pyproject.toml に手を入れたくなかったが、uv pip install だと uv sync が走るたびに wandb が消える。addしかない。
-	uv add wandb
+	uv --project musubi-tuner add wandb
 
 huggingface-cli-login: .venv
 	if uv run huggingface-cli whoami | grep -q 'Not logged in'; then uv run huggingface-cli login; fi
