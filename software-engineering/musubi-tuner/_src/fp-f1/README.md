@@ -1,4 +1,4 @@
-# Setup Musubi Tuner
+# Train FramePack F1 by musubi-tuner
 
 ## Usage
 
