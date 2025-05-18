@@ -1,11 +1,11 @@
-include .env	# DATASET, TMP
+include .env.local	# DATASET, TMP
 
 DATASET ?= https://huggingface.co/datasets/xhiroga/data
 TMP ?= /tmp	# クラウドの場合はマウントしているボリューム配下のパスにすること
 
-.PHONY: run cache huggingface-cli-login
+.PHONY: run cache huggingface-cli-login models
 
-run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl cache
+run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl cache models
 	mkdir -p output
 	uv --project musubi-tuner run wandb login
 	uv --directory musubi-tuner --project musubi-tuner run accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 fpack_train_network.py \
@@ -36,7 +36,7 @@ run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl ca
 		--log_with wandb \
 		--log_tracker_name fp-f1
 
-cache:
+cache: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl models
 	uv --directory musubi-tuner --project musubi-tuner run fpack_cache_latents.py \
 		--dataset_config dataset.toml \
 		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
@@ -78,6 +78,8 @@ musubi-tuner/dataset.toml: .venv musubi-tuner dataset
 
 musubi-tuner/metadata.jsonl: .venv musubi-tuner dataset
 	uv run jinja2 -D dir=$$(realpath dataset) dataset/metadata.jsonl.j2 > $@
+
+models: models/framepack/dit/diffusion_pytorch_model-00001-of-00003.safetensors models/framepack/dit/diffusion_pytorch_model-00002-of-00003.safetensors models/framepack/dit/diffusion_pytorch_model-00003-of-00003.safetensors models/framepack/vae/diffusion_pytorch_model.safetensors models/text_encoder/model-00001-of-00004.safetensors models/text_encoder/model-00002-of-00004.safetensors models/text_encoder/model-00003-of-00004.safetensors models/text_encoder/model-00004-of-00004.safetensors models/text_encoder_2/model.safetensors models/image_encoder/model.safetensors
 
 models/framepack/dit/diffusion_pytorch_model-00001-of-00003.safetensors: models/framepack/dit
 models/framepack/dit/diffusion_pytorch_model-00002-of-00003.safetensors: models/framepack/dit
