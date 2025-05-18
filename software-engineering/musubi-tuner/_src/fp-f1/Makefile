@@ -6,7 +6,6 @@ TMP ?= /tmp	# クラウドの場合はマウントしているボリューム配
 .PHONY: run cache huggingface-cli-login models
 
 run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl cache models
-	mkdir -p output
 	uv --project musubi-tuner run wandb login
 	uv --directory musubi-tuner --project musubi-tuner run accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 fpack_train_network.py \
 		--dit ../models/framepack/dit/diffusion_pytorch_model-00001-of-00003.safetensors \
