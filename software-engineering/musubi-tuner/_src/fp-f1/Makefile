@@ -3,9 +3,36 @@ include .env	# DATASET, TMP
 DATASET ?= https://huggingface.co/datasets/xhiroga/data
 TMP ?= /tmp	# クラウドの場合はマウントしているボリューム配下のパスにすること
 
-.PHONY: run huggingface-cli-login
+.PHONY: run cache huggingface-cli-login
 
-run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl
+run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl cache
+	mkdir -p output
+	uv run --directory musubi-tuner --project musubi-tuner accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 fpack_train_network.py \
+		--dit ../models/framepack/dit/diffusion_pytorch_model-00001-of-00003.safetensors \
+		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
+		--text_encoder1 ../models/text_encoder/model-00001-of-00004.safetensors \
+		--text_encoder2 ../models/text_encoder_2/model.safetensors \
+		--image_encoder ../models/image_encoder/model.safetensors \
+		--dataset_config dataset.toml \
+		--sdpa \
+		--mixed_precision bf16 \
+		--fp8_base \
+		--optimizer_type adamw8bit \
+		--learning_rate 1e-4 \
+		--gradient_checkpointing \
+		--max_data_loader_n_workers 2 \
+		--persistent_data_loader_workers \
+		--network_module networks.lora_framepack \
+		--network_dim 32 \
+		--timestep_sampling shift \
+		--discrete_flow_shift 7.0 \
+		--max_train_epochs 16 \
+		--save_every_n_epochs 1 \
+		--seed 42 \
+		--output_dir output \
+		--output_name lora
+
+cache:
 	uv run --directory musubi-tuner --project musubi-tuner fpack_cache_latents.py \
 		--dataset_config dataset.toml \
 		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
