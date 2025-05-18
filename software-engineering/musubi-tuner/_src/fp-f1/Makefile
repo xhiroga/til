@@ -1,6 +1,6 @@
-include .env.local	# DATASET, TMP
+include .env	# DATASET, TMP
 
-DATASET ?= https://huggingface.co/datasets/xhiroga/data
+DATASET ?= https://huggingface.co/datasets/******/******
 TMP ?= /tmp	# クラウドの場合はマウントしているボリューム配下のパスにすること
 
 .PHONY: run cache huggingface-cli-login models
