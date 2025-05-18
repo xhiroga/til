@@ -61,7 +61,8 @@ musubi-tuner:
 
 musubi-tuner/.venv: musubi-tuner
 	uv sync --project musubi-tuner
-	uv --project musubi-tuner pip install wandb
+	# musubi-tuner 自身の pyproject.toml に手を入れたくなかったが、uv pip install だと uv sync が走るたびに wandb が消える。addしかない。
+	uv add wandb
 
 huggingface-cli-login: .venv
 	if uv run huggingface-cli whoami | grep -q 'Not logged in'; then uv run huggingface-cli login; fi
@@ -72,7 +73,7 @@ dataset: huggingface-cli-login
 
 musubi-tuner/dataset.toml: .venv musubi-tuner dataset
 	# LoRA学習なので単一のデータセットと toml ファイルをまとめて管理したほうが効率が良いと判断
-	# ただし、toml 中の jsonl ファイルのパスが相対パスの場合、 musubi-tuner が基準となる
+	# ただし、toml 中の jsonl ファイルのパスが相対パスの場合、musubi-tuner が基準となる
 	cp dataset/dataset.toml $@
 
 musubi-tuner/metadata.jsonl: .venv musubi-tuner dataset
