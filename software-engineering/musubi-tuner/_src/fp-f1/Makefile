@@ -7,7 +7,8 @@ TMP ?= /tmp	# クラウドの場合はマウントしているボリューム配
 
 run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl cache
 	mkdir -p output
-	uv run --directory musubi-tuner --project musubi-tuner accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 fpack_train_network.py \
+	uv --project musubi-tuner run wandb login
+	uv --directory musubi-tuner --project musubi-tuner run accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 fpack_train_network.py \
 		--dit ../models/framepack/dit/diffusion_pytorch_model-00001-of-00003.safetensors \
 		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
 		--text_encoder1 ../models/text_encoder/model-00001-of-00004.safetensors \
@@ -36,7 +37,7 @@ run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl ca
 		--log_tracker_name fp-f1
 
 cache:
-	uv run --directory musubi-tuner --project musubi-tuner fpack_cache_latents.py \
+	uv --directory musubi-tuner --project musubi-tuner run fpack_cache_latents.py \
 		--dataset_config dataset.toml \
 		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
 		--image_encoder ../models/image_encoder/model.safetensors \
@@ -44,7 +45,7 @@ cache:
 		--vae_spatial_tile_sample_min_size 256 \
 		--f1
 
-	uv run --directory musubi-tuner --project musubi-tuner fpack_cache_text_encoder_outputs.py \
+	uv --directory musubi-tuner --project musubi-tuner run fpack_cache_text_encoder_outputs.py \
 		--dataset_config dataset.toml \
 		--text_encoder1 ../models/text_encoder/model-00001-of-00004.safetensors \
 		--text_encoder2 ../models/text_encoder_2/model.safetensors \
@@ -55,13 +56,13 @@ cache:
 
 .venv:
 	uv sync
-	uv pip install wandb
 
 musubi-tuner:
 	git -C $@ pull || git clone https://github.com/kohya-ss/musubi-tuner $@
 
-musubi-tuner/.venv:
+musubi-tuner/.venv: musubi-tuner
 	uv sync --project musubi-tuner
+	uv --project musubi-tuner pip install wandb
 
 huggingface-cli-login: .venv
 	if uv run huggingface-cli whoami | grep -q 'Not logged in'; then uv run huggingface-cli login; fi
