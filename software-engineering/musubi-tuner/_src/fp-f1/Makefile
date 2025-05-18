@@ -50,8 +50,8 @@ cache: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl 
 		--text_encoder2 ../models/text_encoder_2/model.safetensors \
 		--batch_size 16
 
-	# 慣れるまでは VAE の tiling 設定は deeppwiki に従う方針。
-	# https://deepwiki.com/search/vaetiling-vaespatialtilesample_d53d814c-27e9-405f-a43f-111b316047a3
+# 慣れるまでは VAE の tiling 設定は deeppwiki に従う方針。
+# https://deepwiki.com/search/vaetiling-vaespatialtilesample_d53d814c-27e9-405f-a43f-111b316047a3
 
 .venv:
 	uv sync
@@ -60,8 +60,8 @@ musubi-tuner:
 	git -C $@ pull || git clone https://github.com/kohya-ss/musubi-tuner $@
 
 musubi-tuner/.venv: musubi-tuner
+# musubi-tuner 自身の pyproject.toml に手を入れたくなかったが、uv pip install だと uv sync が走るたびに wandb が消える。addしかない。
 	uv --project musubi-tuner sync
-	# musubi-tuner 自身の pyproject.toml に手を入れたくなかったが、uv pip install だと uv sync が走るたびに wandb が消える。addしかない。
 	uv --project musubi-tuner add wandb
 
 huggingface-cli-login: .venv
@@ -72,8 +72,8 @@ dataset: huggingface-cli-login
 	uv run huggingface-cli download $(DATASET) --repo-type dataset --local-dir $@
 
 musubi-tuner/dataset.toml: .venv musubi-tuner dataset
-	# LoRA学習なので単一のデータセットと toml ファイルをまとめて管理したほうが効率が良いと判断
-	# ただし、toml 中の jsonl ファイルのパスが相対パスの場合、musubi-tuner が基準となる
+# LoRA学習なので単一のデータセットと toml ファイルをまとめて管理したほうが効率が良いと判断
+# ただし、toml 中の jsonl ファイルのパスが相対パスの場合、musubi-tuner が基準となる
 	cp dataset/dataset.toml $@
 
 musubi-tuner/metadata.jsonl: .venv musubi-tuner dataset
@@ -88,7 +88,7 @@ models/framepack/dit: huggingface-cli-login
 	uv run huggingface-cli download lllyasviel/FramePack_F1_I2V_HY_20250503 --local-dir $@
 
 models/framepack/vae/diffusion_pytorch_model.safetensors: huggingface-cli-login
-	# 毎回忘れるが、huggingface-cli の download は 階層構造ごとダウンロードしてくれる点に注意。この場合は local-dir 内部に vae フォルダが作られる
+# 毎回忘れるが、huggingface-cli の download は 階層構造ごとダウンロードしてくれる点に注意。この場合は local-dir 内部に vae フォルダが作られる
 	uv run huggingface-cli download hunyuanvideo-community/HunyuanVideo vae/diffusion_pytorch_model.safetensors --local-dir models/framepack
 
 models/text_encoder/model-00001-of-00004.safetensors: models/text_encoder
