@@ -30,7 +30,10 @@ run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl ca
 		--save_every_n_epochs 1 \
 		--seed 42 \
 		--output_dir output \
-		--output_name lora
+		--f1 \
+		--output_name lora \
+		--log_with wandb \
+		--log_tracker_name fp-f1
 
 cache:
 	uv run --directory musubi-tuner --project musubi-tuner fpack_cache_latents.py \
@@ -38,7 +41,8 @@ cache:
 		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
 		--image_encoder ../models/image_encoder/model.safetensors \
 		--vae_chunk_size 32 \
-		--vae_spatial_tile_sample_min_size 256
+		--vae_spatial_tile_sample_min_size 256 \
+		--f1
 
 	uv run --directory musubi-tuner --project musubi-tuner fpack_cache_text_encoder_outputs.py \
 		--dataset_config dataset.toml \
@@ -51,6 +55,7 @@ cache:
 
 .venv:
 	uv sync
+	uv pip install wandb
 
 musubi-tuner:
 	git -C $@ pull || git clone https://github.com/kohya-ss/musubi-tuner $@
