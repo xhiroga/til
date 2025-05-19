@@ -45,5 +45,5 @@ FramePack/lora: FramePack
 	mkdir -p $@
 
 FramePack/lora/lineart_lora.safetensors: FramePack/lora
-	uv run huggingface-cli login
+	if uv run huggingface-cli whoami | grep -q 'Not logged in'; then uv run huggingface-cli login; fi
 	uv run huggingface-cli download mattyamonaca/framepack_oneframe_extract_lineart_lora lineart_lora.safetensors --local-dir FramePack/lora
