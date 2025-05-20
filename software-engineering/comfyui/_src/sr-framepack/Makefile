@@ -3,10 +3,10 @@ include .env	# MODEL_PATH, TMP
 .PHONY: run init
 
 run:
-	uv run ComfyUI/main.py --enable-cors-header --listen --port 11188 --extra-model-paths-config extra_model_paths.yaml --fast
+	uv run --extra $(EXTRA) ComfyUI/main.py --enable-cors-header --listen --port 11188 --extra-model-paths-config extra_model_paths.yaml --fast
 
 .venv:
-	uv sync
+	uv sync --extra $(EXTRA)
 
 ComfyUI:
 	(git -C $@ pull || git clone https://github.com/comfyanonymous/ComfyUI $@) && git -C $@ checkout v0.3.34

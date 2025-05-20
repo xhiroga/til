@@ -1,7 +1,6 @@
 [project]
 name = "wan2-1"
 version = "0.1.0"
-readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "aiohttp>=3.11.14",
@@ -25,11 +24,6 @@ dependencies = [
     "tqdm>=4.67.1",
     "transformers>=4.50.0",
     "yarl>=1.18.3",
-]
-
-[dependency-groups]
-dev = [
-    "huggingface-hub[cli]>=0.29.3",
 ]
 
 [tool.uv]
