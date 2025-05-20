@@ -5,35 +5,14 @@ TMP ?= /tmp	# クラウドの場合はマウントしているボリューム配
 
 .PHONY: run cache huggingface-cli-login models
 
-run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl cache models
-	uv --project musubi-tuner run wandb login
-	uv --directory musubi-tuner --project musubi-tuner run accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 fpack_train_network.py \
-		--dit ../models/framepack/dit/diffusion_pytorch_model-00001-of-00003.safetensors \
-		--vae ../models/framepack/vae/diffusion_pytorch_model.safetensors \
-		--text_encoder1 ../models/text_encoder/model-00001-of-00004.safetensors \
-		--text_encoder2 ../models/text_encoder_2/model.safetensors \
-		--image_encoder ../models/image_encoder/model.safetensors \
-		--dataset_config dataset.toml \
-		--sdpa \
-		--mixed_precision bf16 \
-		--fp8_base \
-		--optimizer_type adamw8bit \
-		--learning_rate 1e-4 \
-		--gradient_checkpointing \
-		--max_data_loader_n_workers 2 \
-		--persistent_data_loader_workers \
-		--network_module networks.lora_framepack \
-		--network_dim 32 \
-		--timestep_sampling shift \
-		--discrete_flow_shift 7.0 \
-		--max_train_epochs 16 \
-		--save_every_n_epochs 1 \
-		--seed 42 \
-		--output_dir output \
-		--f1 \
-		--output_name lora \
-		--log_with wandb \
-		--log_tracker_name fp-f1
+run: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl cache models wandb-login
+# --image_encoder は required=True なので、--config_file とは別に必要
+	uv --directory musubi-tuner --project musubi-tuner run \
+		accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 \
+			fpack_train_network.py \
+				--image_encoder ../models/image_encoder/model.safetensors \
+				--config_file ../config.toml
+
 
 cache: musubi-tuner/.venv musubi-tuner/dataset.toml musubi-tuner/metadata.jsonl models
 	uv --directory musubi-tuner --project musubi-tuner run fpack_cache_latents.py \
@@ -60,12 +39,15 @@ musubi-tuner:
 	git -C $@ pull || git clone https://github.com/kohya-ss/musubi-tuner $@
 
 musubi-tuner/.venv: musubi-tuner
-# musubi-tuner 自身の pyproject.toml に手を入れたくなかったが、uv pip install だと uv sync が走るたびに wandb が消える。addしかない。
 	uv --project musubi-tuner sync
-	uv --project musubi-tuner add wandb
 
 huggingface-cli-login: .venv
 	if uv run huggingface-cli whoami | grep -q 'Not logged in'; then uv run huggingface-cli login; fi
+
+wandb-login: .venv
+# musubi-tuner 自身の pyproject.toml に手を入れたくなかったが、uv pip install だと uv sync が走るたびに wandb が消える。addしかない。
+	uv --project musubi-tuner add wandb
+	uv --project musubi-tuner run wandb login
 
 datasets/musubi-tuner-fp.toml: dataset
 dataset: huggingface-cli-login
