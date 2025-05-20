@@ -11,7 +11,7 @@ run:
 	uv sync
 
 ComfyUI:
-	git -C $@ checkout v0.3.34 || git clone --branch v0.3.34 https://github.com/comfyanonymous/ComfyUI $@
+	(git -C $@ pull || git clone https://github.com/comfyanonymous/ComfyUI $@) && git -C $@ checkout v0.3.34
 
 custom_nodes = \
 	ComfyUI/custom_nodes/ComfyUI-FramePackWrapper_Plus \
