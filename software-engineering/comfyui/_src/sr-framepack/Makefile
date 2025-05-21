@@ -1,17 +1,15 @@
-include .env	# COMFY_EXTRA_PATH, TMP
-
-TMP ?= /tmp
+include .env	# MODEL_PATH, TMP
 
 .PHONY: run init
 
 run:
-	uv run ComfyUI/main.py --enable-cors-header --listen --port 11188 --extra-model-paths-config extra_model_paths.yaml --fast
+	uv run --extra $(EXTRA) ComfyUI/main.py --enable-cors-header --listen --port 11188 --extra-model-paths-config extra_model_paths.yaml --fast
 
 .venv:
-	uv sync
+	uv sync --extra $(EXTRA)
 
 ComfyUI:
-	git -C $@ checkout v0.3.34 || git clone --branch v0.3.34 https://github.com/comfyanonymous/ComfyUI $@
+	(git -C $@ pull || git clone https://github.com/comfyanonymous/ComfyUI $@) && git -C $@ checkout v0.3.34
 
 custom_nodes = \
 	ComfyUI/custom_nodes/ComfyUI-FramePackWrapper_Plus \
@@ -21,19 +19,22 @@ custom_nodes = \
 	ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite \
 	ComfyUI/custom_nodes/ComfyUI_essentials
 models = \
-	$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors \
-	$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePackI2V_HY_bf16.safetensors \
-	$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model.safetensors.index.json \
-	$(COMFY_EXTRA_PATH)/models/clip_vision/sigclip_vision_patch14_384.safetensors \
-	$(COMFY_EXTRA_PATH)/models/text_encoders/clip_l.safetensors \
-	$(COMFY_EXTRA_PATH)/models/text_encoders/llava_llama3_fp16.safetensors \
-	$(COMFY_EXTRA_PATH)/models/text_encoders/llava_llama3_fp8_scaled.safetensors \
-	$(COMFY_EXTRA_PATH)/models/vae/hunyuan_video_vae_bf16.safetensors
+	$(MODEL_PATH)/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors \
+	$(MODEL_PATH)/diffusion_models/FramePackI2V_HY_bf16.safetensors \
+	$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00001-of-00003.safetensors \
+	$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00002-of-00003.safetensors \
+	$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00003-of-00003.safetensors \
+	$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503.safetensors \
+	$(MODEL_PATH)/clip_vision/sigclip_vision_patch14_384.safetensors \
+	$(MODEL_PATH)/text_encoders/clip_l.safetensors \
+	$(MODEL_PATH)/text_encoders/llava_llama3_fp16.safetensors \
+	$(MODEL_PATH)/text_encoders/llava_llama3_fp8_scaled.safetensors \
+	$(MODEL_PATH)/vae/hunyuan_video_vae_bf16.safetensors
 f1_models = \
-	$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00001-of-00003.safetensors \
-	$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00002-of-00003.safetensors \
-	$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00003-of-00003.safetensors \
-	$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePack_F1_I2V_HY_20250503.safetensors
+	$(MODEL_PATH)/diffusion_models/diffusion_pytorch_model-00001-of-00003.safetensors \
+	$(MODEL_PATH)/diffusion_models/diffusion_pytorch_model-00002-of-00003.safetensors \
+	$(MODEL_PATH)/diffusion_models/diffusion_pytorch_model-00003-of-00003.safetensors \
+	$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503.safetensors
 
 init: .venv ComfyUI $(custom_nodes) $(models) ComfyUI/user/default/workflows/FramePackWrapper_Plus
 
@@ -57,44 +58,43 @@ $(custom_nodes): ComfyUI
 
 # Models
 ## diffusion_models
-$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors: REPO = Kijai/HunyuanVideo_comfy
-$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors: FILE = FramePackI2V_HY_fp8_e4m3fn.safetensors
-$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePackI2V_HY_bf16.safetensors: REPO = Kijai/HunyuanVideo_comfy
-$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePackI2V_HY_bf16.safetensors: FILE = FramePackI2V_HY_bf16.safetensors
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00001-of-00003.safetensors: REPO = lllyasviel/FramePackI2V_HY
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00001-of-00003.safetensors: FILE = diffusion_pytorch_model-00001-of-00003.safetensors
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00002-of-00003.safetensors: REPO = lllyasviel/FramePackI2V_HY
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00002-of-00003.safetensors: FILE = diffusion_pytorch_model-00002-of-00003.safetensors
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00003-of-00003.safetensors: REPO = lllyasviel/FramePackI2V_HY
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00003-of-00003.safetensors: FILE = diffusion_pytorch_model-00003-of-00003.safetensors
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model.safetensors.index.json: REPO = lllyasviel/FramePackI2V_HY
-$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model.safetensors.index.json: FILE = diffusion_pytorch_model.safetensors.index.json
+$(MODEL_PATH)/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors: REPO = Kijai/HunyuanVideo_comfy
+$(MODEL_PATH)/diffusion_models/FramePackI2V_HY_fp8_e4m3fn.safetensors: FILE = FramePackI2V_HY_fp8_e4m3fn.safetensors
+$(MODEL_PATH)/diffusion_models/FramePackI2V_HY_bf16.safetensors: REPO = Kijai/HunyuanVideo_comfy
+$(MODEL_PATH)/diffusion_models/FramePackI2V_HY_bf16.safetensors: FILE = FramePackI2V_HY_bf16.safetensors
+$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00001-of-00003.safetensors: REPO = lllyasviel/FramePackI2V_HY
+$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00001-of-00003.safetensors: FILE = diffusion_pytorch_model-00001-of-00003.safetensors
+$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00002-of-00003.safetensors: REPO = lllyasviel/FramePackI2V_HY
+$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00002-of-00003.safetensors: FILE = diffusion_pytorch_model-00002-of-00003.safetensors
+$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00003-of-00003.safetensors: REPO = lllyasviel/FramePackI2V_HY
+$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00003-of-00003.safetensors: FILE = diffusion_pytorch_model-00003-of-00003.safetensors
 
 # clip_vision
-$(COMFY_EXTRA_PATH)/models/clip_vision/sigclip_vision_patch14_384.safetensors: REPO = Comfy-Org/sigclip_vision_384
-$(COMFY_EXTRA_PATH)/models/clip_vision/sigclip_vision_patch14_384.safetensors: FILE = sigclip_vision_patch14_384.safetensors
+$(MODEL_PATH)/clip_vision/sigclip_vision_patch14_384.safetensors: REPO = Comfy-Org/sigclip_vision_384
+$(MODEL_PATH)/clip_vision/sigclip_vision_patch14_384.safetensors: FILE = sigclip_vision_patch14_384.safetensors
 
 ## text_encoders
-$(COMFY_EXTRA_PATH)/models/text_encoders/clip_l.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
-$(COMFY_EXTRA_PATH)/models/text_encoders/clip_l.safetensors: FILE = split_files/text_encoders/clip_l.safetensors
-$(COMFY_EXTRA_PATH)/models/text_encoders/llava_llama3_fp16.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
-$(COMFY_EXTRA_PATH)/models/text_encoders/llava_llama3_fp16.safetensors: FILE = split_files/text_encoders/llava_llama3_fp16.safetensors
-$(COMFY_EXTRA_PATH)/models/text_encoders/llava_llama3_fp8_scaled.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
-$(COMFY_EXTRA_PATH)/models/text_encoders/llava_llama3_fp8_scaled.safetensors: FILE = split_files/text_encoders/llava_llama3_fp8_scaled.safetensors
+$(MODEL_PATH)/text_encoders/clip_l.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
+$(MODEL_PATH)/text_encoders/clip_l.safetensors: FILE = split_files/text_encoders/clip_l.safetensors
+$(MODEL_PATH)/text_encoders/llava_llama3_fp16.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
+$(MODEL_PATH)/text_encoders/llava_llama3_fp16.safetensors: FILE = split_files/text_encoders/llava_llama3_fp16.safetensors
+$(MODEL_PATH)/text_encoders/llava_llama3_fp8_scaled.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
+$(MODEL_PATH)/text_encoders/llava_llama3_fp8_scaled.safetensors: FILE = split_files/text_encoders/llava_llama3_fp8_scaled.safetensors
 
 ## vae
-$(COMFY_EXTRA_PATH)/models/vae/hunyuan_video_vae_bf16.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
-$(COMFY_EXTRA_PATH)/models/vae/hunyuan_video_vae_bf16.safetensors: FILE = split_files/vae/hunyuan_video_vae_bf16.safetensors
+$(MODEL_PATH)/vae/hunyuan_video_vae_bf16.safetensors: REPO = Comfy-Org/HunyuanVideo_repackaged
+$(MODEL_PATH)/vae/hunyuan_video_vae_bf16.safetensors: FILE = split_files/vae/hunyuan_video_vae_bf16.safetensors
 
 $(models):
 	uv run huggingface-cli download $(REPO) $(FILE) --local-dir $(TMP)/$(REPO)
 	mv $(TMP)/$(REPO)/$(FILE) $@
 
-$(COMFY_EXTRA_PATH)/models/diffusion_models/FramePack_F1_I2V_HY_20250503.safetensors: $(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00001-of-00003.safetensors $(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00002-of-00003.safetensors $(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00003-of-00003.safetensors
-	uv run merge.py --input_files \
-		$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00001-of-00003.safetensors \
-		$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00002-of-00003.safetensors \
-		$(COMFY_EXTRA_PATH)/models/diffusion_models/diffusion_pytorch_model-00003-of-00003.safetensors \
+# On 2025-05-20, kijai does not provide the merged model.
+$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503.safetensors: $(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00001-of-00003.safetensors $(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00002-of-00003.safetensors $(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00003-of-00003.safetensors
+	uv run --extra $(EXTRA) merge.py --input_files \
+		$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00001-of-00003.safetensors \
+		$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00002-of-00003.safetensors \
+		$(MODEL_PATH)/diffusion_models/FramePack_F1_I2V_HY_20250503/diffusion_pytorch_model-00003-of-00003.safetensors \
 	--output $@
 
 # Workflows
