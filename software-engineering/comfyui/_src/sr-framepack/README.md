@@ -1,5 +1,9 @@
 # [ShmuelRonen/ComfyUI-FramePackWrapper_Plus](https://github.com/ShmuelRonen/ComfyUI-FramePackWrapper_Plus)
 
+## Parameters
+
+- Load FramePackModel は 分割されたモデルを読み込むことができないので、事前にmergeしておく
+
 ## WIP! Error 137 (Out of memory) thrown on RTX-4090
 
 ```log

@@ -1,4 +1,4 @@
-include .env	# COMFY_BASE_PATH, TMP
+include .env	# MODEL_PATH, TMP
 
 TMP ?= /tmp
 
@@ -53,68 +53,68 @@ $(TMP)/Kijai/WanVideo_comfy:
 	uv run huggingface-cli download Kijai/WanVideo_comfy --revision main --local-dir $@
 
 ## text_encoders
-$(COMFY_BASE_PATH)/models/text_encoders/open-clip-xlm-roberta-large-vit-huge-14_visual_fp16.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/text_encoders/open-clip-xlm-roberta-large-vit-huge-14_visual_fp16.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/open-clip-xlm-roberta-large-vit-huge-14_visual_fp16.safetensors $@
 
-$(COMFY_BASE_PATH)/models/text_encoders/open-clip-xlm-roberta-large-vit-huge-14_visual_fp32.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/text_encoders/open-clip-xlm-roberta-large-vit-huge-14_visual_fp32.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/open-clip-xlm-roberta-large-vit-huge-14_visual_fp32.safetensors $@
 
-$(COMFY_BASE_PATH)/models/text_encoders/umt5-xxl-enc-bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/text_encoders/umt5-xxl-enc-bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/umt5-xxl-enc-bf16.safetensors $@
 
-$(COMFY_BASE_PATH)/models/text_encoders/umt5-xxl-enc-fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/text_encoders/umt5-xxl-enc-fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/umt5-xxl-enc-fp8_e4m3fn.safetensors $@
 
 ## diffusion_models/i2v
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-I2V-14B-480P_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-I2V-14B-480P_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-I2V-14B-480P_fp8_e4m3fn.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-I2V-14B-480P_fp8_e5m2.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-I2V-14B-480P_fp8_e5m2.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-I2V-14B-480P_fp8_e5m2.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-I2V-14B-720P_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-I2V-14B-720P_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-I2V-14B-720P_fp8_e4m3fn.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-I2V-14B-720P_fp8_e5m2.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-I2V-14B-720P_fp8_e5m2.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-I2V-14B-720P_fp8_e5m2.safetensors $@
 
 ## diffusion_models/t2v
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-14B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-T2V-14B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-14B_fp8_e4m3fn.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-14B_fp8_e5m2.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-T2V-14B_fp8_e5m2.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-14B_fp8_e5m2.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-T2V-1_3B_bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-1_3B_bf16.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_fp32.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-T2V-1_3B_fp32.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-1_3B_fp32.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors $@
 
 ### cn
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/diffusion_models/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors $@
 
-$(COMFY_BASE_PATH)/models/diffusion_models/Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors:
+$(MODEL_PATH)/diffusion_models/Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors:
 	uv run huggingface-cli download Kijai/WanVideo_comfy Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors --revision main --local-dir $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors $@
 
 ## vae
-$(COMFY_BASE_PATH)/models/vae/Wan2_1_VAE_bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/vae/Wan2_1_VAE_bf16.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1_VAE_bf16.safetensors $@
 
-$(COMFY_BASE_PATH)/models/vae/Wan2_1_VAE_fp32.safetensors: $(TMP)/Kijai/WanVideo_comfy
+$(MODEL_PATH)/vae/Wan2_1_VAE_fp32.safetensors: $(TMP)/Kijai/WanVideo_comfy
 	mv $(TMP)/Kijai/WanVideo_comfy/Wan2_1_VAE_fp32.safetensors $@
 
 ## loras
-$(COMFY_BASE_PATH)/models/loras/wan2.1-1.3b-control-lora-depth-v0.1_comfy.safetensors:
+$(MODEL_PATH)/loras/wan2.1-1.3b-control-lora-depth-v0.1_comfy.safetensors:
 	uv run huggingface-cli download spacepxl/Wan2.1-control-loras 1.3b/depth/wan2.1-1.3b-control-lora-depth-v0.1_comfy.safetensors --revision main --local-dir $(TMP)/spacepxl/Wan2.1-control-loras
 	mv $(TMP)/spacepxl/Wan2.1-control-loras/1.3b/depth/wan2.1-1.3b-control-lora-depth-v0.1_comfy.safetensors $@
 
-$(COMFY_BASE_PATH)/models/loras/wan2.1-1.3b-control-lora-tile-v0.2_comfy.safetensors:
+$(MODEL_PATH)/loras/wan2.1-1.3b-control-lora-tile-v0.2_comfy.safetensors:
 	uv run huggingface-cli download spacepxl/Wan2.1-control-loras 1.3b/tile/wan2.1-1.3b-control-lora-tile-v0.2_comfy.safetensors --revision main --local-dir $(TMP)/spacepxl/Wan2.1-control-loras
 	mv $(TMP)/spacepxl/Wan2.1-control-loras/1.3b/tile/wan2.1-1.3b-control-lora-tile-v0.2_comfy.safetensors $@
 
