@@ -9,6 +9,7 @@ models = \
 	$(MODEL_PATH)/checkpoints/Illustrious-XL-v1.0.safetensors \
 	$(MODEL_PATH)/checkpoints/Illustrious-XL-v1.1.safetensors \
 	$(MODEL_PATH)/checkpoints/juggernautXL_juggXIByRundiffusion.safetensors \
+	$(MODEL_PATH)/loras/pixel-art-xl.safetensors \
 	$(MODEL_PATH)/controlnet/sai_xl_depth_256lora.safetensors
 
 # License: openrail++
@@ -32,10 +33,15 @@ $(MODEL_PATH)/checkpoints/Illustrious-XL-v1.1.safetensors: FILE = Illustrious-XL
 $(MODEL_PATH)/checkpoints/juggernautXL_juggXIByRundiffusion.safetensors: REPO = xhiroga/private-models
 $(MODEL_PATH)/checkpoints/juggernautXL_juggXIByRundiffusion.safetensors: FILE = RunDiffusion/juggernautXL_juggXIByRundiffusion.safetensors
 
-## Controlnet
+# License: creativeml-openrail-m
+$(MODEL_PATH)/loras/pixel-art-xl.safetensors: REPO = nerijs/pixel-art-xl
+$(MODEL_PATH)/loras/pixel-art-xl.safetensors: FILE = pixel-art-xl.safetensors
+
+# Controlnet
 $(MODEL_PATH)/controlnet/sai_xl_depth_256lora.safetensors: REPO = lllyasviel/sd_control_collection
 $(MODEL_PATH)/controlnet/sai_xl_depth_256lora.safetensors: FILE = sai_xl_depth_256lora.safetensors
 
 $(models):
 	uvx --from huggingface-hub huggingface-cli download $(REPO) $(FILE) --local-dir $(TMP)/$(REPO)
+	mkdir -p $(dir $@)
 	mv $(TMP)/$(REPO)/$(FILE) $@
