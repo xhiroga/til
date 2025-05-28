@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sandbox"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Hiroaki Ogasawara", email = "13391129+xhiroga@users.noreply.github.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/Hiroaki Ogasawara/sandbox#readme"
+Issues = "https://github.com/Hiroaki Ogasawara/sandbox/issues"
+Source = "https://github.com/Hiroaki Ogasawara/sandbox"
+
+[tool.hatch.version]
+path = "src/sandbox/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/sandbox tests}"
+
+[tool.coverage.run]
+source_pkgs = ["sandbox", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/sandbox/__about__.py",
+]
+
+[tool.coverage.paths]
+sandbox = ["src/sandbox", "*/sandbox/src/sandbox"]
+tests = ["tests", "*/sandbox/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
