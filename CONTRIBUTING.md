@@ -118,6 +118,11 @@ make
 open http://localhost:4000
 ```
 
+## メタ規則
+
+- チャット上の対話が日本語であっても、プログラム中のコメントは同じファイルのそれ以外のコメントに倣ってください。
+- コミットメッセージは英語で書いてください。
+
 ## 参考
 
 - [About this guide  |  Google developer documentation style guide  |  Google Developers](https://developers.google.com/style)
