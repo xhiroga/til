@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "astor"]
 build-backend = "hatchling.build"
 
 [project]
@@ -33,6 +33,8 @@ Source = "https://github.com/Hiroaki Ogasawara/sandbox"
 
 [tool.hatch.version]
 path = "src/sandbox/__about__.py"
+
+[tool.hatch.build.hooks.custom]
 
 [tool.hatch.envs.types]
 extra-dependencies = [

@@ -14,6 +14,7 @@ uvx hatch new sandbox
 ## Build and see inside
 
 ```console
+$ uvx hatch clean && rm -rf dist
 $ uvx hatch build
 
 $ unzip -l dist/sandbox-0.0.1-py3-none-any.whl
@@ -44,3 +45,15 @@ sandbox-0.0.1/PKG-INFO
 
 - **Wheel** (`.whl`): バイナリ配布形式。インストールが高速
 - **Source Distribution (sdist)** (`.tar.gz`): ソース配布形式。ソースコードを含む
+
+### Inspecting build artifacts and contents
+
+```sh
+# Extract and examine
+tar -xzf dist/sandbox-*.tar.gz -C dist/
+ls -la dist/sandbox-*/
+
+# Extract and examine
+unzip dist/sandbox-*.whl -d dist/wheel_contents/
+ls -la dist/wheel_contents/
+```

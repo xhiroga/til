@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:hatch.pypa.io)",
+      "Bash(uvx hatch:*)",
+      "Bash(rm:*)",
+      "Bash(git checkout:*)",
+      "Bash(tar:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(unzip:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}
