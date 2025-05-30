@@ -1,0 +1,12 @@
+[project]
+name = "from-package"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "musubi-tuner",
+]
+
+[tool.uv.sources]
+musubi-tuner = { git = "https://github.com/xhiroga/musubi-tuner-xhiroga" }
