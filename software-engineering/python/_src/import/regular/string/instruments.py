@@ -1,2 +1,0 @@
-def violin():
-    print('♪♪♪♪♪')
