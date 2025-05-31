@@ -17,7 +17,19 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "attrs" },
+    { name = "somepackage" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "attrs", specifier = ">=25.3.0" }]
+requires-dist = [
+    { name = "attrs", specifier = ">=25.3.0" },
+    { name = "somepackage", path = "somepackage/dist/somepackage-0.1.0-py3-none-any.whl" },
+]
+
+[[package]]
+name = "somepackage"
+version = "0.1.0"
+source = { path = "somepackage/dist/somepackage-0.1.0-py3-none-any.whl" }
+wheels = [
+    { filename = "somepackage-0.1.0-py3-none-any.whl", hash = "sha256:dffb7de56f696dbdede95ea83ea74e1f4ace7629526a420acbd0a6c4ffac195d" },
+]
