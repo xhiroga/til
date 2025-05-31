@@ -123,3 +123,6 @@ $ uv run python -c "import importlib, pkgutil; [print(importlib.util.find_spec(m
 
 私が実際に`[blender-mcp-senpai](https://github.com/xhiroga/blender-mcp-senpai)`で遭遇したケース。srcレイアウトを採用した上で、`uv run python src/blender-mcp-senpai/main.py`のように実行すると、`ImportError`が発生しました。
 
+#### 非パッケージまたはフラットレイアウトからsrcレイアウトに切り替える際の注意は？
+
+- カレントワーキングディレクトリ経由でインポートしているモジュールや静的ファイルの確認
