@@ -47,11 +47,25 @@ $ uv add somepackage/dist/somepackage-0.1.0-py3-none-any.whl
 
 ### import
 
-Pythonは、パッケージ・モジュールを配置すべきパスをモジュール検索パスとして提供している。モジュール検索パスは`sys.path`で確認できる。
+Pythonは、パッケージ・モジュールを配置すべきパスをモジュール検索パスとして提供している。モジュール検索パスは`site`や`sys.path`で確認できる。
 
 ```console
+$ .venv/bin/python -m site
+$ uv run python -m site
+
+sys.path = [
+    '/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module',
+    '/home/hiroga/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib/python313.zip',
+    '/home/hiroga/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib/python3.13',
+    '/home/hiroga/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib/python3.13/lib-dynload',
+    '/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module/.venv/lib/python3.13/site-packages',
+    '/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module/src',
+]
+USER_BASE: '/home/hiroga/.local' (exists)
+USER_SITE: '/home/hiroga/.local/lib/python3.13/site-packages' (doesn't exist)
+ENABLE_USER_SITE: False
+
 $ .venv/bin/python -c "import sys; print(sys.path)"
-# OR
 $ uv run python -c "import sys; print(sys.path)"
 
 ['', '/home/hiroga/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib/python313.zip', '/home/hiroga/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib/python3.13', '/home/hiroga/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib/python3.13/lib-dynload', '/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/.venv/lib/python3.13/site-packages', '/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module/src']
@@ -71,13 +85,35 @@ $ cat .venv/lib/python3.13/site-packages/_module.pth
 /home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module/src
 ```
 
+### スクリプト実行・モジュール実行
+
+[StackOverFlowの回答](https://stackoverflow.com/questions/7610001/what-is-the-purpose-of-the-m-switch)も参照。
+
+`python -m main.py` のようなモジュール実行は、Python2.4.1で登場した。
+
+Pythonのユースケースが広がるにつれて、WebアプリケーションフレームワークやCLIツールなど、ライブラリがブートローダー部分を担うケースが登場した。その際もモジュールのimport時と同様に正確なパスを知らなくても使いたいという要望が生まれたのだろう。そうした背景から`-m`オプションが導入された。
+
 ### ビルドと配布
 
 Pythonのソースコードの配布は、初期にはソースコードを直接共有する形で行われた。その後、リポジトリから配布用のソースコードをビルドする手順として`setup.py`が導入された。
 
 ビルド手順の導入に伴い、GitHubなどのVCSからパッケージを直接ダウンロードすることが可能になった。また、ビルドツールの多様化や静的解析ツールからの要望を受けて`setup.py`の代わりに静的設定ファイル（`setup.cfg`, `pyproject.toml`）が導入される。
 
+#### 
+
 ### モジュール・パッケージのトラブルシューティング
+
+#### なぜかパッケージをインポートできた
+
+初めに、元になったモジュール検索パスを確認しましょう。
+
+```console
+$ uv run python -c "import importlib, pkgutil; [print(importlib.util.find_spec(mod.name)) for mod in pkgutil.iter_modules()]"
+```
+
+次に、そのパスがなぜモジュール検索パスに含まれているかを確認しましょう。
+
+これは便利な方法が発見できなかったので、[### モジュール検索パスの構成](#import)を参照して手動で切り分けます。
 
 #### 相対インポートができない
 
@@ -85,5 +121,5 @@ Pythonのソースコードの配布は、初期にはソースコードを直�
 
 #### srcレイアウトを採用したら、パッケージのインポートが上手くいかない
 
-私が実際に`[blender-mcp-senpai](https://github.com/xhiroga/blender-mcp-senpai)`で遭遇したケース。srcレイアウトを採用した上で、`uv run python src/blender-mcp-senpai/main.py`のように実行すると、`ImportError`が発生した。
+私が実際に`[blender-mcp-senpai](https://github.com/xhiroga/blender-mcp-senpai)`で遭遇したケース。srcレイアウトを採用した上で、`uv run python src/blender-mcp-senpai/main.py`のように実行すると、`ImportError`が発生しました。
 
