@@ -1,4 +1,4 @@
-include .env	# MODEL_PATH, TMP
+include .env	# EXTRA, MODEL_PATH, TMP
 
 .PHONY: run init
 

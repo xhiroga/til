@@ -26,6 +26,8 @@ Pythonにおいて、`.py` ファイルをモジュール、モジュールの�
 <module 'module.ham' (namespace) from ['/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module/src/module/ham']>
 ```
 
+### パッケージの利用
+
 ### install
 
 `pip install $PACKAGE_NAME` でパッケージをインストールすると、その配布パッケージに対応するインポートパッケージが`site-packages`にインストールされる。
@@ -89,7 +91,7 @@ $ cat .venv/lib/python3.13/site-packages/_module.pth
 
 [StackOverFlowの回答](https://stackoverflow.com/questions/7610001/what-is-the-purpose-of-the-m-switch)も参照。
 
-`python -m main.py` のようなモジュール実行は、Python2.4.1で登場した。
+`python -m main.py` や `python -m http.server` のようなモジュール実行は、Python2.4.1で登場した。
 
 Pythonのユースケースが広がるにつれて、WebアプリケーションフレームワークやCLIツールなど、ライブラリがブートローダー部分を担うケースが登場した。その際もモジュールのimport時と同様に正確なパスを知らなくても使いたいという要望が生まれたのだろう。そうした背景から`-m`オプションが導入された。
 
