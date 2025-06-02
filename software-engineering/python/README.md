@@ -49,7 +49,7 @@ $ uv add somepackage/dist/somepackage-0.1.0-py3-none-any.whl
 
 実験は[`_src/editable-install`](_src/editable-install)を参照。
 
-カレントディレクトリをパッケージとしてinstallすると、`site-packages`ディレクトリを経由してパッケージを利用できる。
+カレントディレクトリをパッケージとしてinstallすると、`site-packages`ディレクトリを経由してパッケージを利用できる。そのためimport文のモジュール名をパッケージ名から始めることができる。
 
 ```console
 $ python3 -m venv .venv
@@ -65,7 +65,7 @@ $ cat .venv/lib/python3.13/site-packages/_editable_install.pth
 /home/hiroga/Documents/GitHub/til/software-engineering/python/_src/editable-install/src
 ```
 
-`pip install -r requirements.txt`と`pip install -e .`の両方を実行するのは手間なので、`requirements.txt`内に`-e .`を記述しておくと楽になる。
+`pip install -r requirements.txt`と`pip install -e .`の両方を実行するのは手間なので、`requirements-dev.txt`内に`-e .`を記述しておくと楽になる。なぜrequirements.txtではないかというと、パッケージが自分自身を`site-packages`に配置したいような用途では、本番=配布用の依存関係解決に別途`setup.py`や`pyproject.toml`が用意されていることが普通のため。
 
 ```console
 $ rm -rf .venv
@@ -78,6 +78,25 @@ $ cat .venv/lib/python3.13/site-packages/_editable_install.pth
 /home/hiroga/Documents/GitHub/til/software-engineering/python/_src/editable-install/src
 
 $ .venv/bin/python src/editable_install/main.py
+Hello, World!
+```
+
+例えば、`requests`が同様の構成を取っている。
+
+なお、`uv`を利用している場合は、`[build-system]`が宣言されているならば`uv sync`の際に自動的に`-e .`を実行する。
+
+```console
+$ rm -rf .venv && rm uv.lock
+$ uv sync --verbose
+DEBUG uv 0.7.3 (Homebrew 2025-05-07)
+...
+Creating virtual environment at: .venv
+...
+DEBUG Adding direct dependency: editable-install*
+DEBUG Directory source requirement already cached: editable-install==0.1.0 (from file:///home/hiroga/Documents/GitHub/til/software-engineering/python/_src/editable-install)
+Installed 1 package in 3ms
+ + editable-install==0.1.0 (from file:///home/hiroga/Documents/GitHub/til/software-engineering/python/_src/editable-install)
+$ uv run python src/editable_install/main.py
 Hello, World!
 ```
 
