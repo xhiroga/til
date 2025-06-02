@@ -83,6 +83,17 @@ Hello, World!
 
 例えば、`requests`が同様の構成を取っている。
 
+```console
+$ rm -rf .local
+$ mkdir -p .local
+$ git -C .local clone https://github.com/psf/requests.git
+$ cd .local/requests
+$ python3 -m venv .venv
+$ .venv/bin/pip install -r requirements-dev.txt
+$ cat .venv/lib/python3.13/site-packages/__editable__.requests-2.32.3.pth
+/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/.local/requests/src
+```
+
 なお、`uv`を利用している場合は、`[build-system]`が宣言されているならば`uv sync`の際に自動的に`-e .`を実行する。
 
 ```console
