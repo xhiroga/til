@@ -65,7 +65,7 @@ $ cat .venv/lib/python3.13/site-packages/_editable_install.pth
 /home/hiroga/Documents/GitHub/til/software-engineering/python/_src/editable-install/src
 ```
 
-`pip install -r requirements.txt`と`pip install -e .`の両方を実行するのは手間なので、`requirements-dev.txt`内に`-e .`を記述しておくと楽になる。なぜrequirements.txtではないかというと、パッケージが自分自身を`site-packages`に配置したいような用途では、本番=配布用の依存関係解決に別途`setup.py`や`pyproject.toml`が用意されていることが普通のため。
+CLIのあるOSSなど、リポジトリがエントリーポイントとインポートパッケージの両方を持つケースがある。そうしたリポジトリを開発する場合は、`pip install -e .`が推奨されている。[Is setup.py deprecated?](https://packaging.python.org/en/latest/discussions/setup-py-deprecated/)も参照。
 
 ```console
 $ rm -rf .venv
@@ -81,7 +81,7 @@ $ .venv/bin/python src/editable_install/main.py
 Hello, World!
 ```
 
-例えば、`requests`が同様の構成を取っている。
+また、extraを指定することで`pip install -e .[dev]`のような運用もできる。なお、`setup.py`の`install_requires`ではバージョン固定などができなかったことから、`requrements-dev.txt`を定義し、その中で`-e .`をラップすることで細やかな指定を行うテクニックがある。
 
 ```console
 $ rm -rf .local
