@@ -26,8 +26,6 @@ Pythonにおいて、`.py` ファイルをモジュール、モジュールの�
 <module 'module.ham' (namespace) from ['/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module/src/module/ham']>
 ```
 
-### パッケージの利用
-
 ### install
 
 `pip install $PACKAGE_NAME` でパッケージをインストールすると、その配布パッケージに対応するインポートパッケージが`site-packages`にインストールされる。
@@ -86,6 +84,14 @@ $ uv run python -c "import sys; print(sys.path)"
 $ cat .venv/lib/python3.13/site-packages/_module.pth
 /home/hiroga/Documents/GitHub/til/software-engineering/python/_src/module/src
 ```
+
+Python3でモジュールをimportするとき、モジュール名の頭に`.`を付けないなら、それは絶対importである。アプリケーション開発のレイアウトではエントリーポイントはプロジェクトルートに置かれるのが通例なので、プロジェクトルートからの相対importのようにも見えるが、異なる。モジュール検索パス内のカレントディレクトリからの絶対importである。
+
+パッケージを配布するとき、そのパッケージがパッケージ管理ツール(pip, uv, etc...)によってインストールされるなら、パッケージはSite-packagesディレクトリ経由でimportされる。なお、そうではない例としては、アプリケーション拡張機能(Blender, ComfyUI, etc...)など独自の方法でソースコードを管理する場合が考えられる。
+
+したがって、配布用のパッケージでは、カレントディレクトリからの絶対importを採用すると、インストール時に動かなくなることがある。これを避けるため、パッケージ開発においては`Editalbe install`を用いることでSite-packagesディレクトリから参照するよう統一することがベストプラクティスになっている。
+
+明示的相対importでも解決可能である。私見だが、他の言語の影響で今後は明示的相対importによる解決が主流になるかもしれない。
 
 ### スクリプト実行・モジュール実行
 
