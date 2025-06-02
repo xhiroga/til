@@ -45,6 +45,42 @@ $ make somepackage/dist/somepackage-0.1.0-py3-none-any.whl
 $ uv add somepackage/dist/somepackage-0.1.0-py3-none-any.whl
 ```
 
+## editable install
+
+実験は[`_src/editable-install`](_src/editable-install)を参照。
+
+カレントディレクトリをパッケージとしてinstallすると、`site-packages`ディレクトリを経由してパッケージを利用できる。
+
+```console
+$ python3 -m venv .venv
+$ .venv/bin/pip install -e .
+$ .venv/bin/python src/editable_install/main.py
+Hello, World!
+```
+
+この際、`site-packages`ディレクトリには`.pth`ファイルが作成される。
+
+```console
+$ cat .venv/lib/python3.13/site-packages/_editable_install.pth
+/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/editable-install/src
+```
+
+`pip install -r requirements.txt`と`pip install -e .`の両方を実行するのは手間なので、`requirements.txt`内に`-e .`を記述しておくと楽になる。
+
+```console
+$ rm -rf .venv
+$ python3 -m venv .venv
+$ cat requirements.txt
+-e .
+
+$ .venv/bin/pip install -r requirements.txt
+$ cat .venv/lib/python3.13/site-packages/_editable_install.pth
+/home/hiroga/Documents/GitHub/til/software-engineering/python/_src/editable-install/src
+
+$ .venv/bin/python src/editable_install/main.py
+Hello, World!
+```
+
 ### import
 
 Pythonは、パッケージ・モジュールを配置すべきパスをモジュール検索パスとして提供している。モジュール検索パスは`site`や`sys.path`で確認できる。
@@ -87,9 +123,9 @@ $ cat .venv/lib/python3.13/site-packages/_module.pth
 
 Python3でモジュールをimportするとき、モジュール名の頭に`.`を付けないなら、それは絶対importである。アプリケーション開発のレイアウトではエントリーポイントはプロジェクトルートに置かれるのが通例なので、プロジェクトルートからの相対importのようにも見えるが、異なる。モジュール検索パス内のカレントディレクトリからの絶対importである。
 
-パッケージを配布するとき、そのパッケージがパッケージ管理ツール(pip, uv, etc...)によってインストールされるなら、パッケージはSite-packagesディレクトリ経由でimportされる。なお、そうではない例としては、アプリケーション拡張機能(Blender, ComfyUI, etc...)など独自の方法でソースコードを管理する場合が考えられる。
+パッケージを配布するとき、そのパッケージがパッケージ管理ツール(pip, uv, etc...)によってインストールされるなら、パッケージは`site-packages`ディレクトリ経由でimportされる。なお、そうではない例としては、アプリケーション拡張機能(Blender, ComfyUI, etc...)など独自の方法でソースコードを管理する場合が考えられる。
 
-したがって、配布用のパッケージでは、カレントディレクトリからの絶対importを採用すると、インストール時に動かなくなることがある。これを避けるため、パッケージ開発においては`Editalbe install`を用いることでSite-packagesディレクトリから参照するよう統一することがベストプラクティスになっている。
+したがって、配布用のパッケージでは、カレントディレクトリからの絶対importを採用すると、インストール時に動かなくなることがある。これを避けるため、パッケージ開発においては`Editalbe install`を用いることで`site-packages`ディレクトリから参照するよう統一することがベストプラクティスになっている。
 
 ### スクリプト実行・モジュール実行
 

@@ -1,0 +1,17 @@
+[project]
+name = "editable-install"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Hiroaki Ogasawara", email = "13391129+xhiroga@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+editable-install = "editable_install:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
