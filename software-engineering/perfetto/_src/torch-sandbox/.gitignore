@@ -1,0 +1,3 @@
+.claude/
+traces/*
+!traces/trace_example.json
