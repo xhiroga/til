@@ -1,6 +1,6 @@
-# docker
+# Docker
 
-## volume
+## Volume
 
 ### Backup & Restore
 
@@ -88,4 +88,75 @@ drwxr-xr-x    2 root     root          4096 Jun  3 01:10 binaryData
 drwxr-xr-x    2 root     root          4096 Jun  3 01:10 git
 -rw-r--r--    1 root     root             0 Jun  3 01:10 n8nEventLog.log
 drwxr-xr-x    2 root     root          4096 Jun  3 01:10 ssh
+```
+
+tarの作成・解凍ともにコンテナ内で行うことで、メタデータを保つことができる。
+
+```console
+# Prepare
+$ export $(cat config/.n8n-borzoi.env | xargs)
+$ cd /home/hiroga/Documents/GitHub/homelab/apps
+$ sudo rm -rf ${SYNC_DIR}/*
+
+# Backup
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env up -d
+$ ls -la /var/lib/docker/volumes/n8n-borzoi_n8n_data/_data
+...
+
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env logs -f
+...
+sync-1  | [sync] 2025-06-03T01:42:30+00:00
+sync-1  | [sync] done
+
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env run --rm -it --entrypoint /bin/sh sync
+/ # ls -la _data
+total 472
+drwxr-sr-x    5 node     node          4096 Jun  3 02:08 .
+drwxr-sr-x    1 node     node          4096 Jun  3 02:09 ..
+drwxr-sr-x    2 node     node          4096 Jun  3 02:08 binaryData
+-rw-r--r--    1 node     node            56 Jun  3 02:08 config
+-rw-r--r--    1 node     node             0 Jun  3 02:08 crash.journal
+-rw-r--r--    1 node     node        454656 Jun  3 02:08 database.sqlite
+drwxr-sr-x    2 node     node          4096 Jun  3 02:08 git
+-rw-r--r--    1 node     node             0 Jun  3 02:08 n8nEventLog.log
+drwxr-sr-x    2 node     node          4096 Jun  3 02:08 ssh
+
+# 10秒程度待ってから...
+/ # tar -tvf /sync/n8n_data.tar.gz
+drwxr-sr-x 1000/1000         0 2025-06-03 02:56:46 ./
+-rw-r--r-- 1000/1000         0 2025-06-03 02:56:44 ./crash.journal
+drwxr-sr-x 1000/1000         0 2025-06-03 02:56:45 ./binaryData/
+-rw-r--r-- 1000/1000         0 2025-06-03 02:56:46 ./n8nEventLog.log
+drwxr-sr-x 1000/1000         0 2025-06-03 02:56:46 ./git/
+-rw-r--r-- 1000/1000        56 2025-06-03 02:56:43 ./config
+drwxr-sr-x 1000/1000         0 2025-06-03 02:56:46 ./ssh/
+-rw-r--r-- 1000/1000    454656 2025-06-03 02:56:46 ./database.sqlite
+
+# ホスト側からも確認可能
+$ tar -tvf ${SYNC_DIR}/n8n_data.tar.gz
+...
+
+# Restore
+# ホストから復元する場合は`_data`を置き換えればよいが、コンテナから復元する場合は`_data`がないとそもそもマウントできないので、ボリュームごと削除する。
+# この際、ボリュームのトップディレクトリの所有者がrootになりがちなので注意。また、--numeric-ownerを指定すると、元々のコンテナからアクセスできないことがある。
+
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env stop
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi rm -f
+$ docker volume rm n8n-borzoi_n8n_data
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env --profile restore run --rm restore
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env run --rm -it --entrypoint /bin/sh sync
+/ # ls -la _data
+total 468
+drwxr-sr-x    5 1000     1000          4096 Jun  3 03:23 .
+drwxr-xr-x    1 root     root          4096 Jun  3 03:26 ..
+drwxr-sr-x    2 1000     1000          4096 Jun  3 03:14 binaryData
+-rw-r--r--    1 1000     1000            56 Jun  3 03:14 config
+-rw-r--r--    1 1000     1000             0 Jun  3 03:14 crash.journal
+-rw-r--r--    1 1000     1000        454656 Jun  3 03:14 database.sqlite
+drwxr-sr-x    2 1000     1000          4096 Jun  3 03:14 git
+-rw-r--r--    1 1000     1000             0 Jun  3 03:14 n8nEventLog.log
+drwxr-sr-x    2 1000     1000          4096 Jun  3 03:14 ssh
+
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env up -d
+$ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env logs -f
 ```
