@@ -1,0 +1,24 @@
+[project]
+name = "sandbox"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    "pytorch-triton>=3.3.0",
+    "tensorboard>=2.19.0",
+    "torch>=2.6.0",
+    "torch-tb-profiler>=0.4.3",
+    "torchvision>=0.21.0",
+]
+# https://github.com/tensorflow/tensorboard/issues/6964
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+pytorch-triton = { index = "pytorch-cu124" }
+torch = { index = "pytorch-cu124" }
+torchvision = { index = "pytorch-cu124" }
