@@ -20,6 +20,7 @@ $ ls /mnt/c
 1+0 records in
 1+0 records out
 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 0.521108 s, 2.1 GB/s
+% rm /home/hiroga/test.img
 
 % dd if=/dev/zero of=/mnt/c/Users/hiroga/test.img bs=1G count=1 oflag=dsync
 flag=dsync
@@ -30,5 +31,5 @@ flag=dsync
 1+0 records in
 1+0 records out
 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 3.96538 s, 271 MB/s
+% rm /mnt/c/Users/hiroga/test.img
 ```
-
