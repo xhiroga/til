@@ -16,11 +16,30 @@ $ VOLUME_NAME="n8n-borzoi_n8n_data"
 $ mkdir -p .local
 $ tar -czf .local/$VOLUME_NAME.tar.gz -C /var/lib/docker/volumes/$VOLUME_NAME _data
 $ tar -tvf .local/$VOLUME_NAME.tar.gz
+drwxrwxrwx root/root         0 2025-06-03 10:10 _data/
+-rwxrwxrwx root/root         0 2025-06-03 10:10 _data/crash.journal
+drwxrwxrwx root/root         0 2025-06-03 10:10 _data/binaryData/
+-rwxrwxrwx root/root         0 2025-06-03 10:10 _data/n8nEventLog.log
+drwxrwxrwx root/root         0 2025-06-03 10:10 _data/git/
+-rwxrwxrwx root/root        56 2025-06-03 10:10 _data/config
+drwxrwxrwx root/root         0 2025-06-03 10:10 _data/ssh/
+-rwxrwxrwx root/root    454656 2025-06-03 10:10 _data/database.sqlite
+
 $ docker volume rm "$VOLUME_NAME"
 $ docker volume create "$VOLUME_NAME"
 $ sudo rm -r "/var/lib/docker/volumes/$VOLUME_NAME/_data"
 $ sudo tar -xzf .local/$VOLUME_NAME.tar.gz -C "/var/lib/docker/volumes/$VOLUME_NAME" --preserve-permissions --numeric-owner
 $ ls -la /var/lib/docker/volumes/$VOLUME_NAME/_data
+total 448
+drwxrwxrwx 5 root root    512 Jun  3 10:10 .
+drwxrwxrwx 3 root root    512 Jun  3 10:11 ..
+drwxrwxrwx 2 root root    512 Jun  3 10:10 binaryData
+-rwxrwxrwx 1 root root     56 Jun  3 10:10 config
+-rwxrwxrwx 1 root root      0 Jun  3 10:10 crash.journal
+-rwxrwxrwx 1 root root 454656 Jun  3 10:10 database.sqlite
+drwxrwxrwx 2 root root    512 Jun  3 10:10 git
+-rwxrwxrwx 1 root root      0 Jun  3 10:10 n8nEventLog.log
+drwxrwxrwx 2 root root    512 Jun  3 10:10 ssh
 
 $ cd /home/hiroga/Documents/GitHub/homelab/apps
 $ docker compose -f n8n/docker-compose.yml -p n8n-borzoi --env-file config/.n8n-borzoi.env up -d
