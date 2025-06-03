@@ -1,0 +1,4 @@
+.claude/
+.venv/
+profiles/*
+!profiles/flame_example.svg
