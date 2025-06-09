@@ -166,6 +166,21 @@ LSTMでは、系列の分類タスクや、系列のタイムステップと出�
 
 ### 量子化
 
+実験は[quantization](./_src/quantization/)を参照。
+
+モデルのパラメータや中間表現をより低精度な表現に変換することで、モデルサイズや計算コストを削減する技術。物理学の量子とは関係なく、連続的な値を離散的に近似することを量子化という。
+
+Pythonのデフォルトでは、浮動小数点をfp64で扱っている。このとき、1.0近辺で表せる数字の刻み幅は1.1e-16（つまり非常に高い精度）だが、例えばfp8(E4M3)では0.125~0.03程度となる。
+
+このように、より粗い刻み幅でデータを近似することが量子化である。
+
+Pythonの標準のfloat型はfp64だが、numpyを用いることでfp32やfp16などを用いることができる。`.safetensor`形式の機械学習モデルで、用いられたデータ型を確認する方法は次のとおり。
+
+```console
+$ uv run python -c "from safetensors import safe_open; import sys; f = safe_open(sys.argv[1], framework='pt', device='cpu'); print({k: f.get_tensor(k).dtype for k in f.keys()})" /mnt/d/models/vae/diffusion_pytorch_model.safetensors
+{'decoder.conv_in.conv.bias': torch.float32, 'decoder.conv_in.conv.weight': torch.float32, ...}
+```
+
 ### ネットワーク構造探索 (NAS)
 
 ## データが少ない場合の学習
