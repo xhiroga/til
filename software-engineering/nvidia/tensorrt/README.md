@@ -13,9 +13,9 @@ $ uv run python resnet50_trt_demo.py
 ...
 --- Performance Summary ---
 Input Batch Size: 8
-PyTorch: 5.729 ms
-PyTorch Compile: 3.409 ms (Speedup: 1.68x)
-PyTorch Compile (Inductor): 3.742 ms (Speedup: 1.53x)
-TensorRT FP32: 3.349 ms (Speedup: 1.71x)
-TensorRT FP16: 2.340 ms (Speedup: 2.45x)
+PyTorch: 4.205 ms
+PyTorch Compile: 1.696 ms (Speedup: 2.48x)
+PyTorch Compile (Inductor): 3.841 ms (Speedup: 1.09x)
+TensorRT FP32: 2.962 ms (Speedup: 1.42x)
+TensorRT FP16: 2.056 ms (Speedup: 2.05x)
 ```

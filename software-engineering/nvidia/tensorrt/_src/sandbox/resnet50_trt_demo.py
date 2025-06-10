@@ -199,7 +199,7 @@ def main():
     pytorch_compile_time = float('inf')
     try:
         print("Compiling model with torch.compile...")
-        compiled_model = torch_tensorrt.compile(resnet50, ir="dynamo", inputs=[input_tensor])
+        compiled_model = torch_tensorrt.compile(resnet50, ir="torchscript", inputs=[input_tensor])
         pytorch_compile_time = benchmark_framework("PyTorch Compile", pytorch_compile_inference_runner,
                                                   compiled_model, input_tensor, num_runs)
     except Exception as e:
