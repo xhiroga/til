@@ -18,7 +18,7 @@ $ uv run python resnet50_trt_demo.py
 ```
 実行結果のサマリー:
 ```
-PyTorch average inference time: 4.108 ms
+PyTorch average inference time: 5.174 ms
 ```
 
 ### TensorRT (FP32)
@@ -29,8 +29,8 @@ $ uv run python resnet50_trt_demo.py
 ```
 実行結果のサマリー:
 ```
-TensorRT FP32 average inference time: 2.667 ms
-Speedup vs PyTorch: 1.54x
+TensorRT FP32 average inference time: 2.947 ms
+Speedup vs PyTorch: 1.76x
 ```
 
 ### TensorRT (FP16)
@@ -41,9 +41,9 @@ $ uv run python resnet50_trt_demo.py
 ```
 実行結果のサマリー:
 ```
-TensorRT FP16 average inference time: 2.493 ms
-Speedup vs PyTorch: 1.65x
-Speedup vs TensorRT FP32: 1.07x
+TensorRT FP16 average inference time: 3.001 ms
+Speedup vs PyTorch: 1.72x
+Speedup vs TensorRT FP32: 0.98x
 ```
 
 ## 全体サマリー (リファクタリング後スクリプトによる)
@@ -51,8 +51,9 @@ Speedup vs TensorRT FP32: 1.07x
 ```
 --- Performance Summary ---
 Input Batch Size: 8
-PyTorch: 4.108 ms
-TensorRT FP32: 2.667 ms (Speedup vs PyTorch: 1.54x)
-TensorRT FP16: 2.493 ms (Speedup vs PyTorch: 1.65x)
-  (Speedup FP16 vs FP32: 1.07x)
+PyTorch: 5.174 ms
+PyTorch Compile (TensorRT backend): 3.042 ms (Speedup vs PyTorch Eager: 1.70x)
+TensorRT FP32 (ONNX based): 2.947 ms (Speedup vs PyTorch Eager: 1.76x)
+TensorRT FP16 (ONNX based): 3.001 ms (Speedup vs PyTorch Eager: 1.72x)
+  (Speedup FP16 vs FP32 for ONNX based: 0.98x)
 ```

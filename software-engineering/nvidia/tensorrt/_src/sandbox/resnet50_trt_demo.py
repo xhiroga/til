@@ -9,6 +9,10 @@ import pycuda.autoinit # Implicitly initializes CUDA and manages context
 import time
 import os
 
+# Add the explicit import for the torch_tensorrt dynamo backend
+import torch_tensorrt
+import torch_tensorrt.dynamo.backend 
+
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
 def load_or_create_input_tensor(image_path, batch_size):
@@ -194,6 +198,13 @@ def pytorch_inference_runner(model, input_tensor_pytorch, is_warmup=False):
         outputs = model(input_tensor_pytorch) # input_tensor_pytorch is already on cuda
     return outputs # Return PyTorch tensors
 
+def pytorch_compile_inference_runner(compiled_model, input_tensor_pytorch, is_warmup=False):
+    # compiled_model is already on CUDA if the original model was.
+    # input_tensor_pytorch should also be on CUDA.
+    with torch.no_grad():
+        outputs = compiled_model(input_tensor_pytorch)
+    return outputs
+
 def trt_inference_runner(engine_path, input_tensor_pytorch, is_warmup=False):
     runner = get_trt_runner(engine_path)
     # Ensure input is numpy array of correct dtype for TRT engine
@@ -258,6 +269,32 @@ def main():
                                           resnet50_pytorch, current_input_tensor_pytorch, 
                                           num_runs=num_inference_runs)
 
+    # --- PyTorch Compile Benchmark ---
+    print("\n--- PyTorch Compile ---")
+    pytorch_compile_time_ms = float('inf')
+    try:
+        # Ensure the model is on the correct device (CUDA) before compiling
+        # resnet50_pytorch is already on CUDA from previous setup
+        print("Compiling PyTorch model with torch.compile using TensorRT backend...")
+        # Using a default or generally good mode.
+        # mode="max-autotune" aims for best runtime performance, might take longer to compile.
+        # mode="reduce-overhead" might be faster to compile for smaller ops.
+        compiled_pytorch_model = torch.compile(resnet50_pytorch.cuda(), backend="tensorrt", dynamic=False)
+        print("Model compiled with torch.compile using TensorRT backend.")
+        
+        # Benchmark the compiled model
+        # Input tensor current_input_tensor_pytorch is already on CUDA
+        pytorch_compile_time_ms = benchmark_framework(
+            "PyTorch Compile", 
+            pytorch_compile_inference_runner,
+            compiled_pytorch_model,
+            current_input_tensor_pytorch, # This should be on CUDA
+            num_runs=num_inference_runs
+        )
+    except Exception as e:
+        print(f"torch.compile failed or benchmark error: {e}")
+        # pytorch_compile_time_ms remains float('inf')
+
     # --- ONNX Export ---
     if not os.path.exists(onnx_file_path):
         print(f"\nExporting model to ONNX: {onnx_file_path}...")
@@ -317,6 +354,10 @@ def main():
     print(f"Input Batch Size: {inference_batch_size}")
     print(f"PyTorch: {pytorch_time_ms:.3f} ms")
     
+    if pytorch_compile_time_ms != float('inf'):
+        speedup_compile_pytorch = pytorch_time_ms / pytorch_compile_time_ms if pytorch_compile_time_ms > 0 else float('inf')
+        print(f"PyTorch Compile: {pytorch_compile_time_ms:.3f} ms (Speedup vs PyTorch Eager: {speedup_compile_pytorch:.2f}x)")
+
     if trt_fp32_time_ms != float('inf'):
         speedup_fp32 = pytorch_time_ms / trt_fp32_time_ms if trt_fp32_time_ms > 0 else float('inf')
         print(f"TensorRT FP32: {trt_fp32_time_ms:.3f} ms (Speedup vs PyTorch: {speedup_fp32:.2f}x)")
