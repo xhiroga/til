@@ -19,6 +19,26 @@ GPU 00000000:01:00.0
 ...
 ```
 
+<details>
+<summary>L40S</summary>
+
+```console
+nvidia-smi -q
+
+==============NVSMI LOG==============
+
+Timestamp                                 : Tue Jun 10 09:46:16 2025
+Driver Version                            : 550.127.05
+CUDA Version                              : 12.8
+
+Attached GPUs                             : 1
+GPU 00000000:81:00.0
+    Product Name                          : NVIDIA L40S
+    Product Brand                         : NVIDIA
+    Product Architecture                  : Ada Lovelace
+```
+</details>
+
 ## Brand
 
 |ブランド|セグメント|製品例|命名規則|
