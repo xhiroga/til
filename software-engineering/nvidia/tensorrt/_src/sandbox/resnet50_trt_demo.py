@@ -253,9 +253,6 @@ def main():
     if fp16_time != float('inf'):
         speedup_pytorch = pytorch_time / fp16_time
         print(f"TensorRT FP16: {fp16_time:.3f} ms (Speedup: {speedup_pytorch:.2f}x)")
-        if fp32_time != float('inf'):
-            speedup_fp32 = fp32_time / fp16_time
-            print(f"  (FP16 vs FP32: {speedup_fp32:.2f}x)")
 
 if __name__ == "__main__":
-    main() 
+    main()
