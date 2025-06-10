@@ -6,54 +6,33 @@ PyTorchでの推論、ONNXエクスポート、TensorRTエンジン（FP32およ
 コードは[sandbox/_src/sandbox/resnet50_trt_demo.py](_src/sandbox/resnet50_trt_demo.py)を参照してください。
 デモスクリプトおよび生成されるモデルファイル(`.onnx`, `.engine`)は、`software-engineering/nvidia/tensorrt/_src/sandbox/` ディレクトリおよびその中の `models/` サブディレクトリで扱われます。
 
-## パフォーマンス結果 (バッチサイズ 8 での平均推論時間)
+## Performance
 
-使用されたGPU: NVIDIA GeForce RTX 4090
+GPU: NVIDIA GeForce RTX 4090
 
-### PyTorch
-
-実行コマンド (`_src/sandbox` ディレクトリ内):
 ```console
 $ uv run python resnet50_trt_demo.py
-```
-実行結果のサマリー:
-```
-PyTorch average inference time: 5.174 ms
-```
+CUDA device: NVIDIA GeForce RTX 4090
+Loading ResNet50 model...
 
-### TensorRT (FP32)
+Benchmarking PyTorch (100 runs, batch_size=8)...
+PyTorch average inference time: 4.404 ms
+Compiling model with torch.compile...
 
-実行コマンド (`_src/sandbox` ディレクトリ内):
-```console
-$ uv run python resnet50_trt_demo.py 
-```
-実行結果のサマリー:
-```
-TensorRT FP32 average inference time: 2.947 ms
-Speedup vs PyTorch: 1.76x
-```
+Benchmarking PyTorch Compile (100 runs, batch_size=8)...
+PyTorch Compile average inference time: 3.225 ms
 
-### TensorRT (FP16)
+Benchmarking TensorRT FP32 (100 runs, batch_size=8)...
+TensorRT FP32 average inference time: 2.829 ms
 
-実行コマンド (`_src/sandbox` ディレクトリ内):
-```console
-$ uv run python resnet50_trt_demo.py
-```
-実行結果のサマリー:
-```
-TensorRT FP16 average inference time: 3.001 ms
-Speedup vs PyTorch: 1.72x
-Speedup vs TensorRT FP32: 0.98x
-```
+Benchmarking TensorRT FP16 (100 runs, batch_size=8)...
+TensorRT FP16 average inference time: 2.016 ms
 
-## 全体サマリー (リファクタリング後スクリプトによる)
-
-```
 --- Performance Summary ---
 Input Batch Size: 8
-PyTorch: 5.174 ms
-PyTorch Compile (TensorRT backend): 3.042 ms (Speedup vs PyTorch Eager: 1.70x)
-TensorRT FP32 (ONNX based): 2.947 ms (Speedup vs PyTorch Eager: 1.76x)
-TensorRT FP16 (ONNX based): 3.001 ms (Speedup vs PyTorch Eager: 1.72x)
-  (Speedup FP16 vs FP32 for ONNX based: 0.98x)
+PyTorch: 4.404 ms
+PyTorch Compile: 3.225 ms (Speedup: 1.37x)
+TensorRT FP32: 2.829 ms (Speedup: 1.56x)
+TensorRT FP16: 2.016 ms (Speedup: 2.18x)
+  (FP16 vs FP32: 1.40x)
 ```
