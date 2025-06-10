@@ -205,6 +205,20 @@ def main():
     except Exception as e:
         print(f"torch.compile failed: {e}")
 
+    # PyTorch Compile (Inductor) benchmark
+    pytorch_compile_inductor_time = float('inf')
+    try:
+        print("Compiling model with torch.compile (inductor)...")
+        # Create a CPU version of the model for Inductor compilation
+        resnet50_cpu_for_inductor = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1).eval()
+        compiled_model_inductor = torch.compile(resnet50_cpu_for_inductor, backend="inductor")
+        # Ensure the compiled model is on the correct device for benchmarking
+        compiled_model_inductor = compiled_model_inductor.cuda()
+        pytorch_compile_inductor_time = benchmark_framework("PyTorch Compile (Inductor)", pytorch_compile_inference_runner,
+                                                            compiled_model_inductor, input_tensor, num_runs)
+    except Exception as e:
+        print(f"torch.compile (inductor) failed: {e}")
+
     # ONNX export
     if not os.path.exists(onnx_path):
         print(f"Exporting to ONNX: {onnx_path}")
@@ -245,6 +259,10 @@ def main():
     if pytorch_compile_time != float('inf'):
         speedup = pytorch_time / pytorch_compile_time
         print(f"PyTorch Compile: {pytorch_compile_time:.3f} ms (Speedup: {speedup:.2f}x)")
+
+    if pytorch_compile_inductor_time != float('inf'):
+        speedup = pytorch_time / pytorch_compile_inductor_time
+        print(f"PyTorch Compile (Inductor): {pytorch_compile_inductor_time:.3f} ms (Speedup: {speedup:.2f}x)")
 
     if fp32_time != float('inf'):
         speedup = pytorch_time / fp32_time
