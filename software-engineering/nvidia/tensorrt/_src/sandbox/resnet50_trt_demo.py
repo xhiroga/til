@@ -258,7 +258,7 @@ def main():
     
     if pytorch_compile_time != float('inf'):
         speedup = pytorch_time / pytorch_compile_time
-        print(f"PyTorch Compile: {pytorch_compile_time:.3f} ms (Speedup: {speedup:.2f}x)")
+        print(f"PyTorch Compile (TensorRT): {pytorch_compile_time:.3f} ms (Speedup: {speedup:.2f}x)")
 
     if pytorch_compile_inductor_time != float('inf'):
         speedup = pytorch_time / pytorch_compile_inductor_time

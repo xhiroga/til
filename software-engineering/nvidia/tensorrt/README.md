@@ -4,7 +4,7 @@ NVIDIAが提供する機械学習モデルの推論バックエンド。PyTorch�
 
 ## Performance
 
-コードは[sandbox/_src/sandbox/resnet50_trt_demo.py](_src/sandbox/resnet50_trt_demo.py)を参照。
+実装は[_src/sandbox](_src/sandbox)を参照。
 
 GPU: NVIDIA GeForce RTX 4090
 
@@ -13,9 +13,9 @@ $ uv run python resnet50_trt_demo.py
 ...
 --- Performance Summary ---
 Input Batch Size: 8
-PyTorch: 4.205 ms
-PyTorch Compile: 1.696 ms (Speedup: 2.48x)
-PyTorch Compile (Inductor): 3.841 ms (Speedup: 1.09x)
-TensorRT FP32: 2.962 ms (Speedup: 1.42x)
-TensorRT FP16: 2.056 ms (Speedup: 2.05x)
+PyTorch: 4.611 ms
+PyTorch Compile (TensorRT): 1.652 ms (Speedup: 2.79x)
+PyTorch Compile (Inductor): 3.499 ms (Speedup: 1.32x)
+TensorRT FP32: 3.024 ms (Speedup: 1.52x)
+TensorRT FP16: 2.444 ms (Speedup: 1.89x)
 ```
