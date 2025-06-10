@@ -39,6 +39,8 @@ GPU 00000000:81:00.0
 ```
 </details>
 
+ブランドとアーキテクチャ(=Compute Capability)は、[開発者向けページ](https://web.archive.org/web/20250608074658/https://developer.nvidia.com/cuda-gpus)から確認できる。
+
 ## Brand
 
 |ブランド|セグメント|製品例|命名規則|
