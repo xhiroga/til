@@ -1,8 +1,8 @@
 .PHONY: run
 
-run: models/compiled.so
+run: models/exported.pt2
 	mkdir -p models
-	uv run python demo_compile.py
+	uv run python demo_aot.py
 
-models/compiled.so: demo_compile.py
-	uv run demo_compile.py --compile
+models/exported.pt2: demo_aot.py
+	uv run demo_aot.py --export
