@@ -8,10 +8,6 @@ import torchvision.models as models
 from torch.export import export, load, save
 
 
-def get_model():
-    return models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
-
-
 def benchmark(model, input_tensor, num_runs=100):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
@@ -36,39 +32,42 @@ def main():
 
     batch_size = 64
     dummy_input = torch.randn(batch_size, 3, 224, 224)
-    model = get_model()
+    model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
     model.eval()
 
     exported_model_path = "models/exported.pt2"
-    os.makedirs("models", exist_ok=True)
 
     if args.export:
-        print(f"Exporting ResNet50 model to {exported_model_path}...")
         try:
-            exported_program = export(model, (dummy_input,))
+            print("Compiling the model with torch.compile...")
+            compiled_model = torch.compile(model, backend="inductor")
+            print("Model compiled successfully.")
+
+            print(f"Exporting compiled ResNet50 model to {exported_model_path}...")
+            exported_program = export(compiled_model, (dummy_input,))
             save(exported_program, exported_model_path)
-            print("Model exported successfully.")
+            os.makedirs(os.path.dirname(exported_model_path), exist_ok=True)
+            print("Compiled model exported successfully.")
         except Exception as e:
-            print(f"Error during model export: {e}")
-            # エクスポート失敗時は、後続のmake runでエラーになるようにpt2ファイルを削除(もしあれば)
+            print(f"Error during compiled model export: {e}")
             if os.path.exists(exported_model_path):
                 os.remove(exported_model_path)
-            return  # エクスポート失敗時はここで終了
+            return
     else:
         if not os.path.exists(exported_model_path):
             print(
-                f"Exported model not found at {exported_model_path}. Please run with --export first."
+                f"Exported compiled model not found at {exported_model_path}. Please run with --export first."
             )
             return
 
-        print("Running ResNet50 benchmark...")
+        print("Running ResNet50 benchmark (original vs compiled & exported)...")
         original_model_time = benchmark(model, dummy_input)
         print(f"Original model average inference time: {original_model_time:.3f} ms")
 
         try:
-            print(f"Loading exported model from {exported_model_path}...")
+            print(f"Loading exported compiled model from {exported_model_path}...")
             loaded_exported_program = load(exported_model_path)
-            print("Model loaded successfully.")
+            print("Compiled model loaded successfully.")
 
             class ExportedProgramWrapper(nn.Module):
                 def __init__(self, program_to_wrap):
@@ -83,7 +82,7 @@ def main():
             )
             exported_model_time = benchmark(exported_model_for_benchmark, dummy_input)
             print(
-                f"Exported model average inference time: {exported_model_time:.3f} ms"
+                f"Compiled and Exported model average inference time: {exported_model_time:.3f} ms"
             )
 
             if original_model_time > 0 and exported_model_time > 0:
