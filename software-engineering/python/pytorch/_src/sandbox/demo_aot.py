@@ -7,10 +7,10 @@ import os
 from torch.export import export, load, save as export_save # export_save を正しくインポート
 import torchvision.models as models # torchvision.models をインポート
 
-def get_model(pretrained=False):
-    # weights=None でランダム初期化、ResNet18_Weights.DEFAULT で事前学習済み
-    weights = models.ResNet18_Weights.DEFAULT if pretrained else None
-    model = models.resnet18(weights=weights)
+def get_model():
+    # weights=None でランダム初期化、ResNet50_Weights.DEFAULT で事前学習済み
+    weights = models.ResNet50_Weights.DEFAULT # 常に事前学習済み重みを使用
+    model = models.resnet50(weights=weights) # ResNet50 に変更
     # モデルの出力を確認・調整する場合 (例: 分類タスクのクラス数)
     # num_ftrs = model.fc.in_features
     # model.fc = nn.Linear(num_ftrs, 10) # 例: 10クラス分類
@@ -32,23 +32,19 @@ def benchmark(model, input_tensor, num_runs=100):
     return (end_time - start_time) / num_runs * 1000  # 平均実行時間 (ms)
 
 def main():
-    parser = argparse.ArgumentParser(description="PyTorch AOT Autograd Demo with ResNet18") # 説明を更新
+    parser = argparse.ArgumentParser(description="PyTorch AOT Autograd Demo with ResNet50") # 説明を更新
     parser.add_argument("--export", action="store_true", help="Export the model to an .so file")
-    parser.add_argument("--use_pretrained_weights", action="store_true", help="Use pretrained weights for ResNet18") # 事前学習重み使用オプション
     args = parser.parse_args()
 
-    # ResNet18用の入力サイズ
-    # input_size = 1024 # 元の入力サイズはコメントアウト
-    # output_size = 512
-    batch_size = 64 # バッチサイズはそのまま
-    dummy_input = torch.randn(batch_size, 3, 224, 224) # ResNet18の標準的な入力形状
+    # ResNet50用の入力サイズ
+    batch_size = 64
+    dummy_input = torch.randn(batch_size, 3, 224, 224) # ResNet50の標準的な入力形状
 
-    # model = SimpleModel(input_size, output_size) # 元のモデル初期化はコメントアウト
-    model = get_model(pretrained=args.use_pretrained_weights)
+    model = get_model() # pretrained 引数を削除
     model.eval() # 推論モードに設定
 
     if args.export:
-        print("Exporting ResNet18 model...")
+        print("Exporting ResNet50 model...") # モデル名を更新
         os.makedirs("models", exist_ok=True)
         try:
             exported_program = export(model, (dummy_input,))
@@ -62,7 +58,7 @@ def main():
             print(f"Error during model export: {e}")
 
     else:
-        print("Running ResNet18 benchmark...")
+        print("Running ResNet50 benchmark...") # モデル名を更新
 
         original_model_time = benchmark(model, dummy_input)
         print(f"Original model average inference time: {original_model_time:.3f} ms")
