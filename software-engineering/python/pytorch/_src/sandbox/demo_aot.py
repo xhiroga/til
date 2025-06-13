@@ -48,49 +48,26 @@ def main():
     model.eval() # 推論モードに設定
 
     if args.export:
-        print("Exporting ResNet18 model...") # モデル名を更新
+        print("Exporting ResNet18 model...")
         os.makedirs("models", exist_ok=True)
         try:
             exported_program = export(model, (dummy_input,))
             print(f"Exported program type: {type(exported_program)}")
-            export_save(exported_program, "models/exported.pt2") # torch.export.save を使用
+            export_save(exported_program, "models/exported.pt2")
             print("Model exported to models/exported.pt2")
-
-            # .so を期待されているが、torch.export は .pt2 (Pytorch 2 Export Format)
-            # で保存するのが標準的な使い方。
-            # ここでは、便宜上 .so の代わりに .pt2 を使うことにする。
-            # もし厳密に .so が必要なら、C++ 拡張のビルドプロセスが必要。
-
-            # ダミーの .so ファイルを作成 (Makefile の依存関係のため)
-            # 実際には .pt2 ファイルが使われる
-            with open("models/exported.so", "w") as f:
-                f.write("This is a placeholder for the .so file. Use exported.pt2 instead.")
-            print("Placeholder models/exported.so created for Makefile compatibility.")
 
         except ImportError:
             print("torch.export is not available. Please use PyTorch 2.0 or later.")
-            print("As a fallback, creating a dummy .so file.")
-            # ダミーの .so ファイルを作成 (Makefile の依存関係のため)
-            os.makedirs("models", exist_ok=True) # Ensure models dir exists
-            with open("models/exported.so", "w") as f:
-                f.write("torch.export not found. This is a dummy .so file.")
-            print("Dummy models/exported.so created.")
         except Exception as e:
             print(f"Error during model export: {e}")
-            # エラー時もダミーの.soファイルを作成してMakefileの依存関係を解決
-            os.makedirs("models", exist_ok=True) # Ensure models dir exists
-            with open("models/exported.so", "w") as f:
-                f.write(f"Error during export: {e}. This is a dummy .so file.")
-            print(f"Dummy models/exported.so created due to export error.")
 
     else:
-        print("Running ResNet18 benchmark...") # モデル名を更新
+        print("Running ResNet18 benchmark...")
 
         original_model_time = benchmark(model, dummy_input)
         print(f"Original model average inference time: {original_model_time:.3f} ms")
 
         exported_model_path = "models/exported.pt2"
-        so_file_path = "models/exported.so" # Makefile のためにチェック
 
         if os.path.exists(exported_model_path):
             try:
@@ -127,11 +104,8 @@ def main():
                 print(f"Error loading or benchmarking exported model: {e}")
                 print(f"Please ensure '{exported_model_path}' was created correctly via '--export'.")
 
-        elif os.path.exists(so_file_path):
-            print(f"Found placeholder {so_file_path}, but benchmarks require {exported_model_path}.")
-            print("Please run with --export to generate the actual model file.")
         else:
-            print(f"Neither {exported_model_path} nor {so_file_path} found.")
+            print(f"Exported model not found at {exported_model_path}.")
             print("Please run with --export first to generate the model file.")
 
 if __name__ == "__main__":
