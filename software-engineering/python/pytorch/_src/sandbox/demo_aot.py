@@ -10,6 +10,17 @@ if not torch.cuda.is_available():
     raise RuntimeError("CUDA is not available")
 
 
+def benchmark(model, input_tensor, num_runs=100):
+    input_tensor = input_tensor.to("cuda")
+    for _ in range(10):  # Warmup
+        model(input_tensor)
+
+    start_time = time.time()
+    for _ in range(num_runs):
+        model(input_tensor)
+    return (time.time() - start_time) / num_runs * 1000  # ms
+
+
 def export_compiled(model, input_tensor, exported_model_path):
     print(f"Compiling and export to {exported_model_path}...")
     input_tensor_cuda = input_tensor.to("cuda")
@@ -41,17 +52,6 @@ def inference(model, input_tensor, exported_model_path):
 
     speedup = original_model_time / exported_model_time
     print(f"Speedup: {speedup:.2f}x")
-
-
-def benchmark(model, input_tensor, num_runs=100):
-    input_tensor = input_tensor.to("cuda")
-    for _ in range(10):  # Warmup
-        model(input_tensor)
-
-    start_time = time.time()
-    for _ in range(num_runs):
-        model(input_tensor)
-    return (time.time() - start_time) / num_runs * 1000  # ms
 
 
 def main():
