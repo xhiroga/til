@@ -1,3 +1,4 @@
+# https://docs.pytorch.org/tutorials/recipes/recipes/profiler_recipe.html
 import torch
 import torchvision.models as models
 from torch.profiler import ProfilerActivity, profile
