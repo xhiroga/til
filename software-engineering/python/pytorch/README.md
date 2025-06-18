@@ -16,8 +16,14 @@ Compiled model average inference time: 17.440 ms
 Speedup: 1.35x
 
 $ ls models
-trt.ep
+trt.pt2
+
+$ make output/resnet50_graph.svg
 ```
+
+モデルを可視化したSVGファイルは相当巨大になるので、Chromeでは描画できないことがある。
+
+（例えば上記の`trt.pt2`をブラウザで開くと、`width: 28298pt; height: 43775pt;`という巨大なSVG要素になる。）
 
 ## Profiler
 

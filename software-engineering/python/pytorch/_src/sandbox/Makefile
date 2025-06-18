@@ -5,6 +5,10 @@ LOGDIR=/mnt/d/output/til/software-engineering/python/pytorch/_src/sandbox
 run: models/trt.pt2
 	uv run python demo_aot.py
 
+output/resnet50_graph.svg: models/trt.pt2
+	mkdir -p $(dir $@)
+	uv run python demo_viz.py
+
 models/trt.pt2: demo_aot.py
 	mkdir -p models
 	uv run demo_aot.py --export
