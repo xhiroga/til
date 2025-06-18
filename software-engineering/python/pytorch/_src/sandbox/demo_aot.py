@@ -68,7 +68,7 @@ def main():
     model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
     model.eval()
 
-    exported_model_path = "models/trt.ep"
+    exported_model_path = "models/trt.pt2"
 
     if args.export:
         try:
