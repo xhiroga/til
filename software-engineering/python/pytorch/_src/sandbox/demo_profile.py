@@ -1,6 +1,8 @@
 import argparse
+import datetime
 import json
 import os
+from pathlib import Path
 
 import torch
 import torchvision
@@ -26,12 +28,14 @@ with torch.profiler.profile(
         # use_cuda=True に代わって推奨
         torch.profiler.ProfilerActivity.CUDA,
     ],
-    record_shapes=True,
-    profile_memory=True,
     with_stack=True,
-    # NVTX情報も含める
-    with_flops=True,
-    on_trace_ready=torch.profiler.tensorboard_trace_handler(args.logdir),
+    # 以下の設定で 14MB -> 11MB 程度まで削減できる。
+    experimental_config=torch.profiler._ExperimentalConfig(
+        profiler_measure_per_kernel=False,
+        verbose=False,
+        performance_events=[],
+        enable_cuda_sync_events=False,
+    ),
 ) as prof:
     # 出力されるJSONのトップレベルのプロパティに `"args": {"repeat": 10},` が追加される。
     prof.add_metadata_json("args", json.dumps(vars(args), default=str))
@@ -47,3 +51,8 @@ with torch.profiler.profile(
 # ブロック内でアクセスすると何も表示されない。
 # なお、`schedule`を渡している場合は profile() が返すインスタンスがシグニチャ違いの別クラスになるので、呼び出す際に一手間必要そう。。
 print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+
+# おそらく `on_trace_ready=torch.profiler.tensorboard_trace_handler(args.logdir)` で実装しても内容は同じ？ファイル名を指定するならこちら。
+trace_path = Path(args.logdir) / f"{os.uname().nodename}-{Path(__file__).stem}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pt.trace.json"
+os.makedirs(trace_path.parent, exist_ok=True)
+prof.export_chrome_trace(str(trace_path))
