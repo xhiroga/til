@@ -53,6 +53,6 @@ with torch.profiler.profile(
 print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
 
 # おそらく `on_trace_ready=torch.profiler.tensorboard_trace_handler(args.logdir)` で実装しても内容は同じ？ファイル名を指定するならこちら。
-trace_path = Path(args.logdir) / f"{os.uname().nodename}-{Path(__file__).stem}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pt.trace.json"
+trace_path = Path(args.logdir) / f"{os.uname().nodename}-{Path(__file__).stem}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pt.trace.json.gz"
 os.makedirs(trace_path.parent, exist_ok=True)
 prof.export_chrome_trace(str(trace_path))
