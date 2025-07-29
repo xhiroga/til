@@ -3,8 +3,11 @@
 # Model files to download
 models = \
 	ComfyUI/models/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors \
+	ComfyUI/models/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors \
+	ComfyUI/models/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors \
 	ComfyUI/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors \
-	ComfyUI/models/vae/wan2.2_vae.safetensors
+	ComfyUI/models/vae/wan2.2_vae.safetensors \
+	ComfyUI/models/vae/wan_2.1_vae.safetensors
 
 # Main download target
 download: $(models)
@@ -41,6 +44,39 @@ ComfyUI/models/vae/wan2.2_vae.safetensors:
 		--repo-type model \
 		--local-dir .tmp_download
 	@mv .tmp_download/split_files/vae/wan2.2_vae.safetensors $@
+	@rm -rf .tmp_download
+
+ComfyUI/models/vae/wan_2.1_vae.safetensors:
+	@mkdir -p $(dir $@)
+	@echo "Downloading wan_2.1_vae.safetensors..."
+	uvx --from "huggingface_hub[cli]" huggingface-cli download \
+		Comfy-Org/Wan_2.2_ComfyUI_Repackaged \
+		split_files/vae/wan_2.1_vae.safetensors \
+		--repo-type model \
+		--local-dir .tmp_download
+	@mv .tmp_download/split_files/vae/wan_2.1_vae.safetensors $@
+	@rm -rf .tmp_download
+
+ComfyUI/models/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors:
+	@mkdir -p $(dir $@)
+	@echo "Downloading wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors..."
+	uvx --from "huggingface_hub[cli]" huggingface-cli download \
+		Comfy-Org/Wan_2.2_ComfyUI_Repackaged \
+		split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors \
+		--repo-type model \
+		--local-dir .tmp_download
+	@mv .tmp_download/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors $@
+	@rm -rf .tmp_download
+
+ComfyUI/models/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors:
+	@mkdir -p $(dir $@)
+	@echo "Downloading wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors..."
+	uvx --from "huggingface_hub[cli]" huggingface-cli download \
+		Comfy-Org/Wan_2.2_ComfyUI_Repackaged \
+		split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors \
+		--repo-type model \
+		--local-dir .tmp_download
+	@mv .tmp_download/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors $@
 	@rm -rf .tmp_download
 
 # Clean downloaded models
