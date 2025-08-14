@@ -1,0 +1,41 @@
+[project]
+name = "wan2-2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.11.8",
+    "alembic>=1.16.4",
+    "av>=14.2.0",
+    "comfyui-embedded-docs==0.2.4",
+    "comfyui-frontend-package==1.23.4",
+    "comfyui-workflow-templates==0.1.41",
+    "einops>=0.8.1",
+    "numpy>=1.25.0",
+    "pillow>=11.3.0",
+    "psutil>=7.0.0",
+    "pytorch-triton>=3.3.0",
+    "pyyaml>=6.0.2",
+    "safetensors>=0.4.2",
+    "scipy>=1.16.1",
+    "sentencepiece>=0.2.0",
+    "sqlalchemy>=2.0.41",
+    "tokenizers>=0.13.3",
+    "torch>=2.7.1",
+    "torchsde>=0.2.6",
+    "torchvision>=0.22.1",
+    "tqdm>=4.67.1",
+    "transformers>=4.37.2",
+    "yarl>=1.18.0",
+]
+
+[[tool.uv.index]]
+name = "pytorch-nightly-cu129"
+url = "https://download.pytorch.org/whl/nightly/cu129"
+explicit = true
+
+[tool.uv.sources]
+pytorch-triton = { index = "pytorch-nightly-cu129" }
+torch = { index = "pytorch-nightly-cu129" }
+torchvision = { index = "pytorch-nightly-cu129" }
