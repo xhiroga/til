@@ -1,0 +1,23 @@
+[project]
+name = "videomae"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "av>=15.1.0",
+    "pillow>=11.3.0",
+    "pipeline>=0.1.0",
+    "torch>=2.8.0",
+    "transformers>=4.56.1",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+pytorch-triton = { index = "pytorch-cu128" }
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
