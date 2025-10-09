@@ -1,3 +1,4 @@
+import random
 from pathlib import Path
 import wave
 
@@ -7,17 +8,17 @@ from transformers import AutoProcessor, HubertForCTC
 
 
 dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation").sort("id")
+sample_idx = random.randrange(len(dataset))
 sampling_rate = dataset.features["audio"].sampling_rate
 
 processor = AutoProcessor.from_pretrained("facebook/hubert-large-ls960-ft")
 model = HubertForCTC.from_pretrained("facebook/hubert-large-ls960-ft")
 model.eval()
 
-audio = dataset[0]["audio"]
+audio = dataset[sample_idx]["audio"]
 audio_array = audio["array"]
 
-Path("outputs").mkdir(exist_ok=True)
-audio_path = Path("outputs/demo.wav")
+audio_path = Path(f"outputs/demo_{sample_idx}.wav")
 audio_path.parent.mkdir(exist_ok=True)
 with wave.open(audio_path.as_posix(), "wb") as wav:
     wav.setnchannels(1)
@@ -32,7 +33,7 @@ predicted_ids = torch.argmax(logits, dim=-1)
 
 transcription = processor.batch_decode(predicted_ids)
 hypo = transcription[0]
-ref = dataset[0]["text"]
+ref = dataset[sample_idx]["text"]
 
 print(f"Saved audio to {audio_path}")
 print(f"hypo: {hypo}")
