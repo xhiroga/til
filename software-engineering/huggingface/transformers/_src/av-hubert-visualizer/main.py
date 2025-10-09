@@ -2,9 +2,8 @@ from __future__ import annotations
 
 import os
 import sys
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Tuple
+from typing import Optional, Tuple, Union
 
 import gradio as gr
 import numpy as np
@@ -69,26 +68,18 @@ _MODEL_DIR = _resolve_model_path()
 _MODEL_ID = _MODEL_DIR.name
 
 _DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+AUDIO_SAMPLE_RATE = 16_000
 
 
-@dataclass
-class ModelBundle:
-    encoder: torch.nn.Module
-    audio_sample_rate: int
-
-
-def load_model() -> ModelBundle:
+def _load_encoder() -> torch.nn.Module:
     model = AV2TextForConditionalGeneration.from_pretrained(
         str(_MODEL_DIR),
         local_files_only=True,
     )
-    encoder = model.model.encoder.to(_DEVICE).eval()
-    # AV-HuBERT config uses `sample_rate=25` for video FPS, so fix audio rate explicitly.
-    audio_sample_rate = 16_000
-    return ModelBundle(encoder=encoder, audio_sample_rate=audio_sample_rate)
+    return model.model.encoder.to(_DEVICE).eval()
 
 
-_MODEL_BUNDLE = load_model()
+_ENCODER = _load_encoder()
 
 
 # ---------------------------------------------------------------------------
@@ -123,7 +114,7 @@ def _compute_logfbank(waveform: np.ndarray, sample_rate: int) -> np.ndarray:
     return fbank.numpy()
 
 
-def _prepare_audio(audio: Tuple[int, np.ndarray], target_rate: int):
+def _prepare_audio(audio: Optional[Tuple[int, np.ndarray]], target_rate: int) -> Tuple[torch.Tensor, float]:
     if audio is None:
         raise gr.Error("音声をアップロードしてください。")
 
@@ -159,7 +150,10 @@ def _prepare_audio(audio: Tuple[int, np.ndarray], target_rate: int):
     return feats_tensor, duration
 
 
-def _prepare_video(video_value: str) -> torch.Tensor:
+VideoInput = Union[str, Path, Tuple[Union[str, Path], Optional[Union[str, Path]]]]
+
+
+def _prepare_video(video_value: Optional[VideoInput]) -> torch.Tensor:
     if video_value is None:
         raise gr.Error("動画をアップロードしてください。")
     if isinstance(video_value, tuple):
@@ -248,13 +242,14 @@ def _reduce_embeddings(hidden_states: torch.Tensor, duration: float) -> go.Figur
             yaxis_title="UMAP-1",
             zaxis_title="UMAP-2",
         ),
+        height=720,
         margin=dict(l=0, r=0, b=0, t=30),
     )
     return fig
 
 
-def embed_modalities(audio: Tuple[int, np.ndarray], video: str) -> Tuple[go.Figure, str]:
-    audio_feats, duration = _prepare_audio(audio, target_rate=_MODEL_BUNDLE.audio_sample_rate)
+def embed_modalities(audio: Optional[Tuple[int, np.ndarray]], video: Optional[VideoInput]) -> Tuple[go.Figure, str]:
+    audio_feats, duration = _prepare_audio(audio, target_rate=AUDIO_SAMPLE_RATE)
     video_feats = _prepare_video(video)
     audio_feats, video_feats = _align_modalities(audio_feats, video_feats)
 
@@ -265,7 +260,7 @@ def embed_modalities(audio: Tuple[int, np.ndarray], video: str) -> Tuple[go.Figu
     attention_mask = attention_mask.to(_DEVICE)
 
     with torch.no_grad():
-        outputs = _MODEL_BUNDLE.encoder(
+        outputs = _ENCODER(
             input_features=audio_feats,
             attention_mask=attention_mask,
             video=video_feats,
@@ -320,7 +315,7 @@ def build_interface() -> gr.Blocks:
 
 def main() -> None:
     demo = build_interface()
-    demo.queue().launch(show_api=False)
+    demo.queue().launch()
 
 
 if __name__ == "__main__":
