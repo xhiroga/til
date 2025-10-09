@@ -5,7 +5,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "datasets>=4.1.1",
-    "gradio>=4.44.0",
+    "gradio>=4.44.1",
     "plotly>=5.24.0",
     "protobuf>=6.32.1",
     "torch>=2.8.0",

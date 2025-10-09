@@ -556,7 +556,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "datasets", specifier = ">=4.1.1" },
-    { name = "gradio", specifier = ">=4.44.0" },
+    { name = "gradio", specifier = ">=4.44.1" },
     { name = "plotly", specifier = ">=5.24.0" },
     { name = "protobuf", specifier = ">=6.32.1" },
     { name = "torch", specifier = ">=2.8.0", index = "https://download.pytorch.org/whl/cu128" },
