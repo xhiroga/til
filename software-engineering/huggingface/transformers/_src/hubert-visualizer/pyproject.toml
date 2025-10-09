@@ -1,0 +1,23 @@
+[project]
+name = "hubert-visualizer"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "datasets>=4.1.1",
+    "gradio>=4.44.0",
+    "plotly>=5.24.0",
+    "protobuf>=6.32.1",
+    "torch>=2.8.0",
+    "torchcodec>=0.7.0",
+    "transformers>=4.56.1",
+    "umap-learn>=0.5.6",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
