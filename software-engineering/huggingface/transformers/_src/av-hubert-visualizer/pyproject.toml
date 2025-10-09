@@ -12,4 +12,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-av-hubert-s2s = { path = "../../../../../../AV-HuBERT-S2S" }
+av-hubert-s2s = { git = "https://github.com/xhiroga/AV-HuBERT-S2S/" }

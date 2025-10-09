@@ -137,7 +137,7 @@ wheels = [
 [[package]]
 name = "av-hubert-s2s"
 version = "0.1.0"
-source = { directory = "../../../../../../AV-HuBERT-S2S" }
+source = { git = "https://github.com/xhiroga/AV-HuBERT-S2S/#bcf3bbe9617aeff1511bc8fec2bfe8a395fd58ae" }
 dependencies = [
     { name = "av" },
     { name = "dlib" },
@@ -157,25 +157,6 @@ dependencies = [
     { name = "transformers" },
 ]
 
-[package.metadata]
-requires-dist = [
-    { name = "av", specifier = "==15.1.0" },
-    { name = "dlib", specifier = "==19.24.6" },
-    { name = "ffmpeg-python", specifier = "==0.2.0" },
-    { name = "ffmpy", specifier = "==0.4.0" },
-    { name = "gradio", specifier = ">=5.49.1" },
-    { name = "numpy", specifier = "==2.0.2" },
-    { name = "opencv-python", specifier = "==4.10.0.84" },
-    { name = "python-speech-features", specifier = "==0.6" },
-    { name = "scikit-image", specifier = "==0.24.0" },
-    { name = "sentencepiece", specifier = "==0.2.0" },
-    { name = "soundfile", specifier = "==0.12.1" },
-    { name = "torch", specifier = "==2.4.0", index = "https://download.pytorch.org/whl/cu124" },
-    { name = "torchaudio", specifier = "==2.4.0", index = "https://download.pytorch.org/whl/cu124" },
-    { name = "torchvision", specifier = "==0.19.0", index = "https://download.pytorch.org/whl/cu124" },
-    { name = "transformers", specifier = "==4.44.2" },
-]
-
 [[package]]
 name = "av-hubert-visualizer"
 version = "0.1.0"
@@ -189,7 +170,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "av-hubert-s2s", directory = "../../../../../../AV-HuBERT-S2S" },
+    { name = "av-hubert-s2s", git = "https://github.com/xhiroga/AV-HuBERT-S2S/" },
     { name = "gradio", specifier = ">=5.49.1" },
     { name = "plotly", specifier = ">=5.24.0" },
     { name = "umap-learn", specifier = ">=0.5.6" },
