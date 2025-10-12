@@ -23,7 +23,7 @@ PyTorchを利用した、翻訳などのシーケンス処理のためのフレ�
 
 パッケージとしてimportすることもできるが、Cloneして拡張する方がメジャーに見えます。公式ドキュメントもそうですし、論文の公式実装リポジトリ内にfairseqがコミットされていることもあります。
 
-2025年現在、別のリポジトリで [fairseq2](https://github.com/facebookresearch/fairseq2) が提供されているため、fairseq のメンテナンスはほぼ終了しています（ただし、スター数では**31k vs 1k**とfairseqが圧倒しています）
+2025年10月12日時点では、別のリポジトリで [fairseq2](https://github.com/facebookresearch/fairseq2) が開発されており、fairseq 本体の安定版リリースは 2022年6月28日(v0.12.2) から更新が止まっています。ただしリポジトリへのコミットは継続しているため、完全にメンテナンス終了というわけではありません（スター数は 2025年10月12日時点で **約31.8k vs 約1.0k** と fairseq が依然優勢です）。
 
 ## メンタルモデル
 
@@ -63,18 +63,13 @@ ValueError: mutable default <class 'fairseq.dataclass.configs.CommonConfig'> for
 
 ### PyTorch2.6以降のモデルロード時のデフォルト引数の変更との競合
 
-```console
-ValueError: mutable default <class 'fairseq.dataclass.configs.CommonConfig'> for field common is not allowed: use default_factory
-```
+PyTorch 2.6.0 で `torch.load` の既定値 `weights_only=True` が導入された影響で、`fairseq` に含まれる pickled クラスが信頼できないと判断されます。
+
 対処法は3通りあります。
 
-1. `fairseq`側の`checkpoint_utils.py`を変更する（参考: [xhiroga/zero-avsr](https://github.com/xhiroga/zero-avsr/blob/7609cf42c99c74a231a9c93615f42e1a2af547ff/fairseq/fairseq/checkpoint_utils.py#L305)）
-2. PyTorch2.5以前を使う
-3. 次のとおりワークアラウンドを実行する（これ直接関係あるのか...？）
-
-```py
-add_safe_globals([data.dictionary.Dictionary])
-```
+1. `torch.serialization.add_safe_globals([data.dictionary.Dictionary])` を実行して、必要なクラスをホワイトリストに登録する。
+2. 信頼できるチェックポイントのみを扱う前提で `torch.load(..., weights_only=False)` を明示する。
+3. PyTorch 2.5 以前を利用する（CVE-2025-32434 の修正が含まれない点に注意）。
 
 ### fairseq-train: error: argument --arch/-a: invalid choice:
 
