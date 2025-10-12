@@ -1,0 +1,9 @@
+[project]
+name = "getting-started"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fairseq>=0.12.2",
+]
