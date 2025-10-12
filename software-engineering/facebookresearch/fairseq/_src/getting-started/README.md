@@ -7,7 +7,8 @@ uv run fairseq-train data-bin/iwslt14.tokenized.de-en \
   --arch tutorial_simple_lstm \
   --encoder-dropout 0.2 --decoder-dropout 0.2 \
   --optimizer adam --lr 0.005 --lr-shrink 0.5 \
-  --max-tokens 12000
+  --max-tokens 12000 \
+  --user-dir src/getting_started
 ```
 
 ## fairseqとは？
@@ -25,6 +26,8 @@ PyTorchを利用したシーケンス処理のためのフレームワーク。�
 - タスク
 - レジストリ
 - マニフェスト
+- モデル = register_modelと 
+- アーキテクチャ = register_model_architecture（モデルの設定プリセット）
 
 ## ありがちなエラー
 
@@ -42,18 +45,23 @@ ValueError: mutable default <class 'fairseq.dataclass.configs.CommonConfig'> for
 対処法は2通りあります。
 
 1. `FairseqConfig`を修正する（参考: [xhiroga/zero-avsr](https://github.com/xhiroga/zero-avsr/blob/7609cf42c99c74a231a9c93615f42e1a2af547ff/fairseq/fairseq/dataclass/configs.py#L973)）
-2. Python 3.10以前を利用する
+2. Python 3.10以前を使う
 
 ### PyTorch2.6以降のモデルロード時のデフォルト引数の変更との競合
 
 ```console
 ValueError: mutable default <class 'fairseq.dataclass.configs.CommonConfig'> for field common is not allowed: use default_factory
 ```
-対処法は2通りあります。
+対処法は3通りあります。
 
 1. `fairseq`側の`checkpoint_utils.py`を変更する（参考: [xhiroga/zero-avsr](https://github.com/xhiroga/zero-avsr/blob/7609cf42c99c74a231a9c93615f42e1a2af547ff/fairseq/fairseq/checkpoint_utils.py#L305)）
-2. 次のとおりワークアラウンドを実行する（これ直接関係あるのか...？）
+2. PyTorch2.5以前を使う
+3. 次のとおりワークアラウンドを実行する（これ直接関係あるのか...？）
 
 ```py
 add_safe_globals([data.dictionary.Dictionary])
 ```
+
+### fairseq-train: error: argument --arch/-a: invalid choice:
+
+パッケージの`fairseq`のCLIが、自作モデルを認識していないことがあります。その場合、`--user-dir`オプションで渡したディレクトリがパッケージとして解釈され、`import`が実行されます。
