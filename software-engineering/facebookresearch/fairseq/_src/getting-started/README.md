@@ -43,6 +43,10 @@ PyTorchのラッパーです。YAMLなどでタスク・モデル・データを
 
 特に重要な概念はタスク・モデル・アーキテクチャです。ここでタスクは訓練・推論する処理の種類を指し、毎回の実行はジョブと呼ばれます。モデルは`torch.nn`の子孫クラスのラッパーと雑に考えて良いです。アーキテクチャはモデル＋プリセットの設定です。単にモデルを継承したモデルとして定義すれば良さそうなものですが、そうしなかったようです。
 
+## 設定
+
+fairseqを呼び出すコード（エントリーポイント）に対する設定の渡し方は、`--config-dir`などでYAMLを渡し、その後にCLIで差分を渡すスタイルが定番です。Hydraの仕様として、CLIで渡す差分のうちYAMLで定義したキーは `section.field=value`, 無いキーは `+section.field=value` の形式です。設定をfairseqの `checkpoint_util`や`dist_util`にそのまま渡せるよう、fairseq公式でパース先のDataClassが定義されています（[configs.py](https://github.com/facebookresearch/fairseq/blob/main/fairseq/dataclass/configs.py)）
+
 ## ありがちなエラー
 
 fairseqは古いパッケージなので、最新の環境だとエラーが発生します。
