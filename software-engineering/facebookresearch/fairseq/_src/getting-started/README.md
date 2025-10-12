@@ -2,18 +2,24 @@
 
 ## 実行する
 
+**注意: エラーが発生します**
+
 ```sh
+mkdir -p data-bin
+uv run --directory data-bin bash ../.venv/lib/python3.10/site-packages/fairseq/examples/translation/prepare-iwslt14.sh
 uv run fairseq-train data-bin/iwslt14.tokenized.de-en \
   --arch tutorial_simple_lstm \
   --encoder-dropout 0.2 --decoder-dropout 0.2 \
   --optimizer adam --lr 0.005 --lr-shrink 0.5 \
   --max-tokens 12000 \
-  --user-dir src/getting_started
+  --user-dir src/getting_started \
+  --source-lang de \
+  --target-lang en
 ```
 
 ## fairseqとは？
 
-PyTorchを利用したシーケンス処理のためのフレームワーク。読みは「フェアーシーク」が近そう（[YouTube](https://www.youtube.com/watch?v=t6JjlNVuBUQ)）。
+PyTorchを利用したシーケンス処理のためのフレームワーク。読みは「フェアーシーク」が近そう（参考: [YouTube](https://www.youtube.com/watch?v=t6JjlNVuBUQ)）。
 
 見た感じでは、パッケージとしての使用よりも、Cloneしてモデルを拡張し、さらにCLIから呼び出すことを想定しているようだ。
 
