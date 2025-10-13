@@ -19,9 +19,9 @@ uv run fairseq-train data-bin/iwslt14.tokenized.de-en \
 
 ## fairseqとは？
 
-PyTorchを利用した、翻訳などのシーケンス処理のためのフレームワーク。読みは「フェアーシーク」が近そう（参考: [YouTube](https://www.youtube.com/watch?v=t6JjlNVuBUQ)）。
+PyTorchを利用した、翻訳などのシーケンス処理のためのフレームワークです。読みは「フェアーシーク」と思われます（参考: [YouTube](https://www.youtube.com/watch?v=t6JjlNVuBUQ)）。
 
-パッケージとしてimportすることもできるが、Cloneして拡張する方がメジャーに見えます。公式ドキュメントもそうですし、論文の公式実装リポジトリ内にfairseqがコミットされていることもあります。
+パッケージとしてimportすることもできますが、Cloneして拡張する方がメジャーに見えます。公式ドキュメントもそうですし、論文の公式実装リポジトリ内にfairseqがコミットされていることもあります。
 
 2025年10月12日時点では、別のリポジトリで [fairseq2](https://github.com/facebookresearch/fairseq2) が開発されており、fairseq 本体の安定版リリースは 2022年6月28日(v0.12.2) から更新が止まっています。ただしリポジトリへのコミットは継続しているため、完全にメンテナンス終了というわけではありません（スター数は 2025年10月12日時点で **約31.8k vs 約1.0k** と fairseq が依然優勢です）。
 
