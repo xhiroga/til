@@ -10,6 +10,7 @@ dependencies = [
     "protobuf>=6.32.1",
     "torch>=2.8.0",
     "torchcodec>=0.7.0",
+    "tqdm>=4.67.1",
     "transformers>=4.56.1",
     "umap-learn>=0.5.6",
 ]

@@ -549,6 +549,7 @@ dependencies = [
     { name = "protobuf" },
     { name = "torch" },
     { name = "torchcodec" },
+    { name = "tqdm" },
     { name = "transformers" },
     { name = "umap-learn" },
 ]
@@ -561,6 +562,7 @@ requires-dist = [
     { name = "protobuf", specifier = ">=6.32.1" },
     { name = "torch", specifier = ">=2.8.0", index = "https://download.pytorch.org/whl/cu128" },
     { name = "torchcodec", specifier = ">=0.7.0" },
+    { name = "tqdm", specifier = ">=4.67.1" },
     { name = "transformers", specifier = ">=4.56.1" },
     { name = "umap-learn", specifier = ">=0.5.6" },
 ]
