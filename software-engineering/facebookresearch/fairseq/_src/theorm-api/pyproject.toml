@@ -1,0 +1,22 @@
+[project]
+name = "theorm-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fairseq",
+    "flask>=3.1.2",
+    "torch==2.5.1",
+    "transformers>=4.57.0",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+fairseq = { git = "https://github.com/facebookresearch/fairseq" }
+torch = { index = "pytorch-cu124" }
+torchaudio = { index = "pytorch-cu124" }
