@@ -1,0 +1,21 @@
+[project]
+name = "getting-started"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "accelerate>=1.10.1",
+    "bitsandbytes==0.48.1",
+    "memray>=1.19.1",
+    "torch>=2.9.0",
+    "transformers>=4.57.1",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
