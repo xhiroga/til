@@ -75,6 +75,20 @@ PyTorch 2.6.0 で `torch.load` の既定値 `weights_only=True` が導入され�
 2. 信頼できるチェックポイントのみを扱う前提で `torch.load(..., weights_only=False)` を明示する。
 3. PyTorch 2.5 以前を利用する（CVE-2025-32434 の修正が含まれない点に注意）。
 
+## ImportError: cannot import name 'metrics' from 'fairseq' (unknown location)
+
+自分のリポジトリにfariseqを丸ごとコミットしている場合に起きがちです。その場合、`$REPO/fairseq/fairseq`をimportすべきところで、`$REPO/fairseq`をimportしてしまっていることが原因です。
+
+```console
+% uv run python -c 'import fairseq, pathlib; print(*(pathlib.Path(p).resolve() for p in fairseq.__path__), sep="\n")'
+$REPO/fairseq # これが典型的
+```
+
+良さそうな対処法は次のとおり。
+
+1. Pythonのバージョンを3.11以上にして、`-P`フラグや`PYTHONSAFEPATH=1`を設定する（ただし前述のDataClassについてのエラーが出ます）
+2. `export PYTHONPATH=$REPO/fairseq` でコミットした`fairseq`が優先的に読み取られるようにする
+
 ### fairseq-train: error: argument --arch/-a: invalid choice:
 
 パッケージの`fairseq`のCLIが、自作モデルを認識していないことがあります。その場合、`--user-dir`オプションで渡したディレクトリがパッケージとして解釈され、`import`が実行されます。
