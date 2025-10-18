@@ -28,16 +28,19 @@ def main():
     conf = OmegaConf.from_cli()
     print(OmegaConf.to_yaml(conf))
 
-    # `structured()` は以下のような型ヒントを提供できるが、これは DuckTyping であり実際の方は DictConfig である (!??)
+    # `structured()` は以下のような型ヒントを提供できるが、これは DuckTyping であり実際の型は DictConfig である (!??)
     # https://omegaconf.readthedocs.io/en/latest/structured_config.html#static-type-checker-support
+    # これを使うと、逆にDictConfigとして使いたい時にエラーになる...😮‍💨
     base_conf: MyConfig = OmegaConf.structured(MyConfig)
     print(OmegaConf.to_yaml(base_conf))
     # なお、omegaconf.structured() で作成した設定は structured config と呼ばれる状態になる。
     print(f"{OmegaConf.get_type(base_conf)=} vs {OmegaConf.get_type(conf)=}")
 
-    # log_cfg = OmegaConf.create({"log": {"file": "log.txt"}})
-    # merged_conf = OmegaConf.merge(base_conf, log_cfg)
-    # print(OmegaConf.to_yaml(merged_conf))
+    # structured config に 元々ないキーを含む設定をマージするには？ → set_struct: False を使う（ワークアラウンド）
+    OmegaConf.set_struct(base_conf, False)  # type: ignore
+    log_cfg = OmegaConf.create({"log": {"file": "log.txt"}})
+    merged_conf = OmegaConf.merge(base_conf, log_cfg)
+    print(OmegaConf.to_yaml(merged_conf))
 
 if __name__ == "__main__":
     main()
