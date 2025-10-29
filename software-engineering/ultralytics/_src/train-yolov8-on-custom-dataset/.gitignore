@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+.env
+*.pt
+pothole_v8.yaml
+
