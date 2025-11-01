@@ -1,0 +1,11 @@
+[project]
+name = "sandbox"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openbb[all]>=4.5.0",
+]
+
+[tool.uv]
+prerelease = "allow"
