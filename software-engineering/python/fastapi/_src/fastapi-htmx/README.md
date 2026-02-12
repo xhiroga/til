@@ -1,7 +1,7 @@
 # FastAPI + htmx
 
 ```sh
-uv run fastapi dev main:app
+uv run fastapi dev main.py
 ```
 
 ## Inspired by
